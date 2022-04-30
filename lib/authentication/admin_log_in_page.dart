@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:project_mohammad/Api/controller/login_controller.dart';
 
@@ -14,6 +15,9 @@ class _LogInPageState extends State<LogInPage> {
 
   final adminEmailController = TextEditingController();
   final adminPasswordController = TextEditingController();
+
+  // هاد ال key مسان ال  validator
+  final adminLoginFormKey = GlobalKey<FormState>();
 
   //متغير ل تحديد طهور ال password
   bool adminPasswordVisibility = true;
@@ -88,7 +92,13 @@ class _LogInPageState extends State<LogInPage> {
                         height: MediaQuery.of(context).size.height * 0.1,
                       ),
                       // هاد ال حقل الخاص ب ال email
-                      TextField(
+                      TextFormField(
+                        validator: (enteredEmailVal) =>
+                        enteredEmailVal != null &&
+                            !EmailValidator.validate(enteredEmailVal)
+                            ? "Please Enter a Valid E-Mail"
+                            : null,
+                        keyboardType: TextInputType.emailAddress,
                         controller: adminEmailController,
                         decoration: const InputDecoration(
                           prefixIcon: Icon(
@@ -124,7 +134,11 @@ class _LogInPageState extends State<LogInPage> {
                         height: MediaQuery.of(context).size.height * 0.03,
                       ),
                       // هاد ال حقل الخاص ب ال password
-                      TextField(
+                      TextFormField(
+                        validator: (enteredPasswordVal) =>
+                        enteredPasswordVal!.length < 8
+                            ? "Password is too short"
+                            : null,
                         obscureText: adminPasswordVisibility,
                         controller: adminPasswordController,
                         decoration: InputDecoration(
@@ -174,6 +188,12 @@ class _LogInPageState extends State<LogInPage> {
                       // جوا ال onPressed منحط ال استدعاء تابع ارسال البيانات لل database
                       ElevatedButton(
                         onPressed: () {
+                          /*
+                          final formKey = adminLoginFormKey.currentState!;
+                            if(formKey.validate()){
+
+                            }
+                           */
                           print('fasfsdfesfdfs');
                           logincontroller().signIn(adminEmailController.text,adminPasswordController.text,'Admin');
                         },

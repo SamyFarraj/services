@@ -1,7 +1,7 @@
-import 'package:project_mohammad/project/admin/add_new_service.dart';
-import 'package:project_mohammad/project/admin/delete_service.dart';
-import 'package:project_mohammad/project/projects_page.dart';
 import 'package:flutter/material.dart';
+import 'project/admin/add_new_admin.dart';
+import 'project/admin/delete_service.dart';
+import 'project/projects_page.dart';
 
 import 'authentication/admin_log_in_page.dart';
 import 'authentication/sign_up_page.dart';

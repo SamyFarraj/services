@@ -30,6 +30,7 @@ dependencies:
   curved_navigation_bar: ^1.0.3
   cupertino_icons: ^1.0.4
   intl: ^0.17.0
+  email_validator: ^2.0.0-nullsafety
   flutter:
     sdk: flutter
   # The following adds the Cupertino Icons font to your application.

@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:project_mohammad/Api/controller/login_controller.dart';
 
@@ -13,6 +14,9 @@ class _LogInPageState extends State<LogInPage> {
   // مشان ال textFields
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+
+  // هاد ال key  مشات ال  validation
+  final loginFormKey = GlobalKey<FormState>();
 
   //متغير ل تحديد طهور ال password
   bool passwordVisibility = true;
@@ -56,120 +60,183 @@ class _LogInPageState extends State<LogInPage> {
           // هاد مشان لما نفتح ال keyboard
           // ما يعطي pixels rendered out error
           // يعني مشات  ما تطلع ال pixels  من الشاشة
-          SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.14,
-                ),
-                //  هاد logo  الشركة
-                Image.asset(
-                  "asset/images/logo.png",
-                  width: double.infinity,
-                  height: MediaQuery.of(context).size.height * 0.095,
-                ),
-                const SizedBox(
-                  height: 50,
-                ),
-                // هاد ال container اللي بيحتوي ع ال textFields
-                // هون شغل الربط
-                Container(
-                  padding: const EdgeInsets.all(10),
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  height: MediaQuery.of(context).size.height * 0.65,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(35),
-                    color: const Color.fromARGB(180, 0, 0, 65),
+          Form(
+            key: loginFormKey,
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.14,
                   ),
-                  child: Column(
-                    children: <Widget>[
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.1,
-                      ),
-                      // هاد ال حقل الخاص ب ال email
-                      TextField(
-                        controller: emailController,
-                        decoration: const InputDecoration(
-                          prefixIcon: Icon(
-                            Icons.mail,
-                            color: Colors.deepOrange,
-                          ),
-                          label: Text(
-                            "E-Mail",
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.blueAccent,
-                            ),
-                          ),
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              width: 2.0,
+                  //  هاد logo  الشركة
+                  Image.asset(
+                    "asset/images/logo.png",
+                    width: double.infinity,
+                    height: MediaQuery.of(context).size.height * 0.095,
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  // هاد ال container اللي بيحتوي ع ال textFields
+                  // هون شغل الربط
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    height: MediaQuery.of(context).size.height * 0.65,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(35),
+                      color: const Color.fromARGB(180, 0, 0, 65),
+                    ),
+                    child: Column(
+                      children: <Widget>[
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.1,
+                        ),
+                        // هاد ال حقل الخاص ب ال email
+                        TextFormField(
+                          validator: (enteredEmailVal) =>
+                          enteredEmailVal != null &&
+                              !EmailValidator.validate(enteredEmailVal)
+                              ? "Please Enter a Valid E-Mail"
+                              : null,
+                          keyboardType: TextInputType.emailAddress,
+                          controller: emailController,
+                          decoration: const InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.mail,
                               color: Colors.deepOrange,
                             ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              width: 2.0,
-                              color: Colors.blue,
+                            label: Text(
+                              "E-Mail",
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.blueAccent,
+                              ),
                             ),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                width: 2.0,
+                                color: Colors.deepOrange,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                width: 2.0,
+                                color: Colors.blue,
+                              ),
+                            ),
+                          ),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
                           ),
                         ),
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.03,
                         ),
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.03,
-                      ),
-                      // هاد ال حقل الخاص ب ال password
-                      TextField(
-                        obscureText: passwordVisibility,
-                        controller: passwordController,
-                        decoration: InputDecoration(
-                          prefixIcon: const Icon(
-                            Icons.vpn_key_sharp,
-                            color: Colors.deepOrange,
-                          ),
-                          suffixIcon: IconButton(
-                            color: Colors.blue,
-                            icon: passwordVisibility
-                                ? const Icon(Icons.visibility_off)
-                                : const Icon(Icons.visibility),
-                            // color: Colors.deepOrange,
-                            onPressed: () => setState(
-                              () => passwordVisibility = !passwordVisibility,
-                            ),
-                          ),
-                          label: const Text(
-                            "Password",
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.blueAccent,
-                            ),
-                          ),
-                          enabledBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              width: 2.0,
+                        // هاد ال حقل الخاص ب ال password
+                        TextFormField(
+                          validator: (enteredPasswordVal) =>
+                          enteredPasswordVal!.length < 8
+                              ? "Password is too short"
+                              : null,
+                          obscureText: passwordVisibility,
+                          controller: passwordController,
+                          decoration: InputDecoration(
+                            prefixIcon: const Icon(
+                              Icons.vpn_key_sharp,
                               color: Colors.deepOrange,
                             ),
-                          ),
-                          focusedBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(
-                              width: 2.0,
+                            suffixIcon: IconButton(
                               color: Colors.blue,
+                              icon: passwordVisibility
+                                  ? const Icon(Icons.visibility_off)
+                                  : const Icon(Icons.visibility),
+                              // color: Colors.deepOrange,
+                              onPressed: () => setState(
+                                () => passwordVisibility = !passwordVisibility,
+                              ),
+                            ),
+                            label: const Text(
+                              "Password",
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.blueAccent,
+                              ),
+                            ),
+                            enabledBorder: const UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                width: 2.0,
+                                color: Colors.deepOrange,
+                              ),
+                            ),
+                            focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                width: 2.0,
+                                color: Colors.blue,
+                              ),
                             ),
                           ),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                          ),
                         ),
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.2,
                         ),
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.2,
-                      ),
-                      GestureDetector(
+                        GestureDetector(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: const <Widget>[
+                                Icon(
+                                  Icons.lock_open_rounded,
+                                  color: Colors.white,
+                                ),
+                                Text(
+                                  "LogIffn",
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ) ,
+                          onTap: ()
+                          {
+                            //هون لازم نضيف ال validator
+                            // حاليا رح اتركو بتعليق مشات
+                            // ما يعذبك وقت التجريب اخر شي بزبطو
+                            /*
+                                final formKey = loginFormKey.currentState!;
+                            if(formKey.validate()){
+                              // تباع الارسال
+                            }
+                             */
+                            print('fasfsdfesfdfs');
+                            logincontroller().signIn(emailController.text,passwordController.text,'/user');
+                          },
+                        )
+                        //  هي كبسة ال login
+                        // جوا ال onPressed منحط ال استدعاء تابع ارسال البيانات لل database
+/*
+                        ElevatedButton(
+                          onPressed: () {
+                            print('fasfsdfesfdfs');
+                            logincontroller().signIn(emailController.text,passwordController.text);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.symmetric(
+                              vertical: 5.0,
+                              horizontal:
+                                  MediaQuery.of(context).size.width * 0.30,
+                            ),
+                            primary: Colors.blue,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            elevation: 15.0,
+                          ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: const <Widget>[
@@ -178,63 +245,22 @@ class _LogInPageState extends State<LogInPage> {
                                 color: Colors.white,
                               ),
                               Text(
-                                "LogIffn",
+                                "LogIn",
                                 style: TextStyle(
                                   fontSize: 24,
                                   color: Colors.white,
                                 ),
                               ),
                             ],
-                          ) ,
-                        onTap: ()
-                        {
-                          print('fasfsdfesfdfs');
-                          logincontroller().signIn(emailController.text,passwordController.text,'/user');
-                        },
-                      )
-                      //  هي كبسة ال login
-                      // جوا ال onPressed منحط ال استدعاء تابع ارسال البيانات لل database
-/*
-                      ElevatedButton(
-                        onPressed: () {
-                          print('fasfsdfesfdfs');
-                          logincontroller().signIn(emailController.text,passwordController.text);
-                        },
-                        style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.symmetric(
-                            vertical: 5.0,
-                            horizontal:
-                                MediaQuery.of(context).size.width * 0.30,
                           ),
-                          primary: Colors.blue,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          elevation: 15.0,
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: const <Widget>[
-                            Icon(
-                              Icons.lock_open_rounded,
-                              color: Colors.white,
-                            ),
-                            Text(
-                              "LogIn",
-                              style: TextStyle(
-                                fontSize: 24,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
 
  */
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ],
