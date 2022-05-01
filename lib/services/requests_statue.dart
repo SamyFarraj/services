@@ -7,14 +7,16 @@ class RequestsStates {
   final TimeOfDay serviceTime;
   final int minuteDuration;
   final int hoursDuration;
-  final List choosedStaffs;
+  final String user;
+  // final List choosedStaffs;
   const RequestsStates({
     required this.gateTitle,
     required this.serviceTitle,
     required this.serviceDate,
     required this.minuteDuration,
-    required this.choosedStaffs,
     required this.serviceTime,
     required this.hoursDuration,
+    required this.user,
+    // required this.choosedStaffs,
   });
 }

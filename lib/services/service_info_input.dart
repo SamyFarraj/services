@@ -619,7 +619,8 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
           serviceTime: time,
           hoursDuration: int.parse(selectedHoursDuration),
           minuteDuration: int.parse(selectedMinuteDuration),
-          choosedStaffs: choosedStaffsList,
+          user: "user"
+          // choosedStaffs: choosedStaffsList,
         ),
       );
       Navigator.of(context).pushReplacement(
