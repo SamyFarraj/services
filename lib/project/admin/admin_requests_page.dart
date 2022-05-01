@@ -33,7 +33,7 @@ void acceptRequest(RequestsStates request){
   arp.adminRequestListEd.remove(request);
 }
 
-void declineRequest(RequestsStates request){
+void deleteRequest(RequestsStates request){
   arp.adminRequestListEd.remove(request);
 }
 
@@ -236,7 +236,11 @@ class _AdminRequestsPageState extends State<AdminRequestsPage> {
                                               Row(
                                                 children: <Widget>[
                                                   ElevatedButton(
-                                                    onPressed: () {},
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        acceptRequest(val);
+                                                      });
+                                                    },
                                                     style: ElevatedButton
                                                         .styleFrom(
                                                       minimumSize:
@@ -279,8 +283,9 @@ class _AdminRequestsPageState extends State<AdminRequestsPage> {
                                                   ),
                                                   ElevatedButton(
                                                     onPressed: () {
-                                                      adminRequestsList
-                                                          .remove(val);
+                                                      setState(() {
+                                                        deleteRequest(val);
+                                                      });
                                                     },
                                                     style: ElevatedButton
                                                         .styleFrom(
