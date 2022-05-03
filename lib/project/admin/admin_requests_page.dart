@@ -20,12 +20,12 @@ AdminRequestsPage arp = AdminRequestsPage();
 
 void adminManageService() {
   if(arp.adminRequestListEd.isEmpty){
-    arp.adminRequestListEd.add(adminRequestsList[0]);
-    arp.adminRequestListEd.add(adminRequestsList[1]);
-    arp.adminRequestListEd.add(adminRequestsList[2]);
-    arp.adminRequestListEd.add(adminRequestsList[3]);
-    arp.adminRequestListEd.add(adminRequestsList[4]);
-    arp.adminRequestListEd.add(adminRequestsList[5]);
+    arp.adminRequestListEd.add(adminRequestsManageList[0]);
+    arp.adminRequestListEd.add(adminRequestsManageList[1]);
+    arp.adminRequestListEd.add(adminRequestsManageList[2]);
+    arp.adminRequestListEd.add(adminRequestsManageList[3]);
+    arp.adminRequestListEd.add(adminRequestsManageList[4]);
+    arp.adminRequestListEd.add(adminRequestsManageList[5]);
   }
 }
 void acceptRequest(RequestsStates request){
@@ -167,7 +167,7 @@ class _AdminRequestsPageState extends State<AdminRequestsPage> {
                                     width: 2,
                                   )),
                                 ),
-                                ...adminRequestsList.map((val) {
+                                ...adminRequestsManageList.map((val) {
                                   return Column(
                                     children: [
                                       Row(

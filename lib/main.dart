@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'project/admin/add_new_admin.dart';
 import 'project/admin/delete_service.dart';
 import 'project/projects_page.dart';
-
 import 'authentication/admin_log_in_page.dart';
 import 'authentication/sign_up_page.dart';
 
@@ -45,5 +45,6 @@ class _MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<_MyHomePage> {
   @override
-  Widget build(BuildContext context) => const DeleteService();
+  // Widget build(BuildContext context) => const DeleteService();
+  Widget build(BuildContext context) => const ProjectsPage();
 }

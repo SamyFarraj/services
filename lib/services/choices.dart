@@ -91,7 +91,7 @@ var addNewAdmin =[
 ];
 
 
-List <RequestsStates> adminRequestsList = [
+List <RequestsStates> adminRequestsManageList = [
   RequestsStates(
     user: "user 1",
     gateTitle: "gate1",
@@ -153,4 +153,15 @@ List <RequestsStates> adminRequestsList = [
 
   ),
 
+];
+
+
+List <String> adminRequestList =[
+'Select Admin',
+'Admin 1',
+'Admin 2',
+'Admin 3',
+'Admin 4',
+'Admin 5',
+'Admin 6',
 ];
