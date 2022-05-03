@@ -109,14 +109,14 @@ class _ProjectsPageState extends State<ProjectsPage> {
                           children: <Widget>[
                             Ink.image(
                               image: const AssetImage(
-                                  'asset/images/HDS_Woodward_Elev.png'),
+                                  'asset/images/HDS_WoodWard_Elev.png'),
                               child: ClipRRect(
                                 borderRadius: const BorderRadius.only(
                                   topLeft: Radius.circular(15),
                                   topRight: Radius.circular(15),
                                 ),
                                 child: Image.asset(
-                                  'asset/images/HDS_Woodward_Elev.png',
+                                  'asset/images/HDS_WoodWard_Elev.png',
                                   height: 200,
                                   width: 200,
                                   fit: BoxFit.cover,
