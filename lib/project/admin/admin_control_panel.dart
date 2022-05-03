@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:project_mohammad/project/admin/add_new_admin.dart';
+import 'package:project_mohammad/project/admin/remove_admin.dart';
 
 import 'service_calender.dart';
 import 'un_block_service.dart';
@@ -331,6 +333,88 @@ class _AdminControlPanelState extends State<AdminControlPanel> {
                                       ),
                                       Text(
                                         "Service",
+                                        style: TextStyle(
+                                          fontSize: 24,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Container(
+                                padding: const EdgeInsets.all(13),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (_) => const AddNewAdmin(),
+                                      ),
+                                    );
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    minimumSize: const Size(155, 155),
+                                    primary:
+                                    const Color.fromARGB(55, 100, 100, 255),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                    elevation: 15.0,
+                                  ),
+                                  child: Column(
+                                    children: const <Widget>[
+                                      Text(
+                                        "Add",
+                                        style: TextStyle(
+                                          fontSize: 24,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      Text(
+                                        "Admin",
+                                        style: TextStyle(
+                                          fontSize: 24,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.all(13),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (_) => const RemoveAdmin(),
+                                      ),
+                                    );
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    minimumSize: const Size(155, 155),
+                                    primary:
+                                    const Color.fromARGB(55, 100, 100, 255),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                    elevation: 15.0,
+                                  ),
+                                  child: Column(
+                                    children: const <Widget>[
+                                      Text(
+                                        "Remove",
+                                        style: TextStyle(
+                                          fontSize: 24,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      Text(
+                                        "Admin",
                                         style: TextStyle(
                                           fontSize: 24,
                                           color: Colors.white,

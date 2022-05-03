@@ -42,7 +42,8 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
   // ال controller اللي رح ناخد منو المدة بالدقايق من ال textField
   final choosedDurationMinuteController = TextEditingController();
 
-  String showedDate = "Select Date";
+  late String showedDate = 'select Date';
+  late String showedTime = 'select Time';
 
   @override
   Widget build(BuildContext context) {
@@ -184,24 +185,21 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
                                 //هي الزر تبع اختيار ال التاريخ date picker
                                 TextButton(
                                   child: Text(
-                                    showSelectedDate(),
+                                    showedDate,
                                     style: const TextStyle(
                                       fontSize: 26,
                                       color: Colors.white,
                                     ),
                                   ),
-                                  onPressed: () {
-                                    setState(
-                                      () async {
-                                        final choosedDate =
-                                            await pickDate(context);
-                                        date = DateTime(
-                                          choosedDate!.year,
-                                          choosedDate.month,
-                                          choosedDate.day,
-                                        );
-                                      },
+                                  onPressed: () async {
+                                    final choosedDate =
+                                        await pickDate(context);
+                                    date = DateTime(
+                                      choosedDate!.year,
+                                      choosedDate.month,
+                                      choosedDate.day,
                                     );
+                                    showSelectedDate();
                                   },
                                 ),
                                 SizedBox(
@@ -210,20 +208,17 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
                                 ),
                                 //هي الزر تبع اختيار ال وقت time picker
                                 TextButton(
-                                  onPressed: () {
-                                    setState(
-                                      () async {
-                                        final choosedTime =
-                                            await pickTime(context);
-                                        time = TimeOfDay(
-                                          hour: choosedTime!.hour,
-                                          minute: choosedTime.minute,
-                                        );
-                                      },
-                                    );
+                                  onPressed: () async {
+                                      final choosedTime =
+                                          await pickTime(context);
+                                      time = TimeOfDay(
+                                        hour: choosedTime!.hour,
+                                        minute: choosedTime.minute,
+                                      );
+                                      showSelectedTime();
                                   },
                                   child: Text(
-                                    showSelectedTime(),
+                                    showedTime,
                                     style: const TextStyle(
                                       fontSize: 26,
                                       color: Colors.white,
@@ -449,11 +444,13 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
     return selectedDate;
   }
 
-  String showSelectedDate() {
-    if (date == DateTime(2021)) {
-      return 'select Date';
+   showSelectedDate() {
+    setState(() {
+
+    if (date != DateTime(2021)) {
+      showedDate = DateFormat("MM/dd/yyyy").format(date);
     }
-    return DateFormat("MM/dd/yyyy").format(date);
+    });
   }
 
   /*
@@ -461,6 +458,7 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
                 ////////////      time picker       ////////////
 
    */
+
 
   // هاد التابع تيع ال time picker
   Future<TimeOfDay?> pickTime(BuildContext context) async {
@@ -479,11 +477,12 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
     return newTime;
   }
 
-  String showSelectedTime() {
-    if (time == const TimeOfDay(hour: 23, minute: 41)) {
-      return 'select Time';
-    }
-    return time.format(context);
+  showSelectedTime() {
+    setState(() {
+      if (time != const TimeOfDay(hour: 23, minute: 41)) {
+        showedTime = time.format(context);
+      }
+    });
   }
 
   /*

@@ -157,14 +157,13 @@ class _AddNewAdminState extends State<AddNewAdmin> {
       return false;
     }
     else{
-      for (var admin in addNewAdmin) {
+      for (var admin in addAdminList) {
         if(adminName == admin){
           snackBar(context, 'Admin Name Exited',const Color.fromARGB(255, 150, 10, 10));
           return false;
         }
       }
-      addNewAdmin.add(adminName);
-      print("admins = $addNewAdmin");
+      addAdminList.add(adminName);
       snackBar(context, "Admin Added Successfully",const Color.fromARGB(255, 15, 150, 10));
       return true;
     }

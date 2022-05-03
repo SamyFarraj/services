@@ -4,12 +4,13 @@ import 'package:project_mohammad/services/requests_statue.dart';
 import 'package:project_mohammad/services/staff.dart';
 
 import 'street_service_chooser.dart';
+
 //مصفوفة لاسم الشوارع
 //المتغير الاول title يرمز لاسم الشارع
 //المتغير الثاني srChooser يرمز للمصفوفة المحتواة في اسم الشارع
 //والتي تحوي الخدمات (البوابات) التي يمكن حجزها من الشارع
 final selectStreet = <ServiceChooser>[
-  ServiceChooser( title: 'WoodWard', serviceChoosingList: woodWardStreetList),
+  ServiceChooser(title: 'WoodWard', serviceChoosingList: woodWardStreetList),
   ServiceChooser(title: 'Farmer', serviceChoosingList: farmerStreetList),
 ];
 
@@ -38,9 +39,7 @@ final farmerStreetList = <ServiceChooser>[
 //فكرة حجز البوابة فقط هي التأكد اذا كانت الخدمة Not Assigned فإنه
 //يتجاهلها وما عدا ذلك سوف يرسلها لقاعدة البيانات
 
-
-
-List <String> servicesList = [
+List<String> servicesList = [
   'Select Service',
   'Self Unloaded Delivery',
   'Tower Crane 1',
@@ -53,7 +52,7 @@ List <String> servicesList = [
 ];
 //هي list   مسان ال blocked services
 //
-List <String> blockedServicesList = [
+List<String> blockedServicesList = [
   'Select Service',
   'blocked service 1',
   'blocked service 2',
@@ -68,7 +67,7 @@ final selectAllStaff = StaffCheckBox(staff_name: "Select All Staffs");
 //هي ال List الخاصة بال staffs
 // طبعا هي ال list بتكون فاضية لانو ال admin
 //هو اللي رح يضيف اسماء ال staff  او يحذفها حسب الموجود
-final chooseStaff =[
+final chooseStaff = [
   StaffCheckBox(staff_name: "staff 1"),
   StaffCheckBox(staff_name: "staff 2"),
   StaffCheckBox(staff_name: "staff 3"),
@@ -83,15 +82,8 @@ final chooseStaff =[
 // هي list  مشان اضافة newAdmin
 //رح يضيفها ع  ال database
 // هي الميزة لل update
-var addNewAdmin =[
-  'admin 1',
-  'admin 2',
-  'admin 3',
-  'admin 4',
-];
 
-
-List <RequestsStates> adminRequestsManageList = [
+List<RequestsStates> adminRequestsManageList = [
   RequestsStates(
     user: "user 1",
     gateTitle: "gate1",
@@ -100,7 +92,6 @@ List <RequestsStates> adminRequestsManageList = [
     serviceTime: TimeOfDay.now(),
     hoursDuration: int.parse("1"),
     minuteDuration: int.parse("30"),
-
   ),
   RequestsStates(
     user: "user 2",
@@ -110,7 +101,6 @@ List <RequestsStates> adminRequestsManageList = [
     serviceTime: TimeOfDay.now(),
     hoursDuration: int.parse("1"),
     minuteDuration: int.parse("30"),
-
   ),
   RequestsStates(
     user: "user 3",
@@ -120,7 +110,6 @@ List <RequestsStates> adminRequestsManageList = [
     serviceTime: TimeOfDay.now(),
     hoursDuration: int.parse("1"),
     minuteDuration: int.parse("30"),
-
   ),
   RequestsStates(
     user: "user 4",
@@ -130,7 +119,6 @@ List <RequestsStates> adminRequestsManageList = [
     serviceTime: TimeOfDay.now(),
     hoursDuration: int.parse("1"),
     minuteDuration: int.parse("30"),
-
   ),
   RequestsStates(
     user: "user 5",
@@ -140,7 +128,6 @@ List <RequestsStates> adminRequestsManageList = [
     serviceTime: TimeOfDay.now(),
     hoursDuration: int.parse("1"),
     minuteDuration: int.parse("30"),
-
   ),
   RequestsStates(
     user: "user 6",
@@ -150,18 +137,16 @@ List <RequestsStates> adminRequestsManageList = [
     serviceTime: TimeOfDay.now(),
     hoursDuration: int.parse("1"),
     minuteDuration: int.parse("30"),
-
   ),
-
 ];
 
-
-List <String> adminRequestList =[
-'Select Admin',
-'Admin 1',
-'Admin 2',
-'Admin 3',
-'Admin 4',
-'Admin 5',
-'Admin 6',
+List<String> addAdminList = [
+  'Select Admin',
+  'Admin 1',
+  'Admin 2',
+  'Admin 3',
+  'Admin 4',
+  'Admin 5',
+  'Admin 6',
+  'Admin 7',
 ];
