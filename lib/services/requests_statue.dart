@@ -8,6 +8,7 @@ class RequestsStates {
   final int minuteDuration;
   final int hoursDuration;
   final String user;
+  final String endingDate;
   // final List choosedStaffs;
   const RequestsStates({
     required this.gateTitle,
@@ -17,6 +18,7 @@ class RequestsStates {
     required this.serviceTime,
     required this.hoursDuration,
     required this.user,
+    required this.endingDate,
     // required this.choosedStaffs,
   });
 }

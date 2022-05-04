@@ -92,6 +92,7 @@ List<RequestsStates> adminRequestsManageList = [
     serviceTime: TimeOfDay.now(),
     hoursDuration: int.parse("1"),
     minuteDuration: int.parse("30"),
+    endingDate: DateFormat("MM/dd/yyyy").format(DateTime(2022,10,10)),
   ),
   RequestsStates(
     user: "user 2",
@@ -101,6 +102,7 @@ List<RequestsStates> adminRequestsManageList = [
     serviceTime: TimeOfDay.now(),
     hoursDuration: int.parse("1"),
     minuteDuration: int.parse("30"),
+    endingDate: DateFormat("MM/dd/yyyy").format(DateTime(2022,10,10)),
   ),
   RequestsStates(
     user: "user 3",
@@ -110,6 +112,7 @@ List<RequestsStates> adminRequestsManageList = [
     serviceTime: TimeOfDay.now(),
     hoursDuration: int.parse("1"),
     minuteDuration: int.parse("30"),
+    endingDate: DateFormat("MM/dd/yyyy").format(DateTime(2022,10,10)),
   ),
   RequestsStates(
     user: "user 4",
@@ -119,6 +122,7 @@ List<RequestsStates> adminRequestsManageList = [
     serviceTime: TimeOfDay.now(),
     hoursDuration: int.parse("1"),
     minuteDuration: int.parse("30"),
+    endingDate: DateFormat("MM/dd/yyyy").format(DateTime(2022,10,10)),
   ),
   RequestsStates(
     user: "user 5",
@@ -128,6 +132,7 @@ List<RequestsStates> adminRequestsManageList = [
     serviceTime: TimeOfDay.now(),
     hoursDuration: int.parse("1"),
     minuteDuration: int.parse("30"),
+    endingDate: DateFormat("MM/dd/yyyy").format(DateTime(2022,10,10)),
   ),
   RequestsStates(
     user: "user 6",
@@ -137,6 +142,7 @@ List<RequestsStates> adminRequestsManageList = [
     serviceTime: TimeOfDay.now(),
     hoursDuration: int.parse("1"),
     minuteDuration: int.parse("30"),
+    endingDate: DateFormat("MM/dd/yyyy").format(DateTime(2022,10,10)),
   ),
 ];
 

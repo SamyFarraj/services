@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../../services/choices.dart';
 import '../../services/requests_statue.dart';
+import '../home/requests.dart';
 
 class AdminRequestsPage extends StatefulWidget {
    AdminRequestsPage({Key? key}) : super(key: key);
 
-
-  List<RequestsStates> adminRequestListEd = [];
-
-  List<RequestsStates> adminAcceptedRequestListEd = [];
+  final List<RequestsStates> adminAcceptedRequestListEd = [];
 
   @override
   State<AdminRequestsPage> createState() => _AdminRequestsPageState();
@@ -18,23 +15,13 @@ class AdminRequestsPage extends StatefulWidget {
 
 AdminRequestsPage arp = AdminRequestsPage();
 
-void adminManageService() {
-  if(arp.adminRequestListEd.isEmpty){
-    arp.adminRequestListEd.add(adminRequestsManageList[0]);
-    arp.adminRequestListEd.add(adminRequestsManageList[1]);
-    arp.adminRequestListEd.add(adminRequestsManageList[2]);
-    arp.adminRequestListEd.add(adminRequestsManageList[3]);
-    arp.adminRequestListEd.add(adminRequestsManageList[4]);
-    arp.adminRequestListEd.add(adminRequestsManageList[5]);
-  }
-}
 void acceptRequest(RequestsStates request){
   arp.adminAcceptedRequestListEd.add(request);
-  arp.adminRequestListEd.remove(request);
+  UserRequestsPage.requestList.remove(request);
 }
 
 void deleteRequest(RequestsStates request){
-  arp.adminRequestListEd.remove(request);
+  UserRequestsPage.requestList.remove(request);
 }
 
 
@@ -90,35 +77,6 @@ class _AdminRequestsPageState extends State<AdminRequestsPage> {
                   const SizedBox(
                     height: 30,
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        adminManageService();
-                      });
-                    },
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(40, 20),
-                      padding: EdgeInsets.symmetric(
-                        vertical: 3.0,
-                        horizontal: MediaQuery.of(context).size.width * 0.05,
-                      ),
-                      primary: const Color.fromARGB(255, 10, 150, 10),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      elevation: 15.0,
-                    ),
-                    child: const Text(
-                      "Show",
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
                   Container(
                     width: double.infinity,
                     height: MediaQuery.of(context).size.height,
@@ -167,7 +125,8 @@ class _AdminRequestsPageState extends State<AdminRequestsPage> {
                                     width: 2,
                                   )),
                                 ),
-                                ...adminRequestsManageList.map((val) {
+                                // ...adminRequestsManageList.map((val) {
+                                ...UserRequestsPage.requestList.map((val) {
                                   return Column(
                                     children: [
                                       Row(

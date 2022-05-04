@@ -19,7 +19,13 @@ class ServiceInformationInput extends StatefulWidget {
 
 class _ServiceInformationInputState extends State<ServiceInformationInput> {
   //المتغير اللي رح يتخزن فيه التاريخ اللي تم اختيارو
-  DateTime date = DateTime(2021, 1, 1);
+  DateTime date = DateTime(
+    2021,
+    1,
+    1,
+  );
+  DateTime choosedStartingDateTime = DateTime(2021);
+  DateTime choosedEndDateTime = DateTime(2021);
 
   //المتغير اللي رح يتخزن فيه الوقت اللي تم اختيارو
   TimeOfDay time = const TimeOfDay(hour: 23, minute: 41);
@@ -192,12 +198,13 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
                                     ),
                                   ),
                                   onPressed: () async {
-                                    final choosedDate =
-                                        await pickDate(context);
+                                    final choosedDate = await pickDate(context);
                                     date = DateTime(
                                       choosedDate!.year,
                                       choosedDate.month,
                                       choosedDate.day,
+                                      choosedDate.hour,
+                                      choosedDate.minute,
                                     );
                                     showSelectedDate();
                                   },
@@ -209,13 +216,20 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
                                 //هي الزر تبع اختيار ال وقت time picker
                                 TextButton(
                                   onPressed: () async {
-                                      final choosedTime =
-                                          await pickTime(context);
-                                      time = TimeOfDay(
-                                        hour: choosedTime!.hour,
-                                        minute: choosedTime.minute,
-                                      );
-                                      showSelectedTime();
+                                    final choosedTime = await pickTime(context);
+                                    time = TimeOfDay(
+                                      hour: choosedTime!.hour,
+                                      minute: choosedTime.minute,
+                                    );
+                                    choosedStartingDateTime = DateTime(
+                                      date.year,
+                                      date.month,
+                                      date.day,
+                                      time.hour,
+                                      time.minute,
+                                    );
+
+                                    showSelectedTime();
                                   },
                                   child: Text(
                                     showedTime,
@@ -242,11 +256,8 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
                                     Container(
-                                      margin:
-                                          const EdgeInsets.only(right: 10),
-                                      width: MediaQuery.of(context)
-                                              .size
-                                              .width *
+                                      margin: const EdgeInsets.only(right: 10),
+                                      width: MediaQuery.of(context).size.width *
                                           0.28,
                                       child: TextField(
                                         keyboardType: TextInputType.number,
@@ -264,8 +275,7 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
                                               color: Colors.blueAccent,
                                             ),
                                           ),
-                                          enabledBorder:
-                                              UnderlineInputBorder(
+                                          enabledBorder: UnderlineInputBorder(
                                             borderSide: BorderSide(
                                               width: 2.0,
                                               color: Colors.deepOrange,
@@ -285,11 +295,8 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
                                       ),
                                     ),
                                     Container(
-                                      margin:
-                                          const EdgeInsets.only(right: 10),
-                                      width: MediaQuery.of(context)
-                                              .size
-                                              .width *
+                                      margin: const EdgeInsets.only(right: 10),
+                                      width: MediaQuery.of(context).size.width *
                                           0.28,
                                       child: TextField(
                                         keyboardType: TextInputType.number,
@@ -303,8 +310,7 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
                                               color: Colors.blueAccent,
                                             ),
                                           ),
-                                          enabledBorder:
-                                              UnderlineInputBorder(
+                                          enabledBorder: UnderlineInputBorder(
                                             borderSide: BorderSide(
                                               width: 2.0,
                                               color: Colors.deepOrange,
@@ -444,12 +450,11 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
     return selectedDate;
   }
 
-   showSelectedDate() {
+  showSelectedDate() {
     setState(() {
-
-    if (date != DateTime(2021)) {
-      showedDate = DateFormat("MM/dd/yyyy").format(date);
-    }
+      if (date != DateTime(2021)) {
+        showedDate = DateFormat("MM/dd/yyyy HH:mm").format(date);
+      }
     });
   }
 
@@ -458,7 +463,6 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
                 ////////////      time picker       ////////////
 
    */
-
 
   // هاد التابع تيع ال time picker
   Future<TimeOfDay?> pickTime(BuildContext context) async {
@@ -546,8 +550,11 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
   */
 
   //هاد التابع اللي رح يتحقق من انو طلب الحجز كامل قبل ما ينبعت ع ال dataBase
-  bool checkNewRequest(String selectedMinuteDuration,
-      String selectedHoursDuration, String serviceName) {
+  bool checkNewRequest(
+    String selectedMinuteDuration,
+    String selectedHoursDuration,
+    String serviceName,
+  ) {
     if (serviceName == 'Select Service') {
       snackBar(context, 'Please Select Service',
           const Color.fromARGB(255, 150, 10, 10));
@@ -560,7 +567,7 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
       snackBar(context, 'Please Select Time',
           const Color.fromARGB(255, 150, 10, 10));
       return false;
-    } else if (time.hour > 18 && time.hour < 24) {
+    } else if (time.hour > 18 && time.hour < 6) {
       snackBar(context, 'This period is unavailable',
           const Color.fromARGB(255, 150, 10, 10));
       return false;
@@ -610,15 +617,24 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
       }
       snackBar(context, "Service Requested Successfully",
           const Color.fromARGB(255, 15, 150, 10));
+      choosedEndDateTime = DateTime(
+        choosedStartingDateTime.year,
+        choosedStartingDateTime.month,
+        choosedStartingDateTime.day,
+        (choosedStartingDateTime.hour + int.parse(selectedHoursDuration)),
+        (choosedStartingDateTime.minute + int.parse(selectedMinuteDuration)),
+      );
       UserRequestsPage.requestList.add(
         RequestsStates(
           gateTitle: widget.gateName,
           serviceTitle: selectedService!,
-          serviceDate: DateFormat("MM/dd/yyyy").format(date),
+          serviceDate:
+              DateFormat("MM/dd/yyyy HH:mm").format(choosedStartingDateTime),
           serviceTime: time,
           hoursDuration: int.parse(selectedHoursDuration),
           minuteDuration: int.parse(selectedMinuteDuration),
-          user: "user"
+          user: "user",
+          endingDate: DateFormat("MM/dd/yyyy HH:mm").format(choosedEndDateTime),
           // choosedStaffs: choosedStaffsList,
         ),
       );
