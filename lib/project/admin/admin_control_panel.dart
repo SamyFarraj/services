@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:project_mohammad/project/admin/add_new_admin.dart';
 import 'package:project_mohammad/project/admin/remove_admin.dart';
 
+import '../../components/button_control_panel.dart';
+import 'add_new_service.dart';
+import 'block_service.dart';
+import 'delete_service.dart';
 import 'service_calender.dart';
 import 'un_block_service.dart';
-import 'block_service.dart';
-import 'add_new_service.dart';
-import 'delete_service.dart';
 
 //هدول ال imports تبع ال staff
 // import 'add_new_staff.dart';
@@ -76,7 +77,12 @@ class _AdminControlPanelState extends State<AdminControlPanel> {
                 ),
                 SingleChildScrollView(
                   child: Container(
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.fromLTRB(
+                      10,
+                      0.0005,
+                      10,
+                      10,
+                    ),
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height * 0.703,
                     decoration: const BoxDecoration(
@@ -86,439 +92,8 @@ class _AdminControlPanelState extends State<AdminControlPanel> {
                       ),
                       color: Color.fromARGB(180, 0, 0, 65),
                     ),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: <Widget>[
-                          /*
+                    child: panelGridView(),
 
-                              هي كانت مسان ال staff
-                               عملتها تعليق لانو لغاها
-                               وتركتها لانو في احتمال
-                               يطلبها ع ال Update
-
-                           */
-
-                          // Row(
-                          //   children: <Widget>[
-                          //     Container(
-                          //       padding: const EdgeInsets.all(13),
-                          //       child: ElevatedButton(
-                          //         onPressed: () {
-                          //           Navigator.of(context).push(
-                          //             MaterialPageRoute(
-                          //               builder: (_) => const AddNewStaff(),
-                          //             ),
-                          //           );
-                          //         },
-                          //         style: ElevatedButton.styleFrom(
-                          //           minimumSize: const Size(155, 155),
-                          //           primary:
-                          //           const Color.fromARGB(55, 100, 100, 255),
-                          //           shape: RoundedRectangleBorder(
-                          //             borderRadius: BorderRadius.circular(30),
-                          //           ),
-                          //           elevation: 15.0,
-                          //         ),
-                          //         child: Column(
-                          //           children: const <Widget>[
-                          //             Text(
-                          //               "Add",
-                          //               style: TextStyle(
-                          //                 fontSize: 24,
-                          //                 color: Colors.white,
-                          //               ),
-                          //             ),
-                          //             Text(
-                          //               "Staff",
-                          //               style: TextStyle(
-                          //                 fontSize: 24,
-                          //                 color: Colors.white,
-                          //               ),
-                          //             ),
-                          //           ],
-                          //         ),
-                          //       ),
-                          //     ),
-                          //     Container(
-                          //       padding: const EdgeInsets.all(13),
-                          //       child: ElevatedButton(
-                          //         onPressed: () {
-                          //           Navigator.of(context).push(
-                          //             MaterialPageRoute(
-                          //               builder: (_) => const DeleteStaff(),
-                          //             ),
-                          //           );
-                          //         },
-                          //         style: ElevatedButton.styleFrom(
-                          //           minimumSize: const Size(155, 155),
-                          //           primary:
-                          //           const Color.fromARGB(55, 100, 100, 255),
-                          //           shape: RoundedRectangleBorder(
-                          //             borderRadius: BorderRadius.circular(30),
-                          //           ),
-                          //           elevation: 15.0,
-                          //         ),
-                          //         child: Column(
-                          //           children: const <Widget>[
-                          //             Text(
-                          //               "Delete",
-                          //               style: TextStyle(
-                          //                 fontSize: 24,
-                          //                 color: Colors.white,
-                          //               ),
-                          //             ),
-                          //             Text(
-                          //               "Staff",
-                          //               style: TextStyle(
-                          //                 fontSize: 24,
-                          //                 color: Colors.white,
-                          //               ),
-                          //             ),
-                          //           ],
-                          //         ),
-                          //       ),
-                          //     ),
-                          //   ],
-                          // ),
-                          Row(
-                            children: <Widget>[
-                              Container(
-                                padding: const EdgeInsets.all(13),
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (_) => const AddNewService(),
-                                      ),
-                                    );
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    minimumSize: const Size(155, 155),
-                                    primary:
-                                        const Color.fromARGB(55, 100, 100, 255),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                    elevation: 15.0,
-                                  ),
-                                  child: Column(
-                                    children: const <Widget>[
-                                      Text(
-                                        "Add",
-                                        style: TextStyle(
-                                          fontSize: 24,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                      Text(
-                                        "Service",
-                                        style: TextStyle(
-                                          fontSize: 24,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                padding: const EdgeInsets.all(13),
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (_) => const DeleteService(),
-                                      ),
-                                    );
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    minimumSize: const Size(155, 155),
-                                    primary:
-                                        const Color.fromARGB(55, 100, 100, 255),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                    elevation: 15.0,
-                                  ),
-                                  child: Column(
-                                    children: const <Widget>[
-                                      Text(
-                                        "Delete",
-                                        style: TextStyle(
-                                          fontSize: 24,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                      Text(
-                                        "Service",
-                                        style: TextStyle(
-                                          fontSize: 24,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: <Widget>[
-                              Container(
-                                padding: const EdgeInsets.all(13),
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (_) => const BlockService(),
-                                      ),
-                                    );
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    minimumSize: const Size(155, 155),
-                                    primary:
-                                    const Color.fromARGB(55, 100, 100, 255),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                    elevation: 15.0,
-                                  ),
-                                  child: Column(
-                                    children: const <Widget>[
-                                      Text(
-                                        "Block",
-                                        style: TextStyle(
-                                          fontSize: 24,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                      Text(
-                                        "Service",
-                                        style: TextStyle(
-                                          fontSize: 24,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                padding: const EdgeInsets.all(13),
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (_) => const UnBlockService(),
-                                      ),
-                                    );
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    minimumSize: const Size(155, 155),
-                                    primary:
-                                    const Color.fromARGB(55, 100, 100, 255),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                    elevation: 15.0,
-                                  ),
-                                  child: Column(
-                                    children: const <Widget>[
-                                      Text(
-                                        "Un Block",
-                                        style: TextStyle(
-                                          fontSize: 24,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                      Text(
-                                        "Service",
-                                        style: TextStyle(
-                                          fontSize: 24,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: <Widget>[
-                              Container(
-                                padding: const EdgeInsets.all(13),
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (_) => const AddNewAdmin(),
-                                      ),
-                                    );
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    minimumSize: const Size(155, 155),
-                                    primary:
-                                    const Color.fromARGB(55, 100, 100, 255),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                    elevation: 15.0,
-                                  ),
-                                  child: Column(
-                                    children: const <Widget>[
-                                      Text(
-                                        "Add",
-                                        style: TextStyle(
-                                          fontSize: 24,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                      Text(
-                                        "Admin",
-                                        style: TextStyle(
-                                          fontSize: 24,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                padding: const EdgeInsets.all(13),
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (_) => const RemoveAdmin(),
-                                      ),
-                                    );
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    minimumSize: const Size(155, 155),
-                                    primary:
-                                    const Color.fromARGB(55, 100, 100, 255),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                    elevation: 15.0,
-                                  ),
-                                  child: Column(
-                                    children: const <Widget>[
-                                      Text(
-                                        "Remove",
-                                        style: TextStyle(
-                                          fontSize: 24,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                      Text(
-                                        "Admin",
-                                        style: TextStyle(
-                                          fontSize: 24,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: <Widget>[
-                              Container(
-                                padding: const EdgeInsets.all(13),
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (_) => const ServiceCalender(),
-                                      ),
-                                    );
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    minimumSize: const Size(155, 155),
-                                    primary:
-                                    const Color.fromARGB(55, 100, 100, 255),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                    elevation: 15.0,
-                                  ),
-                                  child: Column(
-                                    children: const <Widget>[
-                                      Text(
-                                        "Service",
-                                        style: TextStyle(
-                                          fontSize: 24,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                      Text(
-                                        "calender",
-                                        style: TextStyle(
-                                          fontSize: 24,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              /*
-
-                                    هي مشان ينقل ع واجهة add Admin
-                                    هلا ما بدنا اياها
-                                    لانو رح نضيفها ع التحديث
-
-                               */
-                              // Container(
-                              //   padding: const EdgeInsets.all(13),
-                              //   child: ElevatedButton(
-                              //     onPressed: () {
-                              //       Navigator.of(context).push(
-                              //         MaterialPageRoute(
-                              //           builder: (_) => const AddNewAdmin(),
-                              //         ),
-                              //       );
-                              //     },
-                              //     style: ElevatedButton.styleFrom(
-                              //       minimumSize: const Size(155, 155),
-                              //       primary:
-                              //       const Color.fromARGB(55, 100, 100, 255),
-                              //       shape: RoundedRectangleBorder(
-                              //         borderRadius: BorderRadius.circular(30),
-                              //       ),
-                              //       elevation: 15.0,
-                              //     ),
-                              //     child: Column(
-                              //       children: const <Widget>[
-                              //         Text(
-                              //           "Add",
-                              //           style: TextStyle(
-                              //             fontSize: 24,
-                              //             color: Colors.white,
-                              //           ),
-                              //         ),
-                              //         Text(
-                              //           "Admin",
-                              //           style: TextStyle(
-                              //             fontSize: 24,
-                              //             color: Colors.white,
-                              //           ),
-                              //         ),
-                              //       ],
-                              //     ),
-                              //   ),
-                              // ),
-
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
                   ),
                 ),
               ],
@@ -528,4 +103,35 @@ class _AdminControlPanelState extends State<AdminControlPanel> {
       ),
     );
   }
+
+  Widget panelGridView() {
+    final controlPanelButtonsList = [
+      buttonForControlPanel(context, const AddNewService(), "Add", "service"),
+      buttonForControlPanel(
+          context, const DeleteService(), "Delete", "service"),
+      buttonForControlPanel(context, const BlockService(), "Block", "service"),
+      buttonForControlPanel(
+          context, const UnBlockService(), "UnBlock", "service"),
+      buttonForControlPanel(context, const AddNewAdmin(), "Add", "Admin"),
+      buttonForControlPanel(context, const RemoveAdmin(), "Delete", "Admin"),
+      buttonForControlPanel(
+          context, const ServiceCalender(), "Services", "Calendar"),
+    ];
+    return GridView.builder(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+      ),
+      itemBuilder: (context, index) {
+        final currentButton = controlPanelButtonsList[index];
+        return buildButton(currentButton);
+      },
+      itemCount: 7,
+    );
+  }
+
+  Widget buildButton(currentButton) => GridTile(
+    child: Center(
+      child: currentButton,
+    ),
+  );
 }

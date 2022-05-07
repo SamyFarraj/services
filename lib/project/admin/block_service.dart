@@ -105,7 +105,7 @@ class _BlockServiceState extends State<BlockService> {
                       child: Column(
                         children: <Widget>[
                           SizedBox(
-                            width: 220,
+                            width: MediaQuery.of(context).size.width * 0.7,
                             child: DropdownButtonFormField<String>(
                               decoration: InputDecoration(
                                 enabledBorder: UnderlineInputBorder(
@@ -120,24 +120,29 @@ class _BlockServiceState extends State<BlockService> {
                               items: selectStreet
                                   .map(
                                     (street) => DropdownMenuItem<String>(
-                                  value: street.title,
-                                  child: Text(
-                                    street.title,
-                                    style: const TextStyle(
-                                      fontSize: 22,
-                                      color: Colors.blue,
+                                      value: street.title,
+                                      child: Text(
+                                        street.title,
+                                        style: const TextStyle(
+                                          fontSize: 22,
+                                          color: Colors.blue,
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
-                              )
+                                  )
                                   .toList(),
-                              onChanged: (street) => setState(() {
-                                selectedStreet = street;
-                              }),
+                              onChanged: (street) => setState(
+                                () {
+                                  selectedStreet = street;
+                                },
+                              ),
                             ),
                           ),
                           SizedBox(
-                            width: 220,
+                            height: MediaQuery.of(context).size.height * 0.15,
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.7,
                             child: DropdownButtonFormField<String>(
                               decoration: InputDecoration(
                                 enabledBorder: UnderlineInputBorder(
@@ -152,16 +157,16 @@ class _BlockServiceState extends State<BlockService> {
                               items: servicesList
                                   .map(
                                     (service) => DropdownMenuItem<String>(
-                                  value: service,
-                                  child: Text(
-                                    service,
-                                    style: const TextStyle(
-                                      fontSize: 22,
-                                      color: Colors.blue,
+                                      value: service,
+                                      child: Text(
+                                        service,
+                                        style: const TextStyle(
+                                          fontSize: 22,
+                                          color: Colors.blue,
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
-                              )
+                                  )
                                   .toList(),
                               onChanged: (service) => setState(() {
                                 selectedService = service!;
@@ -169,7 +174,7 @@ class _BlockServiceState extends State<BlockService> {
                             ),
                           ),
                           SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.1,
+                            height: MediaQuery.of(context).size.height * 0.15,
                           ),
                           ElevatedButton(
                             onPressed: () {
@@ -180,7 +185,7 @@ class _BlockServiceState extends State<BlockService> {
                               padding: EdgeInsets.symmetric(
                                 vertical: 5.0,
                                 horizontal:
-                                MediaQuery.of(context).size.width * 0.2,
+                                    MediaQuery.of(context).size.width * 0.2,
                               ),
                               primary: const Color.fromARGB(255, 150, 10, 10),
                               shape: RoundedRectangleBorder(
@@ -210,11 +215,11 @@ class _BlockServiceState extends State<BlockService> {
   }
 
   bool checkServiceBlock(String selectedService) {
-    if(selectedStreet == "Select Street"){
-      snackBar(context, 'Please Select Street' , const Color.fromARGB(255, 150, 10, 10));
+    if (selectedStreet == "Select Street") {
+      snackBar(context, 'Please Select Street',
+          const Color.fromARGB(255, 150, 10, 10));
       return false;
-    }
-    else if (selectedService == 'Select Service') {
+    } else if (selectedService == 'Select Service') {
       snackBar(context, "Please Select Service",
           const Color.fromARGB(255, 150, 10, 10));
       return false;
