@@ -18,6 +18,7 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
 
   @override
   Widget build(BuildContext context) {
+    var numbers;
     return Scaffold(
       extendBody: true,
       extendBodyBehindAppBar: true,
@@ -90,7 +91,8 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
                         controller: verificationCodeController,
                         decoration: const InputDecoration(
                           prefixIcon: Icon(
-                            Icons.numbers,
+                            //هون انا عدلت تعديل  بالايقونة
+                            Icons.ten_k,
                             color: Colors.deepOrange,
                           ),
                           label: Text(

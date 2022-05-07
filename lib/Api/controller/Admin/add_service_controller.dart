@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:project_mohammad/project/constant.dart';
 
-import 'login_controller.dart';
+import '../login_controller.dart';
 class Add_sercive_Admin
 {
   Future<String> Add_Servicee(String name,String Street) async {

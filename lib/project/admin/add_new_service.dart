@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project_mohammad/Api/controller/add_service_controller.dart';
+import 'package:project_mohammad/Api/controller/Admin/add_service_controller.dart';
 import 'package:project_mohammad/services/choices.dart';
 
 class AddNewService extends StatefulWidget {

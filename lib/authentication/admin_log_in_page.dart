@@ -94,8 +94,7 @@ class _LogInPageState extends State<LogInPage> {
                       // هاد ال حقل الخاص ب ال email
                       TextFormField(
                         validator: (enteredEmailVal) =>
-                        enteredEmailVal != null &&
-                            !EmailValidator.validate(enteredEmailVal)
+                        enteredEmailVal != null && !EmailValidator.validate(enteredEmailVal)
                             ? "Please Enter a Valid E-Mail"
                             : null,
                         keyboardType: TextInputType.emailAddress,

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../project/home/requests.dart';
-import 'choices.dart';
-import 'requests_statue.dart';
-import 'staff.dart';
+import '../services/choices.dart';
+import '../services/requests_statue.dart';
+import '../services/staff.dart';
 
 class ServiceInformationInput extends StatefulWidget {
   final String gateName;
