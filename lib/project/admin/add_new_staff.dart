@@ -113,6 +113,14 @@ class _AddNewStaffState extends State<AddNewStaff> {
                               ),
                             ),
                             SizedBox(height: MediaQuery.of(context).size.height * 0.08,),
+                            // buttonOfManageServices(
+                            //   context,
+                            //   () {
+                            //     checkNewStaff( staffNameController.text );
+                            //   },
+                            //   "Add Staff",
+                            //   const Color.fromARGB(255, 10, 150, 10),
+                            // ),
                             ElevatedButton(
                               onPressed: () {
                                 checkNewStaff( staffNameController.text );

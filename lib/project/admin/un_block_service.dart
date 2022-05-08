@@ -140,6 +140,14 @@ class _UnBlockServiceState extends State<UnBlockService> {
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.4,
                           ),
+                          // buttonOfManageServices(
+                          //   context,
+                          //   () {
+                          //     // checkServiceBlock(selectedService);
+                          //   },
+                          //   "UnBlock Service",
+                          //   const Color.fromARGB(255, 10, 150, 10),
+                          // ),
                           ElevatedButton(
                             onPressed: () {
                               // checkServiceBlock(selectedService);

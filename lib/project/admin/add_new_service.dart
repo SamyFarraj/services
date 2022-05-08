@@ -165,6 +165,18 @@ final Streetname=TextEditingController();
                             SizedBox(
                               height: MediaQuery.of(context).size.height * 0.15,
                             ),
+                            // buttonOfManageServices(
+                            //   context,
+                            //   () {
+                            //      setState(() {
+                            //
+                            //            checkNewService(selectedStreet!, serviceNameController.text);
+                            //            Add_sercive_Admin().Add_Servicee(serviceNameController.text, Streetname.text);
+                            //      });
+                            //   },
+                            //   "Add Service",
+                            //   const Color.fromARGB(255, 10, 150, 10),
+                            // ),
                             ElevatedButton(
                               onPressed: () {
                                 setState(() {

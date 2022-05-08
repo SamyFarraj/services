@@ -1,4 +1,4 @@
-import 'package:email_validator/email_validator.dart';
+// import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:project_mohammad/Api/controller/login_controller.dart';
 
@@ -93,10 +93,10 @@ class _LogInPageState extends State<LogInPage> {
                       ),
                       // هاد ال حقل الخاص ب ال email
                       TextFormField(
-                        validator: (enteredEmailVal) =>
-                        enteredEmailVal != null && !EmailValidator.validate(enteredEmailVal)
-                            ? "Please Enter a Valid E-Mail"
-                            : null,
+                        // validator: (enteredEmailVal) =>
+                        // enteredEmailVal != null && !EmailValidator.validate(enteredEmailVal)
+                        //     ? "Please Enter a Valid E-Mail"
+                        //     : null,
                         keyboardType: TextInputType.emailAddress,
                         controller: adminEmailController,
                         decoration: const InputDecoration(

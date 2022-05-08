@@ -333,6 +333,19 @@ print(response.statusCode);
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.1,
                           ),
+                          // buttonOfManageServices(
+                          //   context,
+                          //   () {
+                          //      //  fetch();
+                          //      //fetchfinall();
+                          //      // FetchList();
+                          //      // print("samyyyy${fetchfinall()} ");
+                          //      checkServiceDelete(selectedService);
+                          //      // print(finallServicelist);
+                          //    },
+                          //   "Delete Service",
+                          //   const Color.fromARGB(255, 150, 10, 10),
+                          // ),
                           ElevatedButton(
                             onPressed: () {
                             //  fetch();

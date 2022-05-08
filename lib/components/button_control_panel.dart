@@ -53,13 +53,12 @@ Widget buttonForControlPanel(
 
 Widget buttonOfManageServices(
   BuildContext context,
-  Function onPressedFunction,
-  String selectedService,
+  onPressedFunction,
   String buttonLabel,
   Color buttonColor,
 ) {
   return ElevatedButton(
-    onPressed: onPressedFunction(selectedService),
+    onPressed: onPressedFunction,
     style: ElevatedButton.styleFrom(
       minimumSize: const Size(300, 60),
       padding: EdgeInsets.symmetric(

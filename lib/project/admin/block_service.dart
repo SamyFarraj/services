@@ -176,6 +176,14 @@ class _BlockServiceState extends State<BlockService> {
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.15,
                           ),
+                          // buttonOfManageServices(
+                          //   context,
+                          //   () {
+                          //     checkServiceBlock(selectedService);
+                          //   },
+                          //   "Block Service",
+                          //   const Color.fromARGB(255, 150, 10, 10),
+                          // ),
                           ElevatedButton(
                             onPressed: () {
                               checkServiceBlock(selectedService);

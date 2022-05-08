@@ -123,6 +123,14 @@ class _DeleteStaffState extends State<DeleteStaff> {
                               ),
                             ),
                             SizedBox(height: MediaQuery.of(context).size.height * 0.1,),
+                            // buttonOfManageServices(
+                            //   context,
+                            //   () {
+                            //     checkStaffDelete(selectedStaff!);
+                            //   },
+                            //   "Delete Staff",
+                            //   const Color.fromARGB(255, 150, 10, 10),
+                            // ),
                             ElevatedButton(
                               onPressed: () {
                                 checkStaffDelete(selectedStaff!);

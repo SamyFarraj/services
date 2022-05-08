@@ -121,6 +121,14 @@ class _RemoveAdminState extends State<RemoveAdmin> {
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.1,
                           ),
+                          // buttonOfManageServices(
+                          //   context,
+                          //   () {
+                          //     checkAdminDelete(selectedAdmin!);
+                          //   },
+                          //   "Remove Admin",
+                          //   const Color.fromARGB(255, 150, 10, 10),
+                          // ),
                           ElevatedButton(
                             onPressed: () {
                               checkAdminDelete(selectedAdmin!);
