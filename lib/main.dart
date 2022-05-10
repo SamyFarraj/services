@@ -3,6 +3,7 @@ import 'package:project_mohammad/authentication/log_in_page.dart';
 import 'package:project_mohammad/services/change_passowrd_page.dart';
 import 'package:project_mohammad/services/edit_account_info.dart';
 
+import 'authentication/verfication_code_page.dart';
 import 'project/admin/add_new_admin.dart';
 import 'project/admin/delete_service.dart';
 import 'project/projects_page.dart';
@@ -49,5 +50,5 @@ class _MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<_MyHomePage> {
   @override
   // Widget build(BuildContext context) => const DeleteService();
-  Widget build(BuildContext context) => const LogInPage();
+  Widget build(BuildContext context) => const VerificationCodePage();
 }

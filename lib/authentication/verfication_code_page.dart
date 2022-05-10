@@ -12,13 +12,24 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
   // مشان ال textField
   final verificationCodeController = TextEditingController();
   String correctVerificationCode = "123456";
-
+  bool buttonStatus = false;
   //متغير ل تحديد طهور ال password
   bool passwordVisibility = true;
-
+  @override
+  void initState() {
+    verificationCodeController.addListener(() {
+      bool isButtonActivate = verificationCodeController.text.length >= 6;
+      setState(()=> buttonStatus = isButtonActivate);
+    });
+    super.initState();
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
-    var numbers;
     return Scaffold(
       extendBody: true,
       extendBodyBehindAppBar: true,
@@ -123,21 +134,22 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.2,
                       ),
-
                       //  هي كبسة ال Submit
                       // جوا ال onPressed منحط ال استدعاء تابع
                       // مقارنة الكود اللي اجا من ال database
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.7,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: buttonStatus ? (){} : null,
                           style: ElevatedButton.styleFrom(
+                            onSurface: Colors.grey,
                             padding: EdgeInsets.symmetric(
                               vertical: 10.0,
                               horizontal:
                               MediaQuery.of(context).size.width * 0.21,
                             ),
                             primary: const Color.fromARGB(255, 10, 150, 10),
+
                             elevation: 15.0,
                           ),
                           child: Row(
