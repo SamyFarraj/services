@@ -2,14 +2,16 @@
 import 'package:flutter/material.dart';
 import 'package:project_mohammad/Api/controller/login_controller.dart';
 
-class LogInPage extends StatefulWidget {
-  const LogInPage({Key? key}) : super(key: key);
+import '../components/buttons.dart';
+
+class AdminLogInPage extends StatefulWidget {
+  const AdminLogInPage({Key? key}) : super(key: key);
 
   @override
-  State<LogInPage> createState() => _LogInPageState();
+  State<AdminLogInPage> createState() => _AdminLogInPageState();
 }
 
-class _LogInPageState extends State<LogInPage> {
+class _AdminLogInPageState extends State<AdminLogInPage> {
   // هدول ال controller
   // مشان ال textFields
 
@@ -185,6 +187,13 @@ class _LogInPageState extends State<LogInPage> {
                       ),
                       //  هي كبسة ال login
                       // جوا ال onPressed منحط ال استدعاء تابع ارسال البيانات لل database
+                      // buttonsOfAuthentication(context ,"login" ,(){
+                      //   final adminLoginFormKeyCurrent = adminLoginFormKey.currentState!;
+                      //   //         if(adminLoginFormKeyCurrent.validate()){
+                      //   //           // تابع ارسال البيانات
+                      //   //            print("Test Request SignUp m");
+                      //   //         }
+                      // }),
                       ElevatedButton(
                         onPressed: () {
                           /*

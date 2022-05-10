@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project_mohammad/project/admin/add_new_admin.dart';
 import 'package:project_mohammad/project/admin/remove_admin.dart';
 
-import '../../components/button_control_panel.dart';
+import '../../components/buttons.dart';
 import 'add_new_service.dart';
 import 'block_service.dart';
 import 'delete_service.dart';
@@ -106,15 +106,15 @@ class _AdminControlPanelState extends State<AdminControlPanel> {
 
   Widget panelGridView() {
     final controlPanelButtonsList = [
-      buttonForControlPanel(context, const AddNewService(), "Add", "service"),
-      buttonForControlPanel(
+      buttonsOfControlPanel(context, const AddNewService(), "Add", "service"),
+      buttonsOfControlPanel(
           context, const DeleteService(), "Delete", "service"),
-      buttonForControlPanel(context, const BlockService(), "Block", "service"),
-      buttonForControlPanel(
+      buttonsOfControlPanel(context, const BlockService(), "Block", "service"),
+      buttonsOfControlPanel(
           context, const UnBlockService(), "UnBlock", "service"),
-      buttonForControlPanel(context, const AddNewAdmin(), "Add", "Admin"),
-      buttonForControlPanel(context, const RemoveAdmin(), "Delete", "Admin"),
-      buttonForControlPanel(
+      buttonsOfControlPanel(context, const AddNewAdmin(), "Add", "Admin"),
+      buttonsOfControlPanel(context, const RemoveAdmin(), "Delete", "Admin"),
+      buttonsOfControlPanel(
           context, const ServiceCalender(), "Services", "Calendar"),
     ];
     return GridView.builder(

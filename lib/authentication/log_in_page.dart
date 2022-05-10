@@ -1,4 +1,5 @@
-// import 'package:email_validator/email_validator.dart';
+
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:project_mohammad/Api/controller/login_controller.dart';
 
@@ -94,11 +95,11 @@ class _LogInPageState extends State<LogInPage> {
                         ),
                         // هاد ال حقل الخاص ب ال email
                         TextFormField(
-                          // validator: (enteredEmailVal) =>
-                          // enteredEmailVal != null &&
-                          //     !EmailValidator.validate(enteredEmailVal)
-                          //     ? "Please Enter a Valid E-Mail"
-                          //     : null,
+                          validator: (enteredEmailVal) =>
+                          enteredEmailVal != null &&
+                              !EmailValidator.validate(enteredEmailVal)
+                              ? "Please Enter a Valid E-Mail"
+                              : null,
                           keyboardType: TextInputType.emailAddress,
                           controller: emailController,
                           decoration: const InputDecoration(
@@ -185,6 +186,20 @@ class _LogInPageState extends State<LogInPage> {
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.2,
                         ),
+                        //هاد الزر اخر شي مننقل كلشي جوا ال on pressed
+                        // buttonsOfAuthentication(context, 'Login', (){
+                        //   //هون لازم نضيف ال validator
+                        //   //     // حاليا رح اتركو بتعليق مشات
+                        //   //     // ما يعذبك وقت التجريب اخر شي بزبطو
+                        //   //
+                        //        final LoginFormKeyCurrent = LoginFormKey.currentState!;
+                        //         if(LoginFormKeyCurrent.validate()){
+                        //           // تابع ارسال البيانات
+                        //            print("Test Request SignUp m");
+                        //         }
+                        //
+                        //
+                        // }),
                         GestureDetector(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,

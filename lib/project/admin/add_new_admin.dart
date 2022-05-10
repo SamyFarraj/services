@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_mohammad/services/choices.dart';
 
-// import '../../components/button_control_panel.dart';
+// import '../../components/buttons.dart';
 
 class AddNewAdmin extends StatefulWidget {
   const AddNewAdmin({Key? key}) : super(key: key);

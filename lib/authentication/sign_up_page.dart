@@ -1,6 +1,6 @@
-// import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:project_mohammad/Api/controller/signup_contrller.dart';
+import 'package:project_mohammad/components/buttons.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -25,7 +25,7 @@ class _SignUpPageState extends State<SignUpPage> {
   //هاد ل إعادة رقم ال هاتف
   final phoneController = TextEditingController();
   //هاد ال key مسان ال validation
-  final signupFormKey = GlobalKey<FormState>();
+  final signUpFormKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +67,7 @@ class _SignUpPageState extends State<SignUpPage> {
           // ما يعطي pixels rendered out error
           // يعني مشات  ما تطلع ال pixels  من الشاشة
           Form(
-            key: signupFormKey,
+            key: signUpFormKey,
             child: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
@@ -88,14 +88,14 @@ class _SignUpPageState extends State<SignUpPage> {
                   Container(
                     padding: const EdgeInsets.all(10),
                     width: MediaQuery.of(context).size.width * 0.9,
-                    height: MediaQuery.of(context).size.height * 0.65,
+                    height: MediaQuery.of(context).size.height * 0.67,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(35),
                         color: const Color.fromARGB(180, 0, 0, 65)),
                     child: Column(
                       children: <Widget>[
                         SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.03,
+                          height: MediaQuery.of(context).size.height * 0.02,
                         ),
                         // هاد ال حقل الخاص ب الاسم
                         TextFormField(
@@ -135,15 +135,11 @@ class _SignUpPageState extends State<SignUpPage> {
                           ),
                         ),
                         SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.01,
+                          height: MediaQuery.of(context).size.height * 0.005,
                         ),
                         // هاد ال حقل الخاص ب ال email
                         TextFormField(
-                          // validator: (enteredEmailVal) =>
-                          // enteredEmailVal != null &&
-                          //     !EmailValidator.validate(enteredEmailVal)
-                          //     ? "Please Enter a Valid E-Mail"
-                          //     : null,
+
                           keyboardType: TextInputType.emailAddress,
                           controller: emailController,
                           decoration: const InputDecoration(
@@ -177,7 +173,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           ),
                         ),
                         SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.01,
+                          height: MediaQuery.of(context).size.height * 0.005,
                         ),
                         // هاد ال حقل الخاص ب ال password
                         TextFormField(
@@ -229,7 +225,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           ),
                         ),
                         SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.01,
+                          height: MediaQuery.of(context).size.height * 0.005,
                         ),
                         // هاد ال حقل الخاص ب اعادة ال password
                         TextFormField(
@@ -281,7 +277,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           ),
                         ),
                         SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.01,
+                          height: MediaQuery.of(context).size.height * 0.005,
                         ),
                         // هاد ال حقل الخاص ب رقم الهاتف
                         TextFormField(
@@ -322,10 +318,25 @@ class _SignUpPageState extends State<SignUpPage> {
                           ),
                         ),
                         SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.1,
+                          height: MediaQuery.of(context).size.height * 0.05,
                         ),
+                        //هاد الزر اخر شي مننقل كلشي جوا ال on pressed
+                        // buttonsOfAuthentication(context, 'Sign Up', (){
+                        //   //هون لازم نضيف ال validator
+                        //   //     // حاليا رح اتركو بتعليق مشات
+                        //   //     // ما يعذبك وقت التجريب اخر شي بزبطو
+                        //   //
+                        //        final signupFormKeyCurrent = signUpFormKey.currentState!;
+                        //         if(signupFormKeyCurrent.validate()){
+                        //           // تابع ارسال البيانات
+                        //            print("Test Request SignUp m");
+                        //         }
+                        //
+                        //
+                        // }),
                         //  هي كبسة ال signUp
                         // جوا ال onPressed منحط ال استدعاء تابع ارسال البيانات لل database
+
                         ElevatedButton(
                           onPressed: () {
                             //هون لازم نضيف ال validator

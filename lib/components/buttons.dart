@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget buttonForControlPanel(
+Widget buttonsOfControlPanel(
   BuildContext context,
   pageName,
   String firstWord,
@@ -51,7 +51,7 @@ Widget buttonForControlPanel(
   );
 }
 
-Widget buttonOfManageServices(
+Widget buttonsOfManageServices(
   BuildContext context,
   onPressedFunction,
   String buttonLabel,
@@ -77,6 +77,44 @@ Widget buttonOfManageServices(
         fontSize: 24,
         color: Colors.white,
       ),
+    ),
+  );
+}
+
+Widget buttonsOfAuthentication(
+    BuildContext context,
+    String buttonName,
+    onPressed,
+    ){
+  return  ElevatedButton(
+    onPressed: onPressed,
+    style: ElevatedButton.styleFrom(
+      padding: EdgeInsets.symmetric(
+        vertical: 5.0,
+        horizontal:
+        MediaQuery.of(context).size.width * 0.25,
+      ),
+      primary: Colors.blue,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(30),
+      ),
+      elevation: 15.0,
+    ),
+    child:  Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        const Icon(
+          Icons.lock_open_rounded,
+          color: Colors.white,
+        ),
+        Text(
+          buttonName,
+          style: const TextStyle(
+            fontSize: 24,
+            color: Colors.white,
+          ),
+        ),
+      ],
     ),
   );
 }

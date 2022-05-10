@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_mohammad/authentication/log_in_page.dart';
 import 'package:project_mohammad/services/change_passowrd_page.dart';
 import 'package:project_mohammad/services/edit_account_info.dart';
 
@@ -48,5 +49,5 @@ class _MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<_MyHomePage> {
   @override
   // Widget build(BuildContext context) => const DeleteService();
-  Widget build(BuildContext context) => const EditAccountInfo();
+  Widget build(BuildContext context) => const LogInPage();
 }
