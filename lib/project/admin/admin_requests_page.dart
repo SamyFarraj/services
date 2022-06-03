@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_mohammad/components/dash_board.dart';
 
 import '../../services/requests_statue.dart';
 import '../home/requests.dart';
@@ -30,6 +31,7 @@ class _AdminRequestsPageState extends State<AdminRequestsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const DashBoard(),
       extendBody: true,
       extendBodyBehindAppBar: true,
       appBar: AppBar(

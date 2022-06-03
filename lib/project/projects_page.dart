@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'home/screen_chooser.dart';
+import 'screen_chooser.dart';
 bool admin = false;
 class ProjectsPage extends StatefulWidget {
   const ProjectsPage({Key? key}) : super(key: key);
@@ -15,6 +15,9 @@ class _ProjectsPageState extends State<ProjectsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // drawer: const Drawer(
+      //   backgroundColor: Color.fromARGB(150, 0, 0, 65),
+      // ),
       extendBody: true,
       extendBodyBehindAppBar: true,
       appBar: AppBar(

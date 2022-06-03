@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_mohammad/authentication/verfication_code_page.dart';
 
 
 class ChangePasswordPage extends StatefulWidget {
@@ -22,7 +23,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
-          "Edit Info",
+          "Change Password",
           style: TextStyle(
             fontSize: 36,
             fontWeight: FontWeight.bold,
@@ -193,6 +194,13 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                             final changePasswordFormKey = editingPasswordFormKey.currentState!;
                             if(changePasswordFormKey.validate()){
                               // تابع ارسال البيانات
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(builder: (_){
+                                    return const VerificationCodePage();
+                                  },
+                                  ),
+                              );
                             }
                           },
                           style: ElevatedButton.styleFrom(

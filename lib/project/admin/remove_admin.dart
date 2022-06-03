@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:project_mohammad/services/choices.dart';
 
+import '../../components/snack_bar.dart';
+
 class RemoveAdmin extends StatefulWidget {
   const RemoveAdmin({Key? key}) : super(key: key);
 
@@ -169,31 +171,13 @@ class _RemoveAdminState extends State<RemoveAdmin> {
 
   bool checkAdminDelete(String selectedAdmin) {
     if (selectedAdmin == 'Select Admin') {
-      snackBar(context, "Please Select Admin",
+      TheSnackBar(context, "Please Select Admin",
           const Color.fromARGB(255, 150, 10, 10));
       return false;
     } else {
-      snackBar(context, "Admin Deleted Successfully",
+      TheSnackBar(context, "Admin Deleted Successfully",
           const Color.fromARGB(255, 15, 150, 10));
       return true;
     }
-  }
-
-  void snackBar(
-      BuildContext context, String errorMessage, Color snackBarColor) {
-    final snackBar = SnackBar(
-      content: Text(
-        errorMessage,
-        style: const TextStyle(
-          fontSize: 28,
-          color: Colors.white,
-        ),
-      ),
-      backgroundColor: snackBarColor,
-      duration: const Duration(seconds: 1),
-    );
-    ScaffoldMessenger.of(context)
-      ..removeCurrentSnackBar()
-      ..showSnackBar(snackBar);
   }
 }

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:project_mohammad/Api/controller/Admin/add_service_controller.dart';
 import 'package:project_mohammad/services/choices.dart';
 
+import '../../components/snack_bar.dart';
+
 class AddNewService extends StatefulWidget {
   const AddNewService({Key? key}) : super(key: key);
 
@@ -221,36 +223,22 @@ final Streetname=TextEditingController();
   }
   bool checkNewService(String selectedStreet , String serviceName){
     if(selectedStreet == "Select Street"){
-      snackBar(context, 'Please Select Street' , const Color.fromARGB(255, 150, 10, 10));
+      TheSnackBar(context, 'Please Select Street' , const Color.fromARGB(255, 150, 10, 10),);
         return false;
     }
     else if(serviceName == ''){
-      snackBar(context, 'Please Enter Service Name',const Color.fromARGB(255, 150, 10, 10));
+      TheSnackBar(context, 'Please Enter Service Name' , const Color.fromARGB(255, 150, 10, 10),);
           return false;
     }
     else{
       for (var service in servicesList) {
         if(serviceName == service){
-          snackBar(context, 'Service Name Exited',const Color.fromARGB(255, 150, 10, 10));
+      TheSnackBar(context, 'Service Name Exited' , const Color.fromARGB(255, 150, 10, 10),);
           return false;
         }
       }
-      snackBar(context, "Service Add Successfully", const Color.fromARGB(255, 15, 150, 10));
+      TheSnackBar(context, 'Service Add Successfully' , const Color.fromARGB(255, 10, 150, 10),);
       return true;
     }
-  }
-  void snackBar(BuildContext context , String errorMessage , Color snackBarColor){
-    final snackBar = SnackBar(
-        content: Text(
-          errorMessage,
-          style: const TextStyle(
-            fontSize: 28,
-            color: Colors.white,
-          ),
-        ),
-      backgroundColor: snackBarColor,
-      duration: const Duration(seconds: 1),
-    );
-    ScaffoldMessenger.of(context)..removeCurrentSnackBar()..showSnackBar(snackBar);
   }
 }

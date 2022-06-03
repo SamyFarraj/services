@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../components/snack_bar.dart';
+
 class DeleteStaff extends StatefulWidget {
   const DeleteStaff({Key? key}) : super(key: key);
 
@@ -172,31 +174,13 @@ class _DeleteStaffState extends State<DeleteStaff> {
   }
   bool checkStaffDelete(String selectedService) {
     if (selectedService == 'Select Staff') {
-      snackBar(context, "Please Select Staff",
+      TheSnackBar(context, "Please Select Staff",
           const Color.fromARGB(255, 150, 10, 10));
       return false;
     } else {
-      snackBar(context, "Staff Deleted Successfully",
+      TheSnackBar(context, "Staff Deleted Successfully",
           const Color.fromARGB(255, 15, 150, 10));
       return true;
     }
-  }
-
-  void snackBar(
-      BuildContext context, String errorMessage, Color snackBarColor) {
-    final snackBar = SnackBar(
-      content: Text(
-        errorMessage,
-        style: const TextStyle(
-          fontSize: 28,
-          color: Colors.white,
-        ),
-      ),
-      backgroundColor: snackBarColor,
-      duration: const Duration(seconds: 1),
-    );
-    ScaffoldMessenger.of(context)
-      ..removeCurrentSnackBar()
-      ..showSnackBar(snackBar);
   }
 }

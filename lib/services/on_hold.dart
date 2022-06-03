@@ -1,4 +1,4 @@
-import 'package:project_mohammad/Api/service_info_input.dart';
+import 'package:project_mohammad/project/home/service_info_input.dart';
 import 'package:project_mohammad/services/staff.dart';
 import 'package:flutter/material.dart';
 
@@ -147,11 +147,11 @@ class _OnHoldState extends State<OnHold> {
     if (date == null) return;
     final time = await pickTime(context);
     if (time == null) return;
-    final length = await openTimeDialog(context);
-    if (length == null) return;
-    final staffChoose = await show_staff_list(context);
+    // final length = await openTimeDialog(context);
+    // if (length == null) return;
+    // final staffChoose = await show_staff_list(context);
     // ignore: unnecessary_null_comparison
-    if (staffChoose == null) return;
+    // if (staffChoose == null) return;
     final serviceTitle = await openServiceDialog(context);
     if (serviceTitle == null) return;
 
@@ -205,40 +205,40 @@ class _OnHoldState extends State<OnHold> {
     return newTime;
   }
 
-  Future<String?> openTimeDialog(BuildContext context) async => showDialog<String>(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text(
-            "Choose Time",
-            style: TextStyle(
-              fontSize: 22,
-              color: Colors.orange,
-            ),
-          ),
-          content: Row(
-            children: <Widget>[
-              DropdownButton<String>(
-                items: times.map(buildMenuItem).toList(),
-                value: timeValue,
-                onChanged: (value) => setState(
-                  () {
-                    timeValue = value;
-                    Navigator.of(context).pop(timeValue);
-                    // submit(double.parse(value!));
-                  },
-                ),
-              ),
-              const Text(
-                "hour/s",
-                style: TextStyle(
-                  fontSize: 24,
-                  color: Colors.orange,
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
+  // Future<String?> openTimeDialog(BuildContext context) async => showDialog<String>(
+  //       context: context,
+  //       builder: (context) => AlertDialog(
+  //         title: const Text(
+  //           "Choose Time",
+  //           style: TextStyle(
+  //             fontSize: 22,
+  //             color: Colors.orange,
+  //           ),
+  //         ),
+  //         content: Row(
+  //           children: <Widget>[
+  //             DropdownButton<String>(
+  //               items: times.map(buildMenuItem).toList(),
+  //               value: timeValue,
+  //               onChanged: (value) => setState(
+  //                 () {
+  //                   timeValue = value;
+  //                   Navigator.of(context).pop(timeValue);
+  //                   // submit(double.parse(value!));
+  //                 },
+  //               ),
+  //             ),
+  //             const Text(
+  //               "hour/s",
+  //               style: TextStyle(
+  //                 fontSize: 24,
+  //                 color: Colors.orange,
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //       ),
+  //     );
 
   // void submit(double time) {
   //   timeValue = '$time';
@@ -247,16 +247,16 @@ class _OnHoldState extends State<OnHold> {
   //   // return time;
   // }
 
-  final times = [
-    '0.5',
-    '1',
-    '1.5',
-    '2',
-    '2.5',
-    '3',
-    '3.5',
-    '4',
-  ];
+  // final times = [
+  //   '0.5',
+  //   '1',
+  //   '1.5',
+  //   '2',
+  //   '2.5',
+  //   '3',
+  //   '3.5',
+  //   '4',
+  // ];
   String? timeValue = "Not Assigned";
 
   DropdownMenuItem<String> buildMenuItem(String time) => DropdownMenuItem(
@@ -268,47 +268,47 @@ class _OnHoldState extends State<OnHold> {
       );
 
 
-  List<StaffCheckBox> staffList = [
-    StaffCheckBox(staff_name: "first"),
-    StaffCheckBox(staff_name: "second"),
-    StaffCheckBox(staff_name: "third"),
-    StaffCheckBox(staff_name: "forth"),
-    StaffCheckBox(staff_name: "fifth"),
-    StaffCheckBox(staff_name: "sixth"),
-  ];
+  // List<StaffCheckBox> staffList = [
+  //   StaffCheckBox(staff_name: "first"),
+  //   StaffCheckBox(staff_name: "second"),
+  //   StaffCheckBox(staff_name: "third"),
+  //   StaffCheckBox(staff_name: "forth"),
+  //   StaffCheckBox(staff_name: "fifth"),
+  //   StaffCheckBox(staff_name: "sixth"),
+  // ];
 
-  Widget assignStaff(StaffCheckBox staff) => CheckboxListTile(
-        controlAffinity: ListTileControlAffinity.leading,
-        activeColor: Colors.deepOrange,
-        title: Text(
-          staff.staff_name,
-          style: const TextStyle(
-            fontSize: 24,
-            color: Colors.white,
-          ),
-        ),
-        value: staff.isChecked,
-        onChanged: (value) => setState(() => staff.isChecked = value!),
-      );
+  // Widget assignStaff(StaffCheckBox staff) => CheckboxListTile(
+  //       controlAffinity: ListTileControlAffinity.leading,
+  //       activeColor: Colors.deepOrange,
+  //       title: Text(
+  //         staff.staff_name,
+  //         style: const TextStyle(
+  //           fontSize: 24,
+  //           color: Colors.white,
+  //         ),
+  //       ),
+  //       value: staff.isChecked,
+  //       onChanged: (value) => setState(() => staff.isChecked = value!),
+  //     );
 
   // ignore: non_constant_identifier_names
-  Future<Future> show_staff_list(BuildContext context) async => showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text(
-            "Assign Staff",
-            style: TextStyle(
-              fontSize: 28,
-              color: Colors.blue,
-            ),
-          ),
-          content: ListView(
-            children: <Widget>[
-              ...staffList.map(assignStaff).toList(),
-            ],
-          ),
-        ),
-      );
+  // Future<Future> show_staff_list(BuildContext context) async => showDialog(
+  //       context: context,
+  //       builder: (context) => AlertDialog(
+  //         title: const Text(
+  //           "Assign Staff",
+  //           style: TextStyle(
+  //             fontSize: 28,
+  //             color: Colors.blue,
+  //           ),
+  //         ),
+  //         content: ListView(
+  //           children: <Widget>[
+  //             ...staffList.map(assignStaff).toList(),
+  //           ],
+  //         ),
+  //       ),
+  //     );
 
 ////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////

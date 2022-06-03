@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:project_mohammad/services/choices.dart';
 import 'package:http/http.dart' as http;
 
+import '../../components/snack_bar.dart';
 import '../constant.dart';
 
 class UnBlockService extends StatefulWidget {
@@ -188,35 +189,17 @@ class _UnBlockServiceState extends State<UnBlockService> {
 
   bool checkServiceUnBlock(String selectedService) {
     if (selectedStreet == null) {
-      snackBar(context, 'Please Select Street',
+      TheSnackBar(context, 'Please Select Street',
           const Color.fromARGB(255, 150, 10, 10));
       return false;
     } else if (selectedService == 'Select Service') {
-      snackBar(context, "Please Select Service",
+      TheSnackBar(context, "Please Select Service",
           const Color.fromARGB(255, 150, 10, 10));
       return false;
     } else {
-      snackBar(context, "Service Blocked Successfully",
+      TheSnackBar(context, "Service Blocked Successfully",
           const Color.fromARGB(255, 15, 150, 10));
       return true;
     }
-  }
-
-  void snackBar(
-      BuildContext context, String errorMessage, Color snackBarColor) {
-    final snackBar = SnackBar(
-      content: Text(
-        errorMessage,
-        style: const TextStyle(
-          fontSize: 28,
-          color: Colors.white,
-        ),
-      ),
-      backgroundColor: snackBarColor,
-      duration: const Duration(seconds: 1),
-    );
-    ScaffoldMessenger.of(context)
-      ..removeCurrentSnackBar()
-      ..showSnackBar(snackBar);
   }
 }

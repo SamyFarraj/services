@@ -6,6 +6,8 @@ import 'package:project_mohammad/project/constant.dart';
 import 'package:project_mohammad/services/choices.dart';
 import 'package:http/http.dart' as http;
 
+import '../../components/snack_bar.dart';
+
 class DeleteService extends StatefulWidget {
   const DeleteService({Key? key}) : super(key: key);
 
@@ -391,35 +393,17 @@ print(response.statusCode);
 
   bool checkServiceDelete(String selectedService) {
     if (selectedStreet == null) {
-      snackBar(context, 'Please Select Street',
+      TheSnackBar(context, 'Please Select Street',
           const Color.fromARGB(255, 150, 10, 10));
       return false;
     } else if (selectedService == 'Select Service') {
-      snackBar(context, "Please Select Service",
+      TheSnackBar(context, "Please Select Service",
           const Color.fromARGB(255, 150, 10, 10));
       return false;
     } else {
-      snackBar(context, "Service Deleted Successfully",
+      TheSnackBar(context, "Service Deleted Successfully",
           const Color.fromARGB(255, 15, 150, 10));
       return true;
     }
-  }
-
-  void snackBar(
-      BuildContext context, String errorMessage, Color snackBarColor) {
-    final snackBar = SnackBar(
-      content: Text(
-        errorMessage,
-        style: const TextStyle(
-          fontSize: 28,
-          color: Colors.white,
-        ),
-      ),
-      backgroundColor: snackBarColor,
-      duration: const Duration(seconds: 1),
-    );
-    ScaffoldMessenger.of(context)
-      ..removeCurrentSnackBar()
-      ..showSnackBar(snackBar);
   }
 }

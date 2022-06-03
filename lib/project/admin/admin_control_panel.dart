@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_mohammad/components/dash_board.dart';
 import 'package:project_mohammad/project/admin/add_new_admin.dart';
 import 'package:project_mohammad/project/admin/remove_admin.dart';
 
@@ -26,6 +27,7 @@ class _AdminControlPanelState extends State<AdminControlPanel> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const DashBoard(),
       extendBody: true,
       extendBodyBehindAppBar: true,
       appBar: AppBar(

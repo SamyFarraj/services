@@ -6,6 +6,7 @@ class ContactUs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       extendBody: true,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
