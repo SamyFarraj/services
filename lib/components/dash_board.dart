@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:project_mohammad/project/dash_board_components/General/contact_us.dart';
-import 'package:project_mohammad/project/dash_board_components/Settings/account_settings.dart';
-import 'package:project_mohammad/project/dash_board_components/Settings/change_password_page.dart';
-import 'package:project_mohammad/project/dash_board_components/Settings/edit_account_info.dart';
+
+import '../project/home/dash_board_pages/General/contact_us.dart';
+import '../project/home/dash_board_pages/Settings/account_settings.dart';
+import '../project/home/dash_board_pages/Settings/change_password_page.dart';
+import '../project/home/dash_board_pages/Settings/edit_account_info.dart';
+
+
+
+
 
 final generalDashboardList = [
   "Contact Us",
