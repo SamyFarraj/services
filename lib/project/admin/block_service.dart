@@ -23,8 +23,7 @@ class _BlockServiceState extends State<BlockService> {
     final response = await http.get(
       Uri.parse('${base_Url}/api/Admin/BlockServices/${id}'),
       headers: {
-        'Authorization':
-        'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMzFkM2Y0NTJhMzU2YTI4M2Y4ZGQ5MGQ3NzgxYjU0ZmIyMzE0ZDVkNjBlNmI0YTM0YmNmZWFlMTJkNWRkODc1MzMxZTI3ZWZhOGQzMTM3NzYiLCJpYXQiOjE2NTEyMzQ3NDIuOTkxMTM0LCJuYmYiOjE2NTEyMzQ3NDIuOTkxMTU0LCJleHAiOjE2ODI3NzA3NDIuOTc4MjAxLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.ek1NrqJvLbvZvqQdDecQqUXgqKLef3-Ye7FG39soEesiHyk3DUlcGgIpYoHbHKCH6YBThrqb5PoDQx42DPqbY3cbK895PhKF-Js7gcy2_MEsqrNE8zVTa8yHMRbBNM2wYVaykkyvkz5acWwofqg7dGkXjvTDObilBGRQddOQEIdxwZ_9qIjtjn-_5pMPzhBChJbGddacGc0ryUFHF89MW107cJ4bsaDPhY_rSGTm9NBm3xilBHHFhwEWIcxevuw_bIs9ayuK6aYiaB3d6w-mLuJR9he8W8vTCbkVvqQOk5AnL_3hlKzQ86B8Ce5g-c01OMrkWsIuADFbVv-QgysQGy1zn_kyUwuYmJLiGKYcDtndcW-0ZpJXn-io0UyGdwYFahaofHH7xD_DyW_9kleOGN0BIjaV4GhhMLskb7TFAs2CquLn3E8mCuxKx7MQgWRL-GNL1QHMWuyFezjPWJnTCXJlv-fJQrKYAlwWTsN1UoTchzyolpPEeAEo5AiyH6WQgOyd2ZxaKHikBBu8vKtEE-zONIronEQWJRmauccYKjlpNW3CHoY63rDt2nnskC9FcI3OHX3p_3y8cy9l6wMab8aUBrXwRnebrSA-jAuv6jvHfakf_CelUcB1HnEFIIss5aXxlzYtoyQNUbaOPtW_xer26mZYC1uHcvMynzScejw'
+        'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMzFkM2Y0NTJhMzU2YTI4M2Y4ZGQ5MGQ3NzgxYjU0ZmIyMzE0ZDVkNjBlNmI0YTM0YmNmZWFlMTJkNWRkODc1MzMxZTI3ZWZhOGQzMTM3NzYiLCJpYXQiOjE2NTEyMzQ3NDIuOTkxMTM0LCJuYmYiOjE2NTEyMzQ3NDIuOTkxMTU0LCJleHAiOjE2ODI3NzA3NDIuOTc4MjAxLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.ek1NrqJvLbvZvqQdDecQqUXgqKLef3-Ye7FG39soEesiHyk3DUlcGgIpYoHbHKCH6YBThrqb5PoDQx42DPqbY3cbK895PhKF-Js7gcy2_MEsqrNE8zVTa8yHMRbBNM2wYVaykkyvkz5acWwofqg7dGkXjvTDObilBGRQddOQEIdxwZ_9qIjtjn-_5pMPzhBChJbGddacGc0ryUFHF89MW107cJ4bsaDPhY_rSGTm9NBm3xilBHHFhwEWIcxevuw_bIs9ayuK6aYiaB3d6w-mLuJR9he8W8vTCbkVvqQOk5AnL_3hlKzQ86B8Ce5g-c01OMrkWsIuADFbVv-QgysQGy1zn_kyUwuYmJLiGKYcDtndcW-0ZpJXn-io0UyGdwYFahaofHH7xD_DyW_9kleOGN0BIjaV4GhhMLskb7TFAs2CquLn3E8mCuxKx7MQgWRL-GNL1QHMWuyFezjPWJnTCXJlv-fJQrKYAlwWTsN1UoTchzyolpPEeAEo5AiyH6WQgOyd2ZxaKHikBBu8vKtEE-zONIronEQWJRmauccYKjlpNW3CHoY63rDt2nnskC9FcI3OHX3p_3y8cy9l6wMab8aUBrXwRnebrSA-jAuv6jvHfakf_CelUcB1HnEFIIss5aXxlzYtoyQNUbaOPtW_xer26mZYC1uHcvMynzScejw'
       },
     );
     if(response.statusCode==200)
@@ -150,9 +149,11 @@ class _BlockServiceState extends State<BlockService> {
                               print("step one ");
 
                               print("dkphhhhh");
-                              for(int i =0;i<snapshot.data!.services.woodWard.length;i++)
+
+                              servicefarmer.add('select service');
+                              for(int i =0;i<snapshot.data!.services.woodward.length;i++)
                               {
-                                servicewoodward.add(snapshot.data!.services.woodWard[i].name);
+                                servicewoodward.add(snapshot.data!.services.woodward[i].name);
                               }
                               //   print("the array = ${servicewoodward}");
 
@@ -167,7 +168,8 @@ class _BlockServiceState extends State<BlockService> {
                                   servicefarmer.add(snapshot.data!.services.farmer[i].name);
                                 }
                               }
-                              return Column(
+                              return
+                                Column(
                                 children: <Widget>[
 
 
@@ -245,8 +247,19 @@ class _BlockServiceState extends State<BlockService> {
                                             if(selectedStreet=='Farmer')
                                             {
 
-                                              servicesList = List.from(servicefarmer);
-                                              selectedService=servicesList[0];
+                                              if(servicefarmer.length==0)
+                                                {
+                                                  // servicefarmer.add('');
+                                                  servicesList = List.from(servicefarmer);
+                                              //    servicesList.add('selecet serveics');
+
+                                                }
+                                              else {
+                                                servicesList =
+                                                    List.from(servicefarmer);
+                                                selectedService =
+                                                servicesList[0];
+                                              }
                                             }
 
                                             if(selectedStreet=='WoodWard')
@@ -301,11 +314,11 @@ class _BlockServiceState extends State<BlockService> {
                                         print("the selecteddd ${selectedService}");
                                         print("dkphhhhh");
                                         if(selectedStreet=='WoodWard')
-                                          for(int i =0;i<snapshot.data!.services.woodWard.length;i++)
+                                          for(int i =0;i<snapshot.data!.services.woodward.length;i++)
                                           {
-                                            if(selectedService==snapshot.data!.services.woodWard[i].name)
+                                            if(selectedService==snapshot.data!.services.woodward[i].name)
                                             {
-                                              theid=snapshot.data!.services.woodWard[i].id;
+                                              theid=snapshot.data!.services.woodward[i].id;
                                               print("the id ${theid}");
                                               break;
 

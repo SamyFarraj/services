@@ -55,7 +55,6 @@ final farmerStreetList = <ServiceChooser>[
 late ListService ss ;
 List<String> servicesList = [
   'Select Service',
-  'sa','dasda'
 
 ];//هي list   مسان ال blocked services
 //

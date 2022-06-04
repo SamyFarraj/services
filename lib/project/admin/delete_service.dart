@@ -139,13 +139,13 @@ print("the respsmss base ${response.statusCode}");
             print("step one ");
 
               print("dkphhhhh");
-              if(snapshot.data!.services.woodWard.length==0)
+              if(snapshot.data!.services.woodward.length==0)
                 {
                   servicewoodward.add('no item');
                 }
               else {
-                for (int i = 0; i< snapshot.data!.services.woodWard.length; i++) {
-                  servicewoodward.add(snapshot.data!.services.woodWard[i].name);
+                for (int i = 0; i< snapshot.data!.services.woodward.length; i++) {
+                  servicewoodward.add(snapshot.data!.services.woodward[i].name);
                 }
               }
          //   print("the array = ${servicewoodward}");
@@ -385,11 +385,11 @@ print("the respsmss base ${response.statusCode}");
                           print("the selecteddd ${selectedService}");
                             print("dkphhhhh");
                           if(selectedStreet=='WoodWard')
-                            for(int i =0;i<snapshot.data!.services.woodWard.length;i++)
+                            for(int i =0;i<snapshot.data!.services.woodward.length;i++)
                             {
-                            if(selectedService==snapshot.data!.services.woodWard[i].name)
+                            if(selectedService==snapshot.data!.services.woodward[i].name)
                               {
-                                theid=snapshot.data!.services.woodWard[i].id;
+                                theid=snapshot.data!.services.woodward[i].id;
                                 print("the id ${theid}");
                                 break;
 

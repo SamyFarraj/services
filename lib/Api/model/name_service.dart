@@ -10,10 +10,10 @@ String listServiceToJson(ListService data) => json.encode(data.toJson());
 
 class ListService {
   ListService({
-    required this.services,
+    required  this.services,
   });
 
-   Services services;
+  Services services;
 
   factory ListService.fromJson(Map<String, dynamic> json) => ListService(
     services: Services.fromJson(json["services"]),
@@ -23,26 +23,26 @@ class ListService {
     "services": services.toJson(),
   };
 }
+
 class Services {
   Services({
-    required   this.woodWard,
-    required  this.farmer,
+    required this.woodward,
+    required   this.farmer,
     required this.bothStreet,
   });
 
-
-  List<BothStreet> woodWard=[];
-  List<BothStreet> farmer=[];
-  List<BothStreet> bothStreet=[];
+  List<BothStreet> woodward;
+  List<BothStreet> farmer;
+  List<BothStreet> bothStreet;
 
   factory Services.fromJson(Map<String, dynamic> json) => Services(
-    woodWard: List<BothStreet>.from(json["WoodWard"].map((x) => BothStreet.fromJson(x))),
+    woodward: List<BothStreet>.from(json["Woodward"].map((x) => BothStreet.fromJson(x))),
     farmer: List<BothStreet>.from(json["Farmer"].map((x) => BothStreet.fromJson(x))),
     bothStreet: List<BothStreet>.from(json["BothStreet"].map((x) => BothStreet.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
-    "WoodWard": List<dynamic>.from(woodWard.map((x) => x.toJson())),
+    "Woodward": List<dynamic>.from(woodward.map((x) => x.toJson())),
     "Farmer": List<dynamic>.from(farmer.map((x) => x.toJson())),
     "BothStreet": List<dynamic>.from(bothStreet.map((x) => x.toJson())),
   };
@@ -50,11 +50,11 @@ class Services {
 
 class BothStreet {
   BothStreet({
-  required  this.id,
+    required this.id,
     required this.name,
-    required  this.street,
+    required this.street,
     required this.isActive,
-    required  this.createdAt,
+    required this.createdAt,
     required  this.updatedAt,
     required this.reservations,
   });
