@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:project_mohammad/services/choices.dart';
 import 'package:http/http.dart' as http;
 
+import '../../Api/model/blocked_model.dart';
 import '../constant.dart';
 
 class UnBlockService extends StatefulWidget {
@@ -17,15 +18,43 @@ class _UnBlockServiceState extends State<UnBlockService> {
   String selectedService = 'Select Service';
   String? selectedStreet = "Select Street";
 
+
+List<String> blooock=[];
+  List<BlockedModel> ulist = [];
+  List<BlockedModel> userLists = [];
+  late Future<List<BlockedModel>> futureData;
+  static List<BlockedModel> parseAgents(String responseBody) {
+    final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
+    return parsed.map<BlockedModel>((json) => BlockedModel.fromJson(json)).toList();
+  }
+  Future<List<BlockedModel>> fetchData() async {
+    final response = await http
+        .get(Uri.parse('${base_Url}/api/Admin/IndexBlockedServices'),
+    headers: <String,String>
+        {
+          'Authorization':'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMzFkM2Y0NTJhMzU2YTI4M2Y4ZGQ5MGQ3NzgxYjU0ZmIyMzE0ZDVkNjBlNmI0YTM0YmNmZWFlMTJkNWRkODc1MzMxZTI3ZWZhOGQzMTM3NzYiLCJpYXQiOjE2NTEyMzQ3NDIuOTkxMTM0LCJuYmYiOjE2NTEyMzQ3NDIuOTkxMTU0LCJleHAiOjE2ODI3NzA3NDIuOTc4MjAxLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.ek1NrqJvLbvZvqQdDecQqUXgqKLef3-Ye7FG39soEesiHyk3DUlcGgIpYoHbHKCH6YBThrqb5PoDQx42DPqbY3cbK895PhKF-Js7gcy2_MEsqrNE8zVTa8yHMRbBNM2wYVaykkyvkz5acWwofqg7dGkXjvTDObilBGRQddOQEIdxwZ_9qIjtjn-_5pMPzhBChJbGddacGc0ryUFHF89MW107cJ4bsaDPhY_rSGTm9NBm3xilBHHFhwEWIcxevuw_bIs9ayuK6aYiaB3d6w-mLuJR9he8W8vTCbkVvqQOk5AnL_3hlKzQ86B8Ce5g-c01OMrkWsIuADFbVv-QgysQGy1zn_kyUwuYmJLiGKYcDtndcW-0ZpJXn-io0UyGdwYFahaofHH7xD_DyW_9kleOGN0BIjaV4GhhMLskb7TFAs2CquLn3E8mCuxKx7MQgWRL-GNL1QHMWuyFezjPWJnTCXJlv-fJQrKYAlwWTsN1UoTchzyolpPEeAEo5AiyH6WQgOyd2ZxaKHikBBu8vKtEE-zONIronEQWJRmauccYKjlpNW3CHoY63rDt2nnskC9FcI3OHX3p_3y8cy9l6wMab8aUBrXwRnebrSA-jAuv6jvHfakf_CelUcB1HnEFIIss5aXxlzYtoyQNUbaOPtW_xer26mZYC1uHcvMynzScejw'
+    }
+    );
+    if (response.statusCode == 200) {
+      print("${response.body}");
+      List<BlockedModel> list = parseAgents(response.body);
+      print("sdasdasdasdsad${list}");
+      return list;
+    } else {
+      throw Exception('Unexpected error occured!');
+    }
+  }
+
+
   Future <String> Un_Block_Service(int id)async
   {
     final response = await http.get(
       Uri.parse('${base_Url}/api/Admin/BlockServices/${id}'),
       headers: {
-        'Authorization':
-        'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMzFkM2Y0NTJhMzU2YTI4M2Y4ZGQ5MGQ3NzgxYjU0ZmIyMzE0ZDVkNjBlNmI0YTM0YmNmZWFlMTJkNWRkODc1MzMxZTI3ZWZhOGQzMTM3NzYiLCJpYXQiOjE2NTEyMzQ3NDIuOTkxMTM0LCJuYmYiOjE2NTEyMzQ3NDIuOTkxMTU0LCJleHAiOjE2ODI3NzA3NDIuOTc4MjAxLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.ek1NrqJvLbvZvqQdDecQqUXgqKLef3-Ye7FG39soEesiHyk3DUlcGgIpYoHbHKCH6YBThrqb5PoDQx42DPqbY3cbK895PhKF-Js7gcy2_MEsqrNE8zVTa8yHMRbBNM2wYVaykkyvkz5acWwofqg7dGkXjvTDObilBGRQddOQEIdxwZ_9qIjtjn-_5pMPzhBChJbGddacGc0ryUFHF89MW107cJ4bsaDPhY_rSGTm9NBm3xilBHHFhwEWIcxevuw_bIs9ayuK6aYiaB3d6w-mLuJR9he8W8vTCbkVvqQOk5AnL_3hlKzQ86B8Ce5g-c01OMrkWsIuADFbVv-QgysQGy1zn_kyUwuYmJLiGKYcDtndcW-0ZpJXn-io0UyGdwYFahaofHH7xD_DyW_9kleOGN0BIjaV4GhhMLskb7TFAs2CquLn3E8mCuxKx7MQgWRL-GNL1QHMWuyFezjPWJnTCXJlv-fJQrKYAlwWTsN1UoTchzyolpPEeAEo5AiyH6WQgOyd2ZxaKHikBBu8vKtEE-zONIronEQWJRmauccYKjlpNW3CHoY63rDt2nnskC9FcI3OHX3p_3y8cy9l6wMab8aUBrXwRnebrSA-jAuv6jvHfakf_CelUcB1HnEFIIss5aXxlzYtoyQNUbaOPtW_xer26mZYC1uHcvMynzScejw'
+        'Authorization':'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMzFkM2Y0NTJhMzU2YTI4M2Y4ZGQ5MGQ3NzgxYjU0ZmIyMzE0ZDVkNjBlNmI0YTM0YmNmZWFlMTJkNWRkODc1MzMxZTI3ZWZhOGQzMTM3NzYiLCJpYXQiOjE2NTEyMzQ3NDIuOTkxMTM0LCJuYmYiOjE2NTEyMzQ3NDIuOTkxMTU0LCJleHAiOjE2ODI3NzA3NDIuOTc4MjAxLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.ek1NrqJvLbvZvqQdDecQqUXgqKLef3-Ye7FG39soEesiHyk3DUlcGgIpYoHbHKCH6YBThrqb5PoDQx42DPqbY3cbK895PhKF-Js7gcy2_MEsqrNE8zVTa8yHMRbBNM2wYVaykkyvkz5acWwofqg7dGkXjvTDObilBGRQddOQEIdxwZ_9qIjtjn-_5pMPzhBChJbGddacGc0ryUFHF89MW107cJ4bsaDPhY_rSGTm9NBm3xilBHHFhwEWIcxevuw_bIs9ayuK6aYiaB3d6w-mLuJR9he8W8vTCbkVvqQOk5AnL_3hlKzQ86B8Ce5g-c01OMrkWsIuADFbVv-QgysQGy1zn_kyUwuYmJLiGKYcDtndcW-0ZpJXn-io0UyGdwYFahaofHH7xD_DyW_9kleOGN0BIjaV4GhhMLskb7TFAs2CquLn3E8mCuxKx7MQgWRL-GNL1QHMWuyFezjPWJnTCXJlv-fJQrKYAlwWTsN1UoTchzyolpPEeAEo5AiyH6WQgOyd2ZxaKHikBBu8vKtEE-zONIronEQWJRmauccYKjlpNW3CHoY63rDt2nnskC9FcI3OHX3p_3y8cy9l6wMab8aUBrXwRnebrSA-jAuv6jvHfakf_CelUcB1HnEFIIss5aXxlzYtoyQNUbaOPtW_xer26mZYC1uHcvMynzScejw'
       },
     );
+    print(response.statusCode);
     if(response.statusCode==200)
     {
       return jsonDecode(response.body);
@@ -34,6 +63,37 @@ class _UnBlockServiceState extends State<UnBlockService> {
     {
       return "Error code is ${response.statusCode}";
     }
+  }
+
+int id =0;
+  void initState() {
+    super.initState();
+    fetchData().then((subjectFromServer) {
+      setState(() {
+        ulist = subjectFromServer;
+        userLists = ulist;
+
+
+        blooock.clear();
+        for(int i=0;i<userLists.length;i++)
+          {
+            blooock.add(userLists[i].name);
+          }
+        selectedService=blooock[0];
+
+        blockedServicesList = List.from(blooock);
+
+        // print("fsfsdfdsfdsf${userLists}");
+      });
+    });
+
+    /*
+    futureData =  fetchData();
+    print("the futuerere ${fetchData}");
+
+
+
+     */
   }
 
   @override
@@ -134,6 +194,17 @@ class _UnBlockServiceState extends State<UnBlockService> {
                                   .toList(),
                               onChanged: (service) => setState(() {
                                 selectedService = service!;
+                                print("the selected is ${selectedService}");
+                                for (int i=0;i<userLists.length;i++)
+                                  {
+                                    if(selectedService ==userLists[i].name)
+                                      {
+                                        id =userLists[i].id;
+                                        print('the id  ${id}');
+                                        break;
+                                      }
+                                  }
+
                               }),
                             ),
                           ),
@@ -150,8 +221,11 @@ class _UnBlockServiceState extends State<UnBlockService> {
                           // ),
                           ElevatedButton(
                             onPressed: () {
+                              Un_Block_Service(id);
+                          //    print("the response from un blocked is ${Un_Block_Service(id)}");
+                              print("the listt is ${userLists[0].name}");
                               // checkServiceBlock(selectedService);
-                            },
+                             },
                             style: ElevatedButton.styleFrom(
                               minimumSize: const Size(300, 60),
                               padding: EdgeInsets.symmetric(

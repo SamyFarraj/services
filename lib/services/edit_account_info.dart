@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+import '../Api/controller/login_controller.dart';
+import '../project/constant.dart';
 
 class EditAccountInfo extends StatefulWidget {
   const EditAccountInfo({Key? key}) : super(key: key);
@@ -8,7 +12,36 @@ class EditAccountInfo extends StatefulWidget {
 }
 
 class _EditAccountInfoState extends State<EditAccountInfo> {
-    final editingInfoFormKey = GlobalKey<FormState>();
+
+
+  static Future <String> upadte_user_profile(String name ,String phone) async {
+    var headers = {
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ${t}'
+    };
+    var request = http.MultipartRequest(
+        'POST', Uri.parse('${base_Url}'));
+    request.fields.addAll({
+      'name': '${name}',
+      'phone': '${phone}'
+    });
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      return (await response.stream.bytesToString());
+    }
+    else {
+      return (response.reasonPhrase.toString());
+    }
+  }
+
+
+
+
+  final editingInfoFormKey = GlobalKey<FormState>();
     final newNameController = TextEditingController();
     final newPhoneController = TextEditingController();
   @override
@@ -168,7 +201,9 @@ class _EditAccountInfoState extends State<EditAccountInfo> {
                             final changeInfoFormKey = editingInfoFormKey.currentState!;
                             if(changeInfoFormKey.validate()){
                               // تابع ارسال البيانات
+                              upadte_user_profile(newNameController.text,  newPhoneController.text);
                             }
+
                           },
                           style: ElevatedButton.styleFrom(
                             padding: EdgeInsets.symmetric(
@@ -213,7 +248,10 @@ class _EditAccountInfoState extends State<EditAccountInfo> {
                           height: MediaQuery.of(context).size.height * 0.045,
                         ),
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+
+
+                          },
                           style: ElevatedButton.styleFrom(
                             padding: EdgeInsets.symmetric(
                               vertical: 10.0,

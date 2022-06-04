@@ -5,7 +5,7 @@ import 'package:project_mohammad/project/constant.dart';
 
 import '../login_controller.dart';
 
-class account_user {
+class Account_User {
 
 
   Future  sign_Up_request(String name, String email, String password
@@ -70,17 +70,16 @@ class account_user {
   }
 
 
-  Future <String> upadte_user_profile() async {
+ static Future <String> upadte_user_profile(String name ,String phone) async {
     var headers = {
       'Accept': 'application/json',
-      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYzEwOWI1YjMzY2JmMjlhMDdjZTk3MGU3ZWYzOGQxMGQ4ODdlNDkzZThlNTgyMDJiOTNiMzU3MDNhNDBkYjY5YzQ0MDE4NDZiNWVkNjNlMzQiLCJpYXQiOjE2NTA5NDQ1NzkuMzcwMjAyLCJuYmYiOjE2NTA5NDQ1NzkuMzcwMjA4LCJleHAiOjE2ODI0ODA1NzkuMzAwNzk1LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.LafISEKD8yn9StQjfbHT7yxAFqkDxpmcTgFyqshSmS6bCbuv1lzYc9DpBVT54siGXDkkVW4999pUX6U38S1zAAdK4LvfDip8k74ZA2HIodczwBeWK7AuF0-WG4PCnOwAzXXMe0Qg9_QjPh1FLJ7Dk1tws9MTAs0A42-Or1_hlb2LbUg0_9icWP6__hG78nvLKepCVd4CUNxjQWD1TQj-VA0oK9DZazF8N33dAC4w3TqeDtOfhsIS3cCnEfS13574eS_EhGdOaCwWKUanwyuwjxWOuwmWNf0xzhWljERnHIrC4cr7Yx0urpfYniZtb63Qz7mY8abLX-2dCr9EyFAzsUZyia2zuVZV1OVxTiaOQ6GZEmT6IyOKEMzFTNItRsaJnElYmCrB8eYL1DC4vA7B5txbUqATeR-TLGYwqhA7S18yxElg_peDAqfA-iznUDb90BH3y9toa-tYNYyrFWcCNt7fFH_DwYMxk0LPNz-jm1ATBwX7a9eSaillN8AEpuuq93IXiCicg9pURT_uG3KhafsXHwFJd-2reHRXUkHSgcONEQgHGd0P6McaJPbJnfAaIMcXS06aPNTjROSk3X8RsrICTKPrQDY1DTCtBNfm_6OI1oIDARMaTd2RE3rIPu0jqsTyfmw0NxKM8QvaWNnyPPHCZ5GzVsVBIWJ97-_nWNQ'
+      'Authorization': 'Bearer ${t}'
     };
     var request = http.MultipartRequest(
-        'POST', Uri.parse('http://127.0.0.1:8000/api/ProfileUpdate'));
+        'POST', Uri.parse('${base_Url}'));
     request.fields.addAll({
-      'name': 'sara',
-      'email': 'sarah.kar@outlook.sa',
-      'phone': '0978965412'
+      'name': '${name}',
+      'phone': '${phone}'
     });
 
     request.headers.addAll(headers);
@@ -96,16 +95,16 @@ class account_user {
   }
 
 
-  Future <String> Reset_password() async {
+  Future <String> Reset_password(String pass,String c_pass) async {
     var headers = {
       'Accept': 'application/json',
-      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMTk5NmIzNWI3YmZiZTcwZjVjMjkyNGJjNzNlYTM0YTgxNDFjZTRjZDNhODRlNTdjODc3OWFjODAwZmY1MjBmNmRjZjM2ZjA4OWI5YTQyOTAiLCJpYXQiOjE2NDk0NjU0ODguMzE3MjA3LCJuYmYiOjE2NDk0NjU0ODguMzE3MjEyLCJleHAiOjE2ODEwMDE0ODguMzEwMTIsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.keJDS5HZ0OnA7FXSuU6X5ALQQSAvCnP2ENd453P3PDWhe-lHo31XGZff1I5nfslVISuxNMMHTiOixn5dCZ4KhKfs8ZriBiOYeLXBsw7Gzh3wToLgntZ65bwCn4pBFkJ1jNqpNpUBnVSzP2ncS6_iQN31gvLeGniVaTf3wyLkZy__W9wL0Ad-tCMv40hYJjoREn_2r8unqi9av90QM9JgVBgFxe2qJC0X8JuPSmSsXuBAPjNEToXxlXDJlgfe4q5g6aea_TSN2aUrkzArwPK4hbWud_CdiaWLRBi1aBqhig60jUdUGIcC70AvNrTNFXZmtdgLjqCl0uQ-myYUbOITjfX_rMI-W-OJsZ0q7vtWyZiHQ4lWtSWageZo03lDtevNxPcjNh5isEZHcut8Sr5m7K8fr8hQvDhsKiQhkotUBfax2vvKoqo0jKDDo_vSW32ajA2izBARAk0oT_P9wFzLrDYUoMsea0JhQey_8y9KtJuWQ-1RFz1wnELW2p_-QUyZYmtBI5KiLTHD4GOsjzyE3SXoakrboDcLOCwRcr-SXEMON9xIOYkEYiw0jKQwmdYuMY-5Dkmo8YfCpyyY7dDkUmcaSI4jriumaIN66JoM8xBlLmZYSj9eCDur0Waqi-2ftehOkGNh9cC9V0z6e5Fzaz8YNZ4-wnGTKi6RZfeYRsI'
+      'Authorization': 'Bearer ${t}'
     };
     var request = http.MultipartRequest(
-        'POST', Uri.parse('http://127.0.0.1:8000/api/ResetPassword'));
+        'POST', Uri.parse('${base_Url}'));
     request.fields.addAll({
-      'password': '1234567890',
-      'c_password': '1234567890'
+      'password': '${pass}',
+      'c_password': '${c_pass}'
     });
 
     request.headers.addAll(headers);

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:project_mohammad/services/choices.dart';
 
+import '../../Api/controller/Admin/addNewAdmin_Controller.dart';
+
 // import '../../components/buttons.dart';
 
 class AddNewAdmin extends StatefulWidget {
@@ -128,6 +130,7 @@ class _AddNewAdminState extends State<AddNewAdmin> {
                           ElevatedButton(
                             onPressed: () {
                               checkNewAdmin(adminNameController.text);
+                              AddNewAdmin_con.Add_new_ADmiin(adminNameController.text);
                             },
                             style: ElevatedButton.styleFrom(
                               minimumSize: const Size(300, 60),

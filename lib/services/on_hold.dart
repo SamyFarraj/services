@@ -18,8 +18,7 @@ class OnHold extends StatefulWidget {
 
 class _OnHoldState extends State<OnHold> {
   static DateTime dateTime = DateTime.now();
-
-  @override
+ @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:project_mohammad/project/constant.dart';
 
 import '../project/home/requests.dart';
 import '../services/choices.dart';
 import '../services/requests_statue.dart';
 import '../services/staff.dart';
+import 'package:http/http.dart' as http;
 
 class ServiceInformationInput extends StatefulWidget {
   final String gateName;
@@ -50,6 +52,41 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
 
   late String showedDate = 'select Date';
   late String showedTime = 'select Time';
+
+
+  Future  book_resevices(
+      String gate_name,
+      String Start_time,
+      String end_time,
+      String service_id,
+      String service_name
+      )async
+  {
+    var headers = {
+      'Accept': 'application/json',
+      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYzEwOWI1YjMzY2JmMjlhMDdjZTk3MGU3ZWYzOGQxMGQ4ODdlNDkzZThlNTgyMDJiOTNiMzU3MDNhNDBkYjY5YzQ0MDE4NDZiNWVkNjNlMzQiLCJpYXQiOjE2NTA5NDQ1NzkuMzcwMjAyLCJuYmYiOjE2NTA5NDQ1NzkuMzcwMjA4LCJleHAiOjE2ODI0ODA1NzkuMzAwNzk1LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.LafISEKD8yn9StQjfbHT7yxAFqkDxpmcTgFyqshSmS6bCbuv1lzYc9DpBVT54siGXDkkVW4999pUX6U38S1zAAdK4LvfDip8k74ZA2HIodczwBeWK7AuF0-WG4PCnOwAzXXMe0Qg9_QjPh1FLJ7Dk1tws9MTAs0A42-Or1_hlb2LbUg0_9icWP6__hG78nvLKepCVd4CUNxjQWD1TQj-VA0oK9DZazF8N33dAC4w3TqeDtOfhsIS3cCnEfS13574eS_EhGdOaCwWKUanwyuwjxWOuwmWNf0xzhWljERnHIrC4cr7Yx0urpfYniZtb63Qz7mY8abLX-2dCr9EyFAzsUZyia2zuVZV1OVxTiaOQ6GZEmT6IyOKEMzFTNItRsaJnElYmCrB8eYL1DC4vA7B5txbUqATeR-TLGYwqhA7S18yxElg_peDAqfA-iznUDb90BH3y9toa-tYNYyrFWcCNt7fFH_DwYMxk0LPNz-jm1ATBwX7a9eSaillN8AEpuuq93IXiCicg9pURT_uG3KhafsXHwFJd-2reHRXUkHSgcONEQgHGd0P6McaJPbJnfAaIMcXS06aPNTjROSk3X8RsrICTKPrQDY1DTCtBNfm_6OI1oIDARMaTd2RE3rIPu0jqsTyfmw0NxKM8QvaWNnyPPHCZ5GzVsVBIWJ97-_nWNQ'
+    };
+    var request = http.MultipartRequest('POST', Uri.parse('$base_Url/api/Reservation'));
+    request.fields.addAll({
+      'Gate_name': '${gate_name}',
+      'start_time': '${Start_time}',
+      'end_time': '${end_time}',
+      'services_map[0][id]': '$service_id',
+      'services_map[0][name]': '$service_name'
+    });
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+    }
+    else {
+      print(response.reasonPhrase);
+    }
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -394,11 +431,8 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
                                                 .add(staff.staff_name);
                                           }
                                         }
-                                        selectedMinuteDuration =
-                                            choosedDurationMinuteController
-                                                .text;
-                                        selectedHoursDuration =
-                                            choosedDurationHoursController.text;
+                                        selectedMinuteDuration = choosedDurationMinuteController.text;
+                                        selectedHoursDuration = choosedDurationHoursController.text;
                                         checkNewRequest(
                                           selectedMinuteDuration!,
                                           selectedHoursDuration!,

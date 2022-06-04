@@ -1,21 +1,21 @@
 // To parse this JSON data, do
 //
-//     final listService = listServiceFromJson(jsonString);
+//     final finalservice = finalserviceFromJson(jsonString);
 
 import 'dart:convert';
 
-ListService listServiceFromJson(String str) => ListService.fromJson(json.decode(str));
+Finalservice finalserviceFromJson(String str) => Finalservice.fromJson(json.decode(str));
 
-String listServiceToJson(ListService data) => json.encode(data.toJson());
+String finalserviceToJson(Finalservice data) => json.encode(data.toJson());
 
-class ListService {
-  ListService({
+class Finalservice {
+  Finalservice({
     required this.services,
   });
 
-   Services services;
+  Services services;
 
-  factory ListService.fromJson(Map<String, dynamic> json) => ListService(
+  factory Finalservice.fromJson(Map<String, dynamic> json) => Finalservice(
     services: Services.fromJson(json["services"]),
   );
 
@@ -23,17 +23,17 @@ class ListService {
     "services": services.toJson(),
   };
 }
+
 class Services {
   Services({
-    required   this.woodWard,
-    required  this.farmer,
+    required this.woodWard,
+    required this.farmer,
     required this.bothStreet,
   });
 
-
-  List<BothStreet> woodWard=[];
-  List<BothStreet> farmer=[];
-  List<BothStreet> bothStreet=[];
+  List<BothStreet> woodWard;
+  List<BothStreet> farmer;
+  List<BothStreet> bothStreet;
 
   factory Services.fromJson(Map<String, dynamic> json) => Services(
     woodWard: List<BothStreet>.from(json["WoodWard"].map((x) => BothStreet.fromJson(x))),
@@ -50,12 +50,12 @@ class Services {
 
 class BothStreet {
   BothStreet({
-  required  this.id,
-    required this.name,
-    required  this.street,
+    required this.id,
+    required  this.name,
+    required this.street,
     required this.isActive,
-    required  this.createdAt,
-    required  this.updatedAt,
+    required this.createdAt,
+    required this.updatedAt,
     required this.reservations,
   });
 

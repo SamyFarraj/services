@@ -1,10 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:project_mohammad/Api/model/name_service.dart';
 import 'package:project_mohammad/services/requests_statue.dart';
 import 'package:project_mohammad/services/staff.dart';
 
 import 'street_service_chooser.dart';
 
+
+
+class getdata {
+
+ static late ListService l1 ;
+ getdata(ListService l )
+ {
+   l1=l;
+ }
+
+}
 //مصفوفة لاسم الشوارع
 //المتغير الاول title يرمز لاسم الشارع
 //المتغير الثاني srChooser يرمز للمصفوفة المحتواة في اسم الشارع
@@ -26,6 +38,8 @@ final woodWardStreetList = <ServiceChooser>[
   const ServiceChooser(title: 'WOODWARD street'),
 ];
 //مصفوفة ال بوابات
+
+
 //المتغير title يرمز لاسم البوابة
 
 final farmerStreetList = <ServiceChooser>[
@@ -38,27 +52,15 @@ final farmerStreetList = <ServiceChooser>[
 //حجز خدمة مع البوابة او انه يريد حجز البوابة فقط
 //فكرة حجز البوابة فقط هي التأكد اذا كانت الخدمة Not Assigned فإنه
 //يتجاهلها وما عدا ذلك سوف يرسلها لقاعدة البيانات
-
+late ListService ss ;
 List<String> servicesList = [
   'Select Service',
-  'Self Unloaded Delivery',
-  'Tower Crane 1',
-  'Tower Crane 2',
-  'BLK BuckHoist',
-  'TWR BuckHoist',
-  'ForkLift',
-  'Trailer Pump',
-  'Ramp-BSE',
-];
-//هي list   مسان ال blocked services
+  'sa','dasda'
+
+];//هي list   مسان ال blocked services
 //
 List<String> blockedServicesList = [
   'Select Service',
-  'blocked service 1',
-  'blocked service 2',
-  'blocked service 3',
-  'blocked service 4',
-  'blocked service 5',
 ];
 
 //هي مشان يقدر المستخدم يختار كل ال staffs المتاحين

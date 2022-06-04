@@ -10,7 +10,7 @@ import 'package:project_mohammad/project/constant.dart';
 
 import '../../login_controller.dart';
 
-class Service
+class Servicee
 {
 
 
@@ -91,5 +91,24 @@ Future <String > delete_reservation (String id)async
     
   }
 
+ static Future <String > delte_Service (int id)async
 
+  {
+    var response =await http.delete(Uri.parse("${base_Url}/api/Admin/DeleteService/$id"),
+        headers: {
+          'Accept':'application/json',
+          'Authorization':'Bearer $t'
+        }
+    );
+    
+   if (response.statusCode==200)
+    {
+      print("sklmgdm");
+      return response.body;
+    }
+    else
+      return ("the error isss :  ${response.body}");
+
+
+  }
 }

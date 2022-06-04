@@ -5,6 +5,8 @@ import 'package:project_mohammad/project/constant.dart';
 import 'package:project_mohammad/services/choices.dart';
 import 'package:http/http.dart' as http;
 
+import '../../Api/model/name_service.dart';
+
 class BlockService extends StatefulWidget {
   const BlockService({Key? key}) : super(key: key);
 
@@ -13,8 +15,8 @@ class BlockService extends StatefulWidget {
 }
 
 class _BlockServiceState extends State<BlockService> {
-  String selectedService = 'Select Service';
-  String? selectedStreet = "Select Street";
+  List<String> servicewoodward = [];
+  List<String> servicefarmer = [];
 
   Future <String> Block_Service(int id)async
   {
@@ -27,6 +29,7 @@ class _BlockServiceState extends State<BlockService> {
     );
     if(response.statusCode==200)
       {
+        print("yesssssssssss");
         return jsonDecode(response.body);
       }
     else
@@ -35,6 +38,39 @@ class _BlockServiceState extends State<BlockService> {
       }
   }
 
+
+
+
+  String selectedService = 'Select Service';
+  String? selectedStreet = "Farmer";
+  late int theid;
+  Future<ListService> fetchAlbum() async {
+    final response = await http
+        .get(Uri.parse('${base_Url}/api/services'),
+        headers: {
+          'Authorization':'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMzFkM2Y0NTJhMzU2YTI4M2Y4ZGQ5MGQ3NzgxYjU0ZmIyMzE0ZDVkNjBlNmI0YTM0YmNmZWFlMTJkNWRkODc1MzMxZTI3ZWZhOGQzMTM3NzYiLCJpYXQiOjE2NTEyMzQ3NDIuOTkxMTM0LCJuYmYiOjE2NTEyMzQ3NDIuOTkxMTU0LCJleHAiOjE2ODI3NzA3NDIuOTc4MjAxLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.ek1NrqJvLbvZvqQdDecQqUXgqKLef3-Ye7FG39soEesiHyk3DUlcGgIpYoHbHKCH6YBThrqb5PoDQx42DPqbY3cbK895PhKF-Js7gcy2_MEsqrNE8zVTa8yHMRbBNM2wYVaykkyvkz5acWwofqg7dGkXjvTDObilBGRQddOQEIdxwZ_9qIjtjn-_5pMPzhBChJbGddacGc0ryUFHF89MW107cJ4bsaDPhY_rSGTm9NBm3xilBHHFhwEWIcxevuw_bIs9ayuK6aYiaB3d6w-mLuJR9he8W8vTCbkVvqQOk5AnL_3hlKzQ86B8Ce5g-c01OMrkWsIuADFbVv-QgysQGy1zn_kyUwuYmJLiGKYcDtndcW-0ZpJXn-io0UyGdwYFahaofHH7xD_DyW_9kleOGN0BIjaV4GhhMLskb7TFAs2CquLn3E8mCuxKx7MQgWRL-GNL1QHMWuyFezjPWJnTCXJlv-fJQrKYAlwWTsN1UoTchzyolpPEeAEo5AiyH6WQgOyd2ZxaKHikBBu8vKtEE-zONIronEQWJRmauccYKjlpNW3CHoY63rDt2nnskC9FcI3OHX3p_3y8cy9l6wMab8aUBrXwRnebrSA-jAuv6jvHfakf_CelUcB1HnEFIIss5aXxlzYtoyQNUbaOPtW_xer26mZYC1uHcvMynzScejw'
+        }
+      // snapshot.data!.services.woodWard[1].street
+    );
+    print("the respsmss base ${response.statusCode}");
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      return ListService.fromJson(jsonDecode(response.body));
+    } else {
+      //    print("kgjsdjklsd ${snapshot.data!.services.woodWard[1].street}");
+
+      throw Exception('Failed to load album');
+    }
+  }
+  late Future<ListService>  date;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    date=fetchAlbum();
+    print("gdgdf,h;l");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -102,114 +138,285 @@ class _BlockServiceState extends State<BlockService> {
                       color: Color.fromARGB(180, 0, 0, 65),
                     ),
                     child: SingleChildScrollView(
-                      child: Column(
-                        children: <Widget>[
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.7,
-                            child: DropdownButtonFormField<String>(
-                              decoration: InputDecoration(
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    width: 3.7,
-                                    color: Colors.blue,
+                      child: FutureBuilder
+                        <ListService>(
+                        future:  date,
+                        builder:  ( context,snapshot)
+                        {
+                          if (snapshot.hasData)
+                            {
+                              servicewoodward.clear();
+                              servicefarmer.clear();
+                              print("step one ");
+
+                              print("dkphhhhh");
+                              for(int i =0;i<snapshot.data!.services.woodWard.length;i++)
+                              {
+                                servicewoodward.add(snapshot.data!.services.woodWard[i].name);
+                              }
+                              //   print("the array = ${servicewoodward}");
+
+
+
+                              if(  servicefarmer.length<=snapshot.data!.services.farmer.length)
+                              {
+
+                                print("dkphhhhh");
+                                for(int i =0;i<snapshot.data!.services.farmer.length;i++)
+                                {
+                                  servicefarmer.add(snapshot.data!.services.farmer[i].name);
+                                }
+                              }
+                              return Column(
+                                children: <Widget>[
+
+
+                                  ///الليست القديمة //
+/*
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.7,
+                              child: DropdownButtonFormField<String>(
+                                decoration: InputDecoration(
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: const BorderSide(
+                                      width: 3.7,
+                                      color: Colors.blue,
+                                    ),
+                                    borderRadius: BorderRadius.circular(25),
                                   ),
-                                  borderRadius: BorderRadius.circular(25),
                                 ),
-                              ),
-                              // value: selectedStreet,
-                              items: selectStreet
-                                  .map(
-                                    (street) => DropdownMenuItem<String>(
-                                      value: street.title,
-                                      child: Text(
-                                        street.title,
-                                        style: const TextStyle(
-                                          fontSize: 22,
-                                          color: Colors.blue,
+                                // value: selectedStreet,
+                                items: selectStreet
+                                    .map(
+                                      (street) => DropdownMenuItem<String>(
+                                        value: street.title,
+                                        child: Text(
+                                          street.title,
+                                          style: const TextStyle(
+                                            fontSize: 22,
+                                            color: Colors.blue,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  )
-                                  .toList(),
-                              onChanged: (street) => setState(
-                                () {
-                                  selectedStreet = street;
-                                },
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.15,
-                          ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.7,
-                            child: DropdownButtonFormField<String>(
-                              decoration: InputDecoration(
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    width: 6.0,
-                                    color: Colors.blue,
-                                  ),
-                                  borderRadius: BorderRadius.circular(25),
+                                    )
+                                    .toList(),
+                                onChanged: (street) => setState(
+                                  () {
+                                    selectedStreet = street;
+                                  },
                                 ),
                               ),
-                              value: selectedService,
-                              items: servicesList
-                                  .map(
-                                    (service) => DropdownMenuItem<String>(
-                                      value: service,
-                                      child: Text(
-                                        service,
-                                        style: const TextStyle(
-                                          fontSize: 22,
-                                          color: Colors.blue,
+                            ),
+
+
+ */
+
+                                  SizedBox(
+                                    width: MediaQuery.of(context).size.width * 0.75,
+                                    child: DropdownButtonFormField<String>(
+                                      decoration: InputDecoration(
+                                        enabledBorder: UnderlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            width: 3.6,
+                                            color: Colors.blue,
+                                          ),
+                                          borderRadius: BorderRadius.circular(25),
                                         ),
                                       ),
+                                      items: selectStreet
+                                          .map(
+                                            (street) => DropdownMenuItem<String>(
+                                          value: street.title,
+                                          child: Text(
+                                            street.title,
+                                            style: const TextStyle(
+                                              fontSize: 22,
+                                              color: Colors.blue,
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                          .toList(),
+                                      onChanged: (street) =>
+                                          setState(() {
+
+                                            selectedStreet = street;
+
+                                            if(selectedStreet=='Farmer')
+                                            {
+
+                                              servicesList = List.from(servicefarmer);
+                                              selectedService=servicesList[0];
+                                            }
+
+                                            if(selectedStreet=='WoodWard')
+                                            {
+                                              servicesList = List.from(servicewoodward);
+                                              selectedService=servicesList[0];
+
+                                            }
+                                            // servicesList.clear();
+
+                                            print("kdfsjkjfkl${servicesList}");
+
+                                          }),
                                     ),
-                                  )
-                                  .toList(),
-                              onChanged: (service) => setState(() {
-                                selectedService = service!;
-                              }),
-                            ),
-                          ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.15,
-                          ),
-                          // buttonOfManageServices(
-                          //   context,
-                          //   () {
-                          //     checkServiceBlock(selectedService);
-                          //   },
-                          //   "Block Service",
-                          //   const Color.fromARGB(255, 150, 10, 10),
-                          // ),
-                          ElevatedButton(
-                            onPressed: () {
-                              checkServiceBlock(selectedService);
-                            },
-                            style: ElevatedButton.styleFrom(
-                              minimumSize: const Size(300, 60),
-                              padding: EdgeInsets.symmetric(
-                                vertical: 5.0,
-                                horizontal:
-                                    MediaQuery.of(context).size.width * 0.2,
+                                  ),
+
+                                  SizedBox(
+                                    height: MediaQuery.of(context).size.height * 0.15,
+                                  ),
+
+
+                                  SizedBox(
+                                    width: MediaQuery.of(context).size.width * 0.75,
+                                    child: DropdownButtonFormField<String>(
+                                      decoration: InputDecoration(
+                                        enabledBorder: UnderlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            width: 6.0,
+                                            color: Colors.blue,
+                                          ),
+                                          borderRadius: BorderRadius.circular(25),
+                                        ),
+                                      ),
+                                      value: selectedService,
+                                      items: servicesList
+                                          .map(
+
+                                            (service) => DropdownMenuItem<String>(
+                                          value: service,
+                                          child: Text(
+                                            service,
+                                            style: const TextStyle(
+                                              fontSize: 22,
+                                              color: Colors.blue,
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                          .toList(),
+                                      onChanged: (service) => setState(() {
+                                        selectedService = service!;
+                                        print("the selecteddd ${selectedService}");
+                                        print("dkphhhhh");
+                                        if(selectedStreet=='WoodWard')
+                                          for(int i =0;i<snapshot.data!.services.woodWard.length;i++)
+                                          {
+                                            if(selectedService==snapshot.data!.services.woodWard[i].name)
+                                            {
+                                              theid=snapshot.data!.services.woodWard[i].id;
+                                              print("the id ${theid}");
+                                              break;
+
+
+                                            }
+                                          }
+                                        else  if(selectedStreet=='Farmer')
+                                        {
+                                          for(int i =0;i<snapshot.data!.services.farmer.length;i++)
+                                          {
+                                            if(selectedService==snapshot.data!.services.farmer[i].name)
+                                            {
+                                              theid=snapshot.data!.services.farmer[i].id;
+                                              print("the id ${theid}");
+                                              break;
+
+
+                                            }
+                                          }
+
+
+                                        }}),
+                                    ),
+                                  ),
+                                  ///الليست القديمة //
+                                  /*
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.7,
+                              child: DropdownButtonFormField<String>(
+                                decoration: InputDecoration(
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: const BorderSide(
+                                      width: 6.0,
+                                      color: Colors.blue,
+                                    ),
+                                    borderRadius: BorderRadius.circular(25),
+                                  ),
+                                ),
+                                value: selectedService,
+                                items: servicesList
+                                    .map(
+                                      (service) => DropdownMenuItem<String>(
+                                        value: service,
+                                        child: Text(
+                                          service,
+                                          style: const TextStyle(
+                                            fontSize: 22,
+                                            color: Colors.blue,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                    .toList(),
+                                onChanged: (service) => setState(() {
+                                  selectedService = service!;
+                                }),
                               ),
-                              primary: const Color.fromARGB(255, 150, 10, 10),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              elevation: 15.0,
                             ),
-                            child: const Text(
-                              "Block Service",
-                              style: TextStyle(
-                                fontSize: 24,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ],
+                            */
+                                  SizedBox(
+                                    height: MediaQuery.of(context).size.height * 0.15,
+                                  ),
+                                  // buttonOfManageServices(
+                                  //   context,
+                                  //   () {
+                                  //     checkServiceBlock(selectedService);
+                                  //   },
+                                  //   "Block Service",
+                                  //   const Color.fromARGB(255, 150, 10, 10),
+                                  // ),
+                                  ElevatedButton(
+                                    onPressed: () {
+
+                                      checkServiceBlock(selectedService);
+                                    print("there response bloock${Block_Service(theid)}") ;
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      minimumSize: const Size(300, 60),
+                                      padding: EdgeInsets.symmetric(
+                                        vertical: 5.0,
+                                        horizontal:
+                                        MediaQuery.of(context).size.width * 0.2,
+                                      ),
+                                      primary: const Color.fromARGB(255, 150, 10, 10),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      elevation: 15.0,
+                                    ),
+                                    child: const Text(
+                                      "Block Service",
+                                      style: TextStyle(
+                                        fontSize: 24,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              );
+
+                            }
+                          else if (snapshot.hasError) {
+                            return Text('${snapshot.error}');
+
+                          }
+
+                          // By default, show a loading spinner.
+                          return const CircularProgressIndicator();
+                        },
+
+
                       ),
                     ),
                   ),

@@ -4,7 +4,7 @@ import 'package:project_mohammad/moh_project/model_moh/AddService_model.dart';
 
 import 'login_controller.dart';
 class addserv {
-  var baseUrl = 'http://192.168.43.203:8000';
+  var baseUrl = 'http://192.168.56.1:8000';
   ///
   /// هون ليش بعتت التايب تبع الفيوتشر سترينغ ؟
   ///

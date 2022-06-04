@@ -30,27 +30,10 @@ class _StreetServiceChoosingState extends State<StreetServiceChoosing> {
           ),
         ),
         backgroundColor: const Color.fromARGB(150, 0, 0, 65),
-        // actions: [
-        //   IconButton(
-        //     onPressed: () {
-        //       if (admin) {
-        //         Navigator.of(context).push(
-        //           MaterialPageRoute(
-        //             builder: (_) => const AdminControlPanel(),
-        //           ),
-        //         );
-        //       } else {
-        //         snackBar(
-        //           context,
-        //           "This Feature only for Admins",
-        //           const Color.fromARGB(255, 150, 10, 10),
-        //         );
-        //       }
-        //     },
-        //     icon: const Icon(Icons.view_headline_sharp),
-        //   ),
-        // ],
       ),
+
+
+
       body: SizedBox(
         width: double.infinity,
         height: double.infinity,
@@ -96,14 +79,8 @@ class _StreetServiceChoosingState extends State<StreetServiceChoosing> {
                       topRight: Radius.circular(35),
                     ),
                   ),
-                  child: ListView(
-                    children: selectStreet
-                        .map(
-                          (tile) => BasicTileWidget(
-                            tile: tile,
-                          ),
-                        )
-                        .toList(),
+
+                  child: ListView(children: selectStreet.map((tile) => BasicTileWidget(tile: tile,),).toList(),
                   ),
                 ),
               ],
@@ -134,6 +111,9 @@ class _StreetServiceChoosingState extends State<StreetServiceChoosing> {
 }
 
 DateTime selectedTime = DateTime.now();
+////هون
+
+
 
 class BasicTileWidget extends StatefulWidget {
   final ServiceChooser tile;
@@ -162,14 +142,14 @@ class _BasicTileWidgetState extends State<BasicTileWidget> {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (_) {
-                return OnHold(
-                  title: title,
-                );
+                return OnHold(title: title,);
               },
             ),
           );
         },
       );
+
+
     } else {
       return Container(
         margin: const EdgeInsets.all(10),
@@ -186,8 +166,7 @@ class _BasicTileWidgetState extends State<BasicTileWidget> {
             title,
             style: const TextStyle(fontSize: 26, color: Colors.white),
           ),
-          children:
-              servicesList.map((tile) => BasicTileWidget(tile: tile)).toList(),
+          children: servicesList.map((tile) => BasicTileWidget(tile: tile)).toList(),
         ),
       );
     }
