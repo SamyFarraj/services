@@ -18,8 +18,8 @@ class DeleteService extends StatefulWidget {
 class _DeleteServiceState extends State<DeleteService> {
   String selectedService = 'Select Service';
   String? selectedStreet = "Select Street";
-  late ListService Servicelist;
-  late ListService finallServicelist;
+  late ListService serviceList;
+  late ListService finalServiceList;
 
 
   static ListService parseAgents(String responseBody) {

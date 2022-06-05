@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'dashboard_verification_code_page.dart';
+
 class EditAccountInfo extends StatefulWidget {
   const EditAccountInfo({Key? key}) : super(key: key);
 
@@ -213,7 +215,13 @@ class _EditAccountInfoState extends State<EditAccountInfo> {
                           height: MediaQuery.of(context).size.height * 0.045,
                         ),
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(builder: (_){
+                                return const DashBoardVerificationCodePage();
+                              },),
+                            );
+                          },
                           style: ElevatedButton.styleFrom(
                             padding: EdgeInsets.symmetric(
                               vertical: 10.0,
