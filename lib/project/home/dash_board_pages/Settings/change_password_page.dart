@@ -1,49 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:project_mohammad/authentication/verfication_code_page.dart';
 
-import '../Api/controller/login_controller.dart';
-import '../project/constant.dart';
 
-class EditAccountInfo extends StatefulWidget {
-  const EditAccountInfo({Key? key}) : super(key: key);
+
+class ChangePasswordPage extends StatefulWidget {
+  const ChangePasswordPage({Key? key}) : super(key: key);
 
   @override
-  State<EditAccountInfo> createState() => _EditAccountInfoState();
+  State<ChangePasswordPage> createState() => _ChangePasswordPageState();
 }
 
-class _EditAccountInfoState extends State<EditAccountInfo> {
-
-
-  static Future <String> upadte_user_profile(String name ,String phone) async {
-    var headers = {
-      'Accept': 'application/json',
-      'Authorization': 'Bearer ${t}'
-    };
-    var request = http.MultipartRequest(
-        'POST', Uri.parse('${base_Url}'));
-    request.fields.addAll({
-      'name': '${name}',
-      'phone': '${phone}'
-    });
-
-    request.headers.addAll(headers);
-
-    http.StreamedResponse response = await request.send();
-
-    if (response.statusCode == 200) {
-      return (await response.stream.bytesToString());
-    }
-    else {
-      return (response.reasonPhrase.toString());
-    }
-  }
+class _ChangePasswordPageState extends State<ChangePasswordPage> {
+  bool rePasswordVisibility = true;
+  bool passwordVisibility = true;
+  final editingPasswordFormKey = GlobalKey<FormState>();
+  final newPasswordController = TextEditingController();
+  final rePasswordController = TextEditingController();
 
 
 
-
-  final editingInfoFormKey = GlobalKey<FormState>();
-    final newNameController = TextEditingController();
-    final newPhoneController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +27,7 @@ class _EditAccountInfoState extends State<EditAccountInfo> {
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
-          "Edit Info",
+          "Change Password",
           style: TextStyle(
             fontSize: 36,
             fontWeight: FontWeight.bold,
@@ -84,7 +59,7 @@ class _EditAccountInfoState extends State<EditAccountInfo> {
           // ما يعطي pixels rendered out error
           // يعني مشات  ما تطلع ال pixels  من الشاشة
           Form(
-            key: editingInfoFormKey,
+            key: editingPasswordFormKey,
             child: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
@@ -114,32 +89,44 @@ class _EditAccountInfoState extends State<EditAccountInfo> {
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.03,
                         ),
-                        // هاد ال حقل الخاص ب الاسم
+
                         TextFormField(
-                          validator: (enteredNameVal) =>
-                          enteredNameVal!.length < 6
-                              ? "Name is too short"
+                          validator: (enteredPasswordVal) =>
+                          enteredPasswordVal!.length < 8
+                              ? "Password is too short"
                               : null,
-                          controller: newNameController,
-                          decoration: const InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.person,
+                          keyboardType: TextInputType.visiblePassword,
+                          obscureText: passwordVisibility,
+                          controller: newPasswordController,
+                          decoration: InputDecoration(
+                            prefixIcon: const Icon(
+                              Icons.vpn_key_sharp,
                               color: Colors.deepOrange,
                             ),
-                            label: Text(
-                              "New Name",
+                            suffixIcon: IconButton(
+                              color: Colors.blue,
+                              icon: passwordVisibility
+                                  ? const Icon(Icons.visibility_off)
+                                  : const Icon(Icons.visibility),
+                              // color: Colors.deepOrange,
+                              onPressed: () => setState(
+                                    () => passwordVisibility = !passwordVisibility,
+                              ),
+                            ),
+                            label: const Text(
+                              "Password",
                               style: TextStyle(
                                 fontSize: 18,
                                 color: Colors.blueAccent,
                               ),
                             ),
-                            enabledBorder: UnderlineInputBorder(
+                            enabledBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(
                                 width: 2.0,
                                 color: Colors.deepOrange,
                               ),
                             ),
-                            focusedBorder: OutlineInputBorder(
+                            focusedBorder: const OutlineInputBorder(
                               borderSide: BorderSide(
                                 width: 2.0,
                                 color: Colors.blue,
@@ -152,34 +139,46 @@ class _EditAccountInfoState extends State<EditAccountInfo> {
                           ),
                         ),
                         SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.045,
+                          height: MediaQuery.of(context).size.height * 0.05,
                         ),
+                        // هاد ال حقل الخاص ب اعادة ال password
                         TextFormField(
-                          validator: (enteredPhoneVal) =>
-                          enteredPhoneVal!.length < 9
-                              ? "phone is too short"
+                          validator: (enteredPasswordVal) =>
+                          enteredPasswordVal!= newPasswordController.text
+                              ? "re-Password isn't current"
                               : null,
-                          keyboardType: TextInputType.phone,
-                          controller: newPhoneController,
-                          decoration: const InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.phone,
+                          obscureText: rePasswordVisibility,
+                          controller: rePasswordController,
+                          decoration: InputDecoration(
+                            prefixIcon: const Icon(
+                              Icons.vpn_key_sharp,
                               color: Colors.deepOrange,
                             ),
-                            label: Text(
-                              "New Phone Number",
+                            suffixIcon: IconButton(
+                              color: Colors.blue,
+                              icon: rePasswordVisibility
+                                  ? const Icon(Icons.visibility_off)
+                                  : const Icon(Icons.visibility),
+                              // color: Colors.deepOrange,
+                              onPressed: () => setState(
+                                    () => rePasswordVisibility =
+                                !rePasswordVisibility,
+                              ),
+                            ),
+                            label: const Text(
+                              "Re-Password",
                               style: TextStyle(
                                 fontSize: 18,
                                 color: Colors.blueAccent,
                               ),
                             ),
-                            enabledBorder: UnderlineInputBorder(
+                            enabledBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(
                                 width: 2.0,
                                 color: Colors.deepOrange,
                               ),
                             ),
-                            focusedBorder: OutlineInputBorder(
+                            focusedBorder: const OutlineInputBorder(
                               borderSide: BorderSide(
                                 width: 2.0,
                                 color: Colors.blue,
@@ -192,65 +191,21 @@ class _EditAccountInfoState extends State<EditAccountInfo> {
                           ),
                         ),
                         SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.065,
+                          height: MediaQuery.of(context).size.height * 0.1,
                         ),
-                        //  هي كبسة ال signUp
-                        // جوا ال onPressed منحط ال استدعاء تابع ارسال البيانات لل database
                         ElevatedButton(
                           onPressed: () {
-                            final changeInfoFormKey = editingInfoFormKey.currentState!;
-                            if(changeInfoFormKey.validate()){
+                            final changePasswordFormKey = editingPasswordFormKey.currentState!;
+                            if(changePasswordFormKey.validate()){
                               // تابع ارسال البيانات
-                              upadte_user_profile(newNameController.text,  newPhoneController.text);
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(builder: (_){
+                                    return const VerificationCodePage();
+                                  },
+                                  ),
+                              );
                             }
-
-                          },
-                          style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.symmetric(
-                              vertical: 10.0,
-                              horizontal:
-                                  MediaQuery.of(context).size.width * 0.25,
-                            ),
-                            primary: const Color.fromARGB(255, 10, 150, 0),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            elevation: 15.0,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: const <Widget>[
-                              Icon(
-                                Icons.lock_open_rounded,
-                                color: Colors.white,
-                              ),
-                              Text(
-                                "Accept",
-                                style: TextStyle(
-                                  fontSize: 24,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.045,
-                        ),
-                        const Text(
-                          "or",
-                          style: TextStyle(
-                            fontSize: 24,
-                            color: Colors.white,
-                          ),
-                        ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.045,
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-
-
                           },
                           style: ElevatedButton.styleFrom(
                             padding: EdgeInsets.symmetric(
@@ -259,8 +214,8 @@ class _EditAccountInfoState extends State<EditAccountInfo> {
                               MediaQuery.of(context).size.width * 0.15,
                             ),
                             minimumSize: Size(
-                              MediaQuery.of(context).size.width * 0.85,
-                            MediaQuery.of(context).size.height * 0.05),
+                                MediaQuery.of(context).size.width * 0.85,
+                                MediaQuery.of(context).size.height * 0.05),
                             primary: const Color.fromARGB(255, 10, 150, 0),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),

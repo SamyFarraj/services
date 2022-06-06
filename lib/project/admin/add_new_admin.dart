@@ -3,6 +3,8 @@ import 'package:project_mohammad/services/choices.dart';
 
 import '../../Api/controller/Admin/addNewAdmin_Controller.dart';
 
+import '../../components/snack_bar.dart';
+
 // import '../../components/buttons.dart';
 
 class AddNewAdmin extends StatefulWidget {
@@ -168,45 +170,29 @@ class _AddNewAdminState extends State<AddNewAdmin> {
 
   bool checkNewAdmin(String adminName) {
     if (adminName == '' || adminName == ' ') {
-      snackBar(context, 'Please Enter Admin Name',
+      TheSnackBar(context, 'Please Enter Admin Name',
           const Color.fromARGB(255, 150, 10, 10));
       return false;
     }
     else if(adminName.length < 4){
-      snackBar(context, 'Name Is Too Short',
+      TheSnackBar(context, 'Name Is Too Short',
           const Color.fromARGB(255, 150, 10, 10));
       return false;
     }
      else {
       for (var admin in addAdminList) {
         if (adminName == admin) {
-          snackBar(context, 'Admin Name Exited',
+          TheSnackBar(context, 'Admin Name Exited',
               const Color.fromARGB(255, 150, 10, 10));
           return false;
         }
       }
       addAdminList.add(adminName);
-      snackBar(context, "Admin Added Successfully",
-          const Color.fromARGB(255, 15, 150, 10));
+      TheSnackBar(context, 'Admin Added Successfully',
+          const Color.fromARGB(255, 10, 150, 10));
       return true;
     }
   }
 
-  void snackBar(
-      BuildContext context, String errorMessage, Color snackBarColor) {
-    final snackBar = SnackBar(
-      content: Text(
-        errorMessage,
-        style: const TextStyle(
-          fontSize: 28,
-          color: Colors.white,
-        ),
-      ),
-      backgroundColor: snackBarColor,
-      duration: const Duration(seconds: 1),
-    );
-    ScaffoldMessenger.of(context)
-      ..removeCurrentSnackBar()
-      ..showSnackBar(snackBar);
-  }
+
 }

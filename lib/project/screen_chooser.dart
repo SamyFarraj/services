@@ -1,13 +1,9 @@
-import 'package:project_mohammad/project/home/service_management_page_choosing.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
-import 'requests.dart';
-import 'account_settings.dart';
-import 'contact_us.dart';
-import 'home_page.dart';
-// import 'services.dart';
-
+import 'home/service_management_page_choosing.dart';
+import 'home/home_page.dart';
+import 'home/requests.dart';
 
 class ScreenChooser extends StatefulWidget {
   const ScreenChooser({Key? key}) : super(key: key);
@@ -18,16 +14,12 @@ class ScreenChooser extends StatefulWidget {
 
 class _ScreenChooserState extends State<ScreenChooser> {
   final navigationKey = GlobalKey<CurvedNavigationBarState>();
-  int index = 2;
+  int index = 1;
 
   final screens = [
-    // const StreetServiceChoosing(),
     const ServiceManagementPageChooser(),
-    const AccountSettings(),
     const HomePage(),
-    const ContactUs(),
     const Requests(),
-
   ];
 
   @override
@@ -38,22 +30,13 @@ class _ScreenChooserState extends State<ScreenChooser> {
         size: 40,
       ),
       const Icon(
-        Icons.settings,
-        size: 40,
-      ),
-      const Icon(
         Icons.home,
-        size: 40,
-      ),
-      const Icon(
-        Icons.contact_page_rounded,
         size: 40,
       ),
       const Icon(
         Icons.request_page,
         size: 40,
       ),
-
     ];
     return Scaffold(
       body: screens[index],
@@ -70,15 +53,13 @@ class _ScreenChooserState extends State<ScreenChooser> {
           index: index,
           height: 60,
           color: const Color.fromARGB(190, 0, 20, 145),
-          // color: Color.fromARGB(205, 255, 85, 35),
           backgroundColor: Colors.transparent,
           animationCurve: Curves.fastLinearToSlowEaseIn,
-          onTap: (index) => setState(() {
-
+          onTap: (index) => setState(
+            () {
               this.index = index;
-
-
-          }),
+            },
+          ),
         ),
       ),
     );

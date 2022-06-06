@@ -1,3 +1,4 @@
+import 'package:project_mohammad/components/dash_board.dart';
 import 'package:project_mohammad/services/choices.dart';
 import 'package:project_mohammad/services/on_hold.dart';
 import 'package:project_mohammad/services/street_service_chooser.dart';
@@ -17,6 +18,7 @@ class _StreetServiceChoosingState extends State<StreetServiceChoosing> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const DashBoard(),
       extendBody: true,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -115,18 +117,6 @@ DateTime selectedTime = DateTime.now();
 
 
 
-class BasicTileWidget extends StatefulWidget {
-  final ServiceChooser tile;
-
-  const BasicTileWidget({
-    Key? key,
-    required this.tile,
-  }) : super(key: key);
-
-  @override
-  _BasicTileWidgetState createState() => _BasicTileWidgetState();
-}
-
 class _BasicTileWidgetState extends State<BasicTileWidget> {
   @override
   Widget build(BuildContext context) {
@@ -171,4 +161,16 @@ class _BasicTileWidgetState extends State<BasicTileWidget> {
       );
     }
   }
+}
+
+class BasicTileWidget extends StatefulWidget {
+  final ServiceChooser tile;
+
+  const BasicTileWidget({
+    Key? key,
+    required this.tile,
+  }) : super(key: key);
+
+  @override
+  _BasicTileWidgetState createState() => _BasicTileWidgetState();
 }

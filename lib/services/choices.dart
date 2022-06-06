@@ -22,8 +22,8 @@ class getdata {
 //المتغير الثاني srChooser يرمز للمصفوفة المحتواة في اسم الشارع
 //والتي تحوي الخدمات (البوابات) التي يمكن حجزها من الشارع
 final selectStreet = <ServiceChooser>[
-  ServiceChooser(title: 'WoodWard', serviceChoosingList: woodWardStreetList),
-  ServiceChooser(title: 'Farmer', serviceChoosingList: farmerStreetList),
+  ServiceChooser(title: 'WOODWARD', serviceChoosingList: woodWardStreetList),
+  ServiceChooser(title: 'FARMER', serviceChoosingList: farmerStreetList),
 ];
 
 //مصفوفة ال بوابات

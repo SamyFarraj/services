@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:project_mohammad/project/constant.dart';
 
-import '../project/home/requests.dart';
-import '../services/choices.dart';
-import '../services/requests_statue.dart';
-import '../services/staff.dart';
+
 import 'package:http/http.dart' as http;
+import 'package:project_mohammad/components/snack_bar.dart';
+
+import '../../services/choices.dart';
+import '../../services/requests_statue.dart';
+import 'requests.dart';
+// import '../../services/staff.dart';
 
 class ServiceInformationInput extends StatefulWidget {
   final String gateName;
@@ -243,6 +246,8 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
                                       choosedDate.hour,
                                       choosedDate.minute,
                                     );
+
+                                    print("the dateeee : ${date}");
                                     showSelectedDate();
                                   },
                                 ),
@@ -487,7 +492,7 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
   showSelectedDate() {
     setState(() {
       if (date != DateTime(2021)) {
-        showedDate = DateFormat("MM/dd/yyyy HH:mm").format(date);
+        showedDate = DateFormat("MM/dd/yyyy").format(date);
       }
     });
   }
@@ -525,60 +530,6 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
 
   /*
 
-              ////////////        staffs        ////////////
-
-  */
-
-  //هي ال widget  اللي بتعرض خيار ال  select all staffs ك checkBox
-
-  Widget buildGroupStaffCheckbox(StaffCheckBox staffCheckBox) =>
-      CheckboxListTile(
-        controlAffinity: ListTileControlAffinity.leading,
-        title: Text(
-          staffCheckBox.staff_name,
-          style: const TextStyle(
-            fontSize: 24,
-            color: Colors.orange,
-          ),
-        ),
-        activeColor: Colors.blue,
-        value: staffCheckBox.isChecked,
-        onChanged: toggleGroupStaffCheckbox,
-      );
-
-  // for choosing all staffs in one choice
-  // its called select all staffs
-  // هاد تابع بيتقق اذا تم اختبار ال كل ال staffs او لأ
-  //مشان الخيار select all staffs
-
-  void toggleGroupStaffCheckbox(bool? isChecked) {
-    if (isChecked == null) return;
-    setState(() {
-      selectAllStaff.isChecked = isChecked;
-      // ignore: avoid_function_literals_in_foreach_calls
-      chooseStaff.forEach((staff) => staff.isChecked = isChecked);
-    });
-  }
-
-  //هي ال widget  اللي بتعرض ال staffs ك checkBox
-
-  Widget buildStaffCheckbox(StaffCheckBox staffCheckBox) => CheckboxListTile(
-        onChanged: (staffValue) => setState(() {
-          staffCheckBox.isChecked = staffValue!;
-          selectAllStaff.isChecked =
-              chooseStaff.every((staff) => staff.isChecked == true);
-        }),
-        controlAffinity: ListTileControlAffinity.leading,
-        activeColor: Colors.blue,
-        value: staffCheckBox.isChecked,
-        title: Text(
-          staffCheckBox.staff_name,
-          style: const TextStyle(fontSize: 24, color: Colors.white),
-        ),
-      );
-
-  /*
-
             ///////////       service check       ///////////
 
   */
@@ -590,67 +541,103 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
     String serviceName,
   ) {
     if (serviceName == 'Select Service') {
-      snackBar(context, 'Please Select Service',
-          const Color.fromARGB(255, 150, 10, 10));
+      TheSnackBar(context, 'Please Select Service',
+              const Color.fromARGB(255, 150, 10, 10),
+      );
+      // snackBar(context, 'Please Select Service',
+      //     const Color.fromARGB(255, 150, 10, 10));
       return false;
     } else if (date.year == 2021) {
-      snackBar(context, 'Please Select Date',
-          const Color.fromARGB(255, 150, 10, 10));
+      TheSnackBar(context, 'Please Select Date',
+        const Color.fromARGB(255, 150, 10, 10),
+      );
+      // snackBar(context, 'Please Select Date',
+      //     const Color.fromARGB(255, 150, 10, 10));
       return false;
     } else if (time == const TimeOfDay(hour: 23, minute: 41)) {
-      snackBar(context, 'Please Select Time',
-          const Color.fromARGB(255, 150, 10, 10));
+      TheSnackBar(context, 'Please Select Time',
+        const Color.fromARGB(255, 150, 10, 10),
+      );
+      // snackBar(context, 'Please Select Time',
+      //     const Color.fromARGB(255, 150, 10, 10));
       return false;
     } else if (time.hour > 18 && time.hour < 6) {
-      snackBar(context, 'This period is unavailable',
-          const Color.fromARGB(255, 150, 10, 10));
+      TheSnackBar(context, 'This period is unavailable',
+        const Color.fromARGB(255, 150, 10, 10),
+      );
+      // snackBar(context, 'This period is unavailable',
+      //     const Color.fromARGB(255, 150, 10, 10));
       return false;
     } else if (selectedMinuteDuration == "" && selectedHoursDuration == "") {
-      snackBar(context, 'Please Select Duration',
-          const Color.fromARGB(255, 150, 10, 10));
+      TheSnackBar(context, 'Please Select Duration',
+        const Color.fromARGB(255, 150, 10, 10),
+      );
+      // snackBar(context, 'Please Select Duration',
+      //     const Color.fromARGB(255, 150, 10, 10));
       return false;
     } else {
       for (int i = 0; i < selectedHoursDuration.length; i++) {
         if (selectedHoursDuration[i] == '.' ||
             selectedHoursDuration[i] == ' ' ||
             selectedHoursDuration[i] == ',') {
-          snackBar(context, 'Please Select Correct Hours Duration',
-              const Color.fromARGB(255, 150, 10, 10));
+          TheSnackBar(context, 'Please Select Correct Hours Duration',
+            const Color.fromARGB(255, 150, 10, 10),
+          );
+          // snackBar(context, 'Please Select Correct Hours Duration',
+          //     const Color.fromARGB(255, 150, 10, 10));
           return false;
         } else if (selectedMinuteDuration[i] == '.' ||
             selectedMinuteDuration[i] == ' ' ||
             selectedMinuteDuration[i] == ',') {
-          snackBar(context, 'Please Select Correct Minute Duration',
-              const Color.fromARGB(255, 150, 10, 10));
+          TheSnackBar(context, 'Please Select Correct Minute Duration',
+            const Color.fromARGB(255, 150, 10, 10),
+          );
+          // snackBar(context, 'Please Select Correct Minute Duration',
+          //     const Color.fromARGB(255, 150, 10, 10));
           return false;
         }
       }
-      if (selectedHoursDuration == "" || selectedHoursDuration == " ") {
+      if (selectedHoursDuration == "" ||
+          selectedHoursDuration == " " ||
+          selectedHoursDuration == "0") {
         selectedHoursDuration = "00";
       } else if (selectedMinuteDuration == "" ||
-          selectedMinuteDuration == " ") {
+          selectedMinuteDuration == " " ||
+          selectedMinuteDuration == "0") {
         selectedMinuteDuration = "00";
       }
       int closedHours = int.parse(selectedHoursDuration);
       int closedMinutes = int.parse(selectedMinuteDuration);
-      if ((closedHours + time.hour) >= 18) {
-        snackBar(
-            context,
-            'Duration Exceeding closing time,'
+      if ((closedHours + time.hour) >= 18 &&
+          (closedMinutes + time.minute) > 0) {
+        TheSnackBar(context, 'Duration Exceeding closing time,'
             ' please Edit duration or time',
-            const Color.fromARGB(255, 150, 10, 10));
+          const Color.fromARGB(255, 150, 10, 10),
+        );
+        // snackBar(
+        //     context,
+        //     'Duration Exceeding closing time,'
+        //     ' please Edit duration or time',
+        //     const Color.fromARGB(255, 150, 10, 10));
         return false;
       } else if ((closedHours + time.hour) >= 17 &&
-          (closedMinutes + time.minute) >= 59) {
-        snackBar(
-            context,
-            'Duration Exceeding closing time,'
+          (closedMinutes + time.minute) > 60) {
+        TheSnackBar(context, 'Duration Exceeding closing time,'
             ' please Edit duration or time',
-            const Color.fromARGB(255, 150, 10, 10));
+          const Color.fromARGB(255, 150, 10, 10),
+        );
+        // snackBar(
+        //     context,
+        //     'Duration Exceeding closing time,'
+        //     ' please Edit duration or time',
+        //     const Color.fromARGB(255, 150, 10, 10));
         return false;
       }
-      snackBar(context, "Service Requested Successfully",
-          const Color.fromARGB(255, 15, 150, 10));
+      TheSnackBar(context, 'Service Requested Successfully',
+        const Color.fromARGB(255, 15, 150, 10),
+      );
+      // snackBar(context, "Service Requested Successfully",
+      //     const Color.fromARGB(255, 15, 150, 10));
       choosedEndDateTime = DateTime(
         choosedStartingDateTime.year,
         choosedStartingDateTime.month,
@@ -663,12 +650,12 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
           gateTitle: widget.gateName,
           serviceTitle: selectedService!,
           serviceDate:
-              DateFormat("MM/dd/yyyy HH:mm").format(choosedStartingDateTime),
+              DateFormat("yyyy/MM/dd HH:mm").format(choosedStartingDateTime),
           serviceTime: time,
           hoursDuration: int.parse(selectedHoursDuration),
           minuteDuration: int.parse(selectedMinuteDuration),
           user: "user",
-          endingDate: DateFormat("MM/dd/yyyy HH:mm").format(choosedEndDateTime),
+          endingDate: DateFormat("yyyy/MM/dd HH:mm").format(choosedEndDateTime),
           // choosedStaffs: choosedStaffsList,
         ),
       );
@@ -680,30 +667,5 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
       }
       return true;
     }
-  }
-
-  /*
-
-              ////////////       snackBar       ////////////
-
-  */
-
-  //هاد تابع لل SnackBar بيعرض رسالة الخطأ او رسالة ال اتمام العملية
-  void snackBar(
-      BuildContext context, String errorMessage, Color snackBarColor) {
-    final snackBar = SnackBar(
-      content: Text(
-        errorMessage,
-        style: const TextStyle(
-          fontSize: 20,
-          color: Colors.white,
-        ),
-      ),
-      backgroundColor: snackBarColor,
-      duration: const Duration(seconds: 1),
-    );
-    ScaffoldMessenger.of(context)
-      ..removeCurrentSnackBar()
-      ..showSnackBar(snackBar);
   }
 }

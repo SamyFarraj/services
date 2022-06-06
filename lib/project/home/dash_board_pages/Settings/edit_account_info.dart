@@ -1,24 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
-import '../Api/controller/login_controller.dart';
+import '../../../../Api/controller/login_controller.dart';
+import '../../../constant.dart';
 
-
-class ChangePasswordPage extends StatefulWidget {
-  const ChangePasswordPage({Key? key}) : super(key: key);
+class EditAccountInfo extends StatefulWidget {
+  const EditAccountInfo({Key? key}) : super(key: key);
 
   @override
-  State<ChangePasswordPage> createState() => _ChangePasswordPageState();
+  State<EditAccountInfo> createState() => _EditAccountInfoState();
 }
 
-class _ChangePasswordPageState extends State<ChangePasswordPage> {
-  bool rePasswordVisibility = true;
-  bool passwordVisibility = true;
-  final editingPasswordFormKey = GlobalKey<FormState>();
-  final newPasswordController = TextEditingController();
-  final rePasswordController = TextEditingController();
+class _EditAccountInfoState extends State<EditAccountInfo> {
+
+
+  static Future <String> upadte_user_profile(String name ,String phone) async {
+    var headers = {
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ${t}'
+    };
+    var request = http.MultipartRequest(
+        'POST', Uri.parse('${base_Url}'));
+    request.fields.addAll({
+      'name': '${name}',
+      'phone': '${phone}'
+    });
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      return (await response.stream.bytesToString());
+    }
+    else {
+      return (response.reasonPhrase.toString());
+    }
+  }
 
 
 
+
+  final editingInfoFormKey = GlobalKey<FormState>();
+    final newNameController = TextEditingController();
+    final newPhoneController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +84,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
           // ما يعطي pixels rendered out error
           // يعني مشات  ما تطلع ال pixels  من الشاشة
           Form(
-            key: editingPasswordFormKey,
+            key: editingInfoFormKey,
             child: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
@@ -89,116 +114,143 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.03,
                         ),
+                        // هاد ال حقل الخاص ب الاسم
+                        TextFormField(
+                          validator: (enteredNameVal) =>
+                          enteredNameVal!.length < 6
+                              ? "Name is too short"
+                              : null,
+                          controller: newNameController,
+                          decoration: const InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.person,
+                              color: Colors.deepOrange,
+                            ),
+                            label: Text(
+                              "New Name",
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.blueAccent,
+                              ),
+                            ),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                width: 2.0,
+                                color: Colors.deepOrange,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                width: 2.0,
+                                color: Colors.blue,
+                              ),
+                            ),
+                          ),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                          ),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.045,
+                        ),
+                        TextFormField(
+                          validator: (enteredPhoneVal) =>
+                          enteredPhoneVal!.length < 9
+                              ? "phone is too short"
+                              : null,
+                          keyboardType: TextInputType.phone,
+                          controller: newPhoneController,
+                          decoration: const InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.phone,
+                              color: Colors.deepOrange,
+                            ),
+                            label: Text(
+                              "New Phone Number",
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.blueAccent,
+                              ),
+                            ),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                width: 2.0,
+                                color: Colors.deepOrange,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                width: 2.0,
+                                color: Colors.blue,
+                              ),
+                            ),
+                          ),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                          ),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.065,
+                        ),
+                        //  هي كبسة ال signUp
+                        // جوا ال onPressed منحط ال استدعاء تابع ارسال البيانات لل database
+                        ElevatedButton(
+                          onPressed: () {
+                            final changeInfoFormKey = editingInfoFormKey.currentState!;
+                            if(changeInfoFormKey.validate()){
+                              // تابع ارسال البيانات
+                              upadte_user_profile(newNameController.text,  newPhoneController.text);
+                            }
 
-                        TextFormField(
-                          validator: (enteredPasswordVal) =>
-                          enteredPasswordVal!.length < 8
-                              ? "Password is too short"
-                              : null,
-                          keyboardType: TextInputType.visiblePassword,
-                          obscureText: passwordVisibility,
-                          controller: newPasswordController,
-                          decoration: InputDecoration(
-                            prefixIcon: const Icon(
-                              Icons.vpn_key_sharp,
-                              color: Colors.deepOrange,
+                          },
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.symmetric(
+                              vertical: 10.0,
+                              horizontal:
+                                  MediaQuery.of(context).size.width * 0.25,
                             ),
-                            suffixIcon: IconButton(
-                              color: Colors.blue,
-                              icon: passwordVisibility
-                                  ? const Icon(Icons.visibility_off)
-                                  : const Icon(Icons.visibility),
-                              // color: Colors.deepOrange,
-                              onPressed: () => setState(
-                                    () => passwordVisibility = !passwordVisibility,
-                              ),
+                            primary: const Color.fromARGB(255, 10, 150, 0),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
                             ),
-                            label: const Text(
-                              "Password",
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.blueAccent,
-                              ),
-                            ),
-                            enabledBorder: const UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                width: 2.0,
-                                color: Colors.deepOrange,
-                              ),
-                            ),
-                            focusedBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                width: 2.0,
-                                color: Colors.blue,
-                              ),
-                            ),
+                            elevation: 15.0,
                           ),
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: const <Widget>[
+                              Icon(
+                                Icons.lock_open_rounded,
+                                color: Colors.white,
+                              ),
+                              Text(
+                                "Accept",
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.05,
+                          height: MediaQuery.of(context).size.height * 0.045,
                         ),
-                        // هاد ال حقل الخاص ب اعادة ال password
-                        TextFormField(
-                          validator: (enteredPasswordVal) =>
-                          enteredPasswordVal!= newPasswordController.text
-                              ? "re-Password isn't current"
-                              : null,
-                          obscureText: rePasswordVisibility,
-                          controller: rePasswordController,
-                          decoration: InputDecoration(
-                            prefixIcon: const Icon(
-                              Icons.vpn_key_sharp,
-                              color: Colors.deepOrange,
-                            ),
-                            suffixIcon: IconButton(
-                              color: Colors.blue,
-                              icon: rePasswordVisibility
-                                  ? const Icon(Icons.visibility_off)
-                                  : const Icon(Icons.visibility),
-                              // color: Colors.deepOrange,
-                              onPressed: () => setState(
-                                    () => rePasswordVisibility =
-                                !rePasswordVisibility,
-                              ),
-                            ),
-                            label: const Text(
-                              "Re-Password",
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.blueAccent,
-                              ),
-                            ),
-                            enabledBorder: const UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                width: 2.0,
-                                color: Colors.deepOrange,
-                              ),
-                            ),
-                            focusedBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                width: 2.0,
-                                color: Colors.blue,
-                              ),
-                            ),
-                          ),
-                          style: const TextStyle(
+                        const Text(
+                          "or",
+                          style: TextStyle(
+                            fontSize: 24,
                             color: Colors.white,
-                            fontSize: 18,
                           ),
                         ),
                         SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.1,
+                          height: MediaQuery.of(context).size.height * 0.045,
                         ),
                         ElevatedButton(
                           onPressed: () {
-                            final changePasswordFormKey = editingPasswordFormKey.currentState!;
-                            if(changePasswordFormKey.validate()){
-                              // تابع ارسال البيانات
-                            }
+
+
                           },
                           style: ElevatedButton.styleFrom(
                             padding: EdgeInsets.symmetric(
@@ -207,8 +259,8 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                               MediaQuery.of(context).size.width * 0.15,
                             ),
                             minimumSize: Size(
-                                MediaQuery.of(context).size.width * 0.85,
-                                MediaQuery.of(context).size.height * 0.05),
+                              MediaQuery.of(context).size.width * 0.85,
+                            MediaQuery.of(context).size.height * 0.05),
                             primary: const Color.fromARGB(255, 10, 150, 0),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
