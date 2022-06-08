@@ -1,4 +1,3 @@
-
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:project_mohammad/Api/controller/login_controller.dart';
@@ -96,10 +95,10 @@ class _LogInPageState extends State<LogInPage> {
                         // هاد ال حقل الخاص ب ال email
                         TextFormField(
                           validator: (enteredEmailVal) =>
-                          enteredEmailVal != null &&
-                              !EmailValidator.validate(enteredEmailVal)
-                              ? "Please Enter a Valid E-Mail"
-                              : null,
+                              enteredEmailVal != null &&
+                                      !EmailValidator.validate(enteredEmailVal)
+                                  ? "Please Enter a Valid E-Mail"
+                                  : null,
                           keyboardType: TextInputType.emailAddress,
                           controller: emailController,
                           decoration: const InputDecoration(
@@ -138,9 +137,9 @@ class _LogInPageState extends State<LogInPage> {
                         // هاد ال حقل الخاص ب ال password
                         TextFormField(
                           validator: (enteredPasswordVal) =>
-                          enteredPasswordVal!.length < 8
-                              ? "Password is too short"
-                              : null,
+                              enteredPasswordVal!.length < 8
+                                  ? "Password is too short"
+                                  : null,
                           obscureText: passwordVisibility,
                           controller: passwordController,
                           decoration: InputDecoration(
@@ -183,8 +182,23 @@ class _LogInPageState extends State<LogInPage> {
                             fontSize: 18,
                           ),
                         ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            TextButton(
+                              onPressed: () {},
+                              child: const Text(
+                                "forgot password?",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.blue,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                         SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.2,
+                          height: MediaQuery.of(context).size.height * 0.15,
                         ),
                         //هاد الزر اخر شي مننقل كلشي جوا ال on pressed
                         // buttonsOfAuthentication(context, 'Login', (){
@@ -201,24 +215,36 @@ class _LogInPageState extends State<LogInPage> {
                         //
                         // }),
                         GestureDetector(
+                          child: Container(
+                            margin: const EdgeInsets.only(
+                              left: 15,
+                              right: 15,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.blue,
+                            ),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: const <Widget>[
-                                Icon(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                const Icon(
                                   Icons.lock_open_rounded,
                                   color: Colors.white,
                                 ),
-                                Text(
-                                  "LogIffn",
+                                SizedBox(
+                                  width: MediaQuery.of(context).size.width * 0.05,
+                                ),
+                                const Text(
+                                  "LogInS",
                                   style: TextStyle(
                                     fontSize: 24,
                                     color: Colors.white,
                                   ),
                                 ),
                               ],
-                            ) ,
-                          onTap: ()
-                          {
+                            ),
+                          ),
+                          onTap: () {
                             //هون لازم نضيف ال validator
                             // حاليا رح اتركو بتعليق مشات
                             // ما يعذبك وقت التجريب اخر شي بزبطو
@@ -228,8 +254,9 @@ class _LogInPageState extends State<LogInPage> {
                               // تباع الارسال
                             }
                              */
-                            print('fasfsdfesfdfs');
-                            logincontroller().signIn(emailController.text,passwordController.text,'/user');
+                            print('pressed');
+                            logincontroller().signIn(emailController.text,
+                                passwordController.text, '/user');
                           },
                         )
                         //  هي كبسة ال login
@@ -237,7 +264,7 @@ class _LogInPageState extends State<LogInPage> {
 /*
                         ElevatedButton(
                           onPressed: () {
-                            print('fasfsdfesfdfs');
+                            print('pressed');
                             logincontroller().signIn(emailController.text,passwordController.text);
                           },
                           style: ElevatedButton.styleFrom(

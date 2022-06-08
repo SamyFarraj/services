@@ -4,6 +4,8 @@ import 'package:http/http.dart' as http;
 import '../../../../Api/controller/login_controller.dart';
 import '../../../constant.dart';
 
+import 'dashboard_verification_code_page.dart';
+
 class EditAccountInfo extends StatefulWidget {
   const EditAccountInfo({Key? key}) : super(key: key);
 
@@ -251,6 +253,11 @@ class _EditAccountInfoState extends State<EditAccountInfo> {
                           onPressed: () {
 
 
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(builder: (_){
+                                return const DashBoardVerificationCodePage();
+                              },),
+                            );
                           },
                           style: ElevatedButton.styleFrom(
                             padding: EdgeInsets.symmetric(

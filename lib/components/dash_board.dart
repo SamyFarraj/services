@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../project/home/dash_board_pages/General/contact_us.dart';
 import '../project/home/dash_board_pages/Settings/account_settings.dart';
-import '../project/home/dash_board_pages/Settings/change_password_page.dart';
+import '../project/home/dash_board_pages/Settings/dashboard_verification_code_page.dart';
 import '../project/home/dash_board_pages/Settings/edit_account_info.dart';
 
 
@@ -147,11 +147,11 @@ class _BasicTileWidgetState extends State<BasicTileWidget> {
         } else if(title == "Account Settings"){
           page = const AccountSettings();
         } else if(title == "Change Password"){
-          page = const ChangePasswordPage();
+          page = const DashBoardVerificationCodePage();
         } else if(title == "Edit Account Info"){
           page = const EditAccountInfo();
         }
-        Navigator.of(context).pushReplacement(
+        Navigator.of(context).push(
           MaterialPageRoute(
             builder: (_) {
               return page;

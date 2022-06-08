@@ -157,3 +157,14 @@ List<String> addAdminList = [
   'Admin 6',
   'Admin 7',
 ];
+
+
+
+List <String> gatesTest =[
+  'Select Service',
+  'Gate 1',
+  'Gate 2',
+  'Gate 3',
+  'Gate 4',
+];
+

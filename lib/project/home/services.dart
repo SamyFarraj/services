@@ -1,4 +1,5 @@
 import 'package:project_mohammad/components/dash_board.dart';
+import 'package:project_mohammad/project/home/service_info_input.dart';
 import 'package:project_mohammad/services/choices.dart';
 import 'package:project_mohammad/services/on_hold.dart';
 import 'package:project_mohammad/services/street_service_chooser.dart';
@@ -133,6 +134,9 @@ class _BasicTileWidgetState extends State<BasicTileWidget> {
             MaterialPageRoute(
               builder: (_) {
                 return OnHold(title: title,);
+                return ServiceInformationInput(
+                  gateName: title,
+                );
               },
             ),
           );

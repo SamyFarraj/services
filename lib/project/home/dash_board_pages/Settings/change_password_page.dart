@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:project_mohammad/authentication/verfication_code_page.dart';
+import 'package:project_mohammad/authentication/auth_verification_code_page.dart';
+import 'package:project_mohammad/project/projects_page.dart';
 
 
 
@@ -114,7 +115,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                               ),
                             ),
                             label: const Text(
-                              "Password",
+                              " Password",
                               style: TextStyle(
                                 fontSize: 18,
                                 color: Colors.blueAccent,
@@ -166,7 +167,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                               ),
                             ),
                             label: const Text(
-                              "Re-Password",
+                              " Re-Password",
                               style: TextStyle(
                                 fontSize: 18,
                                 color: Colors.blueAccent,
@@ -174,7 +175,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                             ),
                             enabledBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(
-                                width: 2.0,
+                                width: 2.2,
                                 color: Colors.deepOrange,
                               ),
                             ),
@@ -201,7 +202,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(builder: (_){
-                                    return const VerificationCodePage();
+                                    return const ProjectsPage();
                                   },
                                   ),
                               );

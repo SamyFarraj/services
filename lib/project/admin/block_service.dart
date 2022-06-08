@@ -152,8 +152,11 @@ class _BlockServiceState extends State<BlockService> {
                               print("dkphhhhh");
 
                               servicefarmer.add('select service');
+
                               for(int i =0;i<snapshot.data!.services.woodward.length;i++)
                               {
+                                print("there is no item ");
+
                                 servicewoodward.add(snapshot.data!.services.woodward[i].name);
                               }
                               //   print("the array = ${servicewoodward}");
@@ -166,6 +169,8 @@ class _BlockServiceState extends State<BlockService> {
                                 print("dkphhhhh");
                                 for(int i =0;i<snapshot.data!.services.farmer.length;i++)
                                 {
+                                  print("there is no item ");
+
                                   servicefarmer.add(snapshot.data!.services.farmer[i].name);
                                 }
                               }
@@ -245,7 +250,7 @@ class _BlockServiceState extends State<BlockService> {
 
                                             selectedStreet = street;
 
-                                            if(selectedStreet=='Farmer')
+                                            if(selectedStreet=='FARMER')
                                             {
 
                                               if(servicefarmer.length==0)
@@ -263,7 +268,7 @@ class _BlockServiceState extends State<BlockService> {
                                               }
                                             }
 
-                                            if(selectedStreet=='WoodWard')
+                                            if(selectedStreet=='WOODWARD')
                                             {
                                               servicesList = List.from(servicewoodward);
                                               selectedService=servicesList[0];
@@ -312,9 +317,9 @@ class _BlockServiceState extends State<BlockService> {
                                           .toList(),
                                       onChanged: (service) => setState(() {
                                         selectedService = service!;
-                                        print("the selecteddd ${selectedService}");
+                                        print("the selecteddd $selectedService");
                                         print("dkphhhhh");
-                                        if(selectedStreet=='WoodWard')
+                                        if(selectedStreet=='WOODWARD')
                                           for(int i =0;i<snapshot.data!.services.woodward.length;i++)
                                           {
                                             if(selectedService==snapshot.data!.services.woodward[i].name)
@@ -326,7 +331,7 @@ class _BlockServiceState extends State<BlockService> {
 
                                             }
                                           }
-                                        else  if(selectedStreet=='Farmer')
+                                        else  if(selectedStreet=='FARMER')
                                         {
                                           for(int i =0;i<snapshot.data!.services.farmer.length;i++)
                                           {
@@ -341,7 +346,9 @@ class _BlockServiceState extends State<BlockService> {
                                           }
 
 
-                                        }}),
+                                        }
+
+                                      }),
                                     ),
                                   ),
                                   ///الليست القديمة //

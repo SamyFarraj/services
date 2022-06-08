@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:project_mohammad/components/snack_bar.dart';
+import 'package:project_mohammad/project/home/dash_board_pages/Settings/change_password_page.dart';
 import 'package:project_mohammad/project/projects_page.dart';
 
-class VerificationCodePage extends StatefulWidget {
-  const VerificationCodePage({Key? key}) : super(key: key);
+class AuthVerificationCodePage extends StatefulWidget {
+  const AuthVerificationCodePage({Key? key}) : super(key: key);
 
   @override
-  State<VerificationCodePage> createState() => _VerificationCodePageState();
+  State<AuthVerificationCodePage> createState() => _AuthVerificationCodePageState();
 }
 
-class _VerificationCodePageState extends State<VerificationCodePage> {
+class _AuthVerificationCodePageState extends State<AuthVerificationCodePage> {
   // هاد ال controller
   // مشان ال textField
   final verificationCodeController = TextEditingController();
@@ -169,21 +171,21 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
                                         correctVerificationCode) {
                                       Navigator.of(context).pushReplacement(
                                         MaterialPageRoute(
-                                          builder: (_) => const ProjectsPage(),
+                                          builder: (_) => const ChangePasswordPage(),
                                         ),
                                       );
-                                      snackBar(
-                                        context,
-                                        "Completed",
-                                        const Color.fromARGB(255, 10, 150, 10),
-                                      );
+                                      // TheSnackBar(
+                                      //   context,
+                                      //   "Ac",
+                                      //   const Color.fromARGB(255, 10, 150, 10),
+                                      // );
                                     } else {
                                       final currentCode =
                                           verificationCodeFormKey.currentState!;
-                                      if (currentCode.validate()) {
-                                        print("accepted");
-                                      }
-                                      snackBar(
+                                      // if (currentCode.validate()) {
+                                      //   print("accepted");
+                                      // }
+                                      TheSnackBar(
                                         context,
                                         "Please Enter A Valid Code",
                                         const Color.fromARGB(255, 150, 10, 10),
@@ -230,14 +232,15 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
 
   void checkVerificationCode() {
     if (verificationCodeController.text == correctVerificationCode) {
+
     } else if (verificationCodeController.text == '') {
-      snackBar(
+      TheSnackBar(
         context,
         "Please Enter Verification Code",
         const Color.fromARGB(255, 150, 10, 10),
       );
     } else {
-      snackBar(
+      TheSnackBar(
         context,
         "Please Enter Verification Code",
         const Color.fromARGB(255, 150, 10, 10),
@@ -245,21 +248,4 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
     }
   }
 
-  void snackBar(
-      BuildContext context, String errorMessage, Color snackBarColor) {
-    final snackBar = SnackBar(
-      content: Text(
-        errorMessage,
-        style: const TextStyle(
-          fontSize: 28,
-          color: Colors.white,
-        ),
-      ),
-      backgroundColor: snackBarColor,
-      duration: const Duration(seconds: 1),
-    );
-    ScaffoldMessenger.of(context)
-      ..removeCurrentSnackBar()
-      ..showSnackBar(snackBar);
-  }
 }
