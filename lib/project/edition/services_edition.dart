@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-
 import 'package:project_mohammad/components/dash_board.dart';
 import 'package:project_mohammad/project/home/service_info_input.dart';
 import 'package:project_mohammad/services/choices.dart';
 
+import '../../components/snack_bar.dart';
 
 class ServiceEdition extends StatefulWidget {
   const ServiceEdition({Key? key}) : super(key: key);
@@ -32,26 +32,6 @@ class _ServiceEditionState extends State<ServiceEdition> {
           ),
         ),
         backgroundColor: const Color.fromARGB(150, 0, 0, 65),
-        // actions: [
-        //   IconButton(
-        //     onPressed: () {
-        //       if (admin) {
-        //         Navigator.of(context).push(
-        //           MaterialPageRoute(
-        //             builder: (_) => const AdminControlPanel(),
-        //           ),
-        //         );
-        //       } else {
-        //         snackBar(
-        //           context,
-        //           "This Feature only for Admins",
-        //           const Color.fromARGB(255, 150, 10, 10),
-        //         );
-        //       }
-        //     },
-        //     icon: const Icon(Icons.view_headline_sharp),
-        //   ),
-        // ],
       ),
       body: SizedBox(
         width: double.infinity,
@@ -88,18 +68,17 @@ class _ServiceEditionState extends State<ServiceEdition> {
                   height: 30,
                 ),
                 Container(
-                  width: double.infinity,
-                  alignment: Alignment.center,
-                  height: MediaQuery.of(context).size.height * 0.716,
-                  decoration: const BoxDecoration(
-                    color: Color.fromARGB(180, 0, 0, 65),
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(35),
-                      topRight: Radius.circular(35),
+                    width: double.infinity,
+                    alignment: Alignment.center,
+                    height: MediaQuery.of(context).size.height * 0.716,
+                    decoration: const BoxDecoration(
+                      color: Color.fromARGB(180, 0, 0, 65),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(35),
+                        topRight: Radius.circular(35),
+                      ),
                     ),
-                  ),
-                  child:
-                    SingleChildScrollView(
+                    child: SingleChildScrollView(
                       child: Column(
                         children: <Widget>[
                           SizedBox(
@@ -114,23 +93,23 @@ class _ServiceEditionState extends State<ServiceEdition> {
                                   borderRadius: BorderRadius.circular(25),
                                 ),
                               ),
-                              // value: selectedStreet,
-                              items: selectStreet
+                              value: selectedStreet,
+                              items: streetEdition
                                   .map(
                                     (street) => DropdownMenuItem<String>(
-                                  value: street.title,
-                                  child: Text(
-                                    street.title,
-                                    style: const TextStyle(
-                                      fontSize: 22,
-                                      color: Colors.blue,
+                                      value: street,
+                                      child: Text(
+                                        street,
+                                        style: const TextStyle(
+                                          fontSize: 22,
+                                          color: Colors.blue,
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
-                              )
+                                  )
                                   .toList(),
                               onChanged: (street) => setState(
-                                    () {
+                                () {
                                   selectedStreet = street;
                                 },
                               ),
@@ -142,53 +121,61 @@ class _ServiceEditionState extends State<ServiceEdition> {
                           SizedBox(
                             width: MediaQuery.of(context).size.width * 0.7,
                             child: DropdownButtonFormField<String>(
-                              decoration: InputDecoration(
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    width: 6.0,
-                                    color: Colors.blue,
-                                  ),
-                                  borderRadius: BorderRadius.circular(25),
-                                ),
-                              ),
-                              value: selectedService,
-                              items: gatesTest
-                                  .map(
-                                    (service) => DropdownMenuItem<String>(
-                                  value: service,
-                                  child: Text(
-                                    service,
-                                    style: const TextStyle(
-                                      fontSize: 22,
+                                decoration: InputDecoration(
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: const BorderSide(
+                                      width: 6.0,
                                       color: Colors.blue,
                                     ),
+                                    borderRadius: BorderRadius.circular(25),
                                   ),
                                 ),
-                              )
-                                  .toList(),
-                              onChanged: (service) => setState(() {
-                                selectedService = service!;
-                                Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                    builder: (_) => ServiceInformationInput(gateName: selectedService),
-                                  ),
-                                );
-                              }),
-                            ),
+                                value: selectedService,
+                                items: gatesEdition
+                                    .map(
+                                      (service) => DropdownMenuItem<String>(
+                                        value: service,
+                                        child: Text(
+                                          service,
+                                          style: const TextStyle(
+                                            fontSize: 22,
+                                            color: Colors.blue,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                    .toList(),
+                                onChanged: (service) {
+                                  if (selectedStreet != "Select Street") {
+                                    return setState(() {
+                                      selectedService = service!;
+                                      Navigator.of(context).pushReplacement(
+                                        MaterialPageRoute(
+                                          builder: (_) =>
+                                              ServiceInformationInput(
+                                                  gateName: selectedService),
+                                        ),
+                                      );
+                                    });
+                                  } else {
+                                    TheSnackBar(context, 'Please Select Street',
+                                        const Color.fromARGB(255, 150, 10, 10));
+                                  }
+                                }),
                           ),
                         ],
                       ),
                     )
-                  // ListView(
-                  //   children: selectStreet
-                  //       .map(
-                  //         (tile) => BasicTileWidget(
-                  //       tile: tile,
-                  //     ),
-                  //   )
-                  //       .toList(),
-                  // ),
-                ),
+                    // ListView(
+                    //   children: selectStreet
+                    //       .map(
+                    //         (tile) => BasicTileWidget(
+                    //       tile: tile,
+                    //     ),
+                    //   )
+                    //       .toList(),
+                    // ),
+                    ),
               ],
             ),
           ],
@@ -196,26 +183,7 @@ class _ServiceEditionState extends State<ServiceEdition> {
       ),
     );
   }
-
 }
-
-  // void snackBar(
-  //     BuildContext context, String errorMessage, Color snackBarColor) {
-  //   final snackBar = SnackBar(
-  //     content: Text(
-  //       errorMessage,
-  //       style: const TextStyle(
-  //         fontSize: 28,
-  //         color: Colors.white,
-  //       ),
-  //     ),
-  //     backgroundColor: snackBarColor,
-  //     duration: const Duration(seconds: 1),
-  //   );
-  //   ScaffoldMessenger.of(context)
-  //     ..removeCurrentSnackBar()
-  //     ..showSnackBar(snackBar);
-  // }
 
 DateTime selectedTime = DateTime.now();
 

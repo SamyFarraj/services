@@ -454,7 +454,7 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
   showSelectedDate() {
     setState(() {
       if (date != DateTime(2021)) {
-        showedDate = DateFormat("MM/dd/yyyy").format(date);
+        showedDate = DateFormat("yyyy/MM/dd").format(date);
       }
     });
   }
@@ -612,12 +612,12 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
           gateTitle: widget.gateName,
           serviceTitle: selectedService!,
           serviceDate:
-              DateFormat("MM/dd/yyyy HH:mm").format(choosedStartingDateTime),
+              DateFormat("yyyy/MM/dd HH:mm").format(choosedStartingDateTime),
           serviceTime: time,
           hoursDuration: int.parse(selectedHoursDuration),
           minuteDuration: int.parse(selectedMinuteDuration),
           user: "user",
-          endingDate: DateFormat("MM/dd/yyyy HH:mm").format(choosedEndDateTime),
+          endingDate: DateFormat("yyyy/MM/dd HH:mm").format(choosedEndDateTime),
           // choosedStaffs: choosedStaffsList,
         ),
       );

@@ -159,11 +159,16 @@ List<String> addAdminList = [
 
 
 
-List <String> gatesTest =[
+List <String> gatesEdition =[
   'Select Service',
   'Gate 1',
   'Gate 2',
   'Gate 3',
   'Gate 4',
+];
+List <String> streetEdition=[
+  'Select Street',
+  'WOODWARD',
+  'FARMER',
 ];
 
