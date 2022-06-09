@@ -27,11 +27,14 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
   );
   DateTime choosedStartingDateTime = DateTime(2021);
 
+
+  DateTime choosedEndingDateTime = DateTime(2021);
+
   //المتغير اللي رح يتخزن فيه وقت البداية اللي تم اختيارو
   TimeOfDay time = const TimeOfDay(hour: 23, minute: 41);
 
   //المتغير اللي رح يتخزن فيه وقت  النهاية اللي تم اختيارو
-  TimeOfDay choosedEndDateTime = const TimeOfDay(hour: 23, minute: 41);
+  TimeOfDay choosedEndTime = const TimeOfDay(hour: 23, minute: 41);
 
   // DateTime choosedEndDateTime = DateTime(2021);
 
@@ -233,7 +236,6 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
                                       time.hour,
                                       time.minute,
                                     );
-
                                     showSelectedTime();
                                   },
                                   child: Text(
@@ -624,23 +626,31 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
       );
       // snackBar(context, "Service Requested Successfully",
       //     const Color.fromARGB(255, 15, 150, 10));
-      choosedEndDateTime = TimeOfDay(
+      choosedEndTime = TimeOfDay(
         hour: (choosedStartingDateTime.hour + int.parse(selectedHoursDuration)),
         minute: (choosedStartingDateTime.minute +
             int.parse(selectedMinuteDuration)),
+      );
+      choosedEndingDateTime = DateTime(
+        date.year,
+        date.month,
+        date.day,
+        choosedEndTime.hour,
+        choosedEndTime.minute,
       );
       UserRequestsPage.requestList.add(
         RequestsStates(
           gateTitle: widget.gateName,
           serviceTitle: selectedService!,
-          serviceDate: DateFormat("yyyy/MM/dd").format(choosedStartingDateTime),
+          serviceStartDate: DateFormat("yyyy/MM/dd").format(choosedStartingDateTime),
+          serviceEndDate: DateFormat("yyyy/MM/dd HH:mm").format(choosedEndingDateTime),
           serviceTime: time,
           hoursDuration: int.parse(selectedHoursDuration),
           minuteDuration: int.parse(selectedMinuteDuration),
           user: "user",
-          endingDate: endTimeFormatting(
-            choosedEndDateTime.hour,
-            choosedEndDateTime.minute,
+          endingTime: endTimeFormatting(
+            choosedEndTime.hour,
+            choosedEndTime.minute,
           ),
           // choosedStaffs: choosedStaffsList,
         ),

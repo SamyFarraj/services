@@ -201,7 +201,7 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                                     ),
                                                   ),
                                                   Text(
-                                                    val.serviceDate,
+                                                    val.serviceStartDate,
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 26,
@@ -215,7 +215,14 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                                     ),
                                                   ),
                                                   Text(
-                                                    "end at ${val.endingDate.format(context)}",
+                                                    "end at ${val.endingTime.format(context)}",
+                                                    style: const TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 26,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    "end at ${val.serviceEndDate}",
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 26,
