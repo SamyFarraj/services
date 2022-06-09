@@ -13,17 +13,28 @@ import 'requests.dart';
 
 class ServiceInformationInput extends StatefulWidget {
   final String gateName;
-
-  const ServiceInformationInput({required this.gateName, Key? key})
+final List <String> both;
+  const ServiceInformationInput({required this.gateName,required this.both, Key? key})
       : super(key: key);
 
   @override
   _ServiceInformationInputState createState() =>
-      _ServiceInformationInputState();
+      _ServiceInformationInputState(gateName,both);
 }
 
 class _ServiceInformationInputState extends State<ServiceInformationInput> {
   //المتغير اللي رح يتخزن فيه التاريخ اللي تم اختيارو
+
+  late  String gateName;
+  late  List <String> both;
+
+
+  _ServiceInformationInputState(String gateName,List <String> both)
+  {
+    this.both=both;
+    this.gateName=gateName;
+  }
+
   DateTime date = DateTime(
     2021,
     1,
@@ -40,6 +51,7 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
 
   //المتغير اللي رح يتخزن فيه الخدمة اللي تم اختيارها
   String? selectedService = 'Select Service';
+
 
   //المتغير اللي رح يتخزن فيه مدة حجز للخدمة اللي تم اختيارها
   String? selectedMinuteDuration = 'Select Minute Duration';
@@ -93,6 +105,7 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
 
   @override
   Widget build(BuildContext context) {
+    selectedService=both[0];
     return Scaffold(
       extendBody: true,
       extendBodyBehindAppBar: true,
@@ -200,7 +213,7 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
                                           ),
                                         ),
                                         value: selectedService,
-                                        items: servicesList
+                                        items: both
                                             .map(
                                               (service) =>
                                                   DropdownMenuItem<String>(

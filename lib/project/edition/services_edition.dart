@@ -22,6 +22,7 @@ class _ServiceEditionState extends State<ServiceEdition> {
 
   List<String> servicewoodward = [];
   List<String> servicefarmer = [];
+  List<String> bothstreet = [];
 
   Future <String> Block_Service(int id)async
   {
@@ -80,7 +81,8 @@ class _ServiceEditionState extends State<ServiceEdition> {
 
   @override
   Widget build(BuildContext context) {
-
+    String selectedService = 'Select Service';
+    String? selectedStreet = "Select Street";
     return Scaffold(
       drawer: const DashBoard(),
       extendBody: true,
@@ -326,7 +328,7 @@ class _ServiceEditionState extends State<ServiceEdition> {
                                       ),
                                     ),
                                     value: selectedService,
-                                    items: servicesList
+                                    items: gatesTest
                                         .map(
 
                                           (service) => DropdownMenuItem<String>(
@@ -375,7 +377,7 @@ class _ServiceEditionState extends State<ServiceEdition> {
                                       }
 
 print("the prin t t dnkdjf $selectedService");
-                                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => ServiceInformationInput(gateName: selectedService),),);
+                                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => ServiceInformationInput(gateName: selectedService,both: bothstreet ,),),);
 
 
                                     }),

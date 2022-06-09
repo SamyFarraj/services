@@ -5,6 +5,7 @@ import 'package:project_mohammad/project/admin/admin_requests_page.dart';
 import 'package:project_mohammad/project/admin/block_service.dart';
 import 'package:project_mohammad/project/admin/delete_service.dart';
 import 'package:project_mohammad/project/admin/un_block_service.dart';
+import 'package:project_mohammad/project/edition/DEMO.dart';
 import 'package:project_mohammad/project/home/home_page.dart';
 import 'package:project_mohammad/project/home/requests.dart';
 import 'package:project_mohammad/project/home/services.dart';
@@ -68,7 +69,7 @@ class _MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<_MyHomePage> {
   @override
-  Widget build(BuildContext context) =>  ServiceEdition();
+  Widget build(BuildContext context) =>  ServiceEditionS();
   // Widget build(BuildContext context) => const DeleteService();
   //Widget build(BuildContext context) => const ProjectsPage();
  //adm Widget build(BuildContext context) => const ServiceEdition();

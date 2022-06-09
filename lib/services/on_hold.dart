@@ -103,7 +103,7 @@ class _OnHoldState extends State<OnHold> {
                         MaterialPageRoute(
                           builder: (_) {
                             return ServiceInformationInput(
-                              gateName: widget.title,
+                              gateName: widget.title, both: [],
                             );
                           }
                         ),

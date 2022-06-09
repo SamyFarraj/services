@@ -18,6 +18,8 @@ class BlockService extends StatefulWidget {
 class _BlockServiceState extends State<BlockService> {
   List<String> servicewoodward = [];
   List<String> servicefarmer = [];
+  List<String> bothstreet = [];
+
 
   Future <String> Block_Service(int id)async
   {
@@ -147,11 +149,22 @@ class _BlockServiceState extends State<BlockService> {
                             {
                               servicewoodward.clear();
                               servicefarmer.clear();
+                              bothstreet.clear();
+
                               print("step one ");
 
                               print("dkphhhhh");
 
+
                               servicefarmer.add('select service');
+
+                              for(int i =0;i<snapshot.data!.services.bothStreet.length;i++)
+                              {
+                                print("there is no item ");
+
+                                bothstreet.add(snapshot.data!.services.bothStreet[i].name);
+                              }
+
 
                               for(int i =0;i<snapshot.data!.services.woodward.length;i++)
                               {

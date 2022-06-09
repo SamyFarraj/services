@@ -135,7 +135,7 @@ class _BasicTileWidgetState extends State<BasicTileWidget> {
               builder: (_) {
                 return OnHold(title: title,);
                 return ServiceInformationInput(
-                  gateName: title,
+                  gateName: title, both: [],
                 );
               },
             ),
