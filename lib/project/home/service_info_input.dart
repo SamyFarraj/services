@@ -32,6 +32,7 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
 
   //المتغير اللي رح يتخزن فيه وقت  النهاية اللي تم اختيارو
   TimeOfDay choosedEndDateTime = const TimeOfDay(hour: 23, minute: 41);
+
   // DateTime choosedEndDateTime = DateTime(2021);
 
   // مصفوفة لتخزين ال staff اللي تم اختيارون
@@ -624,8 +625,9 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
       // snackBar(context, "Service Requested Successfully",
       //     const Color.fromARGB(255, 15, 150, 10));
       choosedEndDateTime = TimeOfDay(
-        hour : (choosedStartingDateTime.hour + int.parse(selectedHoursDuration)),
-        minute : (choosedStartingDateTime.minute + int.parse(selectedMinuteDuration)),
+        hour: (choosedStartingDateTime.hour + int.parse(selectedHoursDuration)),
+        minute: (choosedStartingDateTime.minute +
+            int.parse(selectedMinuteDuration)),
       );
       UserRequestsPage.requestList.add(
         RequestsStates(
@@ -636,7 +638,10 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
           hoursDuration: int.parse(selectedHoursDuration),
           minuteDuration: int.parse(selectedMinuteDuration),
           user: "user",
-          endingDate: choosedEndDateTime,
+          endingDate: endTimeFormatting(
+            choosedEndDateTime.hour,
+            choosedEndDateTime.minute,
+          ),
           // choosedStaffs: choosedStaffsList,
         ),
       );
@@ -650,7 +655,10 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
     }
   }
 
-  DateTime endTime(int endHours, int endMinutes, DateTime startingTime) {
+  TimeOfDay endTimeFormatting(
+    int endHours,
+    int endMinutes,
+  ) {
     int endHour = 0, endMinute = endMinutes;
     TimeOfDay endingTime = TimeOfDay(
       hour: 00,
@@ -666,6 +674,6 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
       minute: endMinute,
     );
 
-    return DateTime.now();
+    return endingTime;
   }
 }
