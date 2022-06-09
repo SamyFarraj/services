@@ -26,10 +26,13 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
     1,
   );
   DateTime choosedStartingDateTime = DateTime(2021);
-  DateTime choosedEndDateTime = DateTime(2021);
 
-  //المتغير اللي رح يتخزن فيه الوقت اللي تم اختيارو
+  //المتغير اللي رح يتخزن فيه وقت البداية اللي تم اختيارو
   TimeOfDay time = const TimeOfDay(hour: 23, minute: 41);
+
+  //المتغير اللي رح يتخزن فيه وقت  النهاية اللي تم اختيارو
+  TimeOfDay choosedEndDateTime = const TimeOfDay(hour: 23, minute: 41);
+  // DateTime choosedEndDateTime = DateTime(2021);
 
   // مصفوفة لتخزين ال staff اللي تم اختيارون
   List choosedStaffsList = [];
@@ -106,7 +109,7 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
                     height: 30,
                   ),
                   Column(
-                    children: [
+                    children: <Widget>[
                       SingleChildScrollView(
                         child: Container(
                           width: double.infinity,
@@ -503,35 +506,45 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
     String serviceName,
   ) {
     if (serviceName == 'Select Service') {
-      TheSnackBar(context, 'Please Select Service',
-              const Color.fromARGB(255, 150, 10, 10),
+      TheSnackBar(
+        context,
+        'Please Select Service',
+        const Color.fromARGB(255, 150, 10, 10),
       );
       // snackBar(context, 'Please Select Service',
       //     const Color.fromARGB(255, 150, 10, 10));
       return false;
     } else if (date.year == 2021) {
-      TheSnackBar(context, 'Please Select Date',
+      TheSnackBar(
+        context,
+        'Please Select Date',
         const Color.fromARGB(255, 150, 10, 10),
       );
       // snackBar(context, 'Please Select Date',
       //     const Color.fromARGB(255, 150, 10, 10));
       return false;
     } else if (time == const TimeOfDay(hour: 23, minute: 41)) {
-      TheSnackBar(context, 'Please Select Time',
+      TheSnackBar(
+        context,
+        'Please Select Time',
         const Color.fromARGB(255, 150, 10, 10),
       );
       // snackBar(context, 'Please Select Time',
       //     const Color.fromARGB(255, 150, 10, 10));
       return false;
     } else if (time.hour > 18 && time.hour < 6) {
-      TheSnackBar(context, 'This period is unavailable',
+      TheSnackBar(
+        context,
+        'This period is unavailable',
         const Color.fromARGB(255, 150, 10, 10),
       );
       // snackBar(context, 'This period is unavailable',
       //     const Color.fromARGB(255, 150, 10, 10));
       return false;
     } else if (selectedMinuteDuration == "" && selectedHoursDuration == "") {
-      TheSnackBar(context, 'Please Select Duration',
+      TheSnackBar(
+        context,
+        'Please Select Duration',
         const Color.fromARGB(255, 150, 10, 10),
       );
       // snackBar(context, 'Please Select Duration',
@@ -542,7 +555,9 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
         if (selectedHoursDuration[i] == '.' ||
             selectedHoursDuration[i] == ' ' ||
             selectedHoursDuration[i] == ',') {
-          TheSnackBar(context, 'Please Select Correct Hours Duration',
+          TheSnackBar(
+            context,
+            'Please Select Correct Hours Duration',
             const Color.fromARGB(255, 150, 10, 10),
           );
           // snackBar(context, 'Please Select Correct Hours Duration',
@@ -551,7 +566,9 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
         } else if (selectedMinuteDuration[i] == '.' ||
             selectedMinuteDuration[i] == ' ' ||
             selectedMinuteDuration[i] == ',') {
-          TheSnackBar(context, 'Please Select Correct Minute Duration',
+          TheSnackBar(
+            context,
+            'Please Select Correct Minute Duration',
             const Color.fromARGB(255, 150, 10, 10),
           );
           // snackBar(context, 'Please Select Correct Minute Duration',
@@ -572,8 +589,10 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
       int closedMinutes = int.parse(selectedMinuteDuration);
       if ((closedHours + time.hour) >= 18 &&
           (closedMinutes + time.minute) > 0) {
-        TheSnackBar(context, 'Duration Exceeding closing time,'
-            ' please Edit duration or time',
+        TheSnackBar(
+          context,
+          'Duration Exceeding closing time,'
+          ' please Edit duration or time',
           const Color.fromARGB(255, 150, 10, 10),
         );
         // snackBar(
@@ -584,8 +603,10 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
         return false;
       } else if ((closedHours + time.hour) >= 17 &&
           (closedMinutes + time.minute) > 60) {
-        TheSnackBar(context, 'Duration Exceeding closing time,'
-            ' please Edit duration or time',
+        TheSnackBar(
+          context,
+          'Duration Exceeding closing time,'
+          ' please Edit duration or time',
           const Color.fromARGB(255, 150, 10, 10),
         );
         // snackBar(
@@ -595,29 +616,27 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
         //     const Color.fromARGB(255, 150, 10, 10));
         return false;
       }
-      TheSnackBar(context, 'Service Requested Successfully',
+      TheSnackBar(
+        context,
+        'Service Requested Successfully',
         const Color.fromARGB(255, 15, 150, 10),
       );
       // snackBar(context, "Service Requested Successfully",
       //     const Color.fromARGB(255, 15, 150, 10));
-      choosedEndDateTime = DateTime(
-        choosedStartingDateTime.year,
-        choosedStartingDateTime.month,
-        choosedStartingDateTime.day,
-        (choosedStartingDateTime.hour + int.parse(selectedHoursDuration)),
-        (choosedStartingDateTime.minute + int.parse(selectedMinuteDuration)),
+      choosedEndDateTime = TimeOfDay(
+        hour : (choosedStartingDateTime.hour + int.parse(selectedHoursDuration)),
+        minute : (choosedStartingDateTime.minute + int.parse(selectedMinuteDuration)),
       );
       UserRequestsPage.requestList.add(
         RequestsStates(
           gateTitle: widget.gateName,
           serviceTitle: selectedService!,
-          serviceDate:
-              DateFormat("yyyy/MM/dd HH:mm").format(choosedStartingDateTime),
+          serviceDate: DateFormat("yyyy/MM/dd").format(choosedStartingDateTime),
           serviceTime: time,
           hoursDuration: int.parse(selectedHoursDuration),
           minuteDuration: int.parse(selectedMinuteDuration),
           user: "user",
-          endingDate: DateFormat("yyyy/MM/dd HH:mm").format(choosedEndDateTime),
+          endingDate: choosedEndDateTime,
           // choosedStaffs: choosedStaffsList,
         ),
       );
@@ -629,5 +648,24 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
       }
       return true;
     }
+  }
+
+  DateTime endTime(int endHours, int endMinutes, DateTime startingTime) {
+    int endHour = 0, endMinute = endMinutes;
+    TimeOfDay endingTime = TimeOfDay(
+      hour: 00,
+      minute: 00,
+    );
+    while (endMinute >= 60) {
+      endHour++;
+      endMinute -= 60;
+    }
+    endHour += endHours;
+    endingTime = TimeOfDay(
+      hour: endHour,
+      minute: endMinute,
+    );
+
+    return DateTime.now();
   }
 }

@@ -3,8 +3,6 @@ import 'package:project_mohammad/components/dash_board.dart';
 import 'package:project_mohammad/project/home/service_info_input.dart';
 import 'package:project_mohammad/services/choices.dart';
 
-import '../../components/snack_bar.dart';
-
 class ServiceEdition extends StatefulWidget {
   const ServiceEdition({Key? key}) : super(key: key);
 
@@ -16,7 +14,7 @@ class _ServiceEditionState extends State<ServiceEdition> {
   @override
   Widget build(BuildContext context) {
     String selectedService = 'Select Service';
-    String? selectedStreet = "Select Street";
+    String selectedStreet = "Select Street";
     return Scaffold(
       drawer: const DashBoard(),
       extendBody: true,
@@ -110,7 +108,7 @@ class _ServiceEditionState extends State<ServiceEdition> {
                                   .toList(),
                               onChanged: (street) => setState(
                                 () {
-                                  selectedStreet = street;
+                                  selectedStreet = street!;
                                 },
                               ),
                             ),
@@ -146,21 +144,15 @@ class _ServiceEditionState extends State<ServiceEdition> {
                                     )
                                     .toList(),
                                 onChanged: (service) {
-                                  if (selectedStreet != "Select Street") {
-                                    return setState(() {
-                                      selectedService = service!;
-                                      Navigator.of(context).pushReplacement(
-                                        MaterialPageRoute(
-                                          builder: (_) =>
-                                              ServiceInformationInput(
-                                                  gateName: selectedService),
-                                        ),
-                                      );
-                                    });
-                                  } else {
-                                    TheSnackBar(context, 'Please Select Street',
-                                        const Color.fromARGB(255, 150, 10, 10));
-                                  }
+                                  return setState(() {
+                                    selectedService = service!;
+                                    Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                        builder: (_) => ServiceInformationInput(
+                                            gateName: selectedService),
+                                      ),
+                                    );
+                                  });
                                 }),
                           ),
                         ],

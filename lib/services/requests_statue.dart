@@ -8,7 +8,7 @@ class RequestsStates {
   final int minuteDuration;
   final int hoursDuration;
   final String user;
-  final String endingDate;
+  final TimeOfDay endingDate;
   // final List choosedStaffs;
   const RequestsStates({
     required this.gateTitle,
