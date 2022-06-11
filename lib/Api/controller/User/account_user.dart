@@ -94,8 +94,27 @@ class Account_User {
     }
   }
 
+static Future <String > get_varvecation_code()async
+{
+  
+  var response = await http.get(Uri.parse('$base_Url/api/ResetPasswordRequest'),
+  headers: <String ,String >
 
-  Future <String> Reset_password(String pass,String c_pass) async {
+      {
+        'Authorization':'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYmM4OTU1NmI5MWI0Mzg2ODk3Nzg0NWRiYWJjMTAxMTM2NTI2NTQyNzIwYjNjMDJmYzNlZjI1NTUzOWQ4NzAyMDlkY2RlYjVmNWQwNmE4ZjYiLCJpYXQiOjE2NTAyNzgxODkuODMzMDA4LCJuYmYiOjE2NTAyNzgxODkuODMzMDEzLCJleHAiOjE2ODE4MTQxODkuODI1NzMzLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.fXEerbG_WvyVkOtDsCRsWlk6RJ0J9Q3dEzHjMtsPf0k1DbmJS2RN_Fspy07Uf6p8Gv7CMNML73fVt4f6JIb9bPGqzve3PuFqmpbyC9yEhFQtWBCS_R3FKrrtkek9UzQCvfG5SoyBa7cGYyma_00w9dcLy9zYXzWErfDAavmYPnex8Q7L-M58DKEpF7nJosDyXL5OzMgdAO50rD2VxOq48U1Ey6yd0TZyDKFolp3YeEJKM-G_Lee8cqA_hIEclJhvxCeyXnDk6eqjspBCyh6MuArxi-dJpQ0qXtoCrgAErDcdVRG5KH9oJ0Qz052pcQpIAI69i3Ip0kULxRlfk_aJDFXAyi1CGXMOpk1Wc4L29aApkTSnqesXPnsnpWs9Al4qtfNZypf7jDIj-nOWXcSyFxiM9PRZ4OgfLeDNcLoo_1yTZ8ib-LEydUzKLp7nqOnuUA9VBVQIZzJ1NoDzwvV73yLgv6QuiNFcH6nc_jJXxlgFodwZa2dx-etyexj4ACWZp6x7agkD1oR3BuiwxOp8d4AWCmllzFjr5MlcMA2GMRJzIS0IoSvMAUbxumAh-__VMQT7e_Pk928LD2Fj-bYQjTWuv88zpeWDiAYNBdYm5R8sCKyHRvzM0hOv-e6LKQOSCmv5skfpsaqv8JznF5b7f_smAG_D4PKxPEr67NTkHFE'
+  }
+  );
+
+  if(response.statusCode==200)
+    {
+      var responsejeson = jsonDecode(response.body);
+       var Var= responsejeson['reset password code'];
+   return   Var ;
+    }
+  else
+    return "";
+}
+  static Future <String> Reset_password(String pass,String c_pass) async {
     var headers = {
       'Accept': 'application/json',
       'Authorization': 'Bearer ${t}'

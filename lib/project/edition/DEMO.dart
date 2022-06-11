@@ -329,7 +329,8 @@ print("thedasdas $bothstreet");
                                                 builder: (_) =>
                                                     ServiceInformationInput(
                                                         gateName: selectedService,
-                                                    both: bothstreet,),
+                                                    both: bothstreet, listservice: snapshot.data!.services.bothStreet,
+                                                    ),
                                               ),
                                             );
                                           }),

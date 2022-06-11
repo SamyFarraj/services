@@ -25,6 +25,7 @@ import 'package:project_mohammad/project/home/services.dart';
 import 'package:project_mohammad/services/on_hold.dart';
 
 import 'authentication/admin_log_in_page.dart';
+import 'authentication/auth_verification_code_page.dart';
 import 'authentication/sign_up_page.dart';
 
 import 'project/projects_page.dart';
@@ -69,7 +70,7 @@ class _MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<_MyHomePage> {
   @override
-  Widget build(BuildContext context) =>  ServiceEditionS();
+  Widget build(BuildContext context) => AuthVerificationCodePage();
   // Widget build(BuildContext context) => const DeleteService();
   //Widget build(BuildContext context) => const ProjectsPage();
  //adm Widget build(BuildContext context) => const ServiceEdition();

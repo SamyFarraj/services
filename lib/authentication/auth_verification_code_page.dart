@@ -3,6 +3,8 @@ import 'package:project_mohammad/components/snack_bar.dart';
 import 'package:project_mohammad/project/home/dash_board_pages/Settings/change_password_page.dart';
 import 'package:project_mohammad/project/projects_page.dart';
 
+import '../Api/controller/User/account_user.dart';
+
 class AuthVerificationCodePage extends StatefulWidget {
   const AuthVerificationCodePage({Key? key}) : super(key: key);
 
@@ -14,7 +16,7 @@ class _AuthVerificationCodePageState extends State<AuthVerificationCodePage> {
   // هاد ال controller
   // مشان ال textField
   final verificationCodeController = TextEditingController();
-  String correctVerificationCode = "123456";
+  Future correctVerificationCode  =  Account_User.get_varvecation_code();
   bool buttonStatus = false;
   String buttonDisplayText = "Enter Code";
   Widget showIcon = Container(
@@ -167,8 +169,7 @@ class _AuthVerificationCodePageState extends State<AuthVerificationCodePage> {
                           child: ElevatedButton(
                             onPressed: buttonStatus
                                 ? () {
-                                    if (verificationCodeController.text ==
-                                        correctVerificationCode) {
+                                    if (verificationCodeController.text == correctVerificationCode) {
                                       Navigator.of(context).pushReplacement(
                                         MaterialPageRoute(
                                           builder: (_) => const ChangePasswordPage(),

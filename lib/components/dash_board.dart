@@ -147,7 +147,7 @@ class _BasicTileWidgetState extends State<BasicTileWidget> {
         } else if(title == "Account Settings"){
           page = const AccountSettings();
         } else if(title == "Change Password"){
-          page = const DashBoardVerificationCodePage();
+          page = const DashBoardVerificationCodePage(currectnum: '',);
         } else if(title == "Edit Account Info"){
           page = const EditAccountInfo();
         }

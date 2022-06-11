@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:project_mohammad/authentication/auth_verification_code_page.dart';
 import 'package:project_mohammad/project/projects_page.dart';
 
+import '../../../../Api/controller/User/account_user.dart';
+
 
 
 class ChangePasswordPage extends StatefulWidget {
@@ -199,6 +201,10 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                             final changePasswordFormKey = editingPasswordFormKey.currentState!;
                             if(changePasswordFormKey.validate()){
                               // تابع ارسال البيانات
+
+
+                              Account_User.Reset_password(newPasswordController.text, rePasswordController.text);
+
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(builder: (_){

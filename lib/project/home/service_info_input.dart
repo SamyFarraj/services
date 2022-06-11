@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:project_mohammad/Api/model/name_service.dart';
 import 'package:project_mohammad/project/constant.dart';
-
 
 import 'package:http/http.dart' as http;
 import 'package:project_mohammad/components/snack_bar.dart';
@@ -13,26 +13,32 @@ import 'requests.dart';
 
 class ServiceInformationInput extends StatefulWidget {
   final String gateName;
-final List <String> both;
-  const ServiceInformationInput({required this.gateName,required this.both, Key? key})
+  final List<String> both;
+  final List<BothStreet> listservice;
+  const ServiceInformationInput(
+      {required this.gateName,
+      required this.both,
+      required this.listservice,
+      Key? key})
       : super(key: key);
 
   @override
   _ServiceInformationInputState createState() =>
-      _ServiceInformationInputState(gateName,both);
+      _ServiceInformationInputState(gateName, both, listservice);
 }
 
 class _ServiceInformationInputState extends State<ServiceInformationInput> {
   //المتغير اللي رح يتخزن فيه التاريخ اللي تم اختيارو
 
-  late  String gateName;
-  late  List <String> both;
-
-
-  _ServiceInformationInputState(String gateName,List <String> both)
-  {
-    this.both=both;
-    this.gateName=gateName;
+  late String gateName;
+  late List<String> both;
+  late List<BothStreet> listservice;
+late int id_service;
+  _ServiceInformationInputState(
+      String gateName, List<String> both, List<BothStreet> listservice) {
+    this.listservice = listservice;
+    this.both = both;
+    this.gateName = gateName;
   }
 
   DateTime date = DateTime(
@@ -52,7 +58,6 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
   //المتغير اللي رح يتخزن فيه الخدمة اللي تم اختيارها
   String? selectedService = 'Select Service';
 
-
   //المتغير اللي رح يتخزن فيه مدة حجز للخدمة اللي تم اختيارها
   String? selectedMinuteDuration = 'Select Minute Duration';
 
@@ -68,20 +73,15 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
   late String showedDate = 'select Date';
   late String showedTime = 'select Time';
 
-
-  Future  book_resevices(
-      String gate_name,
-      String Start_time,
-      String end_time,
-      String service_id,
-      String service_name
-      )async
-  {
+  Future book_resevices(String gate_name, String Start_time, String end_time,
+      String service_id, String service_name) async {
     var headers = {
       'Accept': 'application/json',
-      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYzEwOWI1YjMzY2JmMjlhMDdjZTk3MGU3ZWYzOGQxMGQ4ODdlNDkzZThlNTgyMDJiOTNiMzU3MDNhNDBkYjY5YzQ0MDE4NDZiNWVkNjNlMzQiLCJpYXQiOjE2NTA5NDQ1NzkuMzcwMjAyLCJuYmYiOjE2NTA5NDQ1NzkuMzcwMjA4LCJleHAiOjE2ODI0ODA1NzkuMzAwNzk1LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.LafISEKD8yn9StQjfbHT7yxAFqkDxpmcTgFyqshSmS6bCbuv1lzYc9DpBVT54siGXDkkVW4999pUX6U38S1zAAdK4LvfDip8k74ZA2HIodczwBeWK7AuF0-WG4PCnOwAzXXMe0Qg9_QjPh1FLJ7Dk1tws9MTAs0A42-Or1_hlb2LbUg0_9icWP6__hG78nvLKepCVd4CUNxjQWD1TQj-VA0oK9DZazF8N33dAC4w3TqeDtOfhsIS3cCnEfS13574eS_EhGdOaCwWKUanwyuwjxWOuwmWNf0xzhWljERnHIrC4cr7Yx0urpfYniZtb63Qz7mY8abLX-2dCr9EyFAzsUZyia2zuVZV1OVxTiaOQ6GZEmT6IyOKEMzFTNItRsaJnElYmCrB8eYL1DC4vA7B5txbUqATeR-TLGYwqhA7S18yxElg_peDAqfA-iznUDb90BH3y9toa-tYNYyrFWcCNt7fFH_DwYMxk0LPNz-jm1ATBwX7a9eSaillN8AEpuuq93IXiCicg9pURT_uG3KhafsXHwFJd-2reHRXUkHSgcONEQgHGd0P6McaJPbJnfAaIMcXS06aPNTjROSk3X8RsrICTKPrQDY1DTCtBNfm_6OI1oIDARMaTd2RE3rIPu0jqsTyfmw0NxKM8QvaWNnyPPHCZ5GzVsVBIWJ97-_nWNQ'
+      'Authorization':
+          'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYzEwOWI1YjMzY2JmMjlhMDdjZTk3MGU3ZWYzOGQxMGQ4ODdlNDkzZThlNTgyMDJiOTNiMzU3MDNhNDBkYjY5YzQ0MDE4NDZiNWVkNjNlMzQiLCJpYXQiOjE2NTA5NDQ1NzkuMzcwMjAyLCJuYmYiOjE2NTA5NDQ1NzkuMzcwMjA4LCJleHAiOjE2ODI0ODA1NzkuMzAwNzk1LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.LafISEKD8yn9StQjfbHT7yxAFqkDxpmcTgFyqshSmS6bCbuv1lzYc9DpBVT54siGXDkkVW4999pUX6U38S1zAAdK4LvfDip8k74ZA2HIodczwBeWK7AuF0-WG4PCnOwAzXXMe0Qg9_QjPh1FLJ7Dk1tws9MTAs0A42-Or1_hlb2LbUg0_9icWP6__hG78nvLKepCVd4CUNxjQWD1TQj-VA0oK9DZazF8N33dAC4w3TqeDtOfhsIS3cCnEfS13574eS_EhGdOaCwWKUanwyuwjxWOuwmWNf0xzhWljERnHIrC4cr7Yx0urpfYniZtb63Qz7mY8abLX-2dCr9EyFAzsUZyia2zuVZV1OVxTiaOQ6GZEmT6IyOKEMzFTNItRsaJnElYmCrB8eYL1DC4vA7B5txbUqATeR-TLGYwqhA7S18yxElg_peDAqfA-iznUDb90BH3y9toa-tYNYyrFWcCNt7fFH_DwYMxk0LPNz-jm1ATBwX7a9eSaillN8AEpuuq93IXiCicg9pURT_uG3KhafsXHwFJd-2reHRXUkHSgcONEQgHGd0P6McaJPbJnfAaIMcXS06aPNTjROSk3X8RsrICTKPrQDY1DTCtBNfm_6OI1oIDARMaTd2RE3rIPu0jqsTyfmw0NxKM8QvaWNnyPPHCZ5GzVsVBIWJ97-_nWNQ'
     };
-    var request = http.MultipartRequest('POST', Uri.parse('$base_Url/api/Reservation'));
+    var request =
+        http.MultipartRequest('POST', Uri.parse('$base_Url/api/Reservation'));
     request.fields.addAll({
       'Gate_name': '${gate_name}',
       'start_time': '${Start_time}',
@@ -93,19 +93,17 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
-
+print("the response is yesssss ${response.statusCode} ");
     if (response.statusCode == 200) {
       print(await response.stream.bytesToString());
-    }
-    else {
+    } else {
       print(response.reasonPhrase);
     }
-
   }
 
   @override
   Widget build(BuildContext context) {
-    selectedService=both[0];
+    selectedService = both[0];
     return Scaffold(
       extendBody: true,
       extendBodyBehindAppBar: true,
@@ -228,10 +226,23 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
                                               ),
                                             )
                                             .toList(),
-                                        onChanged: (service) =>
-                                            setState(() async {
+                                        onChanged: (service) => setState(
+                                            () // انا علقتها كانت عم تضرب ايرور  async
+                                            {
                                           selectedService = service;
-                                        }),
+                                          for(int i=0; i <listservice.length;i++ )
+                                            {
+                                              if(selectedService==listservice[i].name)
+                                                {
+                                                  id_service=listservice[i].id;
+                                                  break;
+                                                }
+                                            }
+                                          /////1111 seconde parameter
+                                          print("the services is $selectedService");
+                                          print("the services is $id_service");
+
+                                            }),
                                       ),
                                     ),
                                   ],
@@ -449,13 +460,18 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
                                                 .add(staff.staff_name);
                                           }
                                         }
-                                        selectedMinuteDuration = choosedDurationMinuteController.text;
-                                        selectedHoursDuration = choosedDurationHoursController.text;
+                                        selectedMinuteDuration =
+                                            choosedDurationMinuteController
+                                                .text;
+                                        selectedHoursDuration =
+                                            choosedDurationHoursController.text;
                                         checkNewRequest(
                                           selectedMinuteDuration!,
                                           selectedHoursDuration!,
                                           selectedService!,
                                         );
+                                        book_resevices(gateName,'2022/5/7 15:00','2022/5/7 17:00',id_service.toString(),selectedService!);
+                                       //  book_resevices(gateName,selectedService,start time ,end time,id_service )
                                       },
                                     );
                                   },
@@ -554,35 +570,45 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
     String serviceName,
   ) {
     if (serviceName == 'Select Service') {
-      TheSnackBar(context, 'Please Select Service',
-              const Color.fromARGB(255, 150, 10, 10),
+      TheSnackBar(
+        context,
+        'Please Select Service',
+        const Color.fromARGB(255, 150, 10, 10),
       );
       // snackBar(context, 'Please Select Service',
       //     const Color.fromARGB(255, 150, 10, 10));
       return false;
     } else if (date.year == 2021) {
-      TheSnackBar(context, 'Please Select Date',
+      TheSnackBar(
+        context,
+        'Please Select Date',
         const Color.fromARGB(255, 150, 10, 10),
       );
       // snackBar(context, 'Please Select Date',
       //     const Color.fromARGB(255, 150, 10, 10));
       return false;
     } else if (time == const TimeOfDay(hour: 23, minute: 41)) {
-      TheSnackBar(context, 'Please Select Time',
+      TheSnackBar(
+        context,
+        'Please Select Time',
         const Color.fromARGB(255, 150, 10, 10),
       );
       // snackBar(context, 'Please Select Time',
       //     const Color.fromARGB(255, 150, 10, 10));
       return false;
     } else if (time.hour > 18 && time.hour < 6) {
-      TheSnackBar(context, 'This period is unavailable',
+      TheSnackBar(
+        context,
+        'This period is unavailable',
         const Color.fromARGB(255, 150, 10, 10),
       );
       // snackBar(context, 'This period is unavailable',
       //     const Color.fromARGB(255, 150, 10, 10));
       return false;
     } else if (selectedMinuteDuration == "" && selectedHoursDuration == "") {
-      TheSnackBar(context, 'Please Select Duration',
+      TheSnackBar(
+        context,
+        'Please Select Duration',
         const Color.fromARGB(255, 150, 10, 10),
       );
       // snackBar(context, 'Please Select Duration',
@@ -593,7 +619,9 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
         if (selectedHoursDuration[i] == '.' ||
             selectedHoursDuration[i] == ' ' ||
             selectedHoursDuration[i] == ',') {
-          TheSnackBar(context, 'Please Select Correct Hours Duration',
+          TheSnackBar(
+            context,
+            'Please Select Correct Hours Duration',
             const Color.fromARGB(255, 150, 10, 10),
           );
           // snackBar(context, 'Please Select Correct Hours Duration',
@@ -602,7 +630,9 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
         } else if (selectedMinuteDuration[i] == '.' ||
             selectedMinuteDuration[i] == ' ' ||
             selectedMinuteDuration[i] == ',') {
-          TheSnackBar(context, 'Please Select Correct Minute Duration',
+          TheSnackBar(
+            context,
+            'Please Select Correct Minute Duration',
             const Color.fromARGB(255, 150, 10, 10),
           );
           // snackBar(context, 'Please Select Correct Minute Duration',
@@ -623,8 +653,10 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
       int closedMinutes = int.parse(selectedMinuteDuration);
       if ((closedHours + time.hour) >= 18 &&
           (closedMinutes + time.minute) > 0) {
-        TheSnackBar(context, 'Duration Exceeding closing time,'
-            ' please Edit duration or time',
+        TheSnackBar(
+          context,
+          'Duration Exceeding closing time,'
+          ' please Edit duration or time',
           const Color.fromARGB(255, 150, 10, 10),
         );
         // snackBar(
@@ -635,8 +667,10 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
         return false;
       } else if ((closedHours + time.hour) >= 17 &&
           (closedMinutes + time.minute) > 60) {
-        TheSnackBar(context, 'Duration Exceeding closing time,'
-            ' please Edit duration or time',
+        TheSnackBar(
+          context,
+          'Duration Exceeding closing time,'
+          ' please Edit duration or time',
           const Color.fromARGB(255, 150, 10, 10),
         );
         // snackBar(
@@ -646,7 +680,9 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
         //     const Color.fromARGB(255, 150, 10, 10));
         return false;
       }
-      TheSnackBar(context, 'Service Requested Successfully',
+      TheSnackBar(
+        context,
+        'Service Requested Successfully',
         const Color.fromARGB(255, 15, 150, 10),
       );
       // snackBar(context, "Service Requested Successfully",

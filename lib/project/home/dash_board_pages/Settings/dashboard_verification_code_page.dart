@@ -5,15 +5,21 @@ import 'package:project_mohammad/project/home/dash_board_pages/Settings/change_p
 import 'package:project_mohammad/project/projects_page.dart';
 
 class DashBoardVerificationCodePage extends StatefulWidget {
-  const DashBoardVerificationCodePage({Key? key}) : super(key: key);
+  final String   currectnum;
+  const DashBoardVerificationCodePage({required this.currectnum,Key? key}) : super(key: key);
 
   @override
-  State<DashBoardVerificationCodePage> createState() => _DashBoardVerificationCodePageState();
+  State<DashBoardVerificationCodePage> createState() => _DashBoardVerificationCodePageState(currectnum);
 }
 
 class _DashBoardVerificationCodePageState extends State<DashBoardVerificationCodePage> {
   // هاد ال controller
   // مشان ال textField
+late String current ;
+  _DashBoardVerificationCodePageState(String current)
+  {
+    this.current=current;
+  }
   final verificationCodeController = TextEditingController();
   String dashBoardCorrectVerificationCode = "123456";
   bool buttonStatus = false;

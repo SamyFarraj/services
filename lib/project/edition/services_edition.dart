@@ -377,7 +377,7 @@ class _ServiceEditionState extends State<ServiceEdition> {
                                       }
 
 print("the prin t t dnkdjf $selectedService");
-                                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => ServiceInformationInput(gateName: selectedService,both: bothstreet ,),),);
+                                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => ServiceInformationInput(gateName: selectedService,both: bothstreet, listservice: [] ,),),);
 
 
                                     }),

@@ -96,14 +96,17 @@ class _OnHoldState extends State<OnHold> {
                       ),
                     ),
                   ),
+                  /*
+
                   ElevatedButton(
                     onPressed: () {
                       // pickDateTime(context, widget.title);
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (_) {
-                            return ServiceInformationInput(
-                              gateName: widget.title, both: [],
+                            return
+                              ServiceInformationInput(
+                              gateName: widget.title, both: [], listservice: ,
                             );
                           }
                         ),
@@ -132,6 +135,8 @@ class _OnHoldState extends State<OnHold> {
                       ),
                     ),
                   ),
+
+                   */
                 ],
               ),
             )
