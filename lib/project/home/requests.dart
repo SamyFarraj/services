@@ -4,7 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:project_mohammad/Api/model/my_reservations_model.dart';
-import 'package:project_mohammad/services/requests_statue.dart';
+import 'package:project_mohammad/services/requests_form.dart';
 
 import '../../components/dash_board.dart';
 import '../admin/admin_requests_page.dart';
@@ -216,13 +216,6 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                                   ),
                                                   Text(
                                                     "end at ${val.endingTime.format(context)}",
-                                                    style: const TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 26,
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    "end at ${val.serviceEndDate}",
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 26,

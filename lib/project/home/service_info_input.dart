@@ -3,10 +3,13 @@ import 'package:intl/intl.dart';
 import 'package:project_mohammad/components/snack_bar.dart';
 
 import '../../services/choices.dart';
-import '../../services/requests_statue.dart';
+import '../../services/requests_form.dart';
 import 'requests.dart';
-// import '../../services/staff.dart';
+/*
+File in order to enter service reservation information such as
+date, start and end time, gate and route, etc...
 
+ */
 class ServiceInformationInput extends StatefulWidget {
   final String gateName;
 
@@ -39,24 +42,33 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
   // DateTime choosedEndDateTime = DateTime(2021);
 
   // مصفوفة لتخزين ال staff اللي تم اختيارون
+  // Array to store choosed Staffs
   List choosedStaffsList = [];
 
   //المتغير اللي رح يتخزن فيه الخدمة اللي تم اختيارها
+  // Service Name variable
   String? selectedService = 'Select Service';
 
   //المتغير اللي رح يتخزن فيه مدة حجز للخدمة اللي تم اختيارها
+  // service reservation time by minutes
   String? selectedMinuteDuration = 'Select Minute Duration';
 
   //المتغير اللي رح يتخزن فيه مدة حجز للخدمة اللي تم اختيارها
+  // service reservation time by hours
   String? selectedHoursDuration = 'Select Hours Duration';
 
   // ال controller اللي رح ناخد منو المدة بالساعات من ال textField
+  //reservation Hours TextField
   final choosedDurationHoursController = TextEditingController();
 
   // ال controller اللي رح ناخد منو المدة بالدقايق من ال textField
+  //reservation Minute TextField
   final choosedDurationMinuteController = TextEditingController();
 
+  //text displayed on date Picked button
   late String showedDate = 'select Date';
+
+  //text displayed on time Picked button
   late String showedTime = 'select Time';
 
   @override
@@ -67,6 +79,7 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
       appBar: AppBar(
         centerTitle: true,
         // هي مشان نعرض اسم البوابة بال appBar
+        // choosed gate name display
         title: Text(
           widget.gateName,
           style: const TextStyle(
@@ -140,18 +153,7 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
                                       0.055,
                                 ),
                                 Column(
-                                  children: [
-                                    // const Text(
-                                    //   "Service",
-                                    //   style: TextStyle(
-                                    //       fontSize: 28,
-                                    //       color: Colors.white,
-                                    //       // backgroundColor: Colors.blue,
-                                    //   ),
-                                    // ),
-                                    // const SizedBox(
-                                    //   width: 10,
-                                    // ),
+                                  children: <Widget>[
                                     Container(
                                       alignment: Alignment.center,
                                       width: MediaQuery.of(context).size.width *
@@ -195,8 +197,7 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
                                   height:
                                       MediaQuery.of(context).size.height * 0.03,
                                 ),
-
-                                //هي الزر تبع اختيار ال التاريخ date picker
+                                //date Picker Button
                                 TextButton(
                                   child: Text(
                                     showedDate,
@@ -221,7 +222,7 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
                                   height:
                                       MediaQuery.of(context).size.height * 0.03,
                                 ),
-                                //هي الزر تبع اختيار ال وقت time picker
+                                //time picker button
                                 TextButton(
                                   onPressed: () async {
                                     final choosedTime = await pickTime(context);
@@ -255,7 +256,6 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
                                   style: TextStyle(
                                     fontSize: 24,
                                     color: Colors.white,
-                                    // backgroundColor: Colors.blue,
                                   ),
                                 ),
                                 Row(
@@ -342,65 +342,10 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
                                   height:
                                       MediaQuery.of(context).size.height * 0.05,
                                 ),
-                                // const Text(
-                                //   "Assign Staff",
-                                //   softWrap: true,
-                                //   style: TextStyle(
-                                //     fontSize: 30,
-                                //     color: Colors.white,
-                                //     backgroundColor: Colors.blue,
-                                //   ),
-                                // ),
-                                // Container(
-                                //   alignment: Alignment.topCenter,
-                                //   margin: const EdgeInsets.only(
-                                //     left: 25,
-                                //     right: 25,
-                                //   ),
-                                //   padding: EdgeInsets.only(
-                                //     left:
-                                //         MediaQuery.of(context).size.width * 0.1,
-                                //     top: 0.0001,
-                                //   ),
-                                //   width: double.infinity,
-                                //   height: MediaQuery.of(context).size.height *
-                                //       0.255,
-                                //   decoration: BoxDecoration(
-                                //     color:
-                                //         const Color.fromARGB(80, 0, 105, 200),
-                                //     borderRadius: BorderRadius.circular(25),
-                                //     border: Border.all(
-                                //       color: Colors.blue,
-                                //       width: 2.0,
-                                //     ),
-                                //   ),
-                                //   child: ListView(
-                                //     padding: const EdgeInsets.all(0.1),
-                                //     children: [
-                                //       buildGroupStaffCheckbox(selectAllStaff),
-                                //       const Divider(
-                                //         color: Colors.white,
-                                //       ),
-                                //       ...chooseStaff
-                                //           .map(buildStaffCheckbox)
-                                //           .toList(),
-                                //     ],
-                                //   ),
-                                // ),
-                                // SizedBox(
-                                //   height: MediaQuery.of(context).size.height *
-                                //       0.025,
-                                // ),
                                 ElevatedButton(
                                   onPressed: () {
                                     setState(
                                       () {
-                                        for (var staff in chooseStaff) {
-                                          if (staff.isChecked == true) {
-                                            choosedStaffsList
-                                                .add(staff.staff_name);
-                                          }
-                                        }
                                         selectedMinuteDuration =
                                             choosedDurationMinuteController
                                                 .text;
@@ -514,8 +459,6 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
         'Please Select Service',
         const Color.fromARGB(255, 150, 10, 10),
       );
-      // snackBar(context, 'Please Select Service',
-      //     const Color.fromARGB(255, 150, 10, 10));
       return false;
     } else if (date.year == 2021) {
       TheSnackBar(
@@ -523,8 +466,6 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
         'Please Select Date',
         const Color.fromARGB(255, 150, 10, 10),
       );
-      // snackBar(context, 'Please Select Date',
-      //     const Color.fromARGB(255, 150, 10, 10));
       return false;
     } else if (time == const TimeOfDay(hour: 23, minute: 41)) {
       TheSnackBar(
@@ -532,8 +473,6 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
         'Please Select Time',
         const Color.fromARGB(255, 150, 10, 10),
       );
-      // snackBar(context, 'Please Select Time',
-      //     const Color.fromARGB(255, 150, 10, 10));
       return false;
     } else if (time.hour > 18 && time.hour < 6) {
       TheSnackBar(
@@ -541,8 +480,6 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
         'This period is unavailable',
         const Color.fromARGB(255, 150, 10, 10),
       );
-      // snackBar(context, 'This period is unavailable',
-      //     const Color.fromARGB(255, 150, 10, 10));
       return false;
     } else if (selectedMinuteDuration == "" && selectedHoursDuration == "") {
       TheSnackBar(
@@ -550,8 +487,6 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
         'Please Select Duration',
         const Color.fromARGB(255, 150, 10, 10),
       );
-      // snackBar(context, 'Please Select Duration',
-      //     const Color.fromARGB(255, 150, 10, 10));
       return false;
     } else {
       for (int i = 0; i < selectedHoursDuration.length; i++) {
@@ -563,10 +498,11 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
             'Please Select Correct Hours Duration',
             const Color.fromARGB(255, 150, 10, 10),
           );
-          // snackBar(context, 'Please Select Correct Hours Duration',
-          //     const Color.fromARGB(255, 150, 10, 10));
           return false;
-        } else if (selectedMinuteDuration[i] == '.' ||
+        }
+      }
+      for (int i = 0; i < selectedMinuteDuration.length; i++) {
+        if (selectedMinuteDuration[i] == '.' ||
             selectedMinuteDuration[i] == ' ' ||
             selectedMinuteDuration[i] == ',') {
           TheSnackBar(
@@ -574,11 +510,10 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
             'Please Select Correct Minute Duration',
             const Color.fromARGB(255, 150, 10, 10),
           );
-          // snackBar(context, 'Please Select Correct Minute Duration',
-          //     const Color.fromARGB(255, 150, 10, 10));
           return false;
         }
       }
+
       if (selectedHoursDuration == "" ||
           selectedHoursDuration == " " ||
           selectedHoursDuration == "0") {
@@ -598,11 +533,6 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
           ' please Edit duration or time',
           const Color.fromARGB(255, 150, 10, 10),
         );
-        // snackBar(
-        //     context,
-        //     'Duration Exceeding closing time,'
-        //     ' please Edit duration or time',
-        //     const Color.fromARGB(255, 150, 10, 10));
         return false;
       } else if ((closedHours + time.hour) >= 17 &&
           (closedMinutes + time.minute) > 60) {
@@ -612,11 +542,6 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
           ' please Edit duration or time',
           const Color.fromARGB(255, 150, 10, 10),
         );
-        // snackBar(
-        //     context,
-        //     'Duration Exceeding closing time,'
-        //     ' please Edit duration or time',
-        //     const Color.fromARGB(255, 150, 10, 10));
         return false;
       }
       TheSnackBar(
@@ -624,8 +549,7 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
         'Service Requested Successfully',
         const Color.fromARGB(255, 15, 150, 10),
       );
-      // snackBar(context, "Service Requested Successfully",
-      //     const Color.fromARGB(255, 15, 150, 10));
+
       choosedEndTime = TimeOfDay(
         hour: (choosedStartingDateTime.hour + int.parse(selectedHoursDuration)),
         minute: (choosedStartingDateTime.minute +
@@ -642,8 +566,10 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
         RequestsStates(
           gateTitle: widget.gateName,
           serviceTitle: selectedService!,
-          serviceStartDate: DateFormat("yyyy/MM/dd").format(choosedStartingDateTime),
-          serviceEndDate: DateFormat("yyyy/MM/dd HH:mm").format(choosedEndingDateTime),
+          serviceStartDate: DateFormat("yyyy/MM/dd").
+                                      format(choosedStartingDateTime),
+          serviceEndDate: DateFormat("yyyy/MM/dd HH:mm").
+                                      format(choosedEndingDateTime),
           serviceTime: time,
           hoursDuration: int.parse(selectedHoursDuration),
           minuteDuration: int.parse(selectedMinuteDuration),
@@ -652,7 +578,6 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
             choosedEndTime.hour,
             choosedEndTime.minute,
           ),
-          // choosedStaffs: choosedStaffsList,
         ),
       );
       Navigator.of(context).pushReplacement(
@@ -664,7 +589,6 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
       return true;
     }
   }
-
   TimeOfDay endTimeFormatting(
     int endHours,
     int endMinutes,
@@ -686,4 +610,8 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
 
     return endingTime;
   }
+
+
+  ////////////////////////////////////////////
+
 }
