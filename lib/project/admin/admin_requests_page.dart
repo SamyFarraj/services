@@ -168,23 +168,30 @@ class _AdminRequestsPageState extends State<AdminRequestsPage> {
                                                     ),
                                                   ),
                                                   Text(
-                                                    val.serviceTime
-                                                        .format(context),
+                                                    "start : ${val.serviceTime
+                                                        .format(context)}",
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 26,
                                                     ),
                                                   ),
                                                   Text(
-                                                    " for ${val.hoursDuration}"
-                                                    " hour/s and "
-                                                    "${val.minuteDuration} "
-                                                    "minute/s",
+                                                    "end : ${val.endingTime}",
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 21,
                                                     ),
                                                   ),
+                                                  // Text(
+                                                  //   " for ${val.hoursDuration}"
+                                                  //   " hour/s and "
+                                                  //   "${val.minuteDuration} "
+                                                  //   "minute/s",
+                                                  //   style: const TextStyle(
+                                                  //     color: Colors.white,
+                                                  //     fontSize: 21,
+                                                  //   ),
+                                                  // ),
                                                   Text(
                                                     "from ${val.gateTitle}",
                                                     style: const TextStyle(
