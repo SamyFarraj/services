@@ -13,7 +13,7 @@ class ServiceEdition extends StatefulWidget {
 class _ServiceEditionState extends State<ServiceEdition> {
   @override
   Widget build(BuildContext context) {
-    String selectedService = 'Select Service';
+    String selectedService = 'Select Gate';
     String selectedStreet = "Select Street";
     return Scaffold(
       drawer: const DashBoard(),

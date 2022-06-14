@@ -5,6 +5,7 @@ import 'package:project_mohammad/components/snack_bar.dart';
 import '../../services/choices.dart';
 import '../../services/requests_form.dart';
 import 'requests.dart';
+
 /*
 File in order to enter service reservation information such as
 date, start and end time, gate and route, etc...
@@ -29,7 +30,6 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
     1,
   );
   DateTime choosedStartingDateTime = DateTime(2021);
-
 
   DateTime choosedEndingDateTime = DateTime(2021);
 
@@ -351,10 +351,29 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
                                                 .text;
                                         selectedHoursDuration =
                                             choosedDurationHoursController.text;
-                                        checkNewRequest(
+                                        // checkNewRequest(
+                                        //   selectedMinuteDuration!,
+                                        //   selectedHoursDuration!,
+                                        //   selectedService!,
+                                        // );
+                                        if (selectedHoursDuration == "" ||
+                                            selectedHoursDuration == " " ||
+                                            selectedHoursDuration == "0") {
+                                          selectedHoursDuration = "00";
+                                        } else if (selectedMinuteDuration ==
+                                                "" ||
+                                            selectedMinuteDuration == " " ||
+                                            selectedMinuteDuration == "0") {
+                                          selectedMinuteDuration = "00";
+                                        }
+                                        requestSender(
+                                          checkNewRequest(
+                                            selectedMinuteDuration!,
+                                            selectedHoursDuration!,
+                                            selectedService!,
+                                          ),
                                           selectedMinuteDuration!,
                                           selectedHoursDuration!,
-                                          selectedService!,
                                         );
                                       },
                                     );
@@ -514,15 +533,15 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
         }
       }
 
-      if (selectedHoursDuration == "" ||
-          selectedHoursDuration == " " ||
-          selectedHoursDuration == "0") {
-        selectedHoursDuration = "00";
-      } else if (selectedMinuteDuration == "" ||
-          selectedMinuteDuration == " " ||
-          selectedMinuteDuration == "0") {
-        selectedMinuteDuration = "00";
-      }
+      // if (selectedHoursDuration == "" ||
+      //     selectedHoursDuration == " " ||
+      //     selectedHoursDuration == "0") {
+      //   selectedHoursDuration = "00";
+      // } else if (selectedMinuteDuration == "" ||
+      //     selectedMinuteDuration == " " ||
+      //     selectedMinuteDuration == "0") {
+      //   selectedMinuteDuration = "00";
+      // }
       int closedHours = int.parse(selectedHoursDuration);
       int closedMinutes = int.parse(selectedMinuteDuration);
       if ((closedHours + time.hour) >= 18 &&
@@ -544,6 +563,15 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
         );
         return false;
       }
+      if (int.parse(selectedMinuteDuration) < 5 &&
+          int.parse(selectedHoursDuration) < 1) {
+        TheSnackBar(
+          context,
+          'Service duration is too short : ${int.parse(selectedMinuteDuration)}',
+          const Color.fromARGB(255, 150, 15, 10),
+        );
+        return false;
+      }
       TheSnackBar(
         context,
         'Service Requested Successfully',
@@ -562,33 +590,31 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
         choosedEndTime.hour,
         choosedEndTime.minute,
       );
-      UserRequestsPage.requestList.add(
-        RequestsStates(
-          gateTitle: widget.gateName,
-          serviceTitle: selectedService!,
-          serviceStartDate: DateFormat("yyyy/MM/dd").
-                                      format(choosedStartingDateTime),
-          serviceEndDate: DateFormat("yyyy/MM/dd HH:mm").
-                                      format(choosedEndingDateTime),
-          serviceTime: time,
-          hoursDuration: int.parse(selectedHoursDuration),
-          minuteDuration: int.parse(selectedMinuteDuration),
-          user: "user",
-          endingTime: endTimeFormatting(
-            choosedEndTime.hour,
-            choosedEndTime.minute,
-          ),
-        ),
-      );
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => const UserRequestsPage()),
-      );
-      for (var staff in chooseStaff) {
-        staff.isChecked = false;
-      }
+      // UserRequestsPage.requestList.add(
+      //   RequestsStates(
+      //     gateTitle: widget.gateName,
+      //     serviceTitle: selectedService!,
+      //     serviceStartDate: DateFormat("yyyy/MM/dd").
+      //                                 format(choosedStartingDateTime),
+      //     serviceEndDate: DateFormat("yyyy/MM/dd HH:mm").
+      //                                 format(choosedEndingDateTime),
+      //     serviceTime: time,
+      //     hoursDuration: int.parse(selectedHoursDuration),
+      //     minuteDuration: int.parse(selectedMinuteDuration),
+      //     user: "user",
+      //     endingTime: endTimeFormatting(
+      //       choosedEndTime.hour,
+      //       choosedEndTime.minute,
+      //     ),
+      //   ),
+      // );
+      // Navigator.of(context).pushReplacement(
+      //   MaterialPageRoute(builder: (_) => const UserRequestsPage()),
+      // );
       return true;
     }
   }
+
   TimeOfDay endTimeFormatting(
     int endHours,
     int endMinutes,
@@ -611,7 +637,36 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
     return endingTime;
   }
 
+  void requestSender(
+    bool checkNewRequest,
+    String selectedMinuteDuration,
+    String selectedHoursDuration,
+  ) {
+    if (checkNewRequest) {
+      UserRequestsPage.requestList.add(
+        RequestsStates(
+          gateTitle: widget.gateName,
+          serviceTitle: selectedService!,
+          serviceStartDate:
+              DateFormat("yyyy/MM/dd").format(choosedStartingDateTime),
+          serviceEndDate:
+              DateFormat("yyyy/MM/dd HH:mm").format(choosedEndingDateTime),
+          serviceTime: time,
+          hoursDuration: int.parse(selectedHoursDuration),
+          minuteDuration: int.parse(selectedMinuteDuration),
+          user: "user",
+          endingTime: endTimeFormatting(
+            choosedEndTime.hour,
+            choosedEndTime.minute,
+          ),
+        ),
+      );
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (_) => const UserRequestsPage()),
+      );
+    }
+  }
 
-  ////////////////////////////////////////////
+////////////////////////////////////////////
 
 }

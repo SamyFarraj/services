@@ -167,7 +167,7 @@ List<String> addAdminList = [
 
 
 List <String> gatesEdition =[
-  'Select Service',
+  'Select Gate',
   'Gate 1',
   'Gate 2',
   'Gate 3',

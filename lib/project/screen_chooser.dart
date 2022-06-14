@@ -1,5 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:project_mohammad/project/edition/services_edition.dart';
 
 import 'home/service_management_page_choosing.dart';
 import 'home/home_page.dart';
@@ -18,6 +19,7 @@ class _ScreenChooserState extends State<ScreenChooser> {
 
   final screens = [
     const ServiceManagementPageChooser(),
+    // const ServiceEdition(),
     const HomePage(),
     const Requests(),
   ];
