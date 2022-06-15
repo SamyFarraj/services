@@ -545,7 +545,7 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
       int closedHours = int.parse(selectedHoursDuration);
       int closedMinutes = int.parse(selectedMinuteDuration);
       if ((closedHours + time.hour) >= 18 &&
-          (closedMinutes + time.minute) > 0) {
+          (closedMinutes + time.minute) > 5) {
         TheSnackBar(
           context,
           'Duration Exceeding closing time,'
@@ -554,7 +554,7 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
         );
         return false;
       } else if ((closedHours + time.hour) >= 17 &&
-          (closedMinutes + time.minute) > 60) {
+          (closedMinutes + time.minute) > 65) {
         TheSnackBar(
           context,
           'Duration Exceeding closing time,'
