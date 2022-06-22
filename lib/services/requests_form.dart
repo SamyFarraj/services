@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class RequestsStates {
   final String gateTitle;
-  final String serviceTitle;
+  // final String serviceTitle;
+  final serviceTitle;
   final String serviceStartDate;
   final String serviceEndDate;
   final TimeOfDay serviceTime;

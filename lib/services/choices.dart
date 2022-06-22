@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:project_mohammad/services/requests_form.dart';
+import 'package:project_mohammad/services/services_check_box.dart';
 import 'package:project_mohammad/services/staff.dart';
 
 import 'street_service_chooser.dart';
@@ -63,7 +64,8 @@ List<String> blockedServicesList = [
 
 //هي مشان يقدر المستخدم يختار كل ال staffs المتاحين
 //بكبسة وحدة تسمها Select all staffs
-final selectAllStaff = StaffCheckBox(staff_name: "Select All Staffs");
+// final selectAllStaff = StaffCheckBox(staff_name: "Select All Staffs");
+final selectAllServices = ServicesCheckBox(serviceName: "Select All Services");
 //هي ال List الخاصة بال staffs
 // طبعا هي ال list بتكون فاضية لانو ال admin
 //هو اللي رح يضيف اسماء ال staff  او يحذفها حسب الموجود
@@ -78,6 +80,19 @@ final chooseStaff = [
   StaffCheckBox(staff_name: "staff 8"),
   StaffCheckBox(staff_name: "staff 9"),
   StaffCheckBox(staff_name: "staff 10"),
+];
+
+
+final chooseService = [
+  ServicesCheckBox(serviceName: "self Unloaded Delivery"),
+  ServicesCheckBox(serviceName: "Tower Crane 1"),
+  ServicesCheckBox(serviceName: "Tower Crane 2"),
+  ServicesCheckBox(serviceName: "BLK BuckHoist"),
+  ServicesCheckBox(serviceName: "TWR BuckHoist"),
+  ServicesCheckBox(serviceName: "ForkLift"),
+  ServicesCheckBox(serviceName: "Trailer Pump"),
+  ServicesCheckBox(serviceName: "Ramp-BSE"),
+
 ];
 // هي list  مشان اضافة newAdmin
 //رح يضيفها ع  ال database

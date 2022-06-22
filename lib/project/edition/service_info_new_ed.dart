@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:project_mohammad/components/snack_bar.dart';
+import 'package:project_mohammad/services/services_check_box.dart';
 
 import '../../services/choices.dart';
 import '../../services/requests_form.dart';
-import 'requests.dart';
+import '../home/requests.dart';
 
 /*
 File in order to enter service reservation information such as
 date, start and end time, gate and route, etc...
 
  */
-class ServiceInformationInput extends StatefulWidget {
+class ServiceInfoInputNewEd extends StatefulWidget {
   final String gateName;
 
-  const ServiceInformationInput({required this.gateName, Key? key})
+  const ServiceInfoInputNewEd({required this.gateName, Key? key})
       : super(key: key);
 
   @override
-  _ServiceInformationInputState createState() =>
-      _ServiceInformationInputState();
+  _ServiceInfoInputNewEdState createState() => _ServiceInfoInputNewEdState();
 }
 
-class _ServiceInformationInputState extends State<ServiceInformationInput> {
+class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
   //المتغير اللي رح يتخزن فيه التاريخ اللي تم اختيارو
   DateTime date = DateTime(
     2021,
@@ -44,6 +44,10 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
   // مصفوفة لتخزين ال staff اللي تم اختيارون
   // Array to store choosed Staffs
   List choosedStaffsList = [];
+
+//  ال Services اللي تم اختيارون
+//  Array to store choosed Services
+  List choosedServicesList = [];
 
   //المتغير اللي رح يتخزن فيه الخدمة اللي تم اختيارها
   // Service Name variable
@@ -150,53 +154,118 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
                               children: [
                                 SizedBox(
                                   height: MediaQuery.of(context).size.height *
-                                      0.055,
+                                      0.025,
                                 ),
-                                Column(
-                                  children: <Widget>[
-                                    Container(
-                                      alignment: Alignment.center,
-                                      width: MediaQuery.of(context).size.width *
-                                          0.7,
-                                      child: DropdownButtonFormField<String>(
-                                        decoration: InputDecoration(
-                                          enabledBorder: UnderlineInputBorder(
-                                            borderSide: const BorderSide(
-                                              // width: 2.0,
-                                              color: Colors.blue,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(25),
-                                          ),
-                                        ),
-                                        value: selectedService,
-                                        items: servicesList
-                                            .map(
-                                              (service) =>
-                                                  DropdownMenuItem<String>(
-                                                value: service,
-                                                child: Text(
-                                                  service,
-                                                  style: const TextStyle(
-                                                    fontSize: 22,
-                                                    color: Colors.blue,
-                                                  ),
-                                                ),
-                                              ),
-                                            )
-                                            .toList(),
-                                        onChanged: (service) =>
-                                            setState(() async {
-                                          selectedService = service;
-                                        }),
-                                      ),
+                                // Column(
+                                //   children: <Widget>[
+                                //     Container(
+                                //       alignment: Alignment.center,
+                                //       width: MediaQuery.of(context).size.width *
+                                //           0.7,
+                                //       child: DropdownButtonFormField<String>(
+                                //         decoration: InputDecoration(
+                                //           enabledBorder: UnderlineInputBorder(
+                                //             borderSide: const BorderSide(
+                                //               // width: 2.0,
+                                //               color: Colors.blue,
+                                //             ),
+                                //             borderRadius:
+                                //             BorderRadius.circular(25),
+                                //           ),
+                                //         ),
+                                //         value: selectedService,
+                                //         items: servicesList
+                                //             .map(
+                                //               (service) =>
+                                //               DropdownMenuItem<String>(
+                                //                 value: service,
+                                //                 child: Text(
+                                //                   service,
+                                //                   style: const TextStyle(
+                                //                     fontSize: 22,
+                                //                     color: Colors.blue,
+                                //                   ),
+                                //                 ),
+                                //               ),
+                                //         )
+                                //             .toList(),
+                                //         onChanged: (service) =>
+                                //             setState(() async {
+                                //               selectedService = service;
+                                //             }),
+                                //       ),
+                                //     ),
+                                //   ],
+                                // ),
+                                //
+                                const Text(
+                                  "Select Services",
+                                  softWrap: true,
+                                  style: TextStyle(
+                                    fontSize: 30,
+                                    color: Colors.white,
+                                    // backgroundColor: const Color.fromARGB(80, 0, 105, 200),
+                                  ),
+                                ),
+                                Container(
+                                  alignment: Alignment.topCenter,
+                                  margin: const EdgeInsets.only(
+                                    left: 25,
+                                    right: 25,
+                                  ),
+                                  padding: EdgeInsets.only(
+                                    left:
+                                        MediaQuery.of(context).size.width * 0.1,
+                                    top: 0.0001,
+                                  ),
+                                  width: double.infinity,
+                                  height: MediaQuery.of(context).size.height *
+                                      0.265,
+                                  decoration: BoxDecoration(
+                                    color:
+                                        const Color.fromARGB(80, 0, 105, 200),
+                                    borderRadius: BorderRadius.circular(25),
+                                    border: Border.all(
+                                      color: Colors.blue,
+                                      width: 2.0,
                                     ),
-                                  ],
+                                  ),
+                                  child: ListView(
+                                    padding: const EdgeInsets.all(0.1),
+                                    children: [
+                                      buildGroupServicesCheckbox(
+                                          selectAllServices),
+                                      Row(
+                                        children: <Widget>[
+                                          SizedBox(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.1,
+                                          ),
+                                          const Divider(
+                                            color: Colors.white,
+                                            thickness: 1,
+                                          ),
+                                          SizedBox(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.1,
+                                          ),
+                                        ],
+                                      ),
+                                      ...chooseService
+                                          .map(buildServiceCheckbox)
+                                          .toList(),
+                                    ],
+                                  ),
                                 ),
                                 SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.03,
+                                  height: MediaQuery.of(context).size.height *
+                                      0.025,
                                 ),
+
                                 //date Picker Button
                                 TextButton(
                                   child: Text(
@@ -472,14 +541,35 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
     String selectedHoursDuration,
     String serviceName,
   ) {
-    if (serviceName == 'Select Service') {
+    // if (serviceName == 'Select Service') {
+    //   TheSnackBar(
+    //     context,
+    //     'Please Select Service',
+    //     const Color.fromARGB(255, 150, 10, 10),
+    //   );
+    //   return false;
+    // } else
+    chooseService.forEach((service) {
+      if (service.isChecked) choosedServicesList.add(service.serviceName);
+    });
+    if (choosedServicesList.isEmpty) {
       TheSnackBar(
         context,
         'Please Select Service',
         const Color.fromARGB(255, 150, 10, 10),
       );
       return false;
-    } else if (date.year == 2021) {
+    } else if (choosedServicesList.length > 1 &&
+        choosedServicesList[0] == "self Unloaded Delivery") {
+      TheSnackBar(
+        context,
+        "self Unloaded Can't be Used With Any Service",
+        const Color.fromARGB(255, 150, 10, 10),
+      );
+      choosedServicesList.clear();
+      return false;
+    }
+    if (date.year == 2021) {
       TheSnackBar(
         context,
         'Please Select Date',
@@ -590,6 +680,7 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
         choosedEndTime.hour,
         choosedEndTime.minute,
       );
+
       return true;
     }
   }
@@ -625,7 +716,8 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
       UserRequestsPage.requestList.add(
         RequestsStates(
           gateTitle: widget.gateName,
-          serviceTitle: selectedService!,
+          serviceTitle: choosedServicesList,
+          // serviceTitle: selectedService!,
           serviceStartDate:
               DateFormat("yyyy/MM/dd").format(choosedStartingDateTime),
           serviceEndDate:
@@ -647,5 +739,57 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
   }
 
 ////////////////////////////////////////////
+//هي ال widget  اللي بتعرض خيار ال  select all Services ك checkBox
 
+  Widget buildGroupServicesCheckbox(ServicesCheckBox serviceCheckBox) =>
+      CheckboxListTile(
+        controlAffinity: ListTileControlAffinity.leading,
+        title: Text(
+          serviceCheckBox.serviceName,
+          style: const TextStyle(
+            fontSize: 24,
+            color: Colors.orange,
+          ),
+        ),
+        activeColor: Colors.blue,
+        value: serviceCheckBox.isChecked,
+        onChanged: toggleGroupServiceCheckbox,
+      );
+
+// for choosing all Services in one choice
+// its called select all staffs
+// هاد تابع بيتقق اذا تم اختبار ال كل ال Services او لأ
+// مشان الخيار select all Services
+
+  void toggleGroupServiceCheckbox(bool? isChecked) {
+    if (isChecked == null) return;
+    setState(() {
+      selectAllServices.isChecked = isChecked;
+      // ignore: avoid_function_literals_in_foreach_calls
+      chooseService.forEach((service) {
+        if(service.serviceName == "self Unloaded Delivery" && service.isChecked == true)
+          service.isChecked= false;
+        if (service.serviceName != "self Unloaded Delivery")
+          service.isChecked = isChecked;
+      });
+    });
+  }
+
+//هي ال widget  اللي بتعرض ال Services ك checkBox
+
+  Widget buildServiceCheckbox(ServicesCheckBox servicesCheckBox) =>
+      CheckboxListTile(
+        onChanged: (serviceValue) => setState(() {
+          servicesCheckBox.isChecked = serviceValue!;
+          selectAllServices.isChecked =
+              chooseService.every((service) => service.isChecked == true);
+        }),
+        controlAffinity: ListTileControlAffinity.leading,
+        activeColor: Colors.blue,
+        value: servicesCheckBox.isChecked,
+        title: Text(
+          servicesCheckBox.serviceName,
+          style: const TextStyle(fontSize: 24, color: Colors.white),
+        ),
+      );
 }
