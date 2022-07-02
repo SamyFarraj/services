@@ -1,14 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 
 import 'package:project_mohammad/components/dash_board.dart';
 import 'package:project_mohammad/project/home/service_info_input.dart';
 import 'package:project_mohammad/services/choices.dart';
-
-import '../../Api/model/name_service.dart';
-import '../constant.dart';
-import 'package:http/http.dart' as http;
 
 
 class ServiceEdition extends StatefulWidget {
@@ -19,65 +13,7 @@ class ServiceEdition extends StatefulWidget {
 }
 
 class _ServiceEditionState extends State<ServiceEdition> {
-
-  List<String> servicewoodward = [];
-  List<String> servicefarmer = [];
-  List<String> bothstreet = [];
-
-  Future <String> Block_Service(int id)async
-  {
-    final response = await http.get(
-      Uri.parse('${base_Url}/api/Admin/BlockServices/${id}'),
-      headers: {
-        'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMzFkM2Y0NTJhMzU2YTI4M2Y4ZGQ5MGQ3NzgxYjU0ZmIyMzE0ZDVkNjBlNmI0YTM0YmNmZWFlMTJkNWRkODc1MzMxZTI3ZWZhOGQzMTM3NzYiLCJpYXQiOjE2NTEyMzQ3NDIuOTkxMTM0LCJuYmYiOjE2NTEyMzQ3NDIuOTkxMTU0LCJleHAiOjE2ODI3NzA3NDIuOTc4MjAxLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.ek1NrqJvLbvZvqQdDecQqUXgqKLef3-Ye7FG39soEesiHyk3DUlcGgIpYoHbHKCH6YBThrqb5PoDQx42DPqbY3cbK895PhKF-Js7gcy2_MEsqrNE8zVTa8yHMRbBNM2wYVaykkyvkz5acWwofqg7dGkXjvTDObilBGRQddOQEIdxwZ_9qIjtjn-_5pMPzhBChJbGddacGc0ryUFHF89MW107cJ4bsaDPhY_rSGTm9NBm3xilBHHFhwEWIcxevuw_bIs9ayuK6aYiaB3d6w-mLuJR9he8W8vTCbkVvqQOk5AnL_3hlKzQ86B8Ce5g-c01OMrkWsIuADFbVv-QgysQGy1zn_kyUwuYmJLiGKYcDtndcW-0ZpJXn-io0UyGdwYFahaofHH7xD_DyW_9kleOGN0BIjaV4GhhMLskb7TFAs2CquLn3E8mCuxKx7MQgWRL-GNL1QHMWuyFezjPWJnTCXJlv-fJQrKYAlwWTsN1UoTchzyolpPEeAEo5AiyH6WQgOyd2ZxaKHikBBu8vKtEE-zONIronEQWJRmauccYKjlpNW3CHoY63rDt2nnskC9FcI3OHX3p_3y8cy9l6wMab8aUBrXwRnebrSA-jAuv6jvHfakf_CelUcB1HnEFIIss5aXxlzYtoyQNUbaOPtW_xer26mZYC1uHcvMynzScejw'
-      },
-    );
-    if(response.statusCode==200)
-    {
-      print("yesssssssssss");
-      return jsonDecode(response.body);
-    }
-    else
-    {
-      return "Error code is ${response.statusCode}";
-    }
-  }
-
-
-
-
-  String selectedService = 'Select Service';
-  String? selectedStreet = "Farmer";
-  late int theid;
-  Future<ListService> fetchAlbum() async {
-    final response = await http
-        .get(Uri.parse('${base_Url}/api/services'),
-        headers: {
-          'Authorization':'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMzFkM2Y0NTJhMzU2YTI4M2Y4ZGQ5MGQ3NzgxYjU0ZmIyMzE0ZDVkNjBlNmI0YTM0YmNmZWFlMTJkNWRkODc1MzMxZTI3ZWZhOGQzMTM3NzYiLCJpYXQiOjE2NTEyMzQ3NDIuOTkxMTM0LCJuYmYiOjE2NTEyMzQ3NDIuOTkxMTU0LCJleHAiOjE2ODI3NzA3NDIuOTc4MjAxLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.ek1NrqJvLbvZvqQdDecQqUXgqKLef3-Ye7FG39soEesiHyk3DUlcGgIpYoHbHKCH6YBThrqb5PoDQx42DPqbY3cbK895PhKF-Js7gcy2_MEsqrNE8zVTa8yHMRbBNM2wYVaykkyvkz5acWwofqg7dGkXjvTDObilBGRQddOQEIdxwZ_9qIjtjn-_5pMPzhBChJbGddacGc0ryUFHF89MW107cJ4bsaDPhY_rSGTm9NBm3xilBHHFhwEWIcxevuw_bIs9ayuK6aYiaB3d6w-mLuJR9he8W8vTCbkVvqQOk5AnL_3hlKzQ86B8Ce5g-c01OMrkWsIuADFbVv-QgysQGy1zn_kyUwuYmJLiGKYcDtndcW-0ZpJXn-io0UyGdwYFahaofHH7xD_DyW_9kleOGN0BIjaV4GhhMLskb7TFAs2CquLn3E8mCuxKx7MQgWRL-GNL1QHMWuyFezjPWJnTCXJlv-fJQrKYAlwWTsN1UoTchzyolpPEeAEo5AiyH6WQgOyd2ZxaKHikBBu8vKtEE-zONIronEQWJRmauccYKjlpNW3CHoY63rDt2nnskC9FcI3OHX3p_3y8cy9l6wMab8aUBrXwRnebrSA-jAuv6jvHfakf_CelUcB1HnEFIIss5aXxlzYtoyQNUbaOPtW_xer26mZYC1uHcvMynzScejw'
-        }
-      // snapshot.data!.services.woodWard[1].street
-    );
-    print("the respsmss base ${response.statusCode}");
-    if (response.statusCode == 200) {
-      // If the server did return a 200 OK response,
-      // then parse the JSON.
-      return ListService.fromJson(jsonDecode(response.body));
-    } else {
-      //    print("kgjsdjklsd ${snapshot.data!.services.woodWard[1].street}");
-
-      throw Exception('Failed to load album');
-    }
-  }
-  late Future<ListService>  date;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    date=fetchAlbum();
-    print("gdgdf,h;l");
-  }
-
-
+  List<String> gatesEdition=[];
 
   @override
   Widget build(BuildContext context) {
@@ -164,288 +100,87 @@ class _ServiceEditionState extends State<ServiceEdition> {
                       topRight: Radius.circular(35),
                     ),
                   ),
-                  child: SingleChildScrollView(
-                    child: FutureBuilder
-                    <ListService>(
-                      future:  date,
-                      builder:  ( context,snapshot)
-                      {
-                        if (snapshot.hasData)
-                        {
-                          servicewoodward.clear();
-                          servicefarmer.clear();
-                          print("step one ");
-
-                          print("dkphhhhh");
-
-                          servicefarmer.add('select service');
-
-                          for(int i =0;i<snapshot.data!.services.woodward.length;i++)
-                          {
-                            print("there is no item ");
-
-                            servicewoodward.add(snapshot.data!.services.woodward[i].name);
-                          }
-                          //   print("the array = ${servicewoodward}");
-
-
-
-                          if(  servicefarmer.length<=snapshot.data!.services.farmer.length)
-                          {
-
-                            print("dkphhhhh");
-                            for(int i =0;i<snapshot.data!.services.farmer.length;i++)
-                            {
-                              print("there is no item ");
-
-                              servicefarmer.add(snapshot.data!.services.farmer[i].name);
-                            }
-                          }
-                          return
-                            Column(
-                              children: <Widget>[
-
-
-                                ///الليست القديمة //
-/*
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.7,
-                              child: DropdownButtonFormField<String>(
-                                decoration: InputDecoration(
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      width: 3.7,
-                                      color: Colors.blue,
-                                    ),
-                                    borderRadius: BorderRadius.circular(25),
+                  child:
+                    SingleChildScrollView(
+                      child: Column(
+                        children: <Widget>[
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.7,
+                            child: DropdownButtonFormField<String>(
+                              decoration: InputDecoration(
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    width: 3.7,
+                                    color: Colors.blue,
                                   ),
-                                ),
-                                // value: selectedStreet,
-                                items: selectStreet
-                                    .map(
-                                      (street) => DropdownMenuItem<String>(
-                                        value: street.title,
-                                        child: Text(
-                                          street.title,
-                                          style: const TextStyle(
-                                            fontSize: 22,
-                                            color: Colors.blue,
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                    .toList(),
-                                onChanged: (street) => setState(
-                                  () {
-                                    selectedStreet = street;
-                                  },
+                                  borderRadius: BorderRadius.circular(25),
                                 ),
                               ),
-                            ),
-
-
- */
-
-                                SizedBox(
-                                  width: MediaQuery.of(context).size.width * 0.75,
-                                  child: DropdownButtonFormField<String>(
-                                    decoration: InputDecoration(
-                                      enabledBorder: UnderlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          width: 3.6,
-                                          color: Colors.blue,
-                                        ),
-                                        borderRadius: BorderRadius.circular(25),
-                                      ),
-                                    ),
-                                    items: selectStreet
-                                        .map(
-                                          (street) => DropdownMenuItem<String>(
-                                        value: street.title,
-                                        child: Text(
-                                          street.title,
-                                          style: const TextStyle(
-                                            fontSize: 22,
-                                            color: Colors.blue,
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                        .toList(),
-                                    onChanged: (street) =>
-                                        setState(() {
-
-                                          selectedStreet = street;
-
-                                          if(selectedStreet=='FARMER')
-                                          {
-
-                                            if(servicefarmer.length==0)
-                                            {
-                                              // servicefarmer.add('');
-                                              servicesList = List.from(servicefarmer);
-                                              //    servicesList.add('selecet serveics');
-
-                                            }
-                                            else {
-                                              servicesList =
-                                                  List.from(servicefarmer);
-                                              selectedService =
-                                              servicesList[0];
-                                            }
-                                          }
-
-                                          if(selectedStreet=='WOODWARD')
-                                          {
-                                            servicesList = List.from(servicewoodward);
-                                            selectedService=servicesList[0];
-                                            print("kdfsjkjfsssskl${servicesList}");
-
-                                          }
-                                          // servicesList.clear();
-
-                                          print("kdfsjkjfkl${servicesList}");
-
-                                        }),
-                                  ),
-                                ),
-
-                                SizedBox(
-                                  height: MediaQuery.of(context).size.height * 0.15,
-                                ),
-
-
-                                SizedBox(
-                                  width: MediaQuery.of(context).size.width * 0.75,
-                                  child: DropdownButtonFormField<String>(
-                                    decoration: InputDecoration(
-                                      enabledBorder: UnderlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          width: 6.0,
-                                          color: Colors.blue,
-                                        ),
-                                        borderRadius: BorderRadius.circular(25),
-                                      ),
-                                    ),
-                                    value: selectedService,
-                                    items: gatesTest
-                                        .map(
-
-                                          (service) => DropdownMenuItem<String>(
-                                        value: service,
-                                        child: Text(
-                                          service,
-                                          style: const TextStyle(
-                                            fontSize: 22,
-                                            color: Colors.blue,
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                        .toList(),
-                                    onChanged: (service) => setState(() {
-                                      selectedService = service!;
-                                      print("the selecteddd $selectedService");
-                                      print("dkphhhhh");
-                                      if(selectedStreet=='WOODWARD')
-                                        for(int i =0;i<snapshot.data!.services.woodward.length;i++)
-                                        {
-                                          if(selectedService==snapshot.data!.services.woodward[i].name)
-                                          {
-                                            theid=snapshot.data!.services.woodward[i].id;
-                                            print("the id ${theid}");
-                                            break;
-
-
-                                          }
-                                        }
-                                      else  if(selectedStreet=='FARMER')
-                                      {
-                                        for(int i =0;i<snapshot.data!.services.farmer.length;i++)
-                                        {
-                                          if(selectedService==snapshot.data!.services.farmer[i].name)
-                                          {
-                                            theid=snapshot.data!.services.farmer[i].id;
-                                            print("the id ${theid}");
-                                            break;
-
-
-                                          }
-                                        }
-
-
-                                      }
-
-print("the prin t t dnkdjf $selectedService");
-                                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => ServiceInformationInput(gateName: selectedService,both: bothstreet, listservice: [] ,),),);
-
-
-                                    }),
-                                  ),
-                                ),
-                                ///الليست القديمة //
-                                /*
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.7,
-                              child: DropdownButtonFormField<String>(
-                                decoration: InputDecoration(
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      width: 6.0,
+                              // value: selectedStreet,
+                              items: selectStreet
+                                  .map(
+                                    (street) => DropdownMenuItem<String>(
+                                  value: street.title,
+                                  child: Text(
+                                    street.title,
+                                    style: const TextStyle(
+                                      fontSize: 22,
                                       color: Colors.blue,
                                     ),
-                                    borderRadius: BorderRadius.circular(25),
                                   ),
                                 ),
-                                value: selectedService,
-                                items: servicesList
-                                    .map(
-                                      (service) => DropdownMenuItem<String>(
-                                        value: service,
-                                        child: Text(
-                                          service,
-                                          style: const TextStyle(
-                                            fontSize: 22,
-                                            color: Colors.blue,
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                    .toList(),
-                                onChanged: (service) => setState(() {
-                                  selectedService = service!;
-                                }),
+                              )
+                                  .toList(),
+                              onChanged: (street) => setState(
+                                    () {
+                                  selectedStreet = street;
+                                },
                               ),
                             ),
-                            */
-                                SizedBox(
-                                  height: MediaQuery.of(context).size.height * 0.15,
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.15,
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.7,
+                            child: DropdownButtonFormField<String>(
+                              decoration: InputDecoration(
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    width: 6.0,
+                                    color: Colors.blue,
+                                  ),
+                                  borderRadius: BorderRadius.circular(25),
                                 ),
-                                // buttonOfManageServices(
-                                //   context,
-                                //   () {
-                                //     checkServiceBlock(selectedService);
-                                //   },
-                                //   "Block Service",
-                                //   const Color.fromARGB(255, 150, 10, 10),
-                                // ),
-
-                              ],
-                            );
-
-                        }
-                        else if (snapshot.hasError) {
-                          return Text('${snapshot.error}');
-
-                        }
-
-                        // By default, show a loading spinner.
-                        return const CircularProgressIndicator();
-                      },
-
-
-                    ),
-                  ),
+                              ),
+                              value: selectedService,
+                              items: gatesEdition
+                                  .map(
+                                    (service) => DropdownMenuItem<String>(
+                                  value: service,
+                                  child: Text(
+                                    service,
+                                    style: const TextStyle(
+                                      fontSize: 22,
+                                      color: Colors.blue,
+                                    ),
+                                  ),
+                                ),
+                              )
+                                  .toList(),
+                              onChanged: (service) => setState(() {
+                                selectedService = service!;
+                                Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                    builder: (_) => ServiceInformationInput(gateName: selectedService, both: [], listservice: [],),
+                                  ),
+                                );
+                              }),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
                   // ListView(
                   //   children: selectStreet
                   //       .map(

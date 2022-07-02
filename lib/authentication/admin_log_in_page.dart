@@ -203,8 +203,8 @@ class _AdminLogInPageState extends State<AdminLogInPage> {
 
                             }
                            */
-                          print('fasfsdfesfdfs');
-                          logincontroller().signIn(adminEmailController.text,adminPasswordController.text,'Admin');
+                          print('befor send request ');
+                          logincontroller().signIn(adminEmailController.text,adminPasswordController.text,'/Admin');
                         },
                         style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.symmetric(

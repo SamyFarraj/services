@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:project_mohammad/Api/model/name_service.dart';
-import 'package:project_mohammad/services/requests_statue.dart';
+import 'package:project_mohammad/services/requests_form.dart';
 import 'package:project_mohammad/services/staff.dart';
 
+import '../Api/model/name_service.dart';
 import 'street_service_chooser.dart';
 
 
@@ -53,13 +53,24 @@ final farmerStreetList = <ServiceChooser>[
 //فكرة حجز البوابة فقط هي التأكد اذا كانت الخدمة Not Assigned فإنه
 //يتجاهلها وما عدا ذلك سوف يرسلها لقاعدة البيانات
 late ListService ss ;
+
+/*
 List<String> servicesList = [
-  'Select Service',
 
 ];//هي list   مسان ال blocked services
+
+
+
+
+*/
 //
+/*
+List <String> gatesEdition =[
+  'Select Service'
+];
+*/
+
 List<String> blockedServicesList = [
-  'Select Service',
 ];
 
 //هي مشان يقدر المستخدم يختار كل ال staffs المتاحين
@@ -89,82 +100,81 @@ List<RequestsStates> adminRequestsManageList = [
     user: "user 1",
     gateTitle: "gate1",
     serviceTitle: 'service1',
-    serviceDate: DateFormat("MM/dd/yyyy").format(DateTime.now()),
+    serviceStartDate: DateFormat("MM/dd/yyyy").format(DateTime.now()),
+    serviceEndDate: DateFormat("MM/dd/yyyy").format(DateTime.now()),
     serviceTime: TimeOfDay.now(),
     hoursDuration: int.parse("1"),
     minuteDuration: int.parse("30"),
-    endingDate: DateFormat("MM/dd/yyyy").format(DateTime(2022,10,10)),
+    endingTime: TimeOfDay(hour:00 , minute: 00,),
   ),
   RequestsStates(
     user: "user 2",
     gateTitle: "gate2",
     serviceTitle: 'service2',
-    serviceDate: DateFormat("MM/dd/yyyy").format(DateTime.now()),
+    serviceStartDate: DateFormat("MM/dd/yyyy").format(DateTime.now()),
+    serviceEndDate: DateFormat("MM/dd/yyyy").format(DateTime.now()),
     serviceTime: TimeOfDay.now(),
     hoursDuration: int.parse("1"),
     minuteDuration: int.parse("30"),
-    endingDate: DateFormat("MM/dd/yyyy").format(DateTime(2022,10,10)),
+    endingTime: TimeOfDay(hour:00 , minute: 00,),
   ),
   RequestsStates(
     user: "user 3",
     gateTitle: "gate3",
     serviceTitle: 'service3',
-    serviceDate: DateFormat("MM/dd/yyyy").format(DateTime.now()),
+    serviceStartDate: DateFormat("MM/dd/yyyy").format(DateTime.now()),
+    serviceEndDate: DateFormat("MM/dd/yyyy").format(DateTime.now()),
     serviceTime: TimeOfDay.now(),
     hoursDuration: int.parse("1"),
     minuteDuration: int.parse("30"),
-    endingDate: DateFormat("MM/dd/yyyy").format(DateTime(2022,10,10)),
+    endingTime: TimeOfDay(hour:00 , minute: 00,),
   ),
   RequestsStates(
     user: "user 4",
     gateTitle: "gate4",
     serviceTitle: 'service4',
-    serviceDate: DateFormat("MM/dd/yyyy").format(DateTime.now()),
+    serviceStartDate: DateFormat("MM/dd/yyyy").format(DateTime.now()),
+    serviceEndDate: DateFormat("MM/dd/yyyy").format(DateTime.now()),
     serviceTime: TimeOfDay.now(),
     hoursDuration: int.parse("1"),
     minuteDuration: int.parse("30"),
-    endingDate: DateFormat("MM/dd/yyyy").format(DateTime(2022,10,10)),
+    endingTime: TimeOfDay(hour:00 , minute: 00,),
   ),
   RequestsStates(
+
     user: "user 5",
     gateTitle: "gate4",
     serviceTitle: 'service5',
-    serviceDate: DateFormat("MM/dd/yyyy").format(DateTime.now()),
+    serviceStartDate: DateFormat("MM/dd/yyyy").format(DateTime.now()),
+    serviceEndDate: DateFormat("MM/dd/yyyy").format(DateTime.now()),
     serviceTime: TimeOfDay.now(),
     hoursDuration: int.parse("1"),
     minuteDuration: int.parse("30"),
-    endingDate: DateFormat("MM/dd/yyyy").format(DateTime(2022,10,10)),
+    endingTime: TimeOfDay(hour:00 , minute: 00,),
   ),
   RequestsStates(
     user: "user 6",
     gateTitle: "gate4",
     serviceTitle: 'service6',
-    serviceDate: DateFormat("MM/dd/yyyy").format(DateTime.now()),
+    serviceStartDate: DateFormat("MM/dd/yyyy").format(DateTime.now()),
+    serviceEndDate: DateFormat("MM/dd/yyyy").format(DateTime.now()),
     serviceTime: TimeOfDay.now(),
     hoursDuration: int.parse("1"),
     minuteDuration: int.parse("30"),
-    endingDate: DateFormat("MM/dd/yyyy").format(DateTime(2022,10,10)),
+    endingTime: TimeOfDay(hour:00 , minute: 00,),
   ),
 ];
 
 List<String> addAdminList = [
-  'Select Admin',
-  'Admin 1',
-  'Admin 2',
-  'Admin 3',
-  'Admin 4',
-  'Admin 5',
-  'Admin 6',
-  'Admin 7',
+  'Select Admin'
 ];
 
 
 
-List <String> gatesTest =[
-  'Select Service',
-  'Gate 1',
-  'Gate 2',
-  'Gate 3',
-  'Gate 4',
+
+List <String> streetEdition=[
+  'Select Street',
+  'WOODWARD',
+  'FARMER',
 ];
 

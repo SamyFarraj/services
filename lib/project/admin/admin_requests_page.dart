@@ -1,13 +1,22 @@
+
+
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:project_mohammad/components/dash_board.dart';
+import 'package:http/http.dart' as http;
 
-import '../../services/requests_statue.dart';
+import '../../Api/controller/Admin/aceept_or_decline_reservation.dart';
+import '../../Api/controller/login_controller.dart';
+import '../../Api/model/myaccapted_model.dart';
+import '../../moh_project/post_moh/login_controller.dart';
+import '../../services/requests_form.dart';
 import '../home/requests.dart';
 
 class AdminRequestsPage extends StatefulWidget {
    AdminRequestsPage({Key? key}) : super(key: key);
 
-  final List<RequestsStates> adminAcceptedRequestListEd = [];
+  final List<Myascapted> adminAcceptedRequestListEd = [];
 
   @override
   State<AdminRequestsPage> createState() => _AdminRequestsPageState();
@@ -16,7 +25,7 @@ class AdminRequestsPage extends StatefulWidget {
 
 AdminRequestsPage arp = AdminRequestsPage();
 
-void acceptRequest(RequestsStates request){
+void acceptRequest(Myascapted request){
   arp.adminAcceptedRequestListEd.add(request);
   UserRequestsPage.requestList.remove(request);
 }
@@ -28,6 +37,120 @@ void deleteRequest(RequestsStates request){
 
 
 class _AdminRequestsPageState extends State<AdminRequestsPage> {
+
+
+
+
+  List<Myascapted> ulist = [];
+  List<Myascapted> userLists = [];
+  List<Myascapted> adminAcceptedRequestListEds = [];
+  @override
+  static List<Myascapted> parseAgents(String responseBody) {
+    print("sdknkjsdngjnd");
+    //Map<String,String>.from(oldMap)
+    final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
+    return parsed
+        .map<Myascapted>((json) => Myascapted.fromJson(json))
+        .toList();
+  }
+
+  Future<List<Myascapted>> fetchData() async {
+    final response = await http.get(
+      Uri.parse('http://192.168.56.1:8000/api/Admin/Reservation'),
+      headers: {
+
+        'Authorization': 'Bearer $t'
+      },
+    );
+    print('the statues is ${response.statusCode}');
+    if (response.statusCode == 200) {
+      final List parsedList = json.decode(response.body);
+      // List<MyReservations> list = parsedList.map((val) => MyReservations.fromJson(val)).toList();
+      //  print("${response.body}");json.decode(response.body);
+      List<Myascapted> list = parseAgents(response.body);
+      print("sdasdasdasdsad$list");
+      return list;
+    } else {
+      throw Exception('Unexpected error occurred!');
+    }
+  }
+
+  List<Myascapted> pending = [];
+  List<Myascapted> listpending = [];
+
+
+  @override
+  static List<Myascapted> parseAgentsformypending(String responseBody) {
+    print("sdknkjsdngjnd");
+    //Map<String,String>.from(oldMap)
+    final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
+    return parsed
+        .map<Myascapted>((json) => Myascapted.fromJson(json))
+        .toList();
+  }
+/*
+  Future<List<Myascapted>> mypendingresrrvations() async {
+    final response = await http.get(
+      Uri.parse('http://192.168.56.1:8000/api/Reservation/MyPendingReservation'),
+      headers: {
+        'Authorization': 'Bearer $t'
+      },
+    );
+    print('the statues is ${response.statusCode}');
+    if (response.statusCode == 200) {
+      final List parsedList = json.decode(response.body);
+      // List<MyReservations> list = parsedList.map((val) => MyReservations.fromJson(val)).toList();
+      //  print("${response.body}");json.decode(response.body);
+      List<Myascapted> list = parseAgents(response.body);
+      print("sdasdasdasdsad$list");
+      return list;
+    } else {
+      throw Exception('Unexpected error occurred!');
+    }
+  }
+  */
+
+  @override
+  void initState() {
+    arp.  adminAcceptedRequestListEd.clear();
+    UserRequestsPage.requestList.clear();
+    super.initState();
+    fetchData().then((subjectFromServer) {
+      setState(() {
+        ulist = subjectFromServer;
+        userLists = ulist;
+        print("fsfsdfdsfdsf${userLists[0].gateName}");
+
+        for(int i=0;i<userLists.length;i++)
+        {
+if(userLists[i].isAccepted==0) {
+  UserRequestsPage.requestList.add(userLists[i]);
+}
+else
+  {
+    arp.  adminAcceptedRequestListEd.add(userLists[i]);
+  }
+        }
+      });
+    });
+/*
+    mypendingresrrvations().then((subjectFromServer) {
+      setState(() {
+
+        pending = subjectFromServer;
+        listpending = pending;
+        print("the pending list is $listpending");
+      });
+    });
+
+ */
+  }
+
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -128,6 +251,7 @@ class _AdminRequestsPageState extends State<AdminRequestsPage> {
                                   )),
                                 ),
                                 // ...adminRequestsManageList.map((val) {
+
                                 ...UserRequestsPage.requestList.map((val) {
                                   return Column(
                                     children: [
@@ -143,7 +267,7 @@ class _AdminRequestsPageState extends State<AdminRequestsPage> {
                                                 children: <Widget>[
                                                   // ignore: prefer_const_constructors
                                                   Text(
-                                                    val.user,
+                                                    val.gateName,
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 26,
@@ -152,7 +276,7 @@ class _AdminRequestsPageState extends State<AdminRequestsPage> {
                                                     ),
                                                   ),
                                                   Text(
-                                                    val.serviceTitle,
+                                                    val.gateName,
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 26,
@@ -161,32 +285,39 @@ class _AdminRequestsPageState extends State<AdminRequestsPage> {
                                                     ),
                                                   ),
                                                   Text(
-                                                    val.serviceDate,
+                                                    val.gateName,
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 26,
                                                     ),
                                                   ),
                                                   Text(
-                                                    val.serviceTime
-                                                        .format(context),
+                                                    "start : ${val.startTime
+                                                      }",
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 26,
                                                     ),
                                                   ),
                                                   Text(
-                                                    " for ${val.hoursDuration}"
-                                                    " hour/s and "
-                                                    "${val.minuteDuration} "
-                                                    "minute/s",
+                                                    "end : ${val.endTime}",
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 21,
                                                     ),
                                                   ),
+                                                  // Text(
+                                                  //   " for ${val.hoursDuration}"
+                                                  //   " hour/s and "
+                                                  //   "${val.minuteDuration} "
+                                                  //   "minute/s",
+                                                  //   style: const TextStyle(
+                                                  //     color: Colors.white,
+                                                  //     fontSize: 21,
+                                                  //   ),
+                                                  // ),
                                                   Text(
-                                                    "from ${val.gateTitle}",
+                                                    "from ${val.gateName}",
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 26,
@@ -196,10 +327,15 @@ class _AdminRequestsPageState extends State<AdminRequestsPage> {
                                               ),
                                               Row(
                                                 children: <Widget>[
+
+                                                  //قبول حجز
                                                   ElevatedButton(
                                                     onPressed: () {
                                                       setState(() {
-                                                        acceptRequest(val);
+
+                                                        Acc_dec.Accept_reservation(val.id);
+
+                                                      //  acceptRequest(val);
                                                       });
                                                     },
                                                     style: ElevatedButton
@@ -242,10 +378,13 @@ class _AdminRequestsPageState extends State<AdminRequestsPage> {
                                                                 .width *
                                                             0.05,
                                                   ),
+
+                                                  //رفض حجز
                                                   ElevatedButton(
                                                     onPressed: () {
                                                       setState(() {
-                                                        deleteRequest(val);
+                                                //        deleteRequest(val);
+                                                        Acc_dec.delete_reservation(val.id);
                                                       });
                                                     },
                                                     style: ElevatedButton
@@ -408,7 +547,7 @@ class _AdminRequestsPageState extends State<AdminRequestsPage> {
                                                 children: <Widget>[
                                                   // ignore: prefer_const_constructors
                                                   Text(
-                                                    val.user,
+                                                    val.gateName,
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 26,
@@ -417,7 +556,7 @@ class _AdminRequestsPageState extends State<AdminRequestsPage> {
                                                     ),
                                                   ),
                                                   Text(
-                                                    val.serviceTitle,
+                                                    val.gateName,
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 26,
@@ -426,32 +565,40 @@ class _AdminRequestsPageState extends State<AdminRequestsPage> {
                                                     ),
                                                   ),
                                                   Text(
-                                                    val.serviceDate,
+                                                    val.gateName,
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 26,
                                                     ),
                                                   ),
                                                   Text(
-                                                    val.serviceTime
-                                                        .format(context),
+                                                    "start : ${val.startTime
+                                                        }",
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 26,
                                                     ),
                                                   ),
                                                   Text(
-                                                    " for ${val.hoursDuration}"
-                                                        " hour/s and "
-                                                        "${val.minuteDuration} "
-                                                        "minute/s",
+                                                    "end : ${val.endTime
+                                                        }",
                                                     style: const TextStyle(
                                                       color: Colors.white,
-                                                      fontSize: 21,
+                                                      fontSize: 26,
                                                     ),
                                                   ),
+                                                  // Text(
+                                                  //   " for ${val.hoursDuration}"
+                                                  //       " hour/s and "
+                                                  //       "${val.minuteDuration} "
+                                                  //       "minute/s",
+                                                  //   style: const TextStyle(
+                                                  //     color: Colors.white,
+                                                  //     fontSize: 21,
+                                                  //   ),
+                                                  // ),
                                                   Text(
-                                                    "from ${val.gateTitle}",
+                                                    "from ${val.gateName}",
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 26,

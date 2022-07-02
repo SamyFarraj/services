@@ -26,9 +26,12 @@ class _AuthVerificationCodePageState extends State<AuthVerificationCodePage> {
 
   //متغير ل تحديد طهور ال password
   bool passwordVisibility = true;
+  late Future<String> mycode;
 
   @override
   void initState() {
+
+
     verificationCodeController.addListener(() {
       bool isButtonActivate = verificationCodeController.text.length >= 6;
       setState(() {
@@ -42,6 +45,14 @@ class _AuthVerificationCodePageState extends State<AuthVerificationCodePage> {
       });
     });
     super.initState();
+
+    print('the code  is $correctVerificationCode');
+
+
+
+    mycode =Account_User.get_varvecation_code();
+    print('heloooo');
+    print('the code is $mycode');
   }
 
   @override

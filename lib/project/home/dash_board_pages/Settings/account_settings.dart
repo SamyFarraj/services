@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_mohammad/Api/controller/Admin/account.dart';
 
 class AccountSettings extends StatefulWidget {
   const AccountSettings({Key? key}) : super(key: key);
@@ -58,7 +59,10 @@ class _AccountSettingsState extends State<AccountSettings> {
                   ),
                   Container(
                     width: double.infinity,
-                    height: MediaQuery.of(context).size.height - 220,
+                    height: MediaQuery
+                        .of(context)
+                        .size
+                        .height - 220,
                     padding: const EdgeInsets.all(15),
                     decoration: BoxDecoration(
                       color: const Color.fromARGB(140, 0, 0, 65),
@@ -122,7 +126,9 @@ class _AccountSettingsState extends State<AccountSettings> {
                                 height: 35,
                               ),
                               ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  account.logout();
+                                },
                                 style: ElevatedButton.styleFrom(
                                   padding: const EdgeInsets.symmetric(
                                     vertical: 10,
@@ -135,7 +141,8 @@ class _AccountSettingsState extends State<AccountSettings> {
                                     ),
                                     borderRadius: BorderRadius.circular(35),
                                   ),
-                                  primary: const Color.fromARGB(255, 230, 84, 15),
+                                  primary: const Color.fromARGB(
+                                      255, 230, 84, 15),
                                 ),
                                 child: const Text(
                                   "Log Out",
@@ -163,7 +170,8 @@ class _AccountSettingsState extends State<AccountSettings> {
                                     ),
                                     borderRadius: BorderRadius.circular(25),
                                   ),
-                                  primary: const Color.fromARGB(255, 230, 84, 15),
+                                  primary: const Color.fromARGB(
+                                      255, 230, 84, 15),
                                 ),
                                 child: const Text(
                                   "Reset Password",

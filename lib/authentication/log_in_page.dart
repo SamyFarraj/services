@@ -1,6 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:project_mohammad/Api/controller/login_controller.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LogInPage extends StatefulWidget {
   const LogInPage({Key? key}) : super(key: key);
@@ -12,6 +13,8 @@ class LogInPage extends StatefulWidget {
 class _LogInPageState extends State<LogInPage> {
   // هدول ال controller
   // مشان ال textFields
+
+
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -256,7 +259,7 @@ class _LogInPageState extends State<LogInPage> {
                              */
                             print('pressed');
                             logincontroller().signIn(emailController.text,
-                                passwordController.text, '/user');
+                                passwordController.text, '');
                           },
                         )
                         //  هي كبسة ال login

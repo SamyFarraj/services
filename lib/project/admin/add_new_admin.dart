@@ -132,6 +132,9 @@ class _AddNewAdminState extends State<AddNewAdmin> {
                           ElevatedButton(
                             onPressed: () {
                               checkNewAdmin(adminNameController.text);
+
+
+                           //   عدل هون خليه ياخد ايميل بدال اسم لان هيك سارة عاملة
                               AddNewAdmin_con.Add_new_ADmiin(adminNameController.text);
                             },
                             style: ElevatedButton.styleFrom(

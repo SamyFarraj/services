@@ -4,6 +4,8 @@ import 'package:project_mohammad/components/snack_bar.dart';
 import 'package:project_mohammad/project/home/dash_board_pages/Settings/change_password_page.dart';
 import 'package:project_mohammad/project/projects_page.dart';
 
+import '../../../../Api/controller/User/account_user.dart';
+
 class DashBoardVerificationCodePage extends StatefulWidget {
   final String   currectnum;
   const DashBoardVerificationCodePage({required this.currectnum,Key? key}) : super(key: key);
@@ -28,9 +30,12 @@ late String current ;
     width: 10,
   );
   final verificationCodeFormKey = GlobalKey<FormState>();
+String? mycode;
 
   //متغير ل تحديد طهور ال password
   bool passwordVisibility = true;
+late Future<String> date;
+
 
   @override
   void initState() {
@@ -47,6 +52,7 @@ late String current ;
       });
     });
     super.initState();
+        date = Account_User.get_varvecation_code();
   }
 
   @override
@@ -62,7 +68,7 @@ late String current ;
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
-          "Verify",
+          "Verisy",
           style: TextStyle(
             fontSize: 36,
             fontWeight: FontWeight.bold,
@@ -126,6 +132,23 @@ late String current ;
                           height: MediaQuery.of(context).size.height * 0.2,
                         ),
                         // هاد ال حقل الخاص ب ال code تبع التحقق
+                        FutureBuilder(
+                            future:date,
+                       builder: (context, snapshot) {
+
+                              if(snapshot.hasData)
+                                {
+                                  mycode=snapshot.data.toString();
+                                  print('the code is $mycode');
+                                }
+                              return const CircularProgressIndicator();
+                          },
+
+
+
+                        )
+                     ,
+
                         TextFormField(
                           validator: (enteredCode) =>
                           enteredCode == dashBoardCorrectVerificationCode

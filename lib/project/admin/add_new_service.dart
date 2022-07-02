@@ -12,6 +12,8 @@ class AddNewService extends StatefulWidget {
 }
 
 class _AddNewServiceState extends State<AddNewService> {
+  List<String>servicesList=[];
+
   final serviceNameController = TextEditingController();
   List<String> streetsList = ["Select Street", "WoodWard", "Farmer","BothStreet"];
   String? selectedStreet = "Select Street";

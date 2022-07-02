@@ -7,10 +7,14 @@ import 'package:http/http.dart' as http;
 import 'package:project_mohammad/components/snack_bar.dart';
 
 import '../../services/choices.dart';
-import '../../services/requests_statue.dart';
+import '../../services/requests_form.dart';
 import 'requests.dart';
-// import '../../services/staff.dart';
 
+/*
+File in order to enter service reservation information such as
+date, start and end time, gate and route, etc...
+
+ */
 class ServiceInformationInput extends StatefulWidget {
   final String gateName;
   final List<String> both;
@@ -47,30 +51,45 @@ late int id_service;
     1,
   );
   DateTime choosedStartingDateTime = DateTime(2021);
-  DateTime choosedEndDateTime = DateTime(2021);
 
-  //المتغير اللي رح يتخزن فيه الوقت اللي تم اختيارو
+  DateTime choosedEndingDateTime = DateTime(2021);
+
+  //المتغير اللي رح يتخزن فيه وقت البداية اللي تم اختيارو
   TimeOfDay time = const TimeOfDay(hour: 23, minute: 41);
 
+  //المتغير اللي رح يتخزن فيه وقت  النهاية اللي تم اختيارو
+  TimeOfDay choosedEndTime = const TimeOfDay(hour: 23, minute: 41);
+
+  // DateTime choosedEndDateTime = DateTime(2021);
+
   // مصفوفة لتخزين ال staff اللي تم اختيارون
+  // Array to store choosed Staffs
   List choosedStaffsList = [];
 
   //المتغير اللي رح يتخزن فيه الخدمة اللي تم اختيارها
+  // Service Name variable
   String? selectedService = 'Select Service';
 
   //المتغير اللي رح يتخزن فيه مدة حجز للخدمة اللي تم اختيارها
+  // service reservation time by minutes
   String? selectedMinuteDuration = 'Select Minute Duration';
 
   //المتغير اللي رح يتخزن فيه مدة حجز للخدمة اللي تم اختيارها
+  // service reservation time by hours
   String? selectedHoursDuration = 'Select Hours Duration';
 
   // ال controller اللي رح ناخد منو المدة بالساعات من ال textField
+  //reservation Hours TextField
   final choosedDurationHoursController = TextEditingController();
 
   // ال controller اللي رح ناخد منو المدة بالدقايق من ال textField
+  //reservation Minute TextField
   final choosedDurationMinuteController = TextEditingController();
 
+  //text displayed on date Picked button
   late String showedDate = 'select Date';
+
+  //text displayed on time Picked button
   late String showedTime = 'select Time';
 
   Future book_resevices(String gate_name, String Start_time, String end_time,
@@ -78,7 +97,7 @@ late int id_service;
     var headers = {
       'Accept': 'application/json',
       'Authorization':
-          'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYzEwOWI1YjMzY2JmMjlhMDdjZTk3MGU3ZWYzOGQxMGQ4ODdlNDkzZThlNTgyMDJiOTNiMzU3MDNhNDBkYjY5YzQ0MDE4NDZiNWVkNjNlMzQiLCJpYXQiOjE2NTA5NDQ1NzkuMzcwMjAyLCJuYmYiOjE2NTA5NDQ1NzkuMzcwMjA4LCJleHAiOjE2ODI0ODA1NzkuMzAwNzk1LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.LafISEKD8yn9StQjfbHT7yxAFqkDxpmcTgFyqshSmS6bCbuv1lzYc9DpBVT54siGXDkkVW4999pUX6U38S1zAAdK4LvfDip8k74ZA2HIodczwBeWK7AuF0-WG4PCnOwAzXXMe0Qg9_QjPh1FLJ7Dk1tws9MTAs0A42-Or1_hlb2LbUg0_9icWP6__hG78nvLKepCVd4CUNxjQWD1TQj-VA0oK9DZazF8N33dAC4w3TqeDtOfhsIS3cCnEfS13574eS_EhGdOaCwWKUanwyuwjxWOuwmWNf0xzhWljERnHIrC4cr7Yx0urpfYniZtb63Qz7mY8abLX-2dCr9EyFAzsUZyia2zuVZV1OVxTiaOQ6GZEmT6IyOKEMzFTNItRsaJnElYmCrB8eYL1DC4vA7B5txbUqATeR-TLGYwqhA7S18yxElg_peDAqfA-iznUDb90BH3y9toa-tYNYyrFWcCNt7fFH_DwYMxk0LPNz-jm1ATBwX7a9eSaillN8AEpuuq93IXiCicg9pURT_uG3KhafsXHwFJd-2reHRXUkHSgcONEQgHGd0P6McaJPbJnfAaIMcXS06aPNTjROSk3X8RsrICTKPrQDY1DTCtBNfm_6OI1oIDARMaTd2RE3rIPu0jqsTyfmw0NxKM8QvaWNnyPPHCZ5GzVsVBIWJ97-_nWNQ'
+          'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiOTkwYzRkNTdiYzkzODQ2NTA5ZTM3MjU2YzU2ZTQ2MjQwNWZkMzc0Y2M4ZmE5YTg0OTJiN2U1MTBmZDhiM2Q3ZjgyYmY0N2Q1ZmM2YzJjYmMiLCJpYXQiOjE2NTY0MjIzNjAuOTE1MDA5LCJuYmYiOjE2NTY0MjIzNjAuOTE1MDIyLCJleHAiOjE2ODc5NTgzNjAuODkzMjYsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.Rwwp6Npa36TJHcEmOSA1i131gjYD8yaDUFH_EcRrjwhGVYzoy2K4yZifdYtVjqflTf8HjXZJIHLNYHpqvC2hD0G_GMPB9iowUuYxkIqMYbeXlgoU2SDMwQrRrM_jwhqv7VNi5sZo-cbdiy7MO0-J-lTzCjp3X5BxoFs_xDTC5eX2vxrY1bqeLNfXGN_tk3edTyAFF8nGVVVf3sqzur21-YDLfUJAznaS1F54CA1ZJaiKlZ1iefYBE1HFfxctjhqyCZCHcZc6-DBt9T5RA_v0skymQb-F735rRC73c83ZcHaOAk5EhX4_EqysY9WYMDDnoK2mY7nR0kLsL1qn7Se36bjhBBencDItpAA7goYL2E366L-w34X5hfY9_saOKWO1A2fpHnV7l5M-_B7sHvV57qBb_IvyP6AY8RV3EoTmmCBa8GdNJKgFwjU-QuMKerKwr3lBHGnXaskBsSjHeYB0_gt_o6hyx3as8FaiC_DxefdRDnhSQchnPN7WugCcHh_LPQONRB-wVYoYIR-qEjjqY2YyiMVttGFtZ0NO4-pbZLToclrUNIzyaxV7oCNsrd5E1fFF01mrXfwNG3ZmFe029m46Zfrcsfbn8cOG-NihMzQpq37zhXrC3FSnsVdZA2pVr4uGZjtnhuteMqGmtK7V0ek7mdoH4TNfFOVqk294mhc'
     };
     var request =
         http.MultipartRequest('POST', Uri.parse('$base_Url/api/Reservation'));
@@ -110,6 +129,7 @@ print("the response is yesssss ${response.statusCode} ");
       appBar: AppBar(
         centerTitle: true,
         // هي مشان نعرض اسم البوابة بال appBar
+        // choosed gate name display
         title: Text(
           widget.gateName,
           style: const TextStyle(
@@ -156,7 +176,7 @@ print("the response is yesssss ${response.statusCode} ");
                     height: 30,
                   ),
                   Column(
-                    children: [
+                    children: <Widget>[
                       SingleChildScrollView(
                         child: Container(
                           width: double.infinity,
@@ -183,18 +203,7 @@ print("the response is yesssss ${response.statusCode} ");
                                       0.055,
                                 ),
                                 Column(
-                                  children: [
-                                    // const Text(
-                                    //   "Service",
-                                    //   style: TextStyle(
-                                    //       fontSize: 28,
-                                    //       color: Colors.white,
-                                    //       // backgroundColor: Colors.blue,
-                                    //   ),
-                                    // ),
-                                    // const SizedBox(
-                                    //   width: 10,
-                                    // ),
+                                  children: <Widget>[
                                     Container(
                                       alignment: Alignment.center,
                                       width: MediaQuery.of(context).size.width *
@@ -251,8 +260,7 @@ print("the response is yesssss ${response.statusCode} ");
                                   height:
                                       MediaQuery.of(context).size.height * 0.03,
                                 ),
-
-                                //هي الزر تبع اختيار ال التاريخ date picker
+                                //date Picker Button
                                 TextButton(
                                   child: Text(
                                     showedDate,
@@ -279,7 +287,7 @@ print("the response is yesssss ${response.statusCode} ");
                                   height:
                                       MediaQuery.of(context).size.height * 0.03,
                                 ),
-                                //هي الزر تبع اختيار ال وقت time picker
+                                //time picker button
                                 TextButton(
                                   onPressed: () async {
                                     final choosedTime = await pickTime(context);
@@ -294,7 +302,6 @@ print("the response is yesssss ${response.statusCode} ");
                                       time.hour,
                                       time.minute,
                                     );
-
                                     showSelectedTime();
                                   },
                                   child: Text(
@@ -314,7 +321,6 @@ print("the response is yesssss ${response.statusCode} ");
                                   style: TextStyle(
                                     fontSize: 24,
                                     color: Colors.white,
-                                    // backgroundColor: Colors.blue,
                                   ),
                                 ),
                                 Row(
@@ -401,76 +407,40 @@ print("the response is yesssss ${response.statusCode} ");
                                   height:
                                       MediaQuery.of(context).size.height * 0.05,
                                 ),
-                                // const Text(
-                                //   "Assign Staff",
-                                //   softWrap: true,
-                                //   style: TextStyle(
-                                //     fontSize: 30,
-                                //     color: Colors.white,
-                                //     backgroundColor: Colors.blue,
-                                //   ),
-                                // ),
-                                // Container(
-                                //   alignment: Alignment.topCenter,
-                                //   margin: const EdgeInsets.only(
-                                //     left: 25,
-                                //     right: 25,
-                                //   ),
-                                //   padding: EdgeInsets.only(
-                                //     left:
-                                //         MediaQuery.of(context).size.width * 0.1,
-                                //     top: 0.0001,
-                                //   ),
-                                //   width: double.infinity,
-                                //   height: MediaQuery.of(context).size.height *
-                                //       0.255,
-                                //   decoration: BoxDecoration(
-                                //     color:
-                                //         const Color.fromARGB(80, 0, 105, 200),
-                                //     borderRadius: BorderRadius.circular(25),
-                                //     border: Border.all(
-                                //       color: Colors.blue,
-                                //       width: 2.0,
-                                //     ),
-                                //   ),
-                                //   child: ListView(
-                                //     padding: const EdgeInsets.all(0.1),
-                                //     children: [
-                                //       buildGroupStaffCheckbox(selectAllStaff),
-                                //       const Divider(
-                                //         color: Colors.white,
-                                //       ),
-                                //       ...chooseStaff
-                                //           .map(buildStaffCheckbox)
-                                //           .toList(),
-                                //     ],
-                                //   ),
-                                // ),
-                                // SizedBox(
-                                //   height: MediaQuery.of(context).size.height *
-                                //       0.025,
-                                // ),
                                 ElevatedButton(
                                   onPressed: () {
                                     setState(
                                       () {
-                                        for (var staff in chooseStaff) {
-                                          if (staff.isChecked == true) {
-                                            choosedStaffsList
-                                                .add(staff.staff_name);
-                                          }
-                                        }
                                         selectedMinuteDuration =
                                             choosedDurationMinuteController
                                                 .text;
                                         selectedHoursDuration =
                                             choosedDurationHoursController.text;
-                                        checkNewRequest(
+                                        // checkNewRequest(
+                                        //   selectedMinuteDuration!,
+                                        //   selectedHoursDuration!,
+                                        //   selectedService!,
+                                        // );
+                                        if (selectedHoursDuration == "" ||
+                                            selectedHoursDuration == " " ||
+                                            selectedHoursDuration == "0") {
+                                          selectedHoursDuration = "00";
+                                        } else if (selectedMinuteDuration ==
+                                                "" ||
+                                            selectedMinuteDuration == " " ||
+                                            selectedMinuteDuration == "0") {
+                                          selectedMinuteDuration = "00";
+                                        }
+                                        requestSender(
+                                          checkNewRequest(
+                                            selectedMinuteDuration!,
+                                            selectedHoursDuration!,
+                                            selectedService!,
+                                          ),
                                           selectedMinuteDuration!,
                                           selectedHoursDuration!,
-                                          selectedService!,
                                         );
-                                        book_resevices(gateName,'2022/5/7 15:00','2022/5/7 17:00',id_service.toString(),selectedService!);
+                                        book_resevices(gateName,'$choosedStartingDateTime','$choosedEndingDateTime',id_service.toString(),selectedService!);
                                        //  book_resevices(gateName,selectedService,start time ,end time,id_service )
                                       },
                                     );
@@ -521,7 +491,7 @@ print("the response is yesssss ${response.statusCode} ");
   showSelectedDate() {
     setState(() {
       if (date != DateTime(2021)) {
-        showedDate = DateFormat("MM/dd/yyyy").format(date);
+        showedDate = DateFormat("yyyy/MM/dd").format(date);
       }
     });
   }
@@ -575,8 +545,6 @@ print("the response is yesssss ${response.statusCode} ");
         'Please Select Service',
         const Color.fromARGB(255, 150, 10, 10),
       );
-      // snackBar(context, 'Please Select Service',
-      //     const Color.fromARGB(255, 150, 10, 10));
       return false;
     } else if (date.year == 2021) {
       TheSnackBar(
@@ -584,8 +552,6 @@ print("the response is yesssss ${response.statusCode} ");
         'Please Select Date',
         const Color.fromARGB(255, 150, 10, 10),
       );
-      // snackBar(context, 'Please Select Date',
-      //     const Color.fromARGB(255, 150, 10, 10));
       return false;
     } else if (time == const TimeOfDay(hour: 23, minute: 41)) {
       TheSnackBar(
@@ -593,8 +559,6 @@ print("the response is yesssss ${response.statusCode} ");
         'Please Select Time',
         const Color.fromARGB(255, 150, 10, 10),
       );
-      // snackBar(context, 'Please Select Time',
-      //     const Color.fromARGB(255, 150, 10, 10));
       return false;
     } else if (time.hour > 18 && time.hour < 6) {
       TheSnackBar(
@@ -602,8 +566,6 @@ print("the response is yesssss ${response.statusCode} ");
         'This period is unavailable',
         const Color.fromARGB(255, 150, 10, 10),
       );
-      // snackBar(context, 'This period is unavailable',
-      //     const Color.fromARGB(255, 150, 10, 10));
       return false;
     } else if (selectedMinuteDuration == "" && selectedHoursDuration == "") {
       TheSnackBar(
@@ -611,8 +573,6 @@ print("the response is yesssss ${response.statusCode} ");
         'Please Select Duration',
         const Color.fromARGB(255, 150, 10, 10),
       );
-      // snackBar(context, 'Please Select Duration',
-      //     const Color.fromARGB(255, 150, 10, 10));
       return false;
     } else {
       for (int i = 0; i < selectedHoursDuration.length; i++) {
@@ -624,10 +584,11 @@ print("the response is yesssss ${response.statusCode} ");
             'Please Select Correct Hours Duration',
             const Color.fromARGB(255, 150, 10, 10),
           );
-          // snackBar(context, 'Please Select Correct Hours Duration',
-          //     const Color.fromARGB(255, 150, 10, 10));
           return false;
-        } else if (selectedMinuteDuration[i] == '.' ||
+        }
+      }
+      for (int i = 0; i < selectedMinuteDuration.length; i++) {
+        if (selectedMinuteDuration[i] == '.' ||
             selectedMinuteDuration[i] == ' ' ||
             selectedMinuteDuration[i] == ',') {
           TheSnackBar(
@@ -635,49 +596,47 @@ print("the response is yesssss ${response.statusCode} ");
             'Please Select Correct Minute Duration',
             const Color.fromARGB(255, 150, 10, 10),
           );
-          // snackBar(context, 'Please Select Correct Minute Duration',
-          //     const Color.fromARGB(255, 150, 10, 10));
           return false;
         }
       }
-      if (selectedHoursDuration == "" ||
-          selectedHoursDuration == " " ||
-          selectedHoursDuration == "0") {
-        selectedHoursDuration = "00";
-      } else if (selectedMinuteDuration == "" ||
-          selectedMinuteDuration == " " ||
-          selectedMinuteDuration == "0") {
-        selectedMinuteDuration = "00";
-      }
+
+      // if (selectedHoursDuration == "" ||
+      //     selectedHoursDuration == " " ||
+      //     selectedHoursDuration == "0") {
+      //   selectedHoursDuration = "00";
+      // } else if (selectedMinuteDuration == "" ||
+      //     selectedMinuteDuration == " " ||
+      //     selectedMinuteDuration == "0") {
+      //   selectedMinuteDuration = "00";
+      // }
       int closedHours = int.parse(selectedHoursDuration);
       int closedMinutes = int.parse(selectedMinuteDuration);
       if ((closedHours + time.hour) >= 18 &&
-          (closedMinutes + time.minute) > 0) {
+          (closedMinutes + time.minute) > 5) {
         TheSnackBar(
           context,
           'Duration Exceeding closing time,'
           ' please Edit duration or time',
           const Color.fromARGB(255, 150, 10, 10),
         );
-        // snackBar(
-        //     context,
-        //     'Duration Exceeding closing time,'
-        //     ' please Edit duration or time',
-        //     const Color.fromARGB(255, 150, 10, 10));
         return false;
       } else if ((closedHours + time.hour) >= 17 &&
-          (closedMinutes + time.minute) > 60) {
+          (closedMinutes + time.minute) > 65) {
         TheSnackBar(
           context,
           'Duration Exceeding closing time,'
           ' please Edit duration or time',
           const Color.fromARGB(255, 150, 10, 10),
         );
-        // snackBar(
-        //     context,
-        //     'Duration Exceeding closing time,'
-        //     ' please Edit duration or time',
-        //     const Color.fromARGB(255, 150, 10, 10));
+        return false;
+      }
+      if (int.parse(selectedMinuteDuration) < 5 &&
+          int.parse(selectedHoursDuration) < 1) {
+        TheSnackBar(
+          context,
+          'Service duration is too short : ${int.parse(selectedMinuteDuration)}',
+          const Color.fromARGB(255, 150, 15, 10),
+        );
         return false;
       }
       TheSnackBar(
@@ -685,36 +644,102 @@ print("the response is yesssss ${response.statusCode} ");
         'Service Requested Successfully',
         const Color.fromARGB(255, 15, 150, 10),
       );
-      // snackBar(context, "Service Requested Successfully",
-      //     const Color.fromARGB(255, 15, 150, 10));
-      choosedEndDateTime = DateTime(
-        choosedStartingDateTime.year,
-        choosedStartingDateTime.month,
-        choosedStartingDateTime.day,
-        (choosedStartingDateTime.hour + int.parse(selectedHoursDuration)),
-        (choosedStartingDateTime.minute + int.parse(selectedMinuteDuration)),
+
+      choosedEndTime = TimeOfDay(
+        hour: (choosedStartingDateTime.hour + int.parse(selectedHoursDuration)),
+        minute: (choosedStartingDateTime.minute +
+            int.parse(selectedMinuteDuration)),
       );
+      choosedEndingDateTime = DateTime(
+        date.year,
+        date.month,
+        date.day,
+        choosedEndTime.hour,
+        choosedEndTime.minute,
+      );
+      // UserRequestsPage.requestList.add(
+      //   RequestsStates(
+      //     gateTitle: widget.gateName,
+      //     serviceTitle: selectedService!,
+      //     serviceStartDate: DateFormat("yyyy/MM/dd").
+      //                                 format(choosedStartingDateTime),
+      //     serviceEndDate: DateFormat("yyyy/MM/dd HH:mm").
+      //                                 format(choosedEndingDateTime),
+      //     serviceTime: time,
+      //     hoursDuration: int.parse(selectedHoursDuration),
+      //     minuteDuration: int.parse(selectedMinuteDuration),
+      //     user: "user",
+      //     endingTime: endTimeFormatting(
+      //       choosedEndTime.hour,
+      //       choosedEndTime.minute,
+      //     ),
+      //   ),
+      // );
+      // Navigator.of(context).pushReplacement(
+      //   MaterialPageRoute(builder: (_) => const UserRequestsPage()),
+      // );
+      return true;
+    }
+  }
+
+  TimeOfDay endTimeFormatting(
+    int endHours,
+    int endMinutes,
+  ) {
+    int endHour = 0, endMinute = endMinutes;
+    TimeOfDay endingTime = TimeOfDay(
+      hour: 00,
+      minute: 00,
+    );
+    while (endMinute >= 60) {
+      endHour++;
+      endMinute -= 60;
+    }
+    endHour += endHours;
+    endingTime = TimeOfDay(
+      hour: endHour,
+      minute: endMinute,
+    );
+
+    return endingTime;
+  }
+
+  void requestSender(
+    bool checkNewRequest,
+    String selectedMinuteDuration,
+    String selectedHoursDuration,
+  ) {
+    if (checkNewRequest) {
+      /*
       UserRequestsPage.requestList.add(
+/*
         RequestsStates(
           gateTitle: widget.gateName,
           serviceTitle: selectedService!,
-          serviceDate:
-              DateFormat("yyyy/MM/dd HH:mm").format(choosedStartingDateTime),
+          serviceStartDate:
+              DateFormat("yyyy/MM/dd").format(choosedStartingDateTime),
+          serviceEndDate:
+              DateFormat("yyyy/MM/dd HH:mm").format(choosedEndingDateTime),
           serviceTime: time,
           hoursDuration: int.parse(selectedHoursDuration),
           minuteDuration: int.parse(selectedMinuteDuration),
           user: "user",
-          endingDate: DateFormat("yyyy/MM/dd HH:mm").format(choosedEndDateTime),
-          // choosedStaffs: choosedStaffsList,
+          endingTime: endTimeFormatting(
+            choosedEndTime.hour,
+            choosedEndTime.minute,
+          ),
         ),
+
+ */
       );
+      */
+
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (_) => const UserRequestsPage()),
       );
-      for (var staff in chooseStaff) {
-        staff.isChecked = false;
-      }
-      return true;
     }
   }
+
+////////////////////////////////////////////
+
 }

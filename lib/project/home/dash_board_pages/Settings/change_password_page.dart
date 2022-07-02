@@ -19,8 +19,15 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   final editingPasswordFormKey = GlobalKey<FormState>();
   final newPasswordController = TextEditingController();
   final rePasswordController = TextEditingController();
-
-
+  late Future<String> mycode;
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    mycode =Account_User.get_varvecation_code();
+    print('heloooo');
+print('the code is $mycode');
+}
 
   @override
   Widget build(BuildContext context) {
@@ -201,8 +208,6 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                             final changePasswordFormKey = editingPasswordFormKey.currentState!;
                             if(changePasswordFormKey.validate()){
                               // تابع ارسال البيانات
-
-
                               Account_User.Reset_password(newPasswordController.text, rePasswordController.text);
 
                               Navigator.pushReplacement(

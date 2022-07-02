@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 
 import '../../Api/model/name_service.dart';
 import '../../components/snack_bar.dart';
+import '../../moh_project/post_moh/login_controller.dart';
 
 class BlockService extends StatefulWidget {
   const BlockService({Key? key}) : super(key: key);
@@ -19,16 +20,18 @@ class _BlockServiceState extends State<BlockService> {
   List<String> servicewoodward = [];
   List<String> servicefarmer = [];
   List<String> bothstreet = [];
-
+List<String>servicesList=[];
 
   Future <String> Block_Service(int id)async
   {
     final response = await http.get(
       Uri.parse('${base_Url}/api/Admin/BlockServices/${id}'),
       headers: {
-        'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMzFkM2Y0NTJhMzU2YTI4M2Y4ZGQ5MGQ3NzgxYjU0ZmIyMzE0ZDVkNjBlNmI0YTM0YmNmZWFlMTJkNWRkODc1MzMxZTI3ZWZhOGQzMTM3NzYiLCJpYXQiOjE2NTEyMzQ3NDIuOTkxMTM0LCJuYmYiOjE2NTEyMzQ3NDIuOTkxMTU0LCJleHAiOjE2ODI3NzA3NDIuOTc4MjAxLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.ek1NrqJvLbvZvqQdDecQqUXgqKLef3-Ye7FG39soEesiHyk3DUlcGgIpYoHbHKCH6YBThrqb5PoDQx42DPqbY3cbK895PhKF-Js7gcy2_MEsqrNE8zVTa8yHMRbBNM2wYVaykkyvkz5acWwofqg7dGkXjvTDObilBGRQddOQEIdxwZ_9qIjtjn-_5pMPzhBChJbGddacGc0ryUFHF89MW107cJ4bsaDPhY_rSGTm9NBm3xilBHHFhwEWIcxevuw_bIs9ayuK6aYiaB3d6w-mLuJR9he8W8vTCbkVvqQOk5AnL_3hlKzQ86B8Ce5g-c01OMrkWsIuADFbVv-QgysQGy1zn_kyUwuYmJLiGKYcDtndcW-0ZpJXn-io0UyGdwYFahaofHH7xD_DyW_9kleOGN0BIjaV4GhhMLskb7TFAs2CquLn3E8mCuxKx7MQgWRL-GNL1QHMWuyFezjPWJnTCXJlv-fJQrKYAlwWTsN1UoTchzyolpPEeAEo5AiyH6WQgOyd2ZxaKHikBBu8vKtEE-zONIronEQWJRmauccYKjlpNW3CHoY63rDt2nnskC9FcI3OHX3p_3y8cy9l6wMab8aUBrXwRnebrSA-jAuv6jvHfakf_CelUcB1HnEFIIss5aXxlzYtoyQNUbaOPtW_xer26mZYC1uHcvMynzScejw'
+        'Authorization':'Bearer $t'
       },
     );
+    print("yesssssssssss${response.body}");
+
     if(response.statusCode==200)
       {
         print("yesssssssssss");
@@ -41,16 +44,18 @@ class _BlockServiceState extends State<BlockService> {
   }
 
 
-
+int i=0;
 
   String selectedService = 'Select Service';
   String? selectedStreet = "Farmer";
   late int theid;
   Future<ListService> fetchAlbum() async {
+ //   servicesList.clear();
+
     final response = await http
-        .get(Uri.parse('${base_Url}/api/services'),
+        .get(Uri.parse('${base_Url}/api/Admin/services'),
         headers: {
-          'Authorization':'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMzFkM2Y0NTJhMzU2YTI4M2Y4ZGQ5MGQ3NzgxYjU0ZmIyMzE0ZDVkNjBlNmI0YTM0YmNmZWFlMTJkNWRkODc1MzMxZTI3ZWZhOGQzMTM3NzYiLCJpYXQiOjE2NTEyMzQ3NDIuOTkxMTM0LCJuYmYiOjE2NTEyMzQ3NDIuOTkxMTU0LCJleHAiOjE2ODI3NzA3NDIuOTc4MjAxLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.ek1NrqJvLbvZvqQdDecQqUXgqKLef3-Ye7FG39soEesiHyk3DUlcGgIpYoHbHKCH6YBThrqb5PoDQx42DPqbY3cbK895PhKF-Js7gcy2_MEsqrNE8zVTa8yHMRbBNM2wYVaykkyvkz5acWwofqg7dGkXjvTDObilBGRQddOQEIdxwZ_9qIjtjn-_5pMPzhBChJbGddacGc0ryUFHF89MW107cJ4bsaDPhY_rSGTm9NBm3xilBHHFhwEWIcxevuw_bIs9ayuK6aYiaB3d6w-mLuJR9he8W8vTCbkVvqQOk5AnL_3hlKzQ86B8Ce5g-c01OMrkWsIuADFbVv-QgysQGy1zn_kyUwuYmJLiGKYcDtndcW-0ZpJXn-io0UyGdwYFahaofHH7xD_DyW_9kleOGN0BIjaV4GhhMLskb7TFAs2CquLn3E8mCuxKx7MQgWRL-GNL1QHMWuyFezjPWJnTCXJlv-fJQrKYAlwWTsN1UoTchzyolpPEeAEo5AiyH6WQgOyd2ZxaKHikBBu8vKtEE-zONIronEQWJRmauccYKjlpNW3CHoY63rDt2nnskC9FcI3OHX3p_3y8cy9l6wMab8aUBrXwRnebrSA-jAuv6jvHfakf_CelUcB1HnEFIIss5aXxlzYtoyQNUbaOPtW_xer26mZYC1uHcvMynzScejw'
+          'Authorization':'Bearer $t'
         }
       // snapshot.data!.services.woodWard[1].street
     );
@@ -70,7 +75,9 @@ class _BlockServiceState extends State<BlockService> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
     date=fetchAlbum();
+    print(' the i is ${servicesList}');
     print("gdgdf,h;l");
   }
 
@@ -165,7 +172,7 @@ class _BlockServiceState extends State<BlockService> {
                                 bothstreet.add(snapshot.data!.services.bothStreet[i].name);
                               }
 
-
+                              //
                               for(int i =0;i<snapshot.data!.services.woodward.length;i++)
                               {
                                 print("there is no item ");
@@ -329,6 +336,7 @@ class _BlockServiceState extends State<BlockService> {
                                       )
                                           .toList(),
                                       onChanged: (service) => setState(() {
+
                                         selectedService = service!;
                                         print("the selecteddd $selectedService");
                                         print("dkphhhhh");
@@ -360,6 +368,9 @@ class _BlockServiceState extends State<BlockService> {
 
 
                                         }
+                                       // servicesList.clear();
+                                    //    servicesList.clear();
+
 
                                       }),
                                     ),

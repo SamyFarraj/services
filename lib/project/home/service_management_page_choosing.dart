@@ -1,5 +1,7 @@
 
 import '../admin/admin_control_panel.dart';
+import '../edition/DEMO.dart';
+import '../edition/services_edition.dart';
 import 'services.dart';
 import 'package:project_mohammad/project/projects_page.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +17,7 @@ class _ServiceManagementPageChooserState extends State<ServiceManagementPageChoo
   @override
   Widget build(BuildContext context) {
     if(admin) return const AdminControlPanel();
-    return const StreetServiceChoosing();
+    // return const StreetServiceChoosing();
+    return const ServiceEditionS();
   }
 }

@@ -1,12 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:project_mohammad/components/dash_board.dart';
 import 'package:project_mohammad/project/home/service_info_input.dart';
 import 'package:project_mohammad/services/choices.dart';
-import 'package:project_mohammad/services/on_hold.dart';
 import 'package:project_mohammad/services/street_service_chooser.dart';
-import 'package:flutter/material.dart';
 
-// import '../admin/admin_control_panel.dart';
-// import '../projects_page.dart';
+import '../../services/on_hold.dart';
 
 class StreetServiceChoosing extends StatefulWidget {
   const StreetServiceChoosing({Key? key}) : super(key: key);
@@ -93,24 +91,6 @@ class _StreetServiceChoosingState extends State<StreetServiceChoosing> {
       ),
     );
   }
-
-  void snackBar(
-      BuildContext context, String errorMessage, Color snackBarColor) {
-    final snackBar = SnackBar(
-      content: Text(
-        errorMessage,
-        style: const TextStyle(
-          fontSize: 28,
-          color: Colors.white,
-        ),
-      ),
-      backgroundColor: snackBarColor,
-      duration: const Duration(seconds: 1),
-    );
-    ScaffoldMessenger.of(context)
-      ..removeCurrentSnackBar()
-      ..showSnackBar(snackBar);
-  }
 }
 
 DateTime selectedTime = DateTime.now();
@@ -142,6 +122,31 @@ class _BasicTileWidgetState extends State<BasicTileWidget> {
           );
         },
       );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     } else {

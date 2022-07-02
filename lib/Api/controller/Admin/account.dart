@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:project_mohammad/project/constant.dart';
 
+import '../../../moh_project/post_moh/login_controller.dart';
 import '../login_controller.dart';
 
 class account {
@@ -117,7 +118,7 @@ class account {
 
   }
 
-Future <String> logout()async
+static Future <String> logout()async
 {
   var response=await http.get(Uri.parse('${base_Url}/api/Admin/logout')
   ,headers: {
