@@ -260,23 +260,21 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                                     ),
                                                   ),
                                                   Text(
-                                                    val.gateName,
-                                                    style: const TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 26,
-                                                    ),
-                                                  ),
-
-
-                                                  Text(
-                                                    " start at ${val.startTime}",
+                                                    val.serviceStartDate,
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 26,
                                                     ),
                                                   ),
                                                   Text(
-                                                    "end at ${val.endTime}",
+                                                    " start at ${val.serviceTime.format(context)}",
+                                                    style: const TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 26,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    "end at ${val.endingTime.format(context)}",
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 26,
@@ -293,7 +291,7 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                                   //   ),
                                                   // ),
                                                   Text(
-                                                    "from ${val.gateName}",
+                                                    "from ${val.gateTitle}",
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 26,

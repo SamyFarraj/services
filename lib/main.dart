@@ -20,6 +20,7 @@ import 'package:project_mohammad/services/on_hold.dart';
 import 'Api/shredpreference.dart';
 import 'project/projects_page.dart';
 
+import 'project/edition/service_info_new_ed.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
