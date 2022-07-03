@@ -152,7 +152,7 @@ class _AdminRequestsPageState extends State<AdminRequestsPage> {
                                                     ),
                                                   ),
                                                   Text(
-                                                    val.serviceTitle,
+                                                    val.serviceTitleList,
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 26,
@@ -425,7 +425,7 @@ class _AdminRequestsPageState extends State<AdminRequestsPage> {
                                                     ),
                                                   ),
                                                   Text(
-                                                    val.serviceTitle,
+                                                    val.serviceTitleList,
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 26,

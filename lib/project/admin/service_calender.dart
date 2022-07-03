@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../services/choices.dart';
+import '../../services/requests_form.dart';
+import '../home/requests.dart';
+
 class ServiceCalender extends StatefulWidget {
   const ServiceCalender({Key? key}) : super(key: key);
 
@@ -10,6 +14,8 @@ class ServiceCalender extends StatefulWidget {
 
 class _ServiceCalenderState extends State<ServiceCalender> {
   var servicesCalendarDate = DateTime(2021);
+  String showedDate = "select Date";
+  DateTime selectedDate = DateTime(2021);
 
   @override
   Widget build(BuildContext context) {
@@ -79,24 +85,38 @@ class _ServiceCalenderState extends State<ServiceCalender> {
                     child: SingleChildScrollView(
                       child: Column(
                         children: <Widget>[
+                          TextButton(
+                            child: Text(
+                              showedDate,
+                              style: const TextStyle(
+                                fontSize: 26,
+                                color: Colors.white,
+                              ),
+                            ),
+                            onPressed: () async {
+                              final choosedDate =
+                                  await pickServicesCalendarDate(context);
+                              selectedDate = DateTime(
+                                choosedDate!.year,
+                                choosedDate.month,
+                                choosedDate.day,
+                                choosedDate.hour,
+                                choosedDate.minute,
+                              );
+                              showSelectedCalendarDate();
+                            },
+                          ),
                           SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.1,
+                            height: MediaQuery.of(context).size.height * 0.05,
                           ),
                           ElevatedButton(
                             onPressed: () {
-                              setState(
-                                () {
-                                  () async {
-                                    final choosedDate =
-                                        await pickServicesCalendarDate(context);
-                                    servicesCalendarDate = DateTime(
-                                      choosedDate!.year,
-                                      choosedDate.month,
-                                      choosedDate.day,
-                                    );
-                                  };
-                                },
-                              );
+                              setState(() {
+                                serviceDateFilter(
+                                  adminRequestsManageList,
+                                  selectedDate,
+                                );
+                              });
                             },
                             style: ElevatedButton.styleFrom(
                               minimumSize: const Size(300, 60),
@@ -117,6 +137,120 @@ class _ServiceCalenderState extends State<ServiceCalender> {
                                 fontSize: 24,
                                 color: Colors.white,
                               ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.05,
+                          ),
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.8,
+                            height: MediaQuery.of(context).size.height * 0.4,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.blue,
+                                width: 5,
+                              ),
+                              borderRadius: BorderRadius.circular(25),
+                            ),
+                            child: ListView(
+                              children: <Widget>[
+                                ...adminCalendarList
+                                    .map(
+                                      (element) => Container(
+                                        child: Column(
+                                          children: <Widget>[
+                                            Text(
+                                              element.gateTitle,
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            Container(
+                                              alignment: Alignment.center,
+                                              height: 90,
+                                              width:
+                                              MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                                  0.5,
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                    width: 2,
+                                                    color: Colors.blue),
+                                              ),
+                                              child: ListView(
+                                                padding:
+                                                const EdgeInsets.only(
+                                                  top: 1,
+                                                  left: 30,
+                                                ),
+                                                children: <Widget>[
+                                                  ...element.serviceTitleList
+                                                      .map((service) {
+                                                    return Text(
+                                                      service,
+                                                      style:
+                                                      const TextStyle(
+                                                          fontSize:
+                                                          22,
+                                                          color: Colors
+                                                              .white),
+                                                    );
+                                                  }).toList(),
+                                                ],
+                                              ),
+                                            ),
+                                            Text(
+                                              element.serviceStartDate,
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            Text(
+                                              "Start : ${element.serviceTime.format(context)}",
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            Text(
+                                              "End : ${element.endingTime.format(context)}",
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            // Container(
+                                            //   child: ListView(
+                                            //     children: <Widget>[
+                                            //       element.serviceTitleList
+                                            //           .map(
+                                            //             (service) => Text(
+                                            //               service,
+                                            //               style: TextStyle(
+                                            //                 fontSize: 16,
+                                            //                 color: Colors.white,
+                                            //               ),
+                                            //             ),
+                                            //           )
+                                            //           .toList()
+                                            //     ],
+                                            //   ),
+                                            // ),
+                                            const Divider(
+                                              color: Colors.white,
+                                              indent: 30,
+                                              endIndent: 30,
+                                              thickness: 2,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                    .toList(),
+                              ],
                             ),
                           ),
                         ],
@@ -144,10 +278,28 @@ class _ServiceCalenderState extends State<ServiceCalender> {
     return selectedDate;
   }
 
-  String showSelectedCalendarDate() {
-    if (servicesCalendarDate == DateTime(2021)) {
-      return 'select Date';
-    }
-    return DateFormat("MM/dd/yyyy").format(servicesCalendarDate);
+  showSelectedCalendarDate() {
+    setState(() {
+      if (selectedDate != DateTime(2021)) {
+        showedDate = DateFormat("yyyy/MM/dd").format(selectedDate);
+      }
+    });
+  }
+
+  ///////////
+  List<UserRequestsPage> mList = [];
+
+  List serviceDateFilter(
+      List<RequestsStates> allAcceptedServicesList, DateTime currentDate) {
+    adminCalendarList.clear();
+    List NoServiceList = [ "0000"];
+    allAcceptedServicesList.forEach((service) {
+      print(service.serviceStartDate);
+      if (service.serviceStartDate ==  DateFormat("MM/dd/yyyy").format(currentDate))
+        adminCalendarList.add(service);
+    });
+
+    if(adminCalendarList.isEmpty) return NoServiceList;
+    return adminCalendarList;
   }
 }

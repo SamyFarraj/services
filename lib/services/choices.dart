@@ -82,7 +82,6 @@ final chooseStaff = [
   StaffCheckBox(staff_name: "staff 10"),
 ];
 
-
 final chooseService = [
   ServicesCheckBox(serviceName: "self Unloaded Delivery"),
   ServicesCheckBox(serviceName: "Tower Crane 1"),
@@ -92,8 +91,10 @@ final chooseService = [
   ServicesCheckBox(serviceName: "ForkLift"),
   ServicesCheckBox(serviceName: "Trailer Pump"),
   ServicesCheckBox(serviceName: "Ramp-BSE"),
-
 ];
+
+List<RequestsStates> adminCalendarList = [];
+
 // هي list  مشان اضافة newAdmin
 //رح يضيفها ع  ال database
 // هي الميزة لل update
@@ -102,69 +103,164 @@ List<RequestsStates> adminRequestsManageList = [
   RequestsStates(
     user: "user 1",
     gateTitle: "gate1",
-    serviceTitle: 'service1',
-    serviceStartDate: DateFormat("MM/dd/yyyy").format(DateTime.now()),
-    serviceEndDate: DateFormat("MM/dd/yyyy").format(DateTime.now()),
-    serviceTime: TimeOfDay.now(),
+    serviceTitleList: ['service1.0', 'service1.1', 'service1.2'],
+    serviceStartDate: DateFormat("MM/dd/yyyy").format(
+      DateTime(
+        2022,
+        6,
+        30,
+      ),
+    ),
+    serviceEndDate: DateFormat("MM/dd/yyyy").format(
+      DateTime(
+        2022,
+        6,
+        30,
+      ),
+    ),
+    serviceTime: TimeOfDay(hour: 8, minute: 10),
     hoursDuration: int.parse("1"),
     minuteDuration: int.parse("30"),
-    endingTime: TimeOfDay(hour:00 , minute: 00,),
+    endingTime: TimeOfDay(
+      hour: 12,
+      minute: 40,
+    ),
   ),
   RequestsStates(
     user: "user 2",
     gateTitle: "gate2",
-    serviceTitle: 'service2',
-    serviceStartDate: DateFormat("MM/dd/yyyy").format(DateTime.now()),
-    serviceEndDate: DateFormat("MM/dd/yyyy").format(DateTime.now()),
+    serviceTitleList: ['service2.0', 'service2.1' ,'service2.2'],
+    serviceStartDate: DateFormat("MM/dd/yyyy").format(
+      DateTime(
+        2022,
+        7,
+        30,
+      ),
+    ),
+    serviceEndDate: DateFormat("MM/dd/yyyy").format(
+      DateTime(
+        2022,
+        7,
+        30,
+      ),
+    ),
     serviceTime: TimeOfDay.now(),
     hoursDuration: int.parse("1"),
     minuteDuration: int.parse("30"),
-    endingTime: TimeOfDay(hour:00 , minute: 00,),
+    endingTime: TimeOfDay(
+      hour: 4,
+      minute: 10,
+    ),
   ),
   RequestsStates(
     user: "user 3",
     gateTitle: "gate3",
-    serviceTitle: 'service3',
-    serviceStartDate: DateFormat("MM/dd/yyyy").format(DateTime.now()),
-    serviceEndDate: DateFormat("MM/dd/yyyy").format(DateTime.now()),
-    serviceTime: TimeOfDay.now(),
+    serviceTitleList: ['service3.0', 'service3.1' ,'service3.2'],
+    serviceStartDate: DateFormat("MM/dd/yyyy").format(
+      DateTime(
+        2022,
+        6,
+        30,
+      ),
+    ),
+    serviceEndDate: DateFormat("MM/dd/yyyy").format(
+      DateTime(
+        2022,
+        6,
+        30,
+      ),
+    ),
+    serviceTime: TimeOfDay(
+      hour: 14,
+      minute: 15,
+    ),
     hoursDuration: int.parse("1"),
     minuteDuration: int.parse("30"),
-    endingTime: TimeOfDay(hour:00 , minute: 00,),
+    endingTime: TimeOfDay(
+      hour: 16,
+      minute: 10,
+    ),
   ),
   RequestsStates(
     user: "user 4",
     gateTitle: "gate4",
-    serviceTitle: 'service4',
-    serviceStartDate: DateFormat("MM/dd/yyyy").format(DateTime.now()),
-    serviceEndDate: DateFormat("MM/dd/yyyy").format(DateTime.now()),
+    serviceTitleList: ['service4.0', 'service4.1' ,'service4.2'],
+    serviceStartDate: DateFormat("MM/dd/yyyy").format(
+      DateTime(
+        2022,
+        8,
+        30,
+      ),
+    ),
+    serviceEndDate: DateFormat("MM/dd/yyyy").format(
+      DateTime(
+        2022,
+        8,
+        30,
+      ),
+    ),
     serviceTime: TimeOfDay.now(),
     hoursDuration: int.parse("1"),
     minuteDuration: int.parse("30"),
-    endingTime: TimeOfDay(hour:00 , minute: 00,),
+    endingTime: TimeOfDay(
+      hour: 3,
+      minute: 15,
+    ),
   ),
   RequestsStates(
-
     user: "user 5",
     gateTitle: "gate4",
-    serviceTitle: 'service5',
-    serviceStartDate: DateFormat("MM/dd/yyyy").format(DateTime.now()),
-    serviceEndDate: DateFormat("MM/dd/yyyy").format(DateTime.now()),
+    serviceTitleList: ['service5.0', 'service5.1', 'service5.2'],
+    serviceStartDate: DateFormat("MM/dd/yyyy").format(
+      DateTime(
+        2022,
+        9,
+        30,
+      ),
+    ),
+    serviceEndDate: DateFormat("MM/dd/yyyy").format(
+      DateTime(
+        2022,
+        9,
+        30,
+      ),
+    ),
     serviceTime: TimeOfDay.now(),
     hoursDuration: int.parse("1"),
     minuteDuration: int.parse("30"),
-    endingTime: TimeOfDay(hour:00 , minute: 00,),
+    endingTime: TimeOfDay(
+      hour: 00,
+      minute: 00,
+    ),
   ),
   RequestsStates(
     user: "user 6",
     gateTitle: "gate4",
-    serviceTitle: 'service6',
-    serviceStartDate: DateFormat("MM/dd/yyyy").format(DateTime.now()),
-    serviceEndDate: DateFormat("MM/dd/yyyy").format(DateTime.now()),
-    serviceTime: TimeOfDay.now(),
+    serviceTitleList: ['service6.0', 'service6.1' ,'service6.2'],
+    serviceStartDate: DateFormat("MM/dd/yyyy").format(
+      DateTime(
+        2022,
+        6,
+        30,
+      ),
+    ),
+    serviceEndDate: DateFormat("MM/dd/yyyy").format(
+      DateTime(
+        2022,
+        6,
+        30,
+      ),
+    ),
+    serviceTime: TimeOfDay(
+      hour: 16,
+      minute: 30,
+    ),
     hoursDuration: int.parse("1"),
     minuteDuration: int.parse("30"),
-    endingTime: TimeOfDay(hour:00 , minute: 00,),
+    endingTime: TimeOfDay(
+      hour: 17,
+      minute: 40,
+    ),
   ),
 ];
 
@@ -179,18 +275,15 @@ List<String> addAdminList = [
   'Admin 7',
 ];
 
-
-
-List <String> gatesEdition =[
+List<String> gatesEdition = [
   'Select Gate',
   'Gate 1',
   'Gate 2',
   'Gate 3',
   'Gate 4',
 ];
-List <String> streetEdition=[
+List<String> streetEdition = [
   'Select Street',
   'WOODWARD',
   'FARMER',
 ];
-

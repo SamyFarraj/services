@@ -625,7 +625,7 @@ class _ServiceInformationInputState extends State<ServiceInformationInput> {
       UserRequestsPage.requestList.add(
         RequestsStates(
           gateTitle: widget.gateName,
-          serviceTitle: selectedService!,
+          serviceTitleList: selectedService!,
           serviceStartDate:
               DateFormat("yyyy/MM/dd").format(choosedStartingDateTime),
           serviceEndDate:

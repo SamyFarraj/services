@@ -201,38 +201,41 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                                   //   ),
                                                   // ),
                                                   Container(
-                                                    alignment: Alignment.center,
+                                                    // alignment: Alignment.center,
                                                     height: 90,
                                                     width:
                                                         MediaQuery.of(context)
                                                                 .size
                                                                 .width *
-                                                            0.7,
+                                                            0.55,
                                                     decoration: BoxDecoration(
                                                       border: Border.all(
                                                           width: 2,
                                                           color: Colors.blue),
                                                     ),
-                                                    child: ListView(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                        top: 1,
-                                                        left: 30,
+                                                    child:
+                                                        SingleChildScrollView(
+                                                      child: ListView(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                          top: 1,
+                                                          left: 30,
+                                                        ),
+                                                        children: [
+                                                          ...val
+                                                              .serviceTitleList
+                                                              .map((service) {
+                                                            return Text(
+                                                              service,
+                                                              style: const TextStyle(
+                                                                  fontSize: 22,
+                                                                  color: Colors
+                                                                      .white),
+                                                            );
+                                                          }).toList(),
+                                                        ],
                                                       ),
-                                                      children: [
-                                                        ...val.serviceTitle
-                                                            .map((service) {
-                                                          return Text(
-                                                            service,
-                                                            style:
-                                                                const TextStyle(
-                                                                    fontSize:
-                                                                        22,
-                                                                    color: Colors
-                                                                        .white),
-                                                          );
-                                                        }).toList(),
-                                                      ],
                                                     ),
                                                   ),
                                                   Text(
@@ -298,7 +301,6 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                           ),
                                         ],
                                       ),
-
                                       Container(
                                         height: 0.009,
                                         width:

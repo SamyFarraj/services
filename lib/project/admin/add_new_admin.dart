@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:project_mohammad/services/choices.dart';
 
@@ -13,7 +16,9 @@ class AddNewAdmin extends StatefulWidget {
 }
 
 class _AddNewAdminState extends State<AddNewAdmin> {
-  final adminNameController = TextEditingController();
+  final adminEMailController = TextEditingController();
+
+  final addAdminFormKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -53,110 +58,124 @@ class _AddNewAdminState extends State<AddNewAdmin> {
               color: const Color.fromARGB(150, 60, 60, 100),
             ),
 
-            SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.14,
-                  ),
-                  //  هاد logo  الشركة
-                  Image.asset(
-                    "asset/images/logo.png",
-                    width: double.infinity,
-                    height: MediaQuery.of(context).size.height * 0.095,
-                  ),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.all(10),
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * 0.704,
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(35),
-                        topRight: Radius.circular(35),
-                      ),
-                      color: Color.fromARGB(180, 0, 0, 65),
+            Form(
+              key: addAdminFormKey,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.14,
                     ),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: <Widget>[
-                          TextField(
-                            controller: adminNameController,
-                            decoration: const InputDecoration(
-                              prefixIcon: Icon(
-                                Icons.person,
-                                color: Colors.deepOrange,
-                                size: 40,
-                              ),
-                              label: Text(
-                                "Admin Name",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.blueAccent,
-                                ),
-                              ),
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  width: 2.0,
+                    //  هاد logo  الشركة
+                    Image.asset(
+                      "asset/images/logo.png",
+                      width: double.infinity,
+                      height: MediaQuery.of(context).size.height * 0.095,
+                    ),
+                    const SizedBox(
+                      height: 50,
+                    ),
+                    Container(
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.all(10),
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height * 0.704,
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(35),
+                          topRight: Radius.circular(35),
+                        ),
+                        color: Color.fromARGB(180, 0, 0, 65),
+                      ),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: <Widget>[
+                            TextFormField(
+                              validator: (enteredEmailVal) =>
+                              enteredEmailVal != null &&
+                                  !EmailValidator.validate(enteredEmailVal)
+                                  ? "Please Enter a Valid E-Mail"
+                                  : null,
+                              controller: adminEMailController,
+                              keyboardType: TextInputType.emailAddress,
+                              decoration: const InputDecoration(
+                                prefixIcon: Icon(
+                                  Icons.person,
                                   color: Colors.deepOrange,
+                                  size: 40,
+                                ),
+                                label: Text(
+                                  "Admin E-Mail",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.blueAccent,
+                                  ),
+                                ),
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    width: 2.0,
+                                    color: Colors.deepOrange,
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    width: 2.0,
+                                    color: Colors.blue,
+                                  ),
                                 ),
                               ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  width: 2.0,
-                                  color: Colors.blue,
-                                ),
-                              ),
-                            ),
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                            ),
-                          ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.08,
-                          ),
-                          // buttonOfManageServices(
-                          //   context,
-                          //   () {
-                          //     checkNewAdmin(adminNameController.text);
-                          //   },
-                          //   "Add Admin",
-                          //   const Color.fromARGB(255, 10, 150, 10),
-                          // ),
-                          ElevatedButton(
-                            onPressed: () {
-                              checkNewAdmin(adminNameController.text);
-                            },
-                            style: ElevatedButton.styleFrom(
-                              minimumSize: const Size(300, 60),
-                              padding: EdgeInsets.symmetric(
-                                vertical: 5.0,
-                                horizontal:
-                                    MediaQuery.of(context).size.width * 0.2,
-                              ),
-                              primary: const Color.fromARGB(255, 10, 150, 10),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              elevation: 15.0,
-                            ),
-                            child: const Text(
-                              "Add Admin",
-                              style: TextStyle(
-                                fontSize: 24,
+                              style: const TextStyle(
                                 color: Colors.white,
+                                fontSize: 18,
                               ),
                             ),
-                          ),
-                        ],
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.08,
+                            ),
+                            // buttonOfManageServices(
+                            //   context,
+                            //   () {
+                            //     checkNewAdmin(adminNameController.text);
+                            //   },
+                            //   "Add Admin",
+                            //   const Color.fromARGB(255, 10, 150, 10),
+                            // ),
+                            ElevatedButton(
+                              onPressed: () {
+                                final formKey = addAdminFormKey.currentState!;
+                                if(formKey.validate()){
+                                  // تباع الارسال
+                                  // checkNewAdmin(adminEMailController.text);
+                                  checkNewAddAdminRequest();
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                minimumSize: const Size(300, 60),
+                                padding: EdgeInsets.symmetric(
+                                  vertical: 5.0,
+                                  horizontal:
+                                      MediaQuery.of(context).size.width * 0.2,
+                                ),
+                                primary: const Color.fromARGB(255, 10, 150, 10),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                elevation: 15.0,
+                              ),
+                              child: const Text(
+                                "Add Admin",
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ],
@@ -164,29 +183,33 @@ class _AddNewAdminState extends State<AddNewAdmin> {
       }),
     );
   }
-
-  bool checkNewAdmin(String adminName) {
-    if (adminName == '' || adminName == ' ') {
-      TheSnackBar(context, 'Please Enter Admin Name',
+  bool checkNewAddAdminRequest(){
+    if(_checkNewAdmin(adminEMailController.text)){
+      addAdminList.add(adminEMailController.text);
+      TheSnackBar(context, 'Admin Added Successfully',
+          const Color.fromARGB(255, 10, 150, 10));
+    }
+    return false;
+  }
+  bool _checkNewAdmin(String adminEMail) {
+    if (adminEMail == '' || adminEMail == ' ') {
+      TheSnackBar(context, 'Please Enter Admin E-mail Address',
           const Color.fromARGB(255, 150, 10, 10));
       return false;
     }
-    else if(adminName.length < 4){
-      TheSnackBar(context, 'Name Is Too Short',
+    else if(adminEMail.length < 8){
+      TheSnackBar(context, 'E-Mail Is Too Short',
           const Color.fromARGB(255, 150, 10, 10));
       return false;
     }
      else {
       for (var admin in addAdminList) {
-        if (adminName == admin) {
-          TheSnackBar(context, 'Admin Name Exited',
+        if (adminEMail == admin) {
+          TheSnackBar(context, 'Admin E-mail Exited',
               const Color.fromARGB(255, 150, 10, 10));
           return false;
         }
       }
-      addAdminList.add(adminName);
-      TheSnackBar(context, 'Admin Added Successfully',
-          const Color.fromARGB(255, 10, 150, 10));
       return true;
     }
   }

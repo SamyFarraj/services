@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'project/edition/service_info_new_ed.dart';
+import 'project/projects_page.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,27 +24,20 @@ class MyApp extends StatelessWidget {
       );
 }
 
-class MyHomePage extends StatelessWidget {
+
+class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const _MyHomePage();
-  }
-}
-
-class _MyHomePage extends StatefulWidget {
-  const _MyHomePage({Key? key}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<_MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> {
   @override
   // Widget build(BuildContext context) => const DeleteService();
-  // Widget build(BuildContext context) => const ProjectsPage();
-  Widget build(BuildContext context) => ServiceInfoInputNewEd(
-        gateName: "mod Gate",
-      );
+  Widget build(BuildContext context) => const ProjectsPage();
+// Widget build(BuildContext context) => ServiceInfoInputNewEd(
+//   gateName: "mod Gate",
+// );
+
 }
