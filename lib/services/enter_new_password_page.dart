@@ -4,55 +4,43 @@ import 'package:project_mohammad/components/snack_bar.dart';
 import 'package:project_mohammad/project/home/dash_board_pages/Settings/change_password_page.dart';
 import 'package:project_mohammad/project/projects_page.dart';
 
-import '../../../../Api/controller/User/account_user.dart';
-
-class DashBoardVerificationCodePage extends StatefulWidget {
-  final String   currectnum;
-  const DashBoardVerificationCodePage({required this.currectnum,Key? key}) : super(key: key);
+class newPasswordPage extends StatefulWidget {
+  const newPasswordPage({Key? key}) : super(key: key);
 
   @override
-  State<DashBoardVerificationCodePage> createState() => _DashBoardVerificationCodePageState(currectnum);
+  State<newPasswordPage> createState() => _newPasswordPageState();
 }
 
-class _DashBoardVerificationCodePageState extends State<DashBoardVerificationCodePage> {
+class _newPasswordPageState extends State<newPasswordPage> {
   // هاد ال controller
   // مشان ال textField
-late String current ;
-  _DashBoardVerificationCodePageState(String current)
-  {
-    this.current=current;
-  }
-  final verificationCodeController = TextEditingController();
-  String dashBoardCorrectVerificationCode = "123456";
+  final newPasswordController = TextEditingController();
+  // String dashBoardCorrectVerificationCode = "123456";
   bool buttonStatus = false;
-  String buttonDisplayText = "Enter Code";
+  String buttonDisplayText = "Enter New PassWord";
   Widget showIcon = Container(
     width: 10,
   );
-  final verificationCodeFormKey = GlobalKey<FormState>();
-String? mycode;
+  final newPasswordFormKey = GlobalKey<FormState>();
 
   //متغير ل تحديد طهور ال password
   bool passwordVisibility = true;
-late Future<String> date;
-
 
   @override
   void initState() {
-    verificationCodeController.addListener(() {
-      bool isButtonActivate = verificationCodeController.text.length >= 6;
+    newPasswordController.addListener(() {
+      bool isButtonActivate = newPasswordController.text.length >= 6;
       setState(() {
         buttonStatus = isButtonActivate;
         isButtonActivate
             ? buttonDisplayText = "Submit"
-            : buttonDisplayText = "Enter Code";
+            : buttonDisplayText = "Enter New Password";
         isButtonActivate
             ? showIcon = const Icon(Icons.check)
             : const Icon(Icons.numbers);
       });
     });
     super.initState();
-        date = Account_User.get_varvecation_code();
   }
 
   @override
@@ -68,7 +56,7 @@ late Future<String> date;
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
-          "Verisy",
+          "New Password",
           style: TextStyle(
             fontSize: 36,
             fontWeight: FontWeight.bold,
@@ -100,7 +88,7 @@ late Future<String> date;
           // ما يعطي pixels rendered out error
           // يعني مشات  ما تطلع ال pixels  من الشاشة
           Form(
-            key: verificationCodeFormKey,
+            key: newPasswordFormKey,
             child: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
@@ -132,33 +120,16 @@ late Future<String> date;
                           height: MediaQuery.of(context).size.height * 0.2,
                         ),
                         // هاد ال حقل الخاص ب ال code تبع التحقق
-                        FutureBuilder(
-                            future:date,
-                       builder: (context, snapshot) {
-
-                              if(snapshot.hasData)
-                                {
-                                  mycode=snapshot.data.toString();
-                                  print('the code is $mycode');
-                                }
-                              return const CircularProgressIndicator();
-                          },
-
-
-
-                        )
-                     ,
-
                         TextFormField(
                           validator: (enteredCode) =>
-                          enteredCode == dashBoardCorrectVerificationCode
-                              ? "inCorrect Code"
+                          enteredCode!.length > 8
+                              ? "too Short"
                               : null,
-                          controller: verificationCodeController,
+                          controller: newPasswordController,
                           decoration: const InputDecoration(
                             prefixIcon: Icon(
                               //هون انا عدلت تعديل  بالايقونة
-                              Icons.ten_k,
+                              Icons.vpn_key,
                               color: Colors.deepOrange,
                             ),
                             label: Text(
@@ -197,13 +168,8 @@ late Future<String> date;
                           child: ElevatedButton(
                             onPressed: buttonStatus
                                 ? () {
-                              if (verificationCodeController.text ==
-                                  dashBoardCorrectVerificationCode) {
-                                Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                    builder: (_) => const ChangePasswordPage(),
-                                  ),
-                                );
+                              if (checkNewPassword()) {
+                                //هون تابع ارسال القيمة
                                 // TheSnackBar(
                                 //   context,
                                 //   "Ac",
@@ -211,13 +177,13 @@ late Future<String> date;
                                 // );
                               } else {
                                 final currentCode =
-                                verificationCodeFormKey.currentState!;
+                                newPasswordFormKey.currentState!;
                                 // if (currentCode.validate()) {
                                 //   print("accepted");
                                 // }
                                 TheSnackBar(
                                   context,
-                                  "Please Enter A Valid Code",
+                                  "Password is too short",
                                   const Color.fromARGB(255, 150, 10, 10),
                                 );
                               }
@@ -260,22 +226,17 @@ late Future<String> date;
     );
   }
 
-  void checkVerificationCode() {
-    if (verificationCodeController.text == dashBoardCorrectVerificationCode) {
+  bool checkNewPassword() {
+    if (newPasswordController.text.length > 8) {
+        return true;
+    } else
+      TheSnackBar(
+        context,
+        "Please Enter New Password",
+        const Color.fromARGB(255, 150, 10, 10),
+      );
+      return false;
 
-    } else if (verificationCodeController.text == '') {
-      TheSnackBar(
-        context,
-        "Please Enter Verification Code",
-        const Color.fromARGB(255, 150, 10, 10),
-      );
-    } else {
-      TheSnackBar(
-        context,
-        "Please Enter Verification Code",
-        const Color.fromARGB(255, 150, 10, 10),
-      );
-    }
   }
 
 }

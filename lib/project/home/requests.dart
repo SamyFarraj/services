@@ -232,10 +232,6 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                     width: 2,
                                   )),
                                 ),
-
-
-
-
                                 ...UserRequestsPage.requestList.map((val) {
                                   return Column(
                                     children: [
@@ -249,14 +245,48 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                             children: <Widget>[
                                               Column(
                                                 children: <Widget>[
-
-                                                  Text(
-                                                    val.gateName,
-                                                    style: const TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 26,
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                  // Text(
+                                                  //   val.serviceTitle,
+                                                  //   style: const TextStyle(
+                                                  //     color: Colors.white,
+                                                  //     fontSize: 26,
+                                                  //     fontWeight:
+                                                  //         FontWeight.bold,
+                                                  //   ),
+                                                  // ),
+                                                  Container(
+                                                    alignment: Alignment.center,
+                                                    height: 90,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.7,
+                                                    decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                          width: 2,
+                                                          color: Colors.blue),
+                                                    ),
+                                                    child: ListView(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                        top: 1,
+                                                        left: 30,
+                                                      ),
+                                                      children: [
+                                                        ...val.serviceTitle
+                                                            .map((service) {
+                                                          return Text(
+                                                            service,
+                                                            style:
+                                                                const TextStyle(
+                                                                    fontSize:
+                                                                        22,
+                                                                    color: Colors
+                                                                        .white),
+                                                          );
+                                                        }).toList(),
+                                                      ],
                                                     ),
                                                   ),
                                                   Text(

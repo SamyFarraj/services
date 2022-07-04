@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../project/home/dash_board_pages/General/contact_us.dart';
-import '../project/home/dash_board_pages/Settings/account_settings.dart';
 import '../project/home/dash_board_pages/Settings/dashboard_verification_code_page.dart';
 import '../project/home/dash_board_pages/Settings/edit_account_info.dart';
+
 
 
 
@@ -13,9 +13,9 @@ final generalDashboardList = [
   "Contact Us",
 ];
 final settingsDashboardList = [
-  "Account Settings",
   "Change Password",
   "Edit Account Info",
+  "logout",
 ];
 
 class DashBoard extends StatefulWidget {
@@ -139,17 +139,20 @@ class _BasicTileWidgetState extends State<BasicTileWidget> {
       ),
       onTap: () {
         Widget page = const Text(
-          "not ",
+          "not",
           style: TextStyle(fontSize: 22, color: Colors.blue),
         );
         if (title == "Contact Us") {
           page = const ContactUs();
-        } else if(title == "Account Settings"){
-          page = const AccountSettings();
-        } else if(title == "Change Password"){
-          page = const DashBoardVerificationCodePage(currectnum: '',);
+        }
+        else if(title == "Change Password"){
+          page = const DashBoardVerificationCodePage();
         } else if(title == "Edit Account Info"){
           page = const EditAccountInfo();
+        }
+        if(title == "logout") {
+
+          return;
         }
         Navigator.of(context).push(
           MaterialPageRoute(

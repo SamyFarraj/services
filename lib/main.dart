@@ -1,26 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:project_mohammad/Api/controller/User/work/Services_controller.dart';
-import 'package:project_mohammad/authentication/admin_log_in_page.dart';
-import 'package:project_mohammad/authentication/log_in_page.dart';
-import 'package:project_mohammad/authentication/sign_up_page.dart';
-import 'package:project_mohammad/project/admin/admin_requests_page.dart';
-import 'package:project_mohammad/project/admin/block_service.dart';
-import 'package:project_mohammad/project/admin/delete_service.dart';
-import 'package:project_mohammad/project/edition/DEMO.dart';
-import 'package:project_mohammad/project/edition/services_edition.dart';
-import 'package:project_mohammad/project/home/dash_board_pages/Settings/change_password_page.dart';
-import 'package:project_mohammad/project/home/dash_board_pages/Settings/edit_account_info.dart';
-import 'package:project_mohammad/project/home/home_page.dart';
-import 'package:project_mohammad/project/home/requests.dart';
-import 'package:project_mohammad/project/home/service_info_input.dart';
-import 'package:project_mohammad/project/home/service_management_page_choosing.dart';
-import 'package:project_mohammad/project/home/services.dart';
-import 'package:project_mohammad/services/on_hold.dart';
-
-import 'Api/shredpreference.dart';
-import 'project/projects_page.dart';
 
 import 'project/edition/service_info_new_ed.dart';
+import 'project/projects_page.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();

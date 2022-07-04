@@ -3,7 +3,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:project_mohammad/Api/controller/login_controller.dart';
 
-import '../components/buttons.dart';
+// import '../components/buttons.dart';
 
 class AdminLogInPage extends StatefulWidget {
   const AdminLogInPage({Key? key}) : super(key: key);
@@ -97,9 +97,10 @@ class _AdminLogInPageState extends State<AdminLogInPage> {
                       // هاد ال حقل الخاص ب ال email
                       TextFormField(
                         validator: (enteredEmailVal) =>
-                        enteredEmailVal != null && !EmailValidator.validate(enteredEmailVal)
-                            ? "Please Enter a Valid E-Mail"
-                            : null,
+                            enteredEmailVal != null &&
+                                    !EmailValidator.validate(enteredEmailVal)
+                                ? "Please Enter a Valid E-Mail"
+                                : null,
                         keyboardType: TextInputType.emailAddress,
                         controller: adminEmailController,
                         decoration: const InputDecoration(
@@ -138,9 +139,9 @@ class _AdminLogInPageState extends State<AdminLogInPage> {
                       // هاد ال حقل الخاص ب ال password
                       TextFormField(
                         validator: (enteredPasswordVal) =>
-                        enteredPasswordVal!.length < 8
-                            ? "Password is too short"
-                            : null,
+                            enteredPasswordVal!.length < 8
+                                ? "Password is too short"
+                                : null,
                         obscureText: adminPasswordVisibility,
                         controller: adminPasswordController,
                         decoration: InputDecoration(
@@ -155,7 +156,8 @@ class _AdminLogInPageState extends State<AdminLogInPage> {
                                 : const Icon(Icons.visibility),
                             // color: Colors.deepOrange,
                             onPressed: () => setState(
-                                  () => adminPasswordVisibility = !adminPasswordVisibility,
+                              () => adminPasswordVisibility =
+                                  !adminPasswordVisibility,
                             ),
                           ),
                           label: const Text(
@@ -187,9 +189,11 @@ class _AdminLogInPageState extends State<AdminLogInPage> {
                         height: MediaQuery.of(context).size.height * 0.2,
                       ),
                       //  هي كبسة ال login
-                      // جوا ال onPressed منحط ال استدعاء تابع ارسال البيانات لل database
+                      // جوا ال onPressed منحط ال استدعاء
+                      // تابع ارسال البيانات لل database
                       // buttonsOfAuthentication(context ,"login" ,(){
-                      //   final adminLoginFormKeyCurrent = adminLoginFormKey.currentState!;
+                      //   final adminLoginFormKeyCurrent =
+                      //                  adminLoginFormKey.currentState!;
                       //   //         if(adminLoginFormKeyCurrent.validate()){
                       //   //           // تابع ارسال البيانات
                       //   //            print("Test Request SignUp m");
@@ -203,14 +207,20 @@ class _AdminLogInPageState extends State<AdminLogInPage> {
 
                             }
                            */
+                          print('Pressed');
+                          logincontroller().signIn(
+                            adminEmailController.text,
+                            adminPasswordController.text,
+                            'Admin',
+                          );
                           print('befor send request ');
-                          logincontroller().signIn(adminEmailController.text,adminPasswordController.text,'/Admin');
+                      //    logincontroller().signIn(adminEmailController.text,adminPasswordController.text,'/Admin');
                         },
                         style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.symmetric(
                             vertical: 5.0,
                             horizontal:
-                            MediaQuery.of(context).size.width * 0.30,
+                                MediaQuery.of(context).size.width * 0.30,
                           ),
                           primary: Colors.blue,
                           shape: RoundedRectangleBorder(

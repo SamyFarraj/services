@@ -694,7 +694,7 @@ print("the response is yesssss ${response.statusCode} ");
 /*
         RequestsStates(
           gateTitle: widget.gateName,
-          serviceTitle: selectedService!,
+          serviceTitleList: selectedService!,
           serviceStartDate:
               DateFormat("yyyy/MM/dd").format(choosedStartingDateTime),
           serviceEndDate:

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class RequestsStates {
   final String gateTitle;
   // final String serviceTitle;
-  final serviceTitle;
+  final serviceTitleList;
   final String serviceStartDate;
   final String serviceEndDate;
   final TimeOfDay serviceTime;
@@ -14,7 +14,7 @@ class RequestsStates {
   // final List choosedStaffs;
   const RequestsStates({
     required this.gateTitle,
-    required this.serviceTitle,
+    required this.serviceTitleList,
     required this.serviceStartDate,
     required this.serviceEndDate,
     required this.minuteDuration,
