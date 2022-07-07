@@ -1,16 +1,16 @@
 // To parse this JSON data, do
 //
-//     final myascapted = myascaptedFromJson(jsonString);
+//     final allReseervatios = allReseervatiosFromJson(jsonString);
 
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
-List<Myascapted> myascaptedFromJson(String str) => List<Myascapted>.from(json.decode(str).map((x) => Myascapted.fromJson(x)));
+List<AllReseervatios> allReseervatiosFromJson(String str) => List<AllReseervatios>.from(json.decode(str).map((x) => AllReseervatios.fromJson(x)));
 
-String myascaptedToJson(List<Myascapted> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String allReseervatiosToJson(List<AllReseervatios> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class Myascapted {
-  Myascapted({
+class AllReseervatios {
+  AllReseervatios({
     required this.id,
     required this.userId,
     required this.startTime,
@@ -20,7 +20,6 @@ class Myascapted {
     required this.createdAt,
     required this.updatedAt,
     required this.serviceName,
-    required this.serviceId,
     required this.userName,
   });
 
@@ -33,10 +32,9 @@ class Myascapted {
   DateTime createdAt;
   DateTime updatedAt;
   String serviceName;
-  int serviceId;
   String userName;
 
-  factory Myascapted.fromJson(Map<String, dynamic> json) => Myascapted(
+  factory AllReseervatios.fromJson(Map<String, dynamic> json) => AllReseervatios(
     id: json["id"],
     userId: json["user_id"],
     startTime: DateTime.parse(json["start_time"]),
@@ -46,7 +44,6 @@ class Myascapted {
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
     serviceName: json["service_name"],
-    serviceId: json["service_id"],
     userName: json["user_name"],
   );
 
@@ -60,7 +57,6 @@ class Myascapted {
     "created_at": createdAt.toIso8601String(),
     "updated_at": updatedAt.toIso8601String(),
     "service_name": serviceName,
-    "service_id": serviceId,
     "user_name": userName,
   };
 }

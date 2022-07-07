@@ -2,6 +2,7 @@
 //
 //     final listService = listServiceFromJson(jsonString);
 
+import 'package:meta/meta.dart';
 import 'dart:convert';
 
 ListService listServiceFromJson(String str) => ListService.fromJson(json.decode(str));
@@ -10,7 +11,7 @@ String listServiceToJson(ListService data) => json.encode(data.toJson());
 
 class ListService {
   ListService({
-    required  this.services,
+    required this.services,
   });
 
   Services services;
@@ -27,7 +28,7 @@ class ListService {
 class Services {
   Services({
     required this.woodward,
-    required   this.farmer,
+    required this.farmer,
     required this.bothStreet,
   });
 
@@ -55,8 +56,7 @@ class BothStreet {
     required this.street,
     required this.isActive,
     required this.createdAt,
-    required  this.updatedAt,
-    required this.reservations,
+    required this.updatedAt,
   });
 
   int id;
@@ -65,7 +65,6 @@ class BothStreet {
   int isActive;
   DateTime createdAt;
   DateTime updatedAt;
-  List<dynamic> reservations;
 
   factory BothStreet.fromJson(Map<String, dynamic> json) => BothStreet(
     id: json["id"],
@@ -74,7 +73,6 @@ class BothStreet {
     isActive: json["IsActive"],
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
-    reservations: List<dynamic>.from(json["reservations"].map((x) => x)),
   );
 
   Map<String, dynamic> toJson() => {
@@ -84,6 +82,5 @@ class BothStreet {
     "IsActive": isActive,
     "created_at": createdAt.toIso8601String(),
     "updated_at": updatedAt.toIso8601String(),
-    "reservations": List<dynamic>.from(reservations.map((x) => x)),
   };
 }

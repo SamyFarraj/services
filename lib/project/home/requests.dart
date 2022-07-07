@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:project_mohammad/Api/controller/User/work/Services_controller.dart';
 import 'package:project_mohammad/Api/model/my_reservations_model.dart';
 import 'package:project_mohammad/services/requests_form.dart';
 
@@ -55,8 +56,7 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
     final response = await http.get(
       Uri.parse('http://192.168.56.1:8000/api/Reservation/MyAcceptedReservation'),
       headers: {
-        'Authorization':
-            "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYzEwOWI1YjMzY2JmMjlhMDdjZTk3MGU3ZWYzOGQxMGQ4ODdlNDkzZThlNTgyMDJiOTNiMzU3MDNhNDBkYjY5YzQ0MDE4NDZiNWVkNjNlMzQiLCJpYXQiOjE2NTA5NDQ1NzkuMzcwMjAyLCJuYmYiOjE2NTA5NDQ1NzkuMzcwMjA4LCJleHAiOjE2ODI0ODA1NzkuMzAwNzk1LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.LafISEKD8yn9StQjfbHT7yxAFqkDxpmcTgFyqshSmS6bCbuv1lzYc9DpBVT54siGXDkkVW4999pUX6U38S1zAAdK4LvfDip8k74ZA2HIodczwBeWK7AuF0-WG4PCnOwAzXXMe0Qg9_QjPh1FLJ7Dk1tws9MTAs0A42-Or1_hlb2LbUg0_9icWP6__hG78nvLKepCVd4CUNxjQWD1TQj-VA0oK9DZazF8N33dAC4w3TqeDtOfhsIS3cCnEfS13574eS_EhGdOaCwWKUanwyuwjxWOuwmWNf0xzhWljERnHIrC4cr7Yx0urpfYniZtb63Qz7mY8abLX-2dCr9EyFAzsUZyia2zuVZV1OVxTiaOQ6GZEmT6IyOKEMzFTNItRsaJnElYmCrB8eYL1DC4vA7B5txbUqATeR-TLGYwqhA7S18yxElg_peDAqfA-iznUDb90BH3y9toa-tYNYyrFWcCNt7fFH_DwYMxk0LPNz-jm1ATBwX7a9eSaillN8AEpuuq93IXiCicg9pURT_uG3KhafsXHwFJd-2reHRXUkHSgcONEQgHGd0P6McaJPbJnfAaIMcXS06aPNTjROSk3X8RsrICTKPrQDY1DTCtBNfm_6OI1oIDARMaTd2RE3rIPu0jqsTyfmw0NxKM8QvaWNnyPPHCZ5GzVsVBIWJ97-_nWNQ"
+        'Authorization':'Bearer   eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZDQ5ZWRjODRiMWYzYzAzZmUzMjg4NTY0NDQwY2JjYmE0ZmIxY2JkNDBjYjk0ZThmYjY1OTYzZjcyOTA4MDAwM2YyMzczNzgxM2JiYzNkY2MiLCJpYXQiOjE2NTY5NTkxNjkuOTU5NDI4LCJuYmYiOjE2NTY5NTkxNjkuOTU5NDU3LCJleHAiOjE2ODg0OTUxNjkuNzY4MTM0LCJzdWIiOiIyIiwic2NvcGVzIjpbXX0.GTXRTTYJmuUSVl3nvm8RB19bYrCllhsLev5M4vpbOekT5waNGue4jO5n8mdkKyhQrw83uzr5PFFVZVPFqwtYtaCixN5uQPWw6pGtNPLu2MPucYL2hUZrl2Q_pu6atlFqHQ4zwIVEX-6Nf-OXdkMYEpL4bVcdgyumJMiMI_cl4T2sL-0WRCealvlY_uckcvomIsUFWzL8if1kLv2rxPt9xei0D6_-ciE0trrgmI7fLZ1DT6Nnb78VzEiSFOkYo4NuuHXmdPtjlIQ6c7sCSlax5-Sd9qX2mRDoTVlsXg75nw4lHzdhRpvg_wWYWsBPjgV2qE40y2Vhzl7TXtCc9gjEFxABrJ_QbWTJAaX5bRgXl7cW4f-laayYw14jzVtNwNz9Yuv6AGlwWQxBXKGckpluzO14zbc8XS_Bf3lrLxbx1L4mjbyI8tb0Ct6GrBG2dcGJ3mdcVwIBBhfSeCXoxUz4ZN-4Q9tMD0cacReXH3nlXbNa6m1_e6tVVUA2E7UUPExdECppV5H4T9sGfO3c_M8_jXTFPAgiNIynoSY7H1GNoEJ5i0O0Dhpa5384Fwc_fJuJHDNsGT4d-5K528u0NH9O1HZsRdSvaprV04l2mDADg_tF433CNeHMH7FMqEPqsj8MD8RyAw7UJY316bFVSgpw1hzsgE7l81sg0dn8VCxjvb8'
       },
     );
     print('the statues is ${response.statusCode}');
@@ -90,8 +90,7 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
     final response = await http.get(
       Uri.parse('http://192.168.56.1:8000/api/Reservation/MyPendingReservation'),
       headers: {
-        'Authorization':
-        "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYzEwOWI1YjMzY2JmMjlhMDdjZTk3MGU3ZWYzOGQxMGQ4ODdlNDkzZThlNTgyMDJiOTNiMzU3MDNhNDBkYjY5YzQ0MDE4NDZiNWVkNjNlMzQiLCJpYXQiOjE2NTA5NDQ1NzkuMzcwMjAyLCJuYmYiOjE2NTA5NDQ1NzkuMzcwMjA4LCJleHAiOjE2ODI0ODA1NzkuMzAwNzk1LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.LafISEKD8yn9StQjfbHT7yxAFqkDxpmcTgFyqshSmS6bCbuv1lzYc9DpBVT54siGXDkkVW4999pUX6U38S1zAAdK4LvfDip8k74ZA2HIodczwBeWK7AuF0-WG4PCnOwAzXXMe0Qg9_QjPh1FLJ7Dk1tws9MTAs0A42-Or1_hlb2LbUg0_9icWP6__hG78nvLKepCVd4CUNxjQWD1TQj-VA0oK9DZazF8N33dAC4w3TqeDtOfhsIS3cCnEfS13574eS_EhGdOaCwWKUanwyuwjxWOuwmWNf0xzhWljERnHIrC4cr7Yx0urpfYniZtb63Qz7mY8abLX-2dCr9EyFAzsUZyia2zuVZV1OVxTiaOQ6GZEmT6IyOKEMzFTNItRsaJnElYmCrB8eYL1DC4vA7B5txbUqATeR-TLGYwqhA7S18yxElg_peDAqfA-iznUDb90BH3y9toa-tYNYyrFWcCNt7fFH_DwYMxk0LPNz-jm1ATBwX7a9eSaillN8AEpuuq93IXiCicg9pURT_uG3KhafsXHwFJd-2reHRXUkHSgcONEQgHGd0P6McaJPbJnfAaIMcXS06aPNTjROSk3X8RsrICTKPrQDY1DTCtBNfm_6OI1oIDARMaTd2RE3rIPu0jqsTyfmw0NxKM8QvaWNnyPPHCZ5GzVsVBIWJ97-_nWNQ"
+        'Authorization':'Bearer   eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZDQ5ZWRjODRiMWYzYzAzZmUzMjg4NTY0NDQwY2JjYmE0ZmIxY2JkNDBjYjk0ZThmYjY1OTYzZjcyOTA4MDAwM2YyMzczNzgxM2JiYzNkY2MiLCJpYXQiOjE2NTY5NTkxNjkuOTU5NDI4LCJuYmYiOjE2NTY5NTkxNjkuOTU5NDU3LCJleHAiOjE2ODg0OTUxNjkuNzY4MTM0LCJzdWIiOiIyIiwic2NvcGVzIjpbXX0.GTXRTTYJmuUSVl3nvm8RB19bYrCllhsLev5M4vpbOekT5waNGue4jO5n8mdkKyhQrw83uzr5PFFVZVPFqwtYtaCixN5uQPWw6pGtNPLu2MPucYL2hUZrl2Q_pu6atlFqHQ4zwIVEX-6Nf-OXdkMYEpL4bVcdgyumJMiMI_cl4T2sL-0WRCealvlY_uckcvomIsUFWzL8if1kLv2rxPt9xei0D6_-ciE0trrgmI7fLZ1DT6Nnb78VzEiSFOkYo4NuuHXmdPtjlIQ6c7sCSlax5-Sd9qX2mRDoTVlsXg75nw4lHzdhRpvg_wWYWsBPjgV2qE40y2Vhzl7TXtCc9gjEFxABrJ_QbWTJAaX5bRgXl7cW4f-laayYw14jzVtNwNz9Yuv6AGlwWQxBXKGckpluzO14zbc8XS_Bf3lrLxbx1L4mjbyI8tb0Ct6GrBG2dcGJ3mdcVwIBBhfSeCXoxUz4ZN-4Q9tMD0cacReXH3nlXbNa6m1_e6tVVUA2E7UUPExdECppV5H4T9sGfO3c_M8_jXTFPAgiNIynoSY7H1GNoEJ5i0O0Dhpa5384Fwc_fJuJHDNsGT4d-5K528u0NH9O1HZsRdSvaprV04l2mDADg_tF433CNeHMH7FMqEPqsj8MD8RyAw7UJY316bFVSgpw1hzsgE7l81sg0dn8VCxjvb8'
       },
     );
     print('the statues is ${response.statusCode}');
@@ -114,7 +113,7 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
       setState(() {
         ulist = subjectFromServer;
         userLists = ulist;
-        print("fsfsdfdsfdsf${userLists[0].gateName}");
+       // print("fsfsdfdsfdsf${userLists[0].gateName}");
 
         for(int i=0;i<userLists.length;i++)
           {
@@ -130,6 +129,11 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
         pending = subjectFromServer;
         listpending = pending;
         print("the pending list is $listpending");
+        for(int i=0;i<listpending.length;i++)
+        {
+
+          UserRequestsPage.requestList.add(listpending[i]);
+        }
       });
     });
   }
@@ -232,6 +236,10 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                     width: 2,
                                   )),
                                 ),
+
+
+
+
                                 ...UserRequestsPage.requestList.map((val) {
                                   return Column(
                                     children: [
@@ -245,66 +253,32 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                             children: <Widget>[
                                               Column(
                                                 children: <Widget>[
-                                                  // Text(
-                                                  //   val.serviceTitle,
-                                                  //   style: const TextStyle(
-                                                  //     color: Colors.white,
-                                                  //     fontSize: 26,
-                                                  //     fontWeight:
-                                                  //         FontWeight.bold,
-                                                  //   ),
-                                                  // ),
-                                                  Container(
-                                                    alignment: Alignment.center,
-                                                    height: 90,
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.7,
-                                                    decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                          width: 2,
-                                                          color: Colors.blue),
-                                                    ),
-                                                    child: ListView(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                        top: 1,
-                                                        left: 30,
-                                                      ),
-                                                      children: [
-                                                        ...val.serviceTitle
-                                                            .map((service) {
-                                                          return Text(
-                                                            service,
-                                                            style:
-                                                                const TextStyle(
-                                                                    fontSize:
-                                                                        22,
-                                                                    color: Colors
-                                                                        .white),
-                                                          );
-                                                        }).toList(),
-                                                      ],
+
+                                                  Text(
+                                                    val.serviceName,
+                                                    style: const TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 26,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                     ),
                                                   ),
                                                   Text(
-                                                    val.serviceStartDate,
+                                                    '${val.createdAt}',
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 26,
                                                     ),
                                                   ),
                                                   Text(
-                                                    " start at ${val.serviceTime.format(context)}",
+                                                    " start at ${val.startTime}",
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 26,
                                                     ),
                                                   ),
                                                   Text(
-                                                    "end at ${val.endingTime.format(context)}",
+                                                    "end at ${val.endTime}",
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 26,
@@ -321,7 +295,7 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                                   //   ),
                                                   // ),
                                                   Text(
-                                                    "from ${val.gateTitle}",
+                                                    "from ${val.gateName}",
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 26,
@@ -341,8 +315,9 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                             ),
                                             onPressed: () {
                                               setState(() {
-                                                UserRequestsPage.requestList
-                                                    .remove(val);
+                                                //حط تابع الحذف هون
+                                                Servicee.delete_reservation(val.id);
+                                                UserRequestsPage.requestList.remove(val);
                                               });
                                             },
                                             child: const Icon(

@@ -117,6 +117,7 @@ class _AdminRequestsPageState extends State<AdminRequestsPage> {
     super.initState();
     fetchData().then((subjectFromServer) {
       setState(() {
+        print("the u list issss : $ulist");
         ulist = subjectFromServer;
         userLists = ulist;
         print("fsfsdfdsfdsf${userLists[0].gateName}");
@@ -267,7 +268,7 @@ else
                                                 children: <Widget>[
                                                   // ignore: prefer_const_constructors
                                                   Text(
-                                                    val.user,
+                                                    val.userName,
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 26,
@@ -276,7 +277,7 @@ else
                                                     ),
                                                   ),
                                                   Text(
-                                                    val.serviceTitle,
+                                                    val.serviceName,
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 26,
@@ -285,23 +286,22 @@ else
                                                     ),
                                                   ),
                                                   Text(
-                                                    val.serviceStartDate,
+                                                    '${val.createdAt}',
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 26,
                                                     ),
                                                   ),
                                                   Text(
-                                                    "start : ${val.serviceTime
-                                                        .format(context)}",
+                                                    "start : ${val.startTime
+                                                       }",
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 26,
                                                     ),
                                                   ),
                                                   Text(
-                                                    "end : ${val.endingTime.format(
-                                                        context)}",
+                                                    "end : ${val.endTime}",
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 21,
@@ -546,7 +546,7 @@ else
                                                 children: <Widget>[
                                                   // ignore: prefer_const_constructors
                                                   Text(
-                                                    val.user,
+                                                    val.userName,
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 26,
@@ -555,7 +555,9 @@ else
                                                     ),
                                                   ),
                                                   Text(
-                                                    val.serviceTitleList,
+                                                    //هون في تعديل
+
+                                                    val.serviceName,
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 26,
@@ -564,23 +566,23 @@ else
                                                     ),
                                                   ),
                                                   Text(
-                                                    val.serviceStartDate,
+                                                    '${val.createdAt}',
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 26,
                                                     ),
                                                   ),
                                                   Text(
-                                                    "start : ${val.serviceTime
-                                                        .format(context)}",
+                                                    "start : ${val.startTime
+                                                        }",
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 26,
                                                     ),
                                                   ),
                                                   Text(
-                                                    "end : ${val.endingTime
-                                                        .format(context)}",
+                                                    "end : ${val.endTime
+                                                       }",
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 26,
@@ -597,7 +599,7 @@ else
                                                   //   ),
                                                   // ),
                                                   Text(
-                                                    "from ${val.gateTitle}",
+                                                    "from ${val.gateName}",
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 26,

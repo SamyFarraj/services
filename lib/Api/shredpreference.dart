@@ -24,3 +24,10 @@ import '../moh_project/post_moh/login_controller.dart';
   t= mytoken!;
 
 }
+
+delettoken()async
+{
+  SharedPreferences pref= await SharedPreferences.getInstance();
+  pref.setString('Token', '');
+
+}

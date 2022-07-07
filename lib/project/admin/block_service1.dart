@@ -9,14 +9,14 @@ import '../../Api/model/name_service.dart';
 import '../../components/snack_bar.dart';
 import '../../moh_project/post_moh/login_controller.dart';
 
-class BlockService extends StatefulWidget {
-  const BlockService({Key? key}) : super(key: key);
+class BlockServices extends StatefulWidget {
+  const BlockServices({Key? key}) : super(key: key);
 
   @override
-  State<BlockService> createState() => _BlockServiceState();
+  State<BlockServices> createState() => _BlockServiceState();
 }
 
-class _BlockServiceState extends State<BlockService> {
+class _BlockServiceState extends State<BlockServices> {
   List<String> servicewoodward = [];
   List<String> servicefarmer = [];
   List<String> bothstreet = [];
@@ -52,8 +52,11 @@ int i=0;
   Future<ListService> fetchAlbum() async {
  //   servicesList.clear();
 
-    final response = await http.get(Uri.parse('${base_Url}/api/Admin/services'),
-        headers: {'Authorization':'Bearer $t'}
+    final response = await http
+        .get(Uri.parse('${base_Url}/api/Admin/services'),
+        headers: {
+          'Authorization':'Bearer $t'
+        }
       // snapshot.data!.services.woodWard[1].street
     );
     print("the respsmss base ${response.body}");
@@ -76,8 +79,6 @@ int i=0;
     date=fetchAlbum();
     print(' the i is ${servicesList}');
     print("gdgdf,h;l");
-   // print("the u list issss : $d");
-
   }
 
   @override
@@ -163,6 +164,7 @@ int i=0;
 
 
                               servicefarmer.add('select service');
+
                               for(int i =0;i<snapshot.data!.services.bothStreet.length;i++)
                               {
                                 print("there is no item ");
@@ -451,7 +453,6 @@ int i=0;
 
                             }
                           else if (snapshot.hasError) {
-                            print("error is ${snapshot.error}");
                             return Text('${snapshot.error}');
 
                           }

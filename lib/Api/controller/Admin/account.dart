@@ -120,11 +120,14 @@ class account {
 
 static Future <String> logout()async
 {
+  //http://127.0.0.1:8000/api/Admin/logout
   var response=await http.get(Uri.parse('${base_Url}/api/Admin/logout')
   ,headers: {
     'Accept':'application/json'
-        ,'Authorization':t }
+        ,'Authorization':'Bearer $t'
+  }
   );
+  print('the re ${response.statusCode}');
   if (response.statusCode==200)
     {
       return 'seccful';
@@ -132,12 +135,13 @@ static Future <String> logout()async
   else return response.statusCode.toString();
 }
 
-  Future <String> ResetPasswordRequest()async
+ static Future <String> ResetPasswordRequest()async
   {
     var response=await http.get(Uri.parse('${base_Url}/api/ResetPasswordRequest')
         ,headers: {
           'Accept':'application/json'
-          ,'Authorization':t }
+          ,'Authorization':'Bearer $t'
+    }
     );
     if (response.statusCode==200)
     {

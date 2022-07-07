@@ -149,7 +149,7 @@ class _AddNewAdminState extends State<AddNewAdmin> {
                                   // تباع الارسال
                                   // checkNewAdmin(adminEMailController.text);
                                   checkNewAddAdminRequest();
-                                  AddNewAdmin_con.Add_new_ADmiin(adminNameController.text);
+                                  AddNewAdmin_con.Add_new_ADmiin(adminEMailController.text);
 
                                 }
                               },
@@ -214,7 +214,7 @@ class _AddNewAdminState extends State<AddNewAdmin> {
           return false;
         }
       }
-      addAdminList.add(adminName);
+  //    addAdminList.add(adminName);
       TheSnackBar(context, 'Admin Added Successfully',
           const Color.fromARGB(255, 10, 150, 10));
       return true;

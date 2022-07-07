@@ -4,6 +4,7 @@ import 'package:project_mohammad/services/requests_form.dart';
 import 'package:project_mohammad/services/services_check_box.dart';
 import 'package:project_mohammad/services/staff.dart';
 
+import '../Api/model/allreservation_mode.dart';
 import '../Api/model/name_service.dart';
 import 'street_service_chooser.dart';
 
@@ -112,7 +113,7 @@ final chooseService = [
   ServicesCheckBox(serviceName: "Ramp-BSE"),
 ];
 
-List<RequestsStates> adminCalendarList = [];
+List<AllReseervatios> adminCalendarList = [];
 
 // هي list  مشان اضافة newAdmin
 //رح يضيفها ع  ال database
@@ -287,13 +288,9 @@ List<String> addAdminList = [
 
 
 
-List <String> streetEdition=[
 List<String> gatesEdition = [
   'Select Gate',
-  'Gate 1',
-  'Gate 2',
-  'Gate 3',
-  'Gate 4',
+
 ];
 List<String> streetEdition = [
   'Select Street',

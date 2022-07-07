@@ -4,14 +4,6 @@ import 'package:http/http.dart' as http;
 import '../../../moh_project/post_moh/login_controller.dart';
 import '../../../project/constant.dart';
 
-
-
-
-
-
-
-
-
 class Acc_dec {
 
   static Future <String> Accept_reservation(int id) async

@@ -16,7 +16,6 @@ class BlockedModel {
     required this.isActive,
     required this.createdAt,
     required this.updatedAt,
-    required this.reservations,
   });
 
   int id;
@@ -25,7 +24,6 @@ class BlockedModel {
   int isActive;
   DateTime createdAt;
   String updatedAt;
-  List<dynamic> reservations;
 
   factory BlockedModel.fromJson(Map<String, dynamic> json) => BlockedModel(
     id: json["id"],
@@ -34,7 +32,6 @@ class BlockedModel {
     isActive: json["IsActive"],
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: json["updated_at"],
-    reservations: List<dynamic>.from(json["reservations"].map((x) => x)),
   );
 
   Map<String, dynamic> toJson() => {
@@ -44,6 +41,5 @@ class BlockedModel {
     "IsActive": isActive,
     "created_at": createdAt.toIso8601String(),
     "updated_at": updatedAt,
-    "reservations": List<dynamic>.from(reservations.map((x) => x)),
   };
 }

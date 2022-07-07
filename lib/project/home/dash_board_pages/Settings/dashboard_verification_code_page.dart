@@ -39,6 +39,8 @@ late Future<String> date;
 
   @override
   void initState() {
+    
+    print('jollad');
     verificationCodeController.addListener(() {
       bool isButtonActivate = verificationCodeController.text.length >= 6;
       setState(() {
@@ -132,7 +134,7 @@ late Future<String> date;
                           height: MediaQuery.of(context).size.height * 0.2,
                         ),
                         // هاد ال حقل الخاص ب ال code تبع التحقق
-                        FutureBuilder(
+                        FutureBuilder<String>(
                             future:date,
                        builder: (context, snapshot) {
 
@@ -140,52 +142,58 @@ late Future<String> date;
                                 {
                                   mycode=snapshot.data.toString();
                                   print('the code is $mycode');
+                                  return   TextFormField(
+                                    validator: (enteredCode) =>
+                                    enteredCode == dashBoardCorrectVerificationCode
+                                        ? "inCorrect Code"
+                                        : null,
+                                    controller: verificationCodeController,
+                                    decoration: const InputDecoration(
+                                      prefixIcon: Icon(
+                                        //هون انا عدلت تعديل  بالايقونة
+                                        Icons.ten_k,
+                                        color: Colors.deepOrange,
+                                      ),
+                                      label: Text(
+                                        "Code",
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          color: Colors.blueAccent,
+                                        ),
+                                      ),
+                                      enabledBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                          width: 2.0,
+                                          color: Colors.deepOrange,
+                                        ),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          width: 2.0,
+                                          color: Colors.blue,
+                                        ),
+                                      ),
+                                    ),
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                    ),
+                                  );
                                 }
-                              return const CircularProgressIndicator();
-                          },
+
+                         return  CircularProgressIndicator();
+
+
+                          }
+
+                          ,
 
 
 
                         )
                      ,
 
-                        TextFormField(
-                          validator: (enteredCode) =>
-                          enteredCode == dashBoardCorrectVerificationCode
-                              ? "inCorrect Code"
-                              : null,
-                          controller: verificationCodeController,
-                          decoration: const InputDecoration(
-                            prefixIcon: Icon(
-                              //هون انا عدلت تعديل  بالايقونة
-                              Icons.ten_k,
-                              color: Colors.deepOrange,
-                            ),
-                            label: Text(
-                              "Code",
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.blueAccent,
-                              ),
-                            ),
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                width: 2.0,
-                                color: Colors.deepOrange,
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                width: 2.0,
-                                color: Colors.blue,
-                              ),
-                            ),
-                          ),
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                          ),
-                        ),
+
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.2,
                         ),
@@ -198,7 +206,7 @@ late Future<String> date;
                             onPressed: buttonStatus
                                 ? () {
                               if (verificationCodeController.text ==
-                                  dashBoardCorrectVerificationCode) {
+                                  mycode) {
                                 Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(
                                     builder: (_) => const ChangePasswordPage(),

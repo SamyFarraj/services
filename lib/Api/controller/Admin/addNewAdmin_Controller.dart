@@ -9,7 +9,7 @@ class AddNewAdmin_con
 {
 
 static  Future<String> Add_new_ADmiin(String email) async {
-    var url = (base_Url +'/api/Admin/AddADmin');
+    var url = (base_Url +'/api/Admin/AddAdmin');
     var uri = Uri.parse(url);
     var response = await http.post(
       uri,
@@ -19,7 +19,7 @@ static  Future<String> Add_new_ADmiin(String email) async {
       },
       body: {'email':email},
     );
-    print("${response.body}");
+    print("${response.statusCode}");
 
     if (response.statusCode == 200) {
       var responsejeson = jsonDecode(response.body);

@@ -1,9 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:project_mohammad/Api/model/allreservation_mode.dart';
 
+import '../../moh_project/post_moh/login_controller.dart';
 import '../../services/choices.dart';
 import '../../services/requests_form.dart';
 import '../home/requests.dart';
+import 'package:http/http.dart' as http;
 
 class ServiceCalender extends StatefulWidget {
   const ServiceCalender({Key? key}) : super(key: key);
@@ -13,10 +18,66 @@ class ServiceCalender extends StatefulWidget {
 }
 
 class _ServiceCalenderState extends State<ServiceCalender> {
+  List<AllReseervatios> ulist = [];
+  List<AllReseervatios> userLists = [];
+List<AllReseervatios>myadminRequestsManageList=[];
+  @override
+  static List<AllReseervatios> parseAgents(String responseBody) {
+    print("sdknkjsdngjnd");
+    //Map<String,String>.from(oldMap)
+    final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
+    return parsed
+        .map<AllReseervatios>((json) => AllReseervatios.fromJson(json))
+        .toList();
+  }
+
+  Future<List<AllReseervatios>> fetchData() async {
+    final response = await http.get(
+      Uri.parse('http://192.168.56.1:8000/api/Admin/Reservation'),
+      headers: {
+        'Authorization': 'Bearer $t'
+      },
+    );
+    print('the tokem ${t}');
+
+    print('the statues is ${response.statusCode}');
+    if (response.statusCode == 200) {
+      final List parsedList = json.decode(response.body);
+      // List<MyReservations> list = parsedList.map((val) => MyReservations.fromJson(val)).toList();
+      //  print("${response.body}");json.decode(response.body);
+      List<AllReseervatios> list = parseAgents(response.body);
+      print("sdasdasdasdsad$list");
+      return list;
+    } else {
+      throw Exception('Unexpected error occurred!');
+    }
+  }
+
+
+
   var servicesCalendarDate = DateTime(2021);
   String showedDate = "select Date";
   DateTime selectedDate = DateTime(2021);
 
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchData().then((subjectFromServer) {
+      setState(() {
+        print("the u list issss : $ulist");
+        ulist = subjectFromServer;
+        userLists = ulist;
+        print("fsfsdfdsfdsf${userLists[0].gateName}");
+
+        for(int i=0;i<userLists.length;i++)
+        {
+          myadminRequestsManageList.add(userLists[i]);
+        }
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -113,7 +174,7 @@ class _ServiceCalenderState extends State<ServiceCalender> {
                             onPressed: () {
                               setState(() {
                                 serviceDateFilter(
-                                  adminRequestsManageList,
+                                  myadminRequestsManageList,
                                   selectedDate,
                                 );
                               });
@@ -160,7 +221,7 @@ class _ServiceCalenderState extends State<ServiceCalender> {
                                         child: Column(
                                           children: <Widget>[
                                             Text(
-                                              element.gateTitle,
+                                              element.gateName,
                                               style: TextStyle(
                                                 fontSize: 20,
                                                 color: Colors.white,
@@ -186,37 +247,41 @@ class _ServiceCalenderState extends State<ServiceCalender> {
                                                   left: 30,
                                                 ),
                                                 children: <Widget>[
-                                                  ...element.serviceTitleList
-                                                      .map((service) {
-                                                    return Text(
-                                                      service,
+                                                  
+                                                  // ...element.serviceName.map((service) {
+                                                  //   return
+                                                Text(
+                                                      element.serviceName,
                                                       style:
                                                       const TextStyle(
                                                           fontSize:
                                                           22,
                                                           color: Colors
                                                               .white),
-                                                    );
-                                                  }).toList(),
+                                                    ),
+                                                  //;
+                                                  // }).toList(),
+
+                                                   
                                                 ],
                                               ),
                                             ),
                                             Text(
-                                              element.serviceStartDate,
+                                              "${element.createdAt}",
                                               style: TextStyle(
                                                 fontSize: 20,
                                                 color: Colors.white,
                                               ),
                                             ),
                                             Text(
-                                              "Start : ${element.serviceTime.format(context)}",
+                                              "Start : ${element.startTime}",
                                               style: TextStyle(
                                                 fontSize: 20,
                                                 color: Colors.white,
                                               ),
                                             ),
                                             Text(
-                                              "End : ${element.endingTime.format(context)}",
+                                              "End : ${element.endTime}",
                                               style: TextStyle(
                                                 fontSize: 20,
                                                 color: Colors.white,
@@ -289,13 +354,12 @@ class _ServiceCalenderState extends State<ServiceCalender> {
   ///////////
   List<UserRequestsPage> mList = [];
 
-  List serviceDateFilter(
-      List<RequestsStates> allAcceptedServicesList, DateTime currentDate) {
+  List serviceDateFilter(List<AllReseervatios> allAcceptedServicesList, DateTime currentDate) {
     adminCalendarList.clear();
     List NoServiceList = [ "0000"];
     allAcceptedServicesList.forEach((service) {
-      print(service.serviceStartDate);
-      if (service.serviceStartDate ==  DateFormat("MM/dd/yyyy").format(currentDate))
+    //  print(service.serviceStartDate);
+    //  if (service.startTime ==  DateFormat("MM/dd/yyyy"))
         adminCalendarList.add(service);
     });
 

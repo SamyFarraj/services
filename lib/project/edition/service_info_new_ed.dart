@@ -710,9 +710,12 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
     bool checkNewRequest,
     String selectedMinuteDuration,
     String selectedHoursDuration,
-  ) {
+  )
+  {
     if (checkNewRequest) {
+      /*
       UserRequestsPage.requestList.add(
+
         RequestsStates(
           gateTitle: widget.gateName,
           serviceTitleList: choosedServicesList,
@@ -730,9 +733,10 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
             choosedEndTime.minute,
           ),
         ),
-      );
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => const UserRequestsPage()),
+        */
+
+
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => const UserRequestsPage()),
       );
     }
   }

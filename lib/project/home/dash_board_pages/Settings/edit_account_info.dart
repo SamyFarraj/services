@@ -54,7 +54,7 @@ class _EditAccountInfoState extends State<EditAccountInfo> {
       'Authorization': 'Bearer ${t}'
     };
     var request = http.MultipartRequest(
-        'POST', Uri.parse('${base_Url}'));
+        'POST', Uri.parse('${base_Url}/api/Admin/ProfileUpdate'));
     request.fields.addAll({
       'name': '${name}',
       'phone': '${phone}'
@@ -63,7 +63,7 @@ class _EditAccountInfoState extends State<EditAccountInfo> {
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
-
+print('the statues is ${response.statusCode}');
     if (response.statusCode == 200) {
       return (await response.stream.bytesToString());
     }

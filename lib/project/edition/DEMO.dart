@@ -8,7 +8,7 @@ import 'package:project_mohammad/project/home/service_info_input.dart';
 import 'package:project_mohammad/services/choices.dart';
 
 import '../constant.dart';
-
+String tokenuser='eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZDQ5ZWRjODRiMWYzYzAzZmUzMjg4NTY0NDQwY2JjYmE0ZmIxY2JkNDBjYjk0ZThmYjY1OTYzZjcyOTA4MDAwM2YyMzczNzgxM2JiYzNkY2MiLCJpYXQiOjE2NTY5NTkxNjkuOTU5NDI4LCJuYmYiOjE2NTY5NTkxNjkuOTU5NDU3LCJleHAiOjE2ODg0OTUxNjkuNzY4MTM0LCJzdWIiOiIyIiwic2NvcGVzIjpbXX0.GTXRTTYJmuUSVl3nvm8RB19bYrCllhsLev5M4vpbOekT5waNGue4jO5n8mdkKyhQrw83uzr5PFFVZVPFqwtYtaCixN5uQPWw6pGtNPLu2MPucYL2hUZrl2Q_pu6atlFqHQ4zwIVEX-6Nf-OXdkMYEpL4bVcdgyumJMiMI_cl4T2sL-0WRCealvlY_uckcvomIsUFWzL8if1kLv2rxPt9xei0D6_-ciE0trrgmI7fLZ1DT6Nnb78VzEiSFOkYo4NuuHXmdPtjlIQ6c7sCSlax5-Sd9qX2mRDoTVlsXg75nw4lHzdhRpvg_wWYWsBPjgV2qE40y2Vhzl7TXtCc9gjEFxABrJ_QbWTJAaX5bRgXl7cW4f-laayYw14jzVtNwNz9Yuv6AGlwWQxBXKGckpluzO14zbc8XS_Bf3lrLxbx1L4mjbyI8tb0Ct6GrBG2dcGJ3mdcVwIBBhfSeCXoxUz4ZN-4Q9tMD0cacReXH3nlXbNa6m1_e6tVVUA2E7UUPExdECppV5H4T9sGfO3c_M8_jXTFPAgiNIynoSY7H1GNoEJ5i0O0Dhpa5384Fwc_fJuJHDNsGT4d-5K528u0NH9O1HZsRdSvaprV04l2mDADg_tF433CNeHMH7FMqEPqsj8MD8RyAw7UJY316bFVSgpw1hzsgE7l81sg0dn8VCxjvb8';
 class ServiceEditionS extends StatefulWidget {
   const ServiceEditionS({Key? key}) : super(key: key);
 
@@ -21,8 +21,7 @@ class _ServiceEditionState extends State<ServiceEditionS> {
     final response = await http.get(
       Uri.parse('${base_Url}/api/Admin/BlockServices/${id}'),
       headers: {
-        'Authorization':
-            'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMzFkM2Y0NTJhMzU2YTI4M2Y4ZGQ5MGQ3NzgxYjU0ZmIyMzE0ZDVkNjBlNmI0YTM0YmNmZWFlMTJkNWRkODc1MzMxZTI3ZWZhOGQzMTM3NzYiLCJpYXQiOjE2NTEyMzQ3NDIuOTkxMTM0LCJuYmYiOjE2NTEyMzQ3NDIuOTkxMTU0LCJleHAiOjE2ODI3NzA3NDIuOTc4MjAxLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.ek1NrqJvLbvZvqQdDecQqUXgqKLef3-Ye7FG39soEesiHyk3DUlcGgIpYoHbHKCH6YBThrqb5PoDQx42DPqbY3cbK895PhKF-Js7gcy2_MEsqrNE8zVTa8yHMRbBNM2wYVaykkyvkz5acWwofqg7dGkXjvTDObilBGRQddOQEIdxwZ_9qIjtjn-_5pMPzhBChJbGddacGc0ryUFHF89MW107cJ4bsaDPhY_rSGTm9NBm3xilBHHFhwEWIcxevuw_bIs9ayuK6aYiaB3d6w-mLuJR9he8W8vTCbkVvqQOk5AnL_3hlKzQ86B8Ce5g-c01OMrkWsIuADFbVv-QgysQGy1zn_kyUwuYmJLiGKYcDtndcW-0ZpJXn-io0UyGdwYFahaofHH7xD_DyW_9kleOGN0BIjaV4GhhMLskb7TFAs2CquLn3E8mCuxKx7MQgWRL-GNL1QHMWuyFezjPWJnTCXJlv-fJQrKYAlwWTsN1UoTchzyolpPEeAEo5AiyH6WQgOyd2ZxaKHikBBu8vKtEE-zONIronEQWJRmauccYKjlpNW3CHoY63rDt2nnskC9FcI3OHX3p_3y8cy9l6wMab8aUBrXwRnebrSA-jAuv6jvHfakf_CelUcB1HnEFIIss5aXxlzYtoyQNUbaOPtW_xer26mZYC1uHcvMynzScejw'
+        'Authorization':'Bearer $tokenuser'
       },
     );
     if (response.statusCode == 200) {
@@ -44,12 +43,12 @@ class _ServiceEditionState extends State<ServiceEditionS> {
 
   Future<ListService> fetchAlbum() async {
  //   gatesEdition.add('');
-
+print('here');
     final response =
         await http.get(Uri.parse('${base_Url}/api/services'), headers: {
-      'Authorization':
-          'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiOTkwYzRkNTdiYzkzODQ2NTA5ZTM3MjU2YzU2ZTQ2MjQwNWZkMzc0Y2M4ZmE5YTg0OTJiN2U1MTBmZDhiM2Q3ZjgyYmY0N2Q1ZmM2YzJjYmMiLCJpYXQiOjE2NTY0MjIzNjAuOTE1MDA5LCJuYmYiOjE2NTY0MjIzNjAuOTE1MDIyLCJleHAiOjE2ODc5NTgzNjAuODkzMjYsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.Rwwp6Npa36TJHcEmOSA1i131gjYD8yaDUFH_EcRrjwhGVYzoy2K4yZifdYtVjqflTf8HjXZJIHLNYHpqvC2hD0G_GMPB9iowUuYxkIqMYbeXlgoU2SDMwQrRrM_jwhqv7VNi5sZo-cbdiy7MO0-J-lTzCjp3X5BxoFs_xDTC5eX2vxrY1bqeLNfXGN_tk3edTyAFF8nGVVVf3sqzur21-YDLfUJAznaS1F54CA1ZJaiKlZ1iefYBE1HFfxctjhqyCZCHcZc6-DBt9T5RA_v0skymQb-F735rRC73c83ZcHaOAk5EhX4_EqysY9WYMDDnoK2mY7nR0kLsL1qn7Se36bjhBBencDItpAA7goYL2E366L-w34X5hfY9_saOKWO1A2fpHnV7l5M-_B7sHvV57qBb_IvyP6AY8RV3EoTmmCBa8GdNJKgFwjU-QuMKerKwr3lBHGnXaskBsSjHeYB0_gt_o6hyx3as8FaiC_DxefdRDnhSQchnPN7WugCcHh_LPQONRB-wVYoYIR-qEjjqY2YyiMVttGFtZ0NO4-pbZLToclrUNIzyaxV7oCNsrd5E1fFF01mrXfwNG3ZmFe029m46Zfrcsfbn8cOG-NihMzQpq37zhXrC3FSnsVdZA2pVr4uGZjtnhuteMqGmtK7V0ek7mdoH4TNfFOVqk294mhc'
-    }
+      'Authorization':'Bearer   eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZDQ5ZWRjODRiMWYzYzAzZmUzMjg4NTY0NDQwY2JjYmE0ZmIxY2JkNDBjYjk0ZThmYjY1OTYzZjcyOTA4MDAwM2YyMzczNzgxM2JiYzNkY2MiLCJpYXQiOjE2NTY5NTkxNjkuOTU5NDI4LCJuYmYiOjE2NTY5NTkxNjkuOTU5NDU3LCJleHAiOjE2ODg0OTUxNjkuNzY4MTM0LCJzdWIiOiIyIiwic2NvcGVzIjpbXX0.GTXRTTYJmuUSVl3nvm8RB19bYrCllhsLev5M4vpbOekT5waNGue4jO5n8mdkKyhQrw83uzr5PFFVZVPFqwtYtaCixN5uQPWw6pGtNPLu2MPucYL2hUZrl2Q_pu6atlFqHQ4zwIVEX-6Nf-OXdkMYEpL4bVcdgyumJMiMI_cl4T2sL-0WRCealvlY_uckcvomIsUFWzL8if1kLv2rxPt9xei0D6_-ciE0trrgmI7fLZ1DT6Nnb78VzEiSFOkYo4NuuHXmdPtjlIQ6c7sCSlax5-Sd9qX2mRDoTVlsXg75nw4lHzdhRpvg_wWYWsBPjgV2qE40y2Vhzl7TXtCc9gjEFxABrJ_QbWTJAaX5bRgXl7cW4f-laayYw14jzVtNwNz9Yuv6AGlwWQxBXKGckpluzO14zbc8XS_Bf3lrLxbx1L4mjbyI8tb0Ct6GrBG2dcGJ3mdcVwIBBhfSeCXoxUz4ZN-4Q9tMD0cacReXH3nlXbNa6m1_e6tVVUA2E7UUPExdECppV5H4T9sGfO3c_M8_jXTFPAgiNIynoSY7H1GNoEJ5i0O0Dhpa5384Fwc_fJuJHDNsGT4d-5K528u0NH9O1HZsRdSvaprV04l2mDADg_tF433CNeHMH7FMqEPqsj8MD8RyAw7UJY316bFVSgpw1hzsgE7l81sg0dn8VCxjvb8'
+
+        }
             // snapshot.data!.services.woodWard[1].street
             );
     print("the respsmss base ${response.statusCode}");
@@ -171,7 +170,7 @@ class _ServiceEditionState extends State<ServiceEditionS> {
                          servicefarmer.clear();
                           bothstreet.clear();
                           print("step one ");
-
+                          bothstreet.add('Select Service');
                           print("dkphhhhh");
                          // gatesEdition.clear();
 
