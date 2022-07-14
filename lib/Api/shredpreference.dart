@@ -20,8 +20,8 @@ import '../moh_project/post_moh/login_controller.dart';
   SharedPreferences pref= await SharedPreferences.getInstance();
   String? mytoken;
 
-  mytoken=pref.getString('Token');
-  t= mytoken!;
+  mytoken=pref.getString('Token') ?? "M";
+  t= mytoken;
 
 }
 
