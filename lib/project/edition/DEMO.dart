@@ -8,7 +8,7 @@ import 'package:project_mohammad/project/home/service_info_input.dart';
 import 'package:project_mohammad/services/choices.dart';
 
 import '../constant.dart';
-String tokenuser='eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZDQ5ZWRjODRiMWYzYzAzZmUzMjg4NTY0NDQwY2JjYmE0ZmIxY2JkNDBjYjk0ZThmYjY1OTYzZjcyOTA4MDAwM2YyMzczNzgxM2JiYzNkY2MiLCJpYXQiOjE2NTY5NTkxNjkuOTU5NDI4LCJuYmYiOjE2NTY5NTkxNjkuOTU5NDU3LCJleHAiOjE2ODg0OTUxNjkuNzY4MTM0LCJzdWIiOiIyIiwic2NvcGVzIjpbXX0.GTXRTTYJmuUSVl3nvm8RB19bYrCllhsLev5M4vpbOekT5waNGue4jO5n8mdkKyhQrw83uzr5PFFVZVPFqwtYtaCixN5uQPWw6pGtNPLu2MPucYL2hUZrl2Q_pu6atlFqHQ4zwIVEX-6Nf-OXdkMYEpL4bVcdgyumJMiMI_cl4T2sL-0WRCealvlY_uckcvomIsUFWzL8if1kLv2rxPt9xei0D6_-ciE0trrgmI7fLZ1DT6Nnb78VzEiSFOkYo4NuuHXmdPtjlIQ6c7sCSlax5-Sd9qX2mRDoTVlsXg75nw4lHzdhRpvg_wWYWsBPjgV2qE40y2Vhzl7TXtCc9gjEFxABrJ_QbWTJAaX5bRgXl7cW4f-laayYw14jzVtNwNz9Yuv6AGlwWQxBXKGckpluzO14zbc8XS_Bf3lrLxbx1L4mjbyI8tb0Ct6GrBG2dcGJ3mdcVwIBBhfSeCXoxUz4ZN-4Q9tMD0cacReXH3nlXbNa6m1_e6tVVUA2E7UUPExdECppV5H4T9sGfO3c_M8_jXTFPAgiNIynoSY7H1GNoEJ5i0O0Dhpa5384Fwc_fJuJHDNsGT4d-5K528u0NH9O1HZsRdSvaprV04l2mDADg_tF433CNeHMH7FMqEPqsj8MD8RyAw7UJY316bFVSgpw1hzsgE7l81sg0dn8VCxjvb8';
+String tokenuser='eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiODJkMmFhZDhkNjBkMGIxMjAzYzhlZTY0NjA3NTcxZWEyNmM5NzNmYWUyNWE2MzI2MTIzYjNmNDVhNzgxYzBjM2VkZmM3NTNiOGUwOTg1OWUiLCJpYXQiOjE2NTY1NzQxMTQuMzQ0NDIyLCJuYmYiOjE2NTY1NzQxMTQuMzQ0NDI3LCJleHAiOjE2ODgxMTAxMTQuMzM2OTUyLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.fZlWy8pszDPkcFTJ0BST2RmlNDKq3lmhoT-9ik5zMIN6Q4mg41TgEzoQNyPkO34_-zB9t3078c1UqHqTsolqZ5N6JiA1XlA36iEmj1Hs8dN04dozyb4cFzrG0HKhkLMAQlDBDbjsTOFh8rS4xVNouBDdyMaUtBfn2-zes9u8_Q0VD5he9cQCE9lp6I1TDxKr6fu0ur7DyH7NktDATwR75eUoPF9r8tFsBQzB0avaiulDD3lRuk9OkRti3GwDB1-A-J9zyTfzJ_Jri6rstgpGvL9LtXwTfIjohFla2sMke8lLEInuquMQe5DsUpRArSRtHo2kNeubPRlXtzc_Kjdux-L9SXwwGoc1jTz992iU2KOswhONsKcqCedyIQoFd8ehqQhjxuLUfXkPgCvi_1lFW-ZTmg4LOvsmlARHJmzJ-yDjm6v92gJUrLSZQld-udcAZhrar6OpoDcQXTXrrChXkwYZwiZyHR1QCNQtihjkFm8UJQ8Zvys3O2-3sE2qPwQQVkNOggafsc7N-TbXGp_hUJUN8FdaEwMChE3Bv96l1p7-djRN2LvGXAR1cN_V3pQMVms8lh17DrpuB-UjFVkK7ld2yfg_aE7hTbLHzW7IBYeXjTuG2StVRqER_DTmtSsykbdMwef3RMGN4ahfjn5XWMYfJlVWKuhTlcG9QQUbbMo';
 class ServiceEditionS extends StatefulWidget {
   const ServiceEditionS({Key? key}) : super(key: key);
 
@@ -56,7 +56,7 @@ print('here');
       // then parse the JSON.
       return ListService.fromJson(jsonDecode(response.body));
     } else {
-      //    print("kgjsdjklsd ${snapshot.data!.services.woodWard[1].street}");
+      //    print("WoodWard ${snapshot.data!.services.woodWard[1].street}");
 
       throw Exception('Failed to load album');
     }
@@ -69,7 +69,7 @@ print('here');
     // TODO: implement initState
     super.initState();
     date = fetchAlbum();
-    print("gdgdf,h;l");
+    print("processDone");
     //gatesEdition.clear();
   }
 //int i=0;
@@ -159,218 +159,206 @@ print('here');
                         topRight: Radius.circular(35),
                       ),
                     ),
-                    child: SingleChildScrollView(
-                        child: FutureBuilder<ListService>(
-                      future: date,
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                       //  gatesEdition.clear();
-                          servicewoodward.clear();
-                         servicefarmer.clear();
-                          bothstreet.clear();
-                          print("step one ");
-                          bothstreet.add('Select Service');
-                          print("dkphhhhh");
-                         // gatesEdition.clear();
-
-                      //    gatesEdition.add('select service');
-/*
+                  child: SingleChildScrollView(
+                      child: FutureBuilder<ListService>(
+                    future: date,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                     //  gatesEdition.clear();
+                        servicewoodward.clear();
+                       servicefarmer.clear();
+                        bothstreet.clear();
+                        print("step one ");
+                        bothstreet.add('Select Service');
+                        print("dkphhhhh");
+                        // gatesEdition.clear();
+                        //gatesEdition.add('select service');
+                        /*
                           if (snapshot.data!.services.woodward.length == 0) {
                             servicewoodward.add('no item');
                           }
-                          */
-                            for (int i = 0;
-                                i < snapshot.data!.services.woodward.length;
-                                i++) {
-                              print("there is no item ");
-
-                              servicewoodward.add(snapshot.data!.services.woodward[i].name);
-                            }
-                            print(servicewoodward);
-
-
+                        */
                           for (int i = 0;
-                              i < snapshot.data!.services.bothStreet.length;
+                              i < snapshot.data!.services.woodward.length;
                               i++) {
                             print("there is no item ");
 
-                            bothstreet.add(
-                                snapshot.data!.services.bothStreet[i].name);
+                            servicewoodward.add(snapshot.data!.services.woodward[i].name);
                           }
-/*
+                          print(servicewoodward);
+
+
+                        for (int i = 0;
+                            i < snapshot.data!.services.bothStreet.length;
+                            i++) {
+                          print("there is no item ");
+
+                          bothstreet.add(
+                              snapshot.data!.services.bothStreet[i].name);
+                        }
+                        /*
                           if (snapshot.data!.services.farmer.length == 0) {
                             servicefarmer.add('no item');
                           }
-                    */
+                        */
+                          print("dkphhhhh");
 
-
-                            print("dkphhhhh");
-
-                            for (int i = 0; i < snapshot.data!.services.farmer.length; i++)
-                            {servicefarmer.add(snapshot.data!.services.farmer[i].name);
-
-
-                            }
-                            
-
-
-
-
-
-                          return Column(
-                            children: <Widget>[
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.7,
-                                child: DropdownButtonFormField<String>(
-                                  decoration: InputDecoration(
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        width: 3.7,
-                                        color: Colors.blue,
-                                      ),
-                                      borderRadius: BorderRadius.circular(25),
+                          for (int i = 0; i < snapshot.data!.services.farmer.length; i++)
+                          {servicefarmer.add(snapshot.data!.services.farmer[i].name);}
+                        return Column(
+                          children: <Widget>[
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.7,
+                              child: DropdownButtonFormField<String>(
+                                decoration: InputDecoration(
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: const BorderSide(
+                                      width: 3.7,
+                                      color: Colors.blue,
                                     ),
-                                  ),
-                                  // value: selectedStreet,
-                                  hint:Text("Select Service"),
-                                  items: selectStreet
-                                      .map(
-                                        (street) => DropdownMenuItem<String>(
-                                          value: street.title,
-                                          child: Text(
-                                            street.title,
-                                            style: const TextStyle(
-                                              fontSize: 22,
-                                              color: Colors.blue,
-                                            ),
-                                          ),
-                                        ),
-                                      )
-                                      .toList(),
-                                  onChanged: (street) => setState(
-                                    () {
-                                      selectedStreet = street;
-                                      print("the select steree $selectedStreet");
-                                      //111111
-
-                                      if (selectedStreet == 'FARMER') {
-                                        if (servicefarmer.length == 0) {
-                                          // servicefarmer.add('');
-                                          gatesEdition =
-                                              List.from(servicefarmer);
-                                          //    servicesList.add('selecet serveics');
-
-                                        }
-                                        else {
-                                          // servicefarmer.add('');
-                                          gatesEdition =
-                                              List.from(servicefarmer);
-                                          print(
-                                              'the farmeeer is ${gatesEdition}');
-                                          //    servicesList.add('selecet serveics');
-                                          selectedService = gatesEdition[0];
-                                        }
-                                      }
-
-                                      if (selectedStreet == 'WOODWARD') {
-                                        if (servicewoodward.length == 0) {
-                                          // servicefarmer.add('');
-                                          gatesEdition =
-                                              List.from(servicewoodward);
-                                          //    servicesList.add('selecet serveics');
-
-                                        }
-                                        else {
-                                          gatesEdition =
-                                              List.from(servicewoodward);
-                                          //    servicesList.add('selecet serveics');
-                                          selectedService = gatesEdition[0];
-                                          print(selectedService + "sasasa");
-                                        }
-                                      }
-                                      // servicesList.clear();
-                                      //gatesEdition.clear();
-                                      print("kdfsjkjfkl${gatesEdition}");
-                                    },
+                                    borderRadius: BorderRadius.circular(25),
                                   ),
                                 ),
-                              ),
-                              SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.15,
-                              ),
-
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.7,
-                                child: DropdownButtonFormField<String>(
-                                  decoration: InputDecoration(
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        width: 6.0,
-                                        color: Colors.blue,
-                                      ),
-                                      borderRadius: BorderRadius.circular(25),
-                                    ),
-                                  ),
-                                  value: selectedService,
-                                  //2222222
-                                  items: gatesEdition
-                                      .map(
-                                        (service) => DropdownMenuItem<String>(
-                                          value: service,
-                                          child: Text(
-                                            service,
-                                            style: const TextStyle(
-                                              fontSize: 22,
-                                              color: Colors.blue,
-                                            ),
+                                // value: selectedStreet,
+                                hint:Text("Select Service"),
+                                items: selectStreet
+                                    .map(
+                                      (street) => DropdownMenuItem<String>(
+                                        value: street.title,
+                                        child: Text(
+                                          street.title,
+                                          style: const TextStyle(
+                                            fontSize: 22,
+                                            color: Colors.blue,
                                           ),
                                         ),
-                                      )
-                                      .toList(),
-                                  onChanged: (service) => setState(() {
-                                    selectedService = service!;
-                                    print("thedasdas $bothstreet");
-                                    Navigator.of(context).pushReplacement(
-                                      MaterialPageRoute(
-                                        builder: (_) => ServiceInformationInput(
-                                          gateName: selectedService,
-                                          both: bothstreet,
-                                          listservice: snapshot
-                                              .data!.services.bothStreet,
-                                        ),
                                       ),
-                                      //  gatesEdition.clear();
-                                    );
-                                    // gatesEdition.clear();
-                                     gatesEdition.clear();
+                                    )
+                                    .toList(),
+                                onChanged: (street) => setState(
+                                  () {
+                                    selectedStreet = street;
+                                    print("the select steree $selectedStreet");
+                                    //111111
 
+                                    if (selectedStreet == 'FARMER') {
+                                      if (servicefarmer.length == 0) {
+                                        // servicefarmer.add('');
+                                        gatesEdition =
+                                            List.from(servicefarmer);
+                                        //    servicesList.add('selecet serveics');
 
-                                  }),
+                                      }
+                                      else {
+                                        // servicefarmer.add('');
+                                        gatesEdition =
+                                            List.from(servicefarmer);
+                                        print(
+                                            'the farmeeer is ${gatesEdition}');
+                                        //    servicesList.add('selecet serveics');
+                                        selectedService = gatesEdition[0];
+                                      }
+                                    }
+
+                                    if (selectedStreet == 'WOODWARD') {
+                                      if (servicewoodward.length == 0) {
+                                        // servicefarmer.add('');
+                                        gatesEdition =
+                                            List.from(servicewoodward);
+                                        //    servicesList.add('selecet serveics');
+
+                                      }
+                                      else {
+                                        gatesEdition =
+                                            List.from(servicewoodward);
+                                        //    servicesList.add('selecet serveics');
+                                        selectedService = gatesEdition[0];
+                                        print(selectedService + "sasasa");
+                                      }
+                                    }
+                                    // servicesList.clear();
+                                    //gatesEdition.clear();
+                                    print("kdfsjkjfkl${gatesEdition}");
+                                  },
                                 ),
                               ),
+                            ),
+                            SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.15,
+                            ),
+
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.7,
+                              child: DropdownButtonFormField<String>(
+                                decoration: InputDecoration(
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: const BorderSide(
+                                      width: 6.0,
+                                      color: Colors.blue,
+                                    ),
+                                    borderRadius: BorderRadius.circular(25),
+                                  ),
+                                ),
+                                value: selectedService,
+                                //2222222
+                                items: gatesEdition
+                                    .map(
+                                      (service) => DropdownMenuItem<String>(
+                                        value: service,
+                                        child: Text(
+                                          service,
+                                          style: const TextStyle(
+                                            fontSize: 22,
+                                            color: Colors.blue,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                    .toList(),
+                                onChanged: (service) => setState(() {
+                                  selectedService = service!;
+                                  print("thedasdas $bothstreet");
+                                  Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                      builder: (_) => ServiceInformationInput(
+                                        gateName: selectedService,
+                                        both: bothstreet,
+                                        listservice: snapshot
+                                            .data!.services.bothStreet,
+                                      ),
+                                    ),
+                                    //  gatesEdition.clear();
+                                  );
+                                  // gatesEdition.clear();
+                                   gatesEdition.clear();
 
 
-                            ],
-                          );
-                        } else if (snapshot.hasError) {
-                          return Text('${snapshot.error}');
-                        }
+                                }),
+                              ),
+                            ),
 
-                        // By default, show a loading spinner.
-                        return const CircularProgressIndicator();
-                      },
-                    ))
-                    // ListView(
-                    //   children: selectStreet
-                    //       .map(
-                    //         (tile) => BasicTileWidget(
-                    //       tile: tile,
-                    //     ),
-                    //   )
-                    //       .toList(),
-                    // ),
-                    ),
+
+                          ],
+                        );
+                      } else if (snapshot.hasError) {
+                        return Text('${snapshot.error}');
+                      }
+
+                      // By default, show a loading spinner.
+                      return const CircularProgressIndicator();
+                    },
+                  ))
+                  // ListView(
+                  //   children: selectStreet
+                  //       .map(
+                  //         (tile) => BasicTileWidget(
+                  //       tile: tile,
+                  //     ),
+                  //   )
+                  //       .toList(),
+                  // ),
+                  ),
               ],
             ),
           ],
@@ -380,80 +368,4 @@ print('here');
   }
 }
 
-// void snackBar(
-//     BuildContext context, String errorMessage, Color snackBarColor) {
-//   final snackBar = SnackBar(
-//     content: Text(
-//       errorMessage,
-//       style: const TextStyle(
-//         fontSize: 28,
-//         color: Colors.white,
-//       ),
-//     ),
-//     backgroundColor: snackBarColor,
-//     duration: const Duration(seconds: 1),
-//   );
-//   ScaffoldMessenger.of(context)
-//     ..removeCurrentSnackBar()
-//     ..showSnackBar(snackBar);
-// }
 
-DateTime selectedTime = DateTime.now();
-
-/*
-class _BasicTileWidgetState extends State<BasicTileWidget> {
-  @override
-  Widget build(BuildContext context) {
-    final title = widget.tile.title;
-    final servicesList = widget.tile.serviceChoosingList;
-    if (servicesList.isEmpty) {
-      return ListTile(
-        title: Text(
-          title,
-          style: const TextStyle(fontSize: 26, color: Colors.white),
-        ),
-        onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (_) {
-                return ServiceInformationInput(
-                  gateName: title,
-                );
-              },
-            ),
-          );
-        },
-      );
-    } else {
-      return Container(
-        margin: const EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(
-            width: 3,
-            color: Colors.blue,
-          ),
-        ),
-        child: ExpansionTile(
-          key: PageStorageKey(title),
-          title: Text(
-            title,
-            style: const TextStyle(fontSize: 26, color: Colors.white),
-          ),
-          children:
-          servicesList.map((tile) => BasicTileWidget(tile: tile)).toList(),
-        ),
-      );
-    }
-  }
-}
-class BasicTileWidget extends StatefulWidget {
-  final ServiceChooser tile;
-  const BasicTileWidget({
-    Key? key,
-    required this.tile,
-  }) : super(key: key);
-  @override
-  _BasicTileWidgetState createState() => _BasicTileWidgetState();
-}
- */
