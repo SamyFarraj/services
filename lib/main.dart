@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:project_mohammad/authentication/choose_auth_type.dart';
 
 import 'Api/shredpreference.dart';
-import 'authentication/admin_log_in_page.dart';
-import 'project/edition/service_info_new_ed.dart';
 import 'project/projects_page.dart';
+import 'splash_screen.dart';
+
 
 Future main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await initialization(null);
+  // WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  await splashSc();
+  // WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
-Future initialization(BuildContext? context) async {
-  await Future.delayed(const Duration(seconds: 2));
-}
+
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -56,5 +57,5 @@ class _MyHomePageState extends State<_MyHomePage> {
 
 //  Widget build(BuildContext context) =>  AdminLogInPage();
 
-Widget build(BuildContext context) =>  ProjectsPage();
+Widget build(BuildContext context) =>  AuthChoosingPage();
 }

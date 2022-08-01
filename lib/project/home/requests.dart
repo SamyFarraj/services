@@ -1,12 +1,10 @@
 import 'dart:convert';
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:project_mohammad/Api/controller/User/work/Services_controller.dart';
-import 'package:project_mohammad/Api/model/my_reservations_model.dart';
-import 'package:project_mohammad/services/requests_form.dart';
+import 'package:intl/intl.dart';
 
+
+import '/Api/controller/User/work/Services_controller.dart';
 import '../../Api/model/myaccapted_model.dart';
 import '../../components/dash_board.dart';
 import '../admin/admin_requests_page.dart';
@@ -29,6 +27,7 @@ class Requests extends StatelessWidget {
 
 class UserRequestsPage extends StatefulWidget {
   static List<Myascapted> requestList = [];
+  static List<Myascapted> acceptedRequestList = [];
 
   const UserRequestsPage({Key? key}) : super(key: key);
 
@@ -44,7 +43,7 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
 
   @override
   static List<Myascapted> parseAgents(String responseBody) {
-    print("sdknkjsdngjnd");
+    print("ParsAgentSuc");
     //Map<String,String>.from(oldMap)
     final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
     return parsed
@@ -54,7 +53,7 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
 
   Future<List<Myascapted>> fetchData() async {
     final response = await http.get(
-      Uri.parse('http://192.168.56.1:8000/api/Reservation/MyAcceptedReservation'),
+      Uri.parse('http://192.168.35.1:8000/api/Reservation/MyAcceptedReservation'),
       headers: {
         'Authorization':'Bearer   eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZDQ5ZWRjODRiMWYzYzAzZmUzMjg4NTY0NDQwY2JjYmE0ZmIxY2JkNDBjYjk0ZThmYjY1OTYzZjcyOTA4MDAwM2YyMzczNzgxM2JiYzNkY2MiLCJpYXQiOjE2NTY5NTkxNjkuOTU5NDI4LCJuYmYiOjE2NTY5NTkxNjkuOTU5NDU3LCJleHAiOjE2ODg0OTUxNjkuNzY4MTM0LCJzdWIiOiIyIiwic2NvcGVzIjpbXX0.GTXRTTYJmuUSVl3nvm8RB19bYrCllhsLev5M4vpbOekT5waNGue4jO5n8mdkKyhQrw83uzr5PFFVZVPFqwtYtaCixN5uQPWw6pGtNPLu2MPucYL2hUZrl2Q_pu6atlFqHQ4zwIVEX-6Nf-OXdkMYEpL4bVcdgyumJMiMI_cl4T2sL-0WRCealvlY_uckcvomIsUFWzL8if1kLv2rxPt9xei0D6_-ciE0trrgmI7fLZ1DT6Nnb78VzEiSFOkYo4NuuHXmdPtjlIQ6c7sCSlax5-Sd9qX2mRDoTVlsXg75nw4lHzdhRpvg_wWYWsBPjgV2qE40y2Vhzl7TXtCc9gjEFxABrJ_QbWTJAaX5bRgXl7cW4f-laayYw14jzVtNwNz9Yuv6AGlwWQxBXKGckpluzO14zbc8XS_Bf3lrLxbx1L4mjbyI8tb0Ct6GrBG2dcGJ3mdcVwIBBhfSeCXoxUz4ZN-4Q9tMD0cacReXH3nlXbNa6m1_e6tVVUA2E7UUPExdECppV5H4T9sGfO3c_M8_jXTFPAgiNIynoSY7H1GNoEJ5i0O0Dhpa5384Fwc_fJuJHDNsGT4d-5K528u0NH9O1HZsRdSvaprV04l2mDADg_tF433CNeHMH7FMqEPqsj8MD8RyAw7UJY316bFVSgpw1hzsgE7l81sg0dn8VCxjvb8'
       },
@@ -88,7 +87,7 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
 
   Future<List<Myascapted>> mypendingresrrvations() async {
     final response = await http.get(
-      Uri.parse('http://192.168.56.1:8000/api/Reservation/MyPendingReservation'),
+      Uri.parse('http://192.168.35.1:8000/api/Reservation/MyPendingReservation'),
       headers: {
         'Authorization':'Bearer   eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZDQ5ZWRjODRiMWYzYzAzZmUzMjg4NTY0NDQwY2JjYmE0ZmIxY2JkNDBjYjk0ZThmYjY1OTYzZjcyOTA4MDAwM2YyMzczNzgxM2JiYzNkY2MiLCJpYXQiOjE2NTY5NTkxNjkuOTU5NDI4LCJuYmYiOjE2NTY5NTkxNjkuOTU5NDU3LCJleHAiOjE2ODg0OTUxNjkuNzY4MTM0LCJzdWIiOiIyIiwic2NvcGVzIjpbXX0.GTXRTTYJmuUSVl3nvm8RB19bYrCllhsLev5M4vpbOekT5waNGue4jO5n8mdkKyhQrw83uzr5PFFVZVPFqwtYtaCixN5uQPWw6pGtNPLu2MPucYL2hUZrl2Q_pu6atlFqHQ4zwIVEX-6Nf-OXdkMYEpL4bVcdgyumJMiMI_cl4T2sL-0WRCealvlY_uckcvomIsUFWzL8if1kLv2rxPt9xei0D6_-ciE0trrgmI7fLZ1DT6Nnb78VzEiSFOkYo4NuuHXmdPtjlIQ6c7sCSlax5-Sd9qX2mRDoTVlsXg75nw4lHzdhRpvg_wWYWsBPjgV2qE40y2Vhzl7TXtCc9gjEFxABrJ_QbWTJAaX5bRgXl7cW4f-laayYw14jzVtNwNz9Yuv6AGlwWQxBXKGckpluzO14zbc8XS_Bf3lrLxbx1L4mjbyI8tb0Ct6GrBG2dcGJ3mdcVwIBBhfSeCXoxUz4ZN-4Q9tMD0cacReXH3nlXbNa6m1_e6tVVUA2E7UUPExdECppV5H4T9sGfO3c_M8_jXTFPAgiNIynoSY7H1GNoEJ5i0O0Dhpa5384Fwc_fJuJHDNsGT4d-5K528u0NH9O1HZsRdSvaprV04l2mDADg_tF433CNeHMH7FMqEPqsj8MD8RyAw7UJY316bFVSgpw1hzsgE7l81sg0dn8VCxjvb8'
       },
@@ -234,125 +233,123 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                       border: Border.all(
                                     color: Colors.blue,
                                     width: 2,
-                                  )),
-                                ),
+                                  ),
+                                  ),
+                                  child: ListView(
+                                    children: <Widget>[
+                                      ...UserRequestsPage.requestList.map((val) {
+                                        return Column(
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                              children: <Widget>[
+                                                Column(
+                                                  mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                                  children: <Widget>[
+                                                    Column(
+                                                      children: <Widget>[
 
+                                                        Text(
+                                                          val.serviceName,
+                                                          style: const TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 26,
+                                                            fontWeight:
+                                                            FontWeight.bold,
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          '${DateFormat("yyyy/MM/dd").format(val.createdAt)}',
+                                                          style: const TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 26,
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          " start at ${DateFormat("yyyy/MM/dd").format(val.startTime)}",
+                                                          style: const TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 26,
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          "end at ${DateFormat("yyyy/MM/dd").format(val.endTime)}",
+                                                          style: const TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 26,
+                                                          ),
+                                                        ),
+                                                        // Text(
+                                                        //   " for ${val.hoursDuration}"
+                                                        //   " hour/s and "
+                                                        //   "${val.minuteDuration} "
+                                                        //   "minute/s",
+                                                        //   style: const TextStyle(
+                                                        //     color: Colors.white,
+                                                        //     fontSize: 21,
+                                                        //   ),
+                                                        // ),
+                                                        Text(
+                                                          "from ${val.gateName}",
+                                                          style: const TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 26,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                                TextButton(
+                                                  style: ElevatedButton.styleFrom(
+                                                    primary: Colors.transparent,
+                                                    onPrimary: const Color.fromARGB(
+                                                        255, 230, 84, 15),
+                                                    padding: const EdgeInsets.all(-5),
+                                                    shadowColor: Colors.transparent,
+                                                  ),
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      //حط تابع الحذف هون
+                                                      Servicee.delete_reservation(val.id);
+                                                      UserRequestsPage.requestList.remove(val);
+                                                    });
+                                                  },
+                                                  child: const Icon(
+                                                    Icons.delete_rounded,
+                                                    size: 35,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
 
-
-
-                                ...UserRequestsPage.requestList.map((val) {
-                                  return Column(
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: <Widget>[
-                                          Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: <Widget>[
-                                              Column(
-                                                children: <Widget>[
-
-                                                  Text(
-                                                    val.serviceName,
-                                                    style: const TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 26,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    '${val.createdAt}',
-                                                    style: const TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 26,
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    " start at ${val.startTime}",
-                                                    style: const TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 26,
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    "end at ${val.endTime}",
-                                                    style: const TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 26,
-                                                    ),
-                                                  ),
-                                                  // Text(
-                                                  //   " for ${val.hoursDuration}"
-                                                  //   " hour/s and "
-                                                  //   "${val.minuteDuration} "
-                                                  //   "minute/s",
-                                                  //   style: const TextStyle(
-                                                  //     color: Colors.white,
-                                                  //     fontSize: 21,
-                                                  //   ),
-                                                  // ),
-                                                  Text(
-                                                    "from ${val.gateName}",
-                                                    style: const TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 26,
-                                                    ),
-                                                  ),
-                                                ],
+                                            Container(
+                                              height: 0.009,
+                                              width:
+                                              MediaQuery.of(context).size.width *
+                                                  0.65,
+                                              alignment: Alignment.center,
+                                              margin: const EdgeInsets.only(
+                                                top: 15,
+                                                bottom: 15,
                                               ),
-                                            ],
-                                          ),
-                                          TextButton(
-                                            style: ElevatedButton.styleFrom(
-                                              primary: Colors.transparent,
-                                              onPrimary: const Color.fromARGB(
-                                                  255, 230, 84, 15),
-                                              padding: const EdgeInsets.all(-5),
-                                              shadowColor: Colors.transparent,
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                  color: Colors.blue,
+                                                  // color: const Color.fromARGB(
+                                                  //     255, 230, 84, 15),
+                                                  width: 1,
+                                                ),
+                                              ),
                                             ),
-                                            onPressed: () {
-                                              setState(() {
-                                                //حط تابع الحذف هون
-                                                Servicee.delete_reservation(val.id);
-                                                UserRequestsPage.requestList.remove(val);
-                                              });
-                                            },
-                                            child: const Icon(
-                                              Icons.delete_rounded,
-                                              size: 35,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-
-                                      Container(
-                                        height: 0.009,
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.65,
-                                        alignment: Alignment.center,
-                                        margin: const EdgeInsets.only(
-                                          top: 15,
-                                          bottom: 15,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                            color: Colors.blue,
-                                            // color: const Color.fromARGB(
-                                            //     255, 230, 84, 15),
-                                            width: 1,
-                                          ),
-                                        ),
-                                      ),
+                                          ],
+                                        );
+                                      }).toList(),
                                     ],
-                                  );
-                                }).toList(),
-
-
-
+                                  ),
+                                ),
                               ],
                             ),
                           ),
@@ -391,7 +388,102 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                     border: Border.all(
                                   color: Colors.blue,
                                   width: 2,
-                                )),
+                                ),
+                                ),
+                                child: ListView(
+                                  children: <Widget>[
+                                    ...UserRequestsPage.acceptedRequestList.map((val) {
+                                      return Column(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                            children: <Widget>[
+                                              Column(
+                                                mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                                children: <Widget>[
+                                                  Column(
+                                                    children: <Widget>[
+
+                                                      Text(
+                                                        val.serviceName,
+                                                        style: const TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 26,
+                                                          fontWeight:
+                                                          FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        '${DateFormat("yyyy/MM/dd").format(val.createdAt)}',
+                                                        style: const TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 26,
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        " start at ${DateFormat("yyyy/MM/dd").format(val.startTime)}",
+                                                        style: const TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 26,
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        "end at ${DateFormat("yyyy/MM/dd").format(val.endTime)}",
+                                                        style: const TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 26,
+                                                        ),
+                                                      ),
+                                                      // Text(
+                                                      //   " for ${val.hoursDuration}"
+                                                      //   " hour/s and "
+                                                      //   "${val.minuteDuration} "
+                                                      //   "minute/s",
+                                                      //   style: const TextStyle(
+                                                      //     color: Colors.white,
+                                                      //     fontSize: 21,
+                                                      //   ),
+                                                      // ),
+                                                      Text(
+                                                        "from ${val.gateName}",
+                                                        style: const TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 26,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+
+                                          Container(
+                                            height: 0.009,
+                                            width:
+                                            MediaQuery.of(context).size.width *
+                                                0.65,
+                                            alignment: Alignment.center,
+                                            margin: const EdgeInsets.only(
+                                              top: 15,
+                                              bottom: 15,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                color: Colors.blue,
+                                                // color: const Color.fromARGB(
+                                                //     255, 230, 84, 15),
+                                                width: 1,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    }).toList(),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
