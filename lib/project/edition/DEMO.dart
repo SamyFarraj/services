@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:project_mohammad/Api/model/name_service.dart';
 import 'package:http/http.dart' as http;
 import 'package:project_mohammad/components/dash_board.dart';
+import 'package:project_mohammad/project/edition/service_info_new_ed.dart';
 import 'package:project_mohammad/project/home/service_info_input.dart';
 import 'package:project_mohammad/services/choices.dart';
 
 import '../constant.dart';
-String tokenuser='eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiODJkMmFhZDhkNjBkMGIxMjAzYzhlZTY0NjA3NTcxZWEyNmM5NzNmYWUyNWE2MzI2MTIzYjNmNDVhNzgxYzBjM2VkZmM3NTNiOGUwOTg1OWUiLCJpYXQiOjE2NTY1NzQxMTQuMzQ0NDIyLCJuYmYiOjE2NTY1NzQxMTQuMzQ0NDI3LCJleHAiOjE2ODgxMTAxMTQuMzM2OTUyLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.fZlWy8pszDPkcFTJ0BST2RmlNDKq3lmhoT-9ik5zMIN6Q4mg41TgEzoQNyPkO34_-zB9t3078c1UqHqTsolqZ5N6JiA1XlA36iEmj1Hs8dN04dozyb4cFzrG0HKhkLMAQlDBDbjsTOFh8rS4xVNouBDdyMaUtBfn2-zes9u8_Q0VD5he9cQCE9lp6I1TDxKr6fu0ur7DyH7NktDATwR75eUoPF9r8tFsBQzB0avaiulDD3lRuk9OkRti3GwDB1-A-J9zyTfzJ_Jri6rstgpGvL9LtXwTfIjohFla2sMke8lLEInuquMQe5DsUpRArSRtHo2kNeubPRlXtzc_Kjdux-L9SXwwGoc1jTz992iU2KOswhONsKcqCedyIQoFd8ehqQhjxuLUfXkPgCvi_1lFW-ZTmg4LOvsmlARHJmzJ-yDjm6v92gJUrLSZQld-udcAZhrar6OpoDcQXTXrrChXkwYZwiZyHR1QCNQtihjkFm8UJQ8Zvys3O2-3sE2qPwQQVkNOggafsc7N-TbXGp_hUJUN8FdaEwMChE3Bv96l1p7-djRN2LvGXAR1cN_V3pQMVms8lh17DrpuB-UjFVkK7ld2yfg_aE7hTbLHzW7IBYeXjTuG2StVRqER_DTmtSsykbdMwef3RMGN4ahfjn5XWMYfJlVWKuhTlcG9QQUbbMo';
+String tokenuser='eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiNTRmYzllODI0NWZmYzE4MzBkOWZiMzcxOGIwYjgyOTllZjk5M2ViYjY5MzY0YWU2Y2E1Njk1OGQ5NzQ1NmVmY2ExMDU5NTM3OWMzNWE5YzUiLCJpYXQiOjE2NTk0NDIwNTYuNjIzNDQ5LCJuYmYiOjE2NTk0NDIwNTYuNjIzNDUzLCJleHAiOjE2OTA5NzgwNTYuNTA2MDcxLCJzdWIiOiIyIiwic2NvcGVzIjpbXX0.eBNtZtv__rK4pcGeLCPF5DXjhA_p4WAH5KU7CgKwXAJpYZKWfm-VWCpuEEdF-JtJMM_j_8-jOqDFfelXD4-OtOPrTpahJfEbujBA0t9N-Nrk2454NYvDfsoDEsUeIM3ElXpCFdv9wN9TN0rgz5cZxYgaJ7c00GmE3PtXBdxkoUA8hTcrcIN33cbmV0vUybGx6WgA5PcAKr912jZ4lQqvCRF59e9vpO1io0m7phgpJj-kOECnpgWzWQShUn34Cdf31Y9vT1JQioc3SKcHOnYjqDp7h-G-L6Nzx1CB7E_kddA5yhmUHpaQFprcPuUsEWRlfpzkncYszg5fQbUlxA6_gX6rAjgFtXubXck60tnhB19zo5nt9He9DIaNnzUoU9SASFrh0e6xQ1rYaf-EUSy_WFPOyEZGOL3SyaMi6Tc0WHDZQw4IInL6mt3_hUuExTqu0rqjcV9nMoZDxMerdIHWjZvc8r-_oy2kHEGaAK7l2pX6SbYmO5ead8hxMisWODmjOSBFRRym-17ueDadXdsUzWkS9kSS1nqVWzRx_ozeVd-HttoNsR15huuZHT_4CiqMvsH0lFb0shw5wisKPiHu6WHvSF_XtbCUVPjd__NlkK3cJnZsk5vcd7f7_F1m13sHOB0ulHsuocZoHkjs9ugvOZdUy130oI0yQ3q7_6Z8Bto';
 class ServiceEditionS extends StatefulWidget {
   const ServiceEditionS({Key? key}) : super(key: key);
 
@@ -37,6 +38,8 @@ class _ServiceEditionState extends State<ServiceEditionS> {
   List<String> servicewoodward = [];
   List<String> servicefarmer = [];
   List<String> bothstreet = [];
+  List<String> bothstreetID = [];
+
   String selectedService = 'Select Service';
   String? selectedStreet = "FARMER";
 
@@ -46,7 +49,7 @@ class _ServiceEditionState extends State<ServiceEditionS> {
  //   gatesEdition.add('');
 print('here');
     final response = await http.get(Uri.parse('${base_Url}/api/services'), headers: {
-      'Authorization':'Bearer $tokenuser'
+      'Authorization':'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiNTRmYzllODI0NWZmYzE4MzBkOWZiMzcxOGIwYjgyOTllZjk5M2ViYjY5MzY0YWU2Y2E1Njk1OGQ5NzQ1NmVmY2ExMDU5NTM3OWMzNWE5YzUiLCJpYXQiOjE2NTk0NDIwNTYuNjIzNDQ5LCJuYmYiOjE2NTk0NDIwNTYuNjIzNDUzLCJleHAiOjE2OTA5NzgwNTYuNTA2MDcxLCJzdWIiOiIyIiwic2NvcGVzIjpbXX0.eBNtZtv__rK4pcGeLCPF5DXjhA_p4WAH5KU7CgKwXAJpYZKWfm-VWCpuEEdF-JtJMM_j_8-jOqDFfelXD4-OtOPrTpahJfEbujBA0t9N-Nrk2454NYvDfsoDEsUeIM3ElXpCFdv9wN9TN0rgz5cZxYgaJ7c00GmE3PtXBdxkoUA8hTcrcIN33cbmV0vUybGx6WgA5PcAKr912jZ4lQqvCRF59e9vpO1io0m7phgpJj-kOECnpgWzWQShUn34Cdf31Y9vT1JQioc3SKcHOnYjqDp7h-G-L6Nzx1CB7E_kddA5yhmUHpaQFprcPuUsEWRlfpzkncYszg5fQbUlxA6_gX6rAjgFtXubXck60tnhB19zo5nt9He9DIaNnzUoU9SASFrh0e6xQ1rYaf-EUSy_WFPOyEZGOL3SyaMi6Tc0WHDZQw4IInL6mt3_hUuExTqu0rqjcV9nMoZDxMerdIHWjZvc8r-_oy2kHEGaAK7l2pX6SbYmO5ead8hxMisWODmjOSBFRRym-17ueDadXdsUzWkS9kSS1nqVWzRx_ozeVd-HttoNsR15huuZHT_4CiqMvsH0lFb0shw5wisKPiHu6WHvSF_XtbCUVPjd__NlkK3cJnZsk5vcd7f7_F1m13sHOB0ulHsuocZoHkjs9ugvOZdUy130oI0yQ3q7_6Z8Bto'
         }
             // snapshot.data!.services.woodWard[1].street
             );
@@ -195,6 +198,8 @@ print('here');
 
                           bothstreet.add(
                               snapshot.data!.services.bothStreet[i].name);
+                          bothstreetID.add(
+                              snapshot.data!.services.bothStreet[i].id.toString());
                         }
                         /*
                           if (snapshot.data!.services.farmer.length == 0) {
@@ -319,14 +324,17 @@ print('here');
                                 onChanged: (service) => setState(() {
                                   selectedService = service!;
                                   print("thedasdas $bothstreet");
+                                  print('the both street${bothstreet}');
                                   Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(
-                                      builder: (_) => ServiceInformationInput(
+                                      builder: (_) =>
+                                          ServiceInfoInputNewEd(
                                         gateName: selectedService,
                                         both: bothstreet,
-                                        listservice: snapshot
-                                            .data!.services.bothStreet,
-                                      ),
+                                        listservice: snapshot.data!.services.bothStreet,
+                                            bothId:bothstreetID,
+
+                                          ),
                                     ),
                                     //  gatesEdition.clear();
                                   );

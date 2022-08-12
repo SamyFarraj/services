@@ -73,8 +73,10 @@ List<AllReseervatios>myadminRequestsManageList=[];
 
         for(int i=0;i<userLists.length;i++)
         {
+          if(userLists[i].isAccepted==1)
+            {
           myadminRequestsManageList.add(userLists[i]);
-        }
+        }}
       });
     });
   }
@@ -173,6 +175,9 @@ List<AllReseervatios>myadminRequestsManageList=[];
                           ElevatedButton(
                             onPressed: () {
                               setState(() {
+                                print('the select date${selectedDate}');
+                                print('the select array${myadminRequestsManageList[0].startTime}');
+
                                 serviceDateFilter(
                                   myadminRequestsManageList,
                                   selectedDate,
@@ -267,7 +272,7 @@ List<AllReseervatios>myadminRequestsManageList=[];
                                               ),
                                             ),
                                             Text(
-                                              "${element.createdAt}",
+                                              "${DateFormat("yyyy-MM-dd").format(element.startTime)}",
                                               style: TextStyle(
                                                 fontSize: 20,
                                                 color: Colors.white,
@@ -358,8 +363,8 @@ List<AllReseervatios>myadminRequestsManageList=[];
     adminCalendarList.clear();
     List NoServiceList = [ "0000"];
     allAcceptedServicesList.forEach((service) {
-    //  print(service.serviceStartDate);
-    //  if (service.startTime ==  DateFormat("MM/dd/yyyy"))
+      print('${DateFormat("yyyy-MM-dd").format(currentDate)}');
+     if (DateFormat("yyyy-MM-dd").format(service.startTime) == DateFormat("yyyy-MM-dd").format(currentDate))
         adminCalendarList.add(service);
     });
 

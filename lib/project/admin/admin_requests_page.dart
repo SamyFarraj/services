@@ -120,7 +120,7 @@ class _AdminRequestsPageState extends State<AdminRequestsPage> {
         print("the u list issss : $ulist");
         ulist = subjectFromServer;
         userLists = ulist;
-        print("fsfsdfdsfdsf${userLists[0].gateName}");
+       // print("fsfsdfdsfdsf${userLists[0].gateName}");
 
         for(int i=0;i<userLists.length;i++)
         {
