@@ -71,7 +71,7 @@ class _AuthChoosingPageState extends State<AuthChoosingPage> {
                 Container(
                   padding: const EdgeInsets.all(10),
                   width: MediaQuery.of(context).size.width * 0.9,
-                  height: MediaQuery.of(context).size.height * 0.65,
+                  height: MediaQuery.of(context).size.height * 0.57,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(35),
                     color: const Color.fromARGB(180, 0, 0, 65),
@@ -114,16 +114,16 @@ class _AuthChoosingPageState extends State<AuthChoosingPage> {
                             padding: EdgeInsets.symmetric(
                               vertical: 10.0,
                               horizontal:
-                                  MediaQuery.of(context).size.width * 0.1,
+                              MediaQuery.of(context).size.width * 0.1,
                             ),
-                            primary: const Color.fromARGB(255, 10, 150, 10),
+                            primary:  Colors.blue,
                             elevation: 15.0,
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: <Widget>[
                               Text(
-                                "User LogIn",
+                                "LogIn",
                                 style: const TextStyle(
                                   fontSize: 24,
                                   color: Colors.white,
@@ -149,7 +149,7 @@ class _AuthChoosingPageState extends State<AuthChoosingPage> {
                             padding: EdgeInsets.symmetric(
                               vertical: 10.0,
                               horizontal:
-                                  MediaQuery.of(context).size.width * 0.1,
+                              MediaQuery.of(context).size.width * 0.1,
                             ),
                             primary: Colors.blue,
                             elevation: 15.0,
@@ -158,7 +158,7 @@ class _AuthChoosingPageState extends State<AuthChoosingPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: <Widget>[
                               Text(
-                                "User SignUp",
+                                "SignUp",
                                 style: const TextStyle(
                                   fontSize: 24,
                                   color: Colors.white,
@@ -176,7 +176,8 @@ class _AuthChoosingPageState extends State<AuthChoosingPage> {
                         style: TextStyle(
                             fontSize: 26,
                             fontWeight: FontWeight.bold,
-                            color: Colors.deepOrange),
+                            color: Colors.deepOrange,
+                        ),
                       ),
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.008,
@@ -206,7 +207,7 @@ class _AuthChoosingPageState extends State<AuthChoosingPage> {
                               horizontal:
                                   MediaQuery.of(context).size.width * 0.1,
                             ),
-                            primary: const Color.fromARGB(255, 10, 150, 10),
+                            primary: Colors.blue,
                             elevation: 15.0,
                           ),
                           child: Row(

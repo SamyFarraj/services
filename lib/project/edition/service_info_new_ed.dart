@@ -4,7 +4,6 @@ import 'package:project_mohammad/components/snack_bar.dart';
 import 'package:project_mohammad/services/services_check_box.dart';
 
 import '../../services/choices.dart';
-import '../../services/requests_form.dart';
 import '../home/requests.dart';
 
 /*
@@ -25,13 +24,13 @@ class ServiceInfoInputNewEd extends StatefulWidget {
 class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
   //المتغير اللي رح يتخزن فيه التاريخ اللي تم اختيارو
   DateTime date = DateTime(
-    2021,
+    2001,
     1,
     1,
   );
-  DateTime choosedStartingDateTime = DateTime(2021);
+  DateTime choosedStartingDateTime = DateTime(2001);
 
-  DateTime choosedEndingDateTime = DateTime(2021);
+  DateTime choosedEndingDateTime = DateTime(2001);
 
   //المتغير اللي رح يتخزن فيه وقت البداية اللي تم اختيارو
   TimeOfDay time = const TimeOfDay(hour: 23, minute: 41);
@@ -653,11 +652,11 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
         );
         return false;
       }
-      if(time.hour < 6){
+      if (time.hour < 6) {
         TheSnackBar(
           context,
           'Duration Exceeding closing time,'
-              ' please Edit duration or time',
+          ' please Edit duration or time',
           const Color.fromARGB(255, 150, 10, 10),
         );
         return false;
@@ -710,8 +709,7 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
     bool checkNewRequest,
     String selectedMinuteDuration,
     String selectedHoursDuration,
-  )
-  {
+  ) {
     if (checkNewRequest) {
       /*
       UserRequestsPage.requestList.add(
@@ -735,8 +733,10 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
         ),
         */
 
-
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => const UserRequestsPage()),
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (_) => const UserRequestsPage(),
+        ),
       );
     }
   }
@@ -770,8 +770,8 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
       selectAllServices.isChecked = isChecked;
       // ignore: avoid_function_literals_in_foreach_calls
       chooseService.forEach((service) {
-        if(service.serviceName == "self Unloaded Delivery" && service.isChecked == true)
-          service.isChecked= false;
+        if (service.serviceName == "self Unloaded Delivery" &&
+            service.isChecked == true) service.isChecked = false;
         if (service.serviceName != "self Unloaded Delivery")
           service.isChecked = isChecked;
       });

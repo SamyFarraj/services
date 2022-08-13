@@ -57,5 +57,5 @@ class _MyHomePageState extends State<_MyHomePage> {
 
 //  Widget build(BuildContext context) =>  AdminLogInPage();
 
-Widget build(BuildContext context) =>  AuthChoosingPage();
+Widget build(BuildContext context) =>  ProjectsPage();
 }
