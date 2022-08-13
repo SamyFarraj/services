@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:project_mohammad/authentication/choose_auth_type.dart';
+import 'package:project_mohammad/project/admin/delete_service.dart';
+import 'package:project_mohammad/project/edition/service_info_new_ed.dart';
+import 'package:project_mohammad/project/edition/services_edition.dart';
 
 import 'Api/shredpreference.dart';
 import 'project/projects_page.dart';
-import 'splash_screen.dart';
+//import 'splash_screen.dart';
 
 
 Future main() async {
   // WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  await splashSc();
+//  await splashSc();
   // WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }

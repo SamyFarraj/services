@@ -104,13 +104,7 @@ final chooseStaff = [
 
 final chooseService = [
   ServicesCheckBox(serviceName: "self Unloaded Delivery"),
-  ServicesCheckBox(serviceName: "Tower Crane 1"),
-  ServicesCheckBox(serviceName: "Tower Crane 2"),
-  ServicesCheckBox(serviceName: "BLK BuckHoist"),
-  ServicesCheckBox(serviceName: "TWR BuckHoist"),
-  ServicesCheckBox(serviceName: "ForkLift"),
-  ServicesCheckBox(serviceName: "Trailer Pump"),
-  ServicesCheckBox(serviceName: "Ramp-BSE"),
+
 ];
 
 List<AllReseervatios> adminCalendarList = [];

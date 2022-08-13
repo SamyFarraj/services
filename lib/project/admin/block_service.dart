@@ -239,7 +239,8 @@ int i=0;
 
                                   SizedBox(
                                     width: MediaQuery.of(context).size.width * 0.75,
-                                    child: DropdownButtonFormField<String>(
+                                    child:
+                                    DropdownButtonFormField<String>(
                                       decoration: InputDecoration(
                                         enabledBorder: UnderlineInputBorder(
                                           borderSide: const BorderSide(
@@ -250,8 +251,7 @@ int i=0;
                                         ),
                                       ),
                                       items: selectStreet
-                                          .map(
-                                            (street) => DropdownMenuItem<String>(
+                                          .map((street) => DropdownMenuItem<String>(
                                           value: street.title,
                                           child: Text(
                                             street.title,
