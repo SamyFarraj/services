@@ -561,10 +561,10 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
                                         );
                                         book_resevices(
                                           gateName,
-                                          DateFormat("yyyy/MM/dd")
+                                          DateFormat("yyyy-MM-dd HH:mm")
                                               .format(choosedStartingDateTime)
                                               .toString(),
-                                          DateFormat("yyyy/MM/dd")
+                                          DateFormat("yyyy/MM/dd HH:mm")
                                               .format(choosedEndingDateTime)
                                               .toString(),
                                         );
