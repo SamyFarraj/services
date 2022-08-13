@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:project_mohammad/components/snack_bar.dart';
 import 'package:project_mohammad/services/services_check_box.dart';
-import 'package:http/http.dart' as http;
 
 import '../../Api/model/List Services To Send.dart';
 import '../../Api/model/name_service.dart';
 import '../../services/choices.dart';
-import '../../services/requests_form.dart';
 import '../constant.dart';
 import '../home/requests.dart';
 
@@ -22,17 +21,16 @@ class ServiceInfoInputNewEd extends StatefulWidget {
   final List<String> bothId;
 
   final List<BothStreet> listservice;
+
   const ServiceInfoInputNewEd(
       {required this.gateName,
-        required this.both,
-        required this.listservice,
-         required this.bothId});
-
-
+      required this.both,
+      required this.listservice,
+      required this.bothId});
 
   @override
   _ServiceInfoInputNewEdState createState() =>
-      _ServiceInfoInputNewEdState(gateName, both, listservice,bothId);
+      _ServiceInfoInputNewEdState(gateName, both, listservice, bothId);
 }
 
 class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
@@ -40,26 +38,26 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
   late List<String> both;
   late List<String> bothId;
 
-
   late List<BothStreet> listservice;
   late int id_service;
-  _ServiceInfoInputNewEdState(
-      String gateName, List<String> both, List<BothStreet> listservice,List<String> bothID) {
+
+  _ServiceInfoInputNewEdState(String gateName, List<String> both,
+      List<BothStreet> listservice, List<String> bothID) {
     this.listservice = listservice;
     this.both = both;
     this.gateName = gateName;
-    this.bothId=bothID;
+    this.bothId = bothID;
   }
 
   //المتغير اللي رح يتخزن فيه التاريخ اللي تم اختيارو
   DateTime date = DateTime(
-    2021,
+    2001,
     1,
     1,
   );
-  DateTime choosedStartingDateTime = DateTime(2021);
+  DateTime choosedStartingDateTime = DateTime(2001);
 
-  DateTime choosedEndingDateTime = DateTime(2021);
+  DateTime choosedEndingDateTime = DateTime(2001);
 
   //المتغير اللي رح يتخزن فيه وقت البداية اللي تم اختيارو
   TimeOfDay time = const TimeOfDay(hour: 23, minute: 41);
@@ -100,11 +98,14 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
   //text displayed on date Picked button
   late String showedDate = 'select Date';
 
+  ListServeiceToSend ReservationToSend = new ListServeiceToSend(
+      servicesMap: [], startTime: '', endTime: '', gateName: '');
 
-   ListServeiceToSend ReservationToSend=new ListServeiceToSend(servicesMap: [], startTime: '', endTime:'', gateName: '') ;
-List ListOfIdChosingToSend =[];
+  List ListOfIdChosingToSend = [];
+
   //text displayed on time Picked button
   late String showedTime = 'select Time';
+
   /*
   Future book_resevices(String gate_name, String Start_time, String end_time,
     ) async {
@@ -143,47 +144,50 @@ List ListOfIdChosingToSend =[];
 
 
    */
-  book_resevices(String gate_name, String Start_time, String end_time,)async
-  {
-    for (int i=0;i<choosedServicesList.length;i++)
-    {
-      ReservationToSend.servicesMap.add(new ServicesMap(id:bothId[i].toString(),name:choosedServicesList[i]));
+  book_resevices(
+    String gate_name,
+    String Start_time,
+    String end_time,
+  ) async {
+    for (int i = 0; i < choosedServicesList.length; i++) {
+      ReservationToSend.servicesMap.add(new ServicesMap(
+          id: bothId[i].toString(), name: choosedServicesList[i]));
       // ReservationToSend.servicesMap[i].name=;
 
     }
-    ReservationToSend.gateName=gate_name;
-    ReservationToSend.startTime='2022/2/2';
-    ReservationToSend.endTime='2022/2/2';
+    ReservationToSend.gateName = gate_name;
+    ReservationToSend.startTime = '2022/2/2';
+    ReservationToSend.endTime = '2022/2/2';
     print("the list send is ${ReservationToSend.servicesMap[1].id}");
 
     print("the list send is ${ReservationToSend.servicesMap[1].name}");
-    var response=await http.post(Uri.parse('$base_Url/api/Reservation'),
-        headers: <String,String>
-        {
+    var response = await http.post(Uri.parse('$base_Url/api/Reservation'),
+        headers: <String, String>{
           'Content-Type': 'application/json',
-          'Accept':'application/json',
-          'Authorization':'Bearer   eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZDQ5ZWRjODRiMWYzYzAzZmUzMjg4NTY0NDQwY2JjYmE0ZmIxY2JkNDBjYjk0ZThmYjY1OTYzZjcyOTA4MDAwM2YyMzczNzgxM2JiYzNkY2MiLCJpYXQiOjE2NTY5NTkxNjkuOTU5NDI4LCJuYmYiOjE2NTY5NTkxNjkuOTU5NDU3LCJleHAiOjE2ODg0OTUxNjkuNzY4MTM0LCJzdWIiOiIyIiwic2NvcGVzIjpbXX0.GTXRTTYJmuUSVl3nvm8RB19bYrCllhsLev5M4vpbOekT5waNGue4jO5n8mdkKyhQrw83uzr5PFFVZVPFqwtYtaCixN5uQPWw6pGtNPLu2MPucYL2hUZrl2Q_pu6atlFqHQ4zwIVEX-6Nf-OXdkMYEpL4bVcdgyumJMiMI_cl4T2sL-0WRCealvlY_uckcvomIsUFWzL8if1kLv2rxPt9xei0D6_-ciE0trrgmI7fLZ1DT6Nnb78VzEiSFOkYo4NuuHXmdPtjlIQ6c7sCSlax5-Sd9qX2mRDoTVlsXg75nw4lHzdhRpvg_wWYWsBPjgV2qE40y2Vhzl7TXtCc9gjEFxABrJ_QbWTJAaX5bRgXl7cW4f-laayYw14jzVtNwNz9Yuv6AGlwWQxBXKGckpluzO14zbc8XS_Bf3lrLxbx1L4mjbyI8tb0Ct6GrBG2dcGJ3mdcVwIBBhfSeCXoxUz4ZN-4Q9tMD0cacReXH3nlXbNa6m1_e6tVVUA2E7UUPExdECppV5H4T9sGfO3c_M8_jXTFPAgiNIynoSY7H1GNoEJ5i0O0Dhpa5384Fwc_fJuJHDNsGT4d-5K528u0NH9O1HZsRdSvaprV04l2mDADg_tF433CNeHMH7FMqEPqsj8MD8RyAw7UJY316bFVSgpw1hzsgE7l81sg0dn8VCxjvb8'
+          'Accept': 'application/json',
+          'Authorization':
+              'Bearer   eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZDQ5ZWRjODRiMWYzYzAzZmUzMjg4NTY0NDQwY2JjYmE0ZmIxY2JkNDBjYjk0ZThmYjY1OTYzZjcyOTA4MDAwM2YyMzczNzgxM2JiYzNkY2MiLCJpYXQiOjE2NTY5NTkxNjkuOTU5NDI4LCJuYmYiOjE2NTY5NTkxNjkuOTU5NDU3LCJleHAiOjE2ODg0OTUxNjkuNzY4MTM0LCJzdWIiOiIyIiwic2NvcGVzIjpbXX0.GTXRTTYJmuUSVl3nvm8RB19bYrCllhsLev5M4vpbOekT5waNGue4jO5n8mdkKyhQrw83uzr5PFFVZVPFqwtYtaCixN5uQPWw6pGtNPLu2MPucYL2hUZrl2Q_pu6atlFqHQ4zwIVEX-6Nf-OXdkMYEpL4bVcdgyumJMiMI_cl4T2sL-0WRCealvlY_uckcvomIsUFWzL8if1kLv2rxPt9xei0D6_-ciE0trrgmI7fLZ1DT6Nnb78VzEiSFOkYo4NuuHXmdPtjlIQ6c7sCSlax5-Sd9qX2mRDoTVlsXg75nw4lHzdhRpvg_wWYWsBPjgV2qE40y2Vhzl7TXtCc9gjEFxABrJ_QbWTJAaX5bRgXl7cW4f-laayYw14jzVtNwNz9Yuv6AGlwWQxBXKGckpluzO14zbc8XS_Bf3lrLxbx1L4mjbyI8tb0Ct6GrBG2dcGJ3mdcVwIBBhfSeCXoxUz4ZN-4Q9tMD0cacReXH3nlXbNa6m1_e6tVVUA2E7UUPExdECppV5H4T9sGfO3c_M8_jXTFPAgiNIynoSY7H1GNoEJ5i0O0Dhpa5384Fwc_fJuJHDNsGT4d-5K528u0NH9O1HZsRdSvaprV04l2mDADg_tF433CNeHMH7FMqEPqsj8MD8RyAw7UJY316bFVSgpw1hzsgE7l81sg0dn8VCxjvb8'
         },
-        body:listServeiceToSendToJson(ReservationToSend)
-    );
+        body: listServeiceToSendToJson(ReservationToSend));
     print('the response i ss${response.body}');
-    if(response.statusCode==201)
-    {
-
+    if (response.statusCode == 201) {
       return response;
-    }
-    else response;
+    } else
+      response;
   }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 628f77dd4d3c8e7c68f5aaeb08194c76288a7e83
   @override
   void initState() {
     super.initState();
-    for(int i=0;i<both.length;i++)
-      {
-        chooseService.add(new ServicesCheckBox(serviceName:both[i] ));
-      }
+    for (int i = 0; i < both.length; i++) {
+      chooseService.add(new ServicesCheckBox(serviceName: both[i]));
+    }
   }
+
   @override
   Widget build(BuildContext context) {
     selectedService = both[0];
@@ -347,7 +351,9 @@ List ListOfIdChosingToSend =[];
                                   ),
                                   child: ListView(
                                     padding: const EdgeInsets.all(0.1),
-                                    children: [buildGroupServicesCheckbox(selectAllServices),
+                                    children: [
+                                      buildGroupServicesCheckbox(
+                                          selectAllServices),
                                       Row(
                                         children: <Widget>[
                                           SizedBox(
@@ -557,7 +563,16 @@ List ListOfIdChosingToSend =[];
                                           selectedMinuteDuration!,
                                           selectedHoursDuration!,
                                         );
-                                        book_resevices(gateName,time.toString(),choosedEndTime.toString());
+                                        book_resevices(
+                                          gateName,
+                                          DateFormat("yyyy-MM-dd HH:mm")
+                                              .format(choosedStartingDateTime)
+                                              .toString(),
+                                          DateFormat("yyyy/MM/dd HH:mm")
+                                              .format(choosedEndingDateTime)
+                                              .toString(),
+                                        );
+                                        // book_resevices(gateName,time.toString(),choosedEndTime.toString());
                                       },
                                     );
                                   },
@@ -665,7 +680,6 @@ List ListOfIdChosingToSend =[];
     // } else
     chooseService.forEach((service) {
       if (service.isChecked) choosedServicesList.add(service.serviceName);
-
     });
 
     if (choosedServicesList.isEmpty) {
@@ -769,11 +783,11 @@ List ListOfIdChosingToSend =[];
         );
         return false;
       }
-      if(time.hour < 6){
+      if (time.hour < 6) {
         TheSnackBar(
           context,
           'Duration Exceeding closing time,'
-              ' please Edit duration or time',
+          ' please Edit duration or time',
           const Color.fromARGB(255, 150, 10, 10),
         );
         return false;
@@ -826,10 +840,8 @@ List ListOfIdChosingToSend =[];
     bool checkNewRequest,
     String selectedMinuteDuration,
     String selectedHoursDuration,
-  )
-  {
+  ) {
     if (checkNewRequest) {
-
       /*
       UserRequestsPage.requestList.add(
 
@@ -852,8 +864,10 @@ List ListOfIdChosingToSend =[];
         ),
         */
 
-
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => const UserRequestsPage()),
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (_) => const UserRequestsPage(),
+        ),
       );
     }
   }
@@ -887,8 +901,8 @@ List ListOfIdChosingToSend =[];
       selectAllServices.isChecked = isChecked;
       // ignore: avoid_function_literals_in_foreach_calls
       chooseService.forEach((service) {
-        if(service.serviceName == "self Unloaded Delivery" && service.isChecked == true)
-          service.isChecked= false;
+        if (service.serviceName == "self Unloaded Delivery" &&
+            service.isChecked == true) service.isChecked = false;
         if (service.serviceName != "self Unloaded Delivery")
           service.isChecked = isChecked;
       });
