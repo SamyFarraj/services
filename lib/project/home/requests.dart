@@ -4,6 +4,8 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
 
+import '../../main.dart';
+import '../edition/DEMO.dart';
 import '/Api/controller/User/work/Services_controller.dart';
 import '../../Api/model/myaccapted_model.dart';
 import '../../components/dash_board.dart';
@@ -55,7 +57,7 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
     final response = await http.get(
       Uri.parse('http://192.168.56.1:8000/api/Reservation/MyAcceptedReservation'),
       headers: {
-        'Authorization':'Bearer   eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZDQ5ZWRjODRiMWYzYzAzZmUzMjg4NTY0NDQwY2JjYmE0ZmIxY2JkNDBjYjk0ZThmYjY1OTYzZjcyOTA4MDAwM2YyMzczNzgxM2JiYzNkY2MiLCJpYXQiOjE2NTY5NTkxNjkuOTU5NDI4LCJuYmYiOjE2NTY5NTkxNjkuOTU5NDU3LCJleHAiOjE2ODg0OTUxNjkuNzY4MTM0LCJzdWIiOiIyIiwic2NvcGVzIjpbXX0.GTXRTTYJmuUSVl3nvm8RB19bYrCllhsLev5M4vpbOekT5waNGue4jO5n8mdkKyhQrw83uzr5PFFVZVPFqwtYtaCixN5uQPWw6pGtNPLu2MPucYL2hUZrl2Q_pu6atlFqHQ4zwIVEX-6Nf-OXdkMYEpL4bVcdgyumJMiMI_cl4T2sL-0WRCealvlY_uckcvomIsUFWzL8if1kLv2rxPt9xei0D6_-ciE0trrgmI7fLZ1DT6Nnb78VzEiSFOkYo4NuuHXmdPtjlIQ6c7sCSlax5-Sd9qX2mRDoTVlsXg75nw4lHzdhRpvg_wWYWsBPjgV2qE40y2Vhzl7TXtCc9gjEFxABrJ_QbWTJAaX5bRgXl7cW4f-laayYw14jzVtNwNz9Yuv6AGlwWQxBXKGckpluzO14zbc8XS_Bf3lrLxbx1L4mjbyI8tb0Ct6GrBG2dcGJ3mdcVwIBBhfSeCXoxUz4ZN-4Q9tMD0cacReXH3nlXbNa6m1_e6tVVUA2E7UUPExdECppV5H4T9sGfO3c_M8_jXTFPAgiNIynoSY7H1GNoEJ5i0O0Dhpa5384Fwc_fJuJHDNsGT4d-5K528u0NH9O1HZsRdSvaprV04l2mDADg_tF433CNeHMH7FMqEPqsj8MD8RyAw7UJY316bFVSgpw1hzsgE7l81sg0dn8VCxjvb8'
+        'Authorization':'Bearer $tokenUser'
       },
     );
     print('the statues is ${response.statusCode}');
@@ -89,7 +91,7 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
     final response = await http.get(
       Uri.parse('http://192.168.56.1:8000/api/Reservation/MyPendingReservation'),
       headers: {
-        'Authorization':'Bearer   eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZDQ5ZWRjODRiMWYzYzAzZmUzMjg4NTY0NDQwY2JjYmE0ZmIxY2JkNDBjYjk0ZThmYjY1OTYzZjcyOTA4MDAwM2YyMzczNzgxM2JiYzNkY2MiLCJpYXQiOjE2NTY5NTkxNjkuOTU5NDI4LCJuYmYiOjE2NTY5NTkxNjkuOTU5NDU3LCJleHAiOjE2ODg0OTUxNjkuNzY4MTM0LCJzdWIiOiIyIiwic2NvcGVzIjpbXX0.GTXRTTYJmuUSVl3nvm8RB19bYrCllhsLev5M4vpbOekT5waNGue4jO5n8mdkKyhQrw83uzr5PFFVZVPFqwtYtaCixN5uQPWw6pGtNPLu2MPucYL2hUZrl2Q_pu6atlFqHQ4zwIVEX-6Nf-OXdkMYEpL4bVcdgyumJMiMI_cl4T2sL-0WRCealvlY_uckcvomIsUFWzL8if1kLv2rxPt9xei0D6_-ciE0trrgmI7fLZ1DT6Nnb78VzEiSFOkYo4NuuHXmdPtjlIQ6c7sCSlax5-Sd9qX2mRDoTVlsXg75nw4lHzdhRpvg_wWYWsBPjgV2qE40y2Vhzl7TXtCc9gjEFxABrJ_QbWTJAaX5bRgXl7cW4f-laayYw14jzVtNwNz9Yuv6AGlwWQxBXKGckpluzO14zbc8XS_Bf3lrLxbx1L4mjbyI8tb0Ct6GrBG2dcGJ3mdcVwIBBhfSeCXoxUz4ZN-4Q9tMD0cacReXH3nlXbNa6m1_e6tVVUA2E7UUPExdECppV5H4T9sGfO3c_M8_jXTFPAgiNIynoSY7H1GNoEJ5i0O0Dhpa5384Fwc_fJuJHDNsGT4d-5K528u0NH9O1HZsRdSvaprV04l2mDADg_tF433CNeHMH7FMqEPqsj8MD8RyAw7UJY316bFVSgpw1hzsgE7l81sg0dn8VCxjvb8'
+        'Authorization':'Bearer $tokenUser'
       },
     );
     print('the statues is ${response.statusCode}');
@@ -98,7 +100,7 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
       // List<MyReservations> list = parsedList.map((val) => MyReservations.fromJson(val)).toList();
       //  print("${response.body}");json.decode(response.body);
       List<Myascapted> list = parseAgents(response.body);
-      print("sdasdasdasdsad$list");
+      print("sdasdasdasdsasASd$list");
       return list;
     } else {
       throw Exception('Unexpected error occurred!');
@@ -118,7 +120,7 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
           {
 
             UserRequestsPage.requestList.add(userLists[i]);
-            print('${ UserRequestsPage.requestList}');
+            print('dsasd${ UserRequestsPage.requestList}');
           }
       });
     });
@@ -227,7 +229,7 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                     top: 10,
                                     bottom: 10,
                                   ),
-                                  height: 0.009,
+                                  height: MediaQuery.of(context).size.width * 0.9,
                                   width:
                                       MediaQuery.of(context).size.width * 0.7,
                                   alignment: Alignment.center,
@@ -382,10 +384,11 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                 ),
                               ),
                               Container(
+
                                 margin: const EdgeInsets.only(
                                   top: 10,
                                 ),
-                                height: 0.009,
+                                height: MediaQuery.of(context).size.width *0.9,
                                 width: MediaQuery.of(context).size.width * 0.7,
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
