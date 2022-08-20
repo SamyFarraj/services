@@ -159,6 +159,7 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
     ReservationToSend.gateName = gate_name;
     ReservationToSend.startTime = Start_time;
     ReservationToSend.endTime = end_time;
+    print("the end time${ReservationToSend.endTime} ");
     print("the list send is ${ReservationToSend.servicesMap[1].id}");
 
     print("the list send is ${ReservationToSend.servicesMap[1].name}");
