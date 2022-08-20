@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../Api/controller/User/work/Services_controller.dart';
-import '../../Api/model/myaccapted_model.dart';
+import '../../Api/model/my_accepted_model.dart';
 import '../../components/dash_board.dart';
 import '../../main.dart';
 
@@ -22,7 +22,7 @@ class UserRequestsPage extends StatefulWidget {
 class _UserRequestsPageState extends State<UserRequestsPage> {
 
 
-  List<Myascapted> ulist = [];
+  List<Myascapted> uList = [];
   List<Myascapted> userLists = [];
 
   get http => null;
@@ -96,8 +96,8 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
     super.initState();
     fetchData().then((subjectFromServer) {
       setState(() {
-        ulist = subjectFromServer;
-        userLists = ulist;
+        uList = subjectFromServer;
+        userLists = uList;
         // print("fsfsdfdsfdsf${userLists[0].gateName}");
 
         for(int i=0;i<userLists.length;i++)
@@ -258,14 +258,14 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                                           ),
                                                         ),
                                                         Text(
-                                                          " start at ${DateFormat("yyyy-MM-dd").format(val.startTime)}",
+                                                          " start at ${DateFormat("HH:mm").format(val.startTime)}",
                                                           style: const TextStyle(
                                                             color: Colors.white,
                                                             fontSize: 26,
                                                           ),
                                                         ),
                                                         Text(
-                                                          "end at ${DateFormat("yyyy-MM-dd").format(val.endTime)}",
+                                                          "end at ${DateFormat("HH:mm").format(val.endTime)}",
                                                           style: const TextStyle(
                                                             color: Colors.white,
                                                             fontSize: 26,

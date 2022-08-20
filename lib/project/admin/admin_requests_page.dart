@@ -7,7 +7,7 @@ import 'package:project_mohammad/components/dash_board.dart';
 import 'package:http/http.dart' as http;
 
 import '../../Api/controller/Admin/aceept_or_decline_reservation.dart';
-import '../../Api/model/myaccapted_model.dart';
+import '../../Api/model/my_accepted_model.dart';
 import '../../moh_project/post_moh/login_controller.dart';
 import '../../services/requests_form.dart';
 import '../user/user_requests.dart';
