@@ -1,31 +1,13 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
-
-import '../../main.dart';
-import '../edition/DEMO.dart';
-import '/Api/controller/User/work/Services_controller.dart';
+import '../../Api/controller/User/work/Services_controller.dart';
 import '../../Api/model/myaccapted_model.dart';
 import '../../components/dash_board.dart';
-import '../admin/admin_requests_page.dart';
-import '../projects_page.dart';
+import '../../main.dart';
 
-int val = 0;
-
-class Requests extends StatelessWidget {
-  const Requests({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    if (admin) {
-      return AdminRequestsPage();
-    } else {
-      return const UserRequestsPage();
-    }
-  }
-}
 
 class UserRequestsPage extends StatefulWidget {
   static List<Myascapted> requestList = [];
@@ -42,6 +24,8 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
 
   List<Myascapted> ulist = [];
   List<Myascapted> userLists = [];
+
+  get http => null;
 
   @override
   static List<Myascapted> parseAgents(String responseBody) {
@@ -63,9 +47,9 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
     print('the statues is ${response.statusCode}');
     if (response.statusCode == 200) {
       final List parsedList = json.decode(response.body);
-     // List<MyReservations> list = parsedList.map((val) => MyReservations.fromJson(val)).toList();
+      // List<MyReservations> list = parsedList.map((val) => MyReservations.fromJson(val)).toList();
       //  print("${response.body}");json.decode(response.body);
-       List<Myascapted> list = parseAgents(response.body);
+      List<Myascapted> list = parseAgents(response.body);
       print("sdasdasdasdsad$list");
       return list;
     } else {
@@ -108,20 +92,20 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
   }
   @override
   void initState() {
-   UserRequestsPage.requestList.clear();
+    UserRequestsPage.requestList.clear();
     super.initState();
     fetchData().then((subjectFromServer) {
       setState(() {
         ulist = subjectFromServer;
         userLists = ulist;
-       // print("fsfsdfdsfdsf${userLists[0].gateName}");
+        // print("fsfsdfdsfdsf${userLists[0].gateName}");
 
         for(int i=0;i<userLists.length;i++)
-          {
+        {
 
-            UserRequestsPage.requestList.add(userLists[i]);
-            print('dsasd${ UserRequestsPage.requestList}');
-          }
+          UserRequestsPage.requestList.add(userLists[i]);
+          print('dsasd${ UserRequestsPage.requestList}');
+        }
       });
     });
 
@@ -231,13 +215,13 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                   ),
                                   height: MediaQuery.of(context).size.width * 0.9,
                                   width:
-                                      MediaQuery.of(context).size.width * 0.7,
+                                  MediaQuery.of(context).size.width * 0.7,
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(
-                                      border: Border.all(
-                                    color: Colors.blue,
-                                    width: 2,
-                                  ),
+                                    border: Border.all(
+                                      color: Colors.blue,
+                                      width: 2,
+                                    ),
                                   ),
                                   child:
                                   ListView(
@@ -392,10 +376,10 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                 width: MediaQuery.of(context).size.width * 0.7,
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
-                                    border: Border.all(
-                                  color: Colors.blue,
-                                  width: 2,
-                                ),
+                                  border: Border.all(
+                                    color: Colors.blue,
+                                    width: 2,
+                                  ),
                                 ),
                                 child: ListView(
                                   children: <Widget>[

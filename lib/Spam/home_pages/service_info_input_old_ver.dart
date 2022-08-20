@@ -1,64 +1,58 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-import 'package:project_mohammad/components/snack_bar.dart';
-import 'package:project_mohammad/services/services_check_box.dart';
+import 'package:project_mohammad/Api/model/name_service.dart';
+import 'package:project_mohammad/project/constant.dart';
 
-import '../../Api/model/List Services To Send.dart';
-import '../../Api/model/name_service.dart';
-import '../../main.dart';
-import '../../services/choices.dart';
-import '../constant.dart';
-import '../home/requests.dart';
+import 'package:http/http.dart' as http;
+import 'package:project_mohammad/components/snack_bar.dart';
+
+
+import '../../project/user/user_requests.dart';
+import '../../project/home/requests_page_managment.dart';
 
 /*
 File in order to enter service reservation information such as
 date, start and end time, gate and route, etc...
 
  */
-class ServiceInfoInputNewEd extends StatefulWidget {
+class ServiceInformationInput extends StatefulWidget {
   final String gateName;
   final List<String> both;
-  final List<String> bothId;
-
   final List<BothStreet> listservice;
-
-  const ServiceInfoInputNewEd(
+  const ServiceInformationInput(
       {required this.gateName,
       required this.both,
       required this.listservice,
-      required this.bothId});
+      Key? key})
+      : super(key: key);
 
   @override
-  _ServiceInfoInputNewEdState createState() =>
-      _ServiceInfoInputNewEdState(gateName, both, listservice, bothId);
+  _ServiceInformationInputState createState() =>
+      _ServiceInformationInputState(gateName, both, listservice);
 }
 
-class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
+class _ServiceInformationInputState extends State<ServiceInformationInput> {
+  //المتغير اللي رح يتخزن فيه التاريخ اللي تم اختيارو
+
   late String gateName;
   late List<String> both;
-  late List<String> bothId;
-
   late List<BothStreet> listservice;
-  late int id_service;
-
-  _ServiceInfoInputNewEdState(String gateName, List<String> both,
-      List<BothStreet> listservice, List<String> bothID) {
+late int id_service;
+  _ServiceInformationInputState(
+      String gateName, List<String> both, List<BothStreet> listservice) {
     this.listservice = listservice;
     this.both = both;
     this.gateName = gateName;
-    this.bothId = bothID;
   }
 
-  //المتغير اللي رح يتخزن فيه التاريخ اللي تم اختيارو
   DateTime date = DateTime(
-    2001,
+    2021,
     1,
     1,
   );
-  DateTime choosedStartingDateTime = DateTime(2001);
+  DateTime choosedStartingDateTime = DateTime(2021);
 
-  DateTime choosedEndingDateTime = DateTime(2001);
+  DateTime choosedEndingDateTime = DateTime(2021);
 
   //المتغير اللي رح يتخزن فيه وقت البداية اللي تم اختيارو
   TimeOfDay time = const TimeOfDay(hour: 23, minute: 41);
@@ -71,10 +65,6 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
   // مصفوفة لتخزين ال staff اللي تم اختيارون
   // Array to store choosed Staffs
   List choosedStaffsList = [];
-
-//  ال Services اللي تم اختيارون
-//  Array to store choosed Services
-  List choosedServicesList = [];
 
   //المتغير اللي رح يتخزن فيه الخدمة اللي تم اختيارها
   // Service Name variable
@@ -99,43 +89,29 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
   //text displayed on date Picked button
   late String showedDate = 'select Date';
 
-  ListServeiceToSend ReservationToSend = new ListServeiceToSend(
-      servicesMap: [], startTime: '', endTime: '', gateName: '');
-
-  List ListOfIdChosingToSend = [];
-
   //text displayed on time Picked button
   late String showedTime = 'select Time';
 
-  /*
   Future book_resevices(String gate_name, String Start_time, String end_time,
-    ) async {
+      String service_id, String service_name) async {
     var headers = {
       'Accept': 'application/json',
       'Authorization':'Bearer   eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZDQ5ZWRjODRiMWYzYzAzZmUzMjg4NTY0NDQwY2JjYmE0ZmIxY2JkNDBjYjk0ZThmYjY1OTYzZjcyOTA4MDAwM2YyMzczNzgxM2JiYzNkY2MiLCJpYXQiOjE2NTY5NTkxNjkuOTU5NDI4LCJuYmYiOjE2NTY5NTkxNjkuOTU5NDU3LCJleHAiOjE2ODg0OTUxNjkuNzY4MTM0LCJzdWIiOiIyIiwic2NvcGVzIjpbXX0.GTXRTTYJmuUSVl3nvm8RB19bYrCllhsLev5M4vpbOekT5waNGue4jO5n8mdkKyhQrw83uzr5PFFVZVPFqwtYtaCixN5uQPWw6pGtNPLu2MPucYL2hUZrl2Q_pu6atlFqHQ4zwIVEX-6Nf-OXdkMYEpL4bVcdgyumJMiMI_cl4T2sL-0WRCealvlY_uckcvomIsUFWzL8if1kLv2rxPt9xei0D6_-ciE0trrgmI7fLZ1DT6Nnb78VzEiSFOkYo4NuuHXmdPtjlIQ6c7sCSlax5-Sd9qX2mRDoTVlsXg75nw4lHzdhRpvg_wWYWsBPjgV2qE40y2Vhzl7TXtCc9gjEFxABrJ_QbWTJAaX5bRgXl7cW4f-laayYw14jzVtNwNz9Yuv6AGlwWQxBXKGckpluzO14zbc8XS_Bf3lrLxbx1L4mjbyI8tb0Ct6GrBG2dcGJ3mdcVwIBBhfSeCXoxUz4ZN-4Q9tMD0cacReXH3nlXbNa6m1_e6tVVUA2E7UUPExdECppV5H4T9sGfO3c_M8_jXTFPAgiNIynoSY7H1GNoEJ5i0O0Dhpa5384Fwc_fJuJHDNsGT4d-5K528u0NH9O1HZsRdSvaprV04l2mDADg_tF433CNeHMH7FMqEPqsj8MD8RyAw7UJY316bFVSgpw1hzsgE7l81sg0dn8VCxjvb8'
     };
-    ReservationToSend.servicesMap.clear();
-    for (int i=0;i<choosedServicesList.length;i++)
-      {
-        ReservationToSend.servicesMap.add(new ServicesMap(id:bothId[i].toString(),name:choosedServicesList[i]));
-       // ReservationToSend.servicesMap[i].name=;
-
-      }
-    print("the list send is ${ReservationToSend.servicesMap[1].id}");
-
-    print("the list send is ${ReservationToSend.servicesMap[1].name}");
     var request =
-    http.MultipartRequest('POST', Uri.parse('$base_Url/api/Reservation'));
+        http.MultipartRequest('POST', Uri.parse('$base_Url/api/Reservation'));
     request.fields.addAll({
       'Gate_name': '${gate_name}',
       'start_time': '${Start_time}',
       'end_time': '${end_time}',
+      'services_map[0][id]': '$service_id',
+      'services_map[0][name]': '$service_name',
     });
 
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
-    print("the response is yesssss ${response.statusCode} ");
+print("the response is yesssss ${response.statusCode} ");
     if (response.statusCode == 200) {
       print(await response.stream.bytesToString());
     } else {
@@ -143,56 +119,9 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
     }
   }
 
-
-   */
-  book_resevices(
-    String gate_name,
-    String Start_time,
-    String end_time,
-  ) async {
-    for (int i = 0; i < choosedServicesList.length; i++) {
-      ReservationToSend.servicesMap.add(new ServicesMap(
-          id: bothId[i].toString(), name: choosedServicesList[i]));
-      // ReservationToSend.servicesMap[i].name=;
-
-    }
-    ReservationToSend.gateName = gate_name;
-    ReservationToSend.startTime = Start_time;
-    ReservationToSend.endTime = end_time;
-    print("the list send is ${ReservationToSend.servicesMap[1].id}");
-
-    print("the list send is ${ReservationToSend.servicesMap[1].name}");
-    var response = await http.post(Uri.parse('$base_Url/api/Reservation'),
-        headers: <String, String>{
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization':'Bearer $tokenUser'
-        },
-        body: listServeiceToSendToJson(ReservationToSend));
-    print('the response i ss${response.body}');
-    print('the response i ss${response.statusCode}');
-
-    if (response.statusCode == 201) {
-      print('secssful');
-      print('body ${response.body}');
-      print('the end is ${listServeiceToSendToJson(ReservationToSend)}');
-      return response;
-    } else
-      response;
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    for (int i = 0; i < both.length; i++) {
-      chooseService.add(new ServicesCheckBox(serviceName: both[i]));
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     selectedService = both[0];
-
     return Scaffold(
       extendBody: true,
       extendBodyBehindAppBar: true,
@@ -270,9 +199,8 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
                               children: [
                                 SizedBox(
                                   height: MediaQuery.of(context).size.height *
-                                      0.025,
+                                      0.055,
                                 ),
-                                /*
                                 Column(
                                   children: <Widget>[
                                     Container(
@@ -287,105 +215,50 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
                                               color: Colors.blue,
                                             ),
                                             borderRadius:
-                                            BorderRadius.circular(25),
+                                                BorderRadius.circular(25),
                                           ),
                                         ),
                                         value: selectedService,
-                                        items: listservice
+                                        items: both
                                             .map(
                                               (service) =>
-                                              DropdownMenuItem<String>(
+                                                  DropdownMenuItem<String>(
+                                                value: service,
                                                 child: Text(
-                                                  service.name,
+                                                  service,
                                                   style: const TextStyle(
                                                     fontSize: 22,
                                                     color: Colors.blue,
                                                   ),
                                                 ),
-
                                               ),
-                                        )
+                                            )
                                             .toList(),
-                                        onChanged: (service) =>
-                                            setState(() async {
-                                              selectedService = service;
+                                        onChanged: (service) => setState(
+                                            () // انا علقتها كانت عم تضرب ايرور  async
+                                            {
+                                          selectedService = service;
+                                          for(int i=0; i <listservice.length;i++ )
+                                            {
+                                              if(selectedService==listservice[i].name)
+                                                {
+                                                  id_service=listservice[i].id;
+                                                  break;
+                                                }
+                                            }
+                                          /////1111 seconde parameter
+                                          print("the services is $selectedService");
+                                          print("the services is $id_service");
 
                                             }),
                                       ),
                                     ),
                                   ],
                                 ),
-
-
-                                 */
-                                const Text(
-                                  "Select Services",
-                                  softWrap: true,
-                                  style: TextStyle(
-                                    fontSize: 30,
-                                    color: Colors.white,
-                                    // backgroundColor: const Color.fromARGB(80, 0, 105, 200),
-                                  ),
-                                ),
-                                Container(
-                                  alignment: Alignment.topCenter,
-                                  margin: const EdgeInsets.only(
-                                    left: 25,
-                                    right: 25,
-                                  ),
-                                  padding: EdgeInsets.only(
-                                    left:
-                                        MediaQuery.of(context).size.width * 0.1,
-                                    top: 0.0001,
-                                  ),
-                                  width: double.infinity,
-                                  height: MediaQuery.of(context).size.height *
-                                      0.265,
-                                  decoration: BoxDecoration(
-                                    color:
-                                        const Color.fromARGB(80, 0, 105, 200),
-                                    borderRadius: BorderRadius.circular(25),
-                                    border: Border.all(
-                                      color: Colors.blue,
-                                      width: 2.0,
-                                    ),
-                                  ),
-                                  child: ListView(
-                                    padding: const EdgeInsets.all(0.1),
-                                    children: [
-                                      buildGroupServicesCheckbox(
-                                          selectAllServices),
-                                      Row(
-                                        children: <Widget>[
-                                          SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.1,
-                                          ),
-                                          const Divider(
-                                            color: Colors.white,
-                                            thickness: 1,
-                                          ),
-                                          SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.1,
-                                          ),
-                                        ],
-                                      ),
-                                      ...chooseService
-                                          .map(buildServiceCheckbox)
-                                          .toList(),
-                                    ],
-                                  ),
-                                ),
                                 SizedBox(
-                                  height: MediaQuery.of(context).size.height *
-                                      0.025,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.03,
                                 ),
-
                                 //date Picker Button
                                 TextButton(
                                   child: Text(
@@ -404,6 +277,8 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
                                       choosedDate.hour,
                                       choosedDate.minute,
                                     );
+
+                                    print("the dateeee : ${date}");
                                     showSelectedDate();
                                   },
                                 ),
@@ -564,16 +439,9 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
                                           selectedMinuteDuration!,
                                           selectedHoursDuration!,
                                         );
-                                        book_resevices(
-                                          gateName,
-                                          DateFormat("yyyy-MM-dd HH:mm")
-                                              .format(choosedStartingDateTime)
-                                              .toString(),
-                                          DateFormat("yyyy-MM-dd HH:mm")
-                                              .format(choosedEndingDateTime)
-                                              .toString(),
-                                        );
-                                        // book_resevices(gateName,time.toString(),choosedEndTime.toString());
+                                        
+                                        book_resevices(gateName,'$choosedStartingDateTime','$choosedEndingDateTime',id_service.toString(),selectedService!);
+                                       //  book_resevices(gateName,selectedService,start time ,end time,id_service )
                                       },
                                     );
                                   },
@@ -671,36 +539,14 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
     String selectedHoursDuration,
     String serviceName,
   ) {
-    // if (serviceName == 'Select Service') {
-    //   TheSnackBar(
-    //     context,
-    //     'Please Select Service',
-    //     const Color.fromARGB(255, 150, 10, 10),
-    //   );
-    //   return false;
-    // } else
-    chooseService.forEach((service) {
-      if (service.isChecked) choosedServicesList.add(service.serviceName);
-    });
-
-    if (choosedServicesList.isEmpty) {
+    if (serviceName == 'Select Service') {
       TheSnackBar(
         context,
         'Please Select Service',
         const Color.fromARGB(255, 150, 10, 10),
       );
       return false;
-    } else if (choosedServicesList.length > 1 &&
-        choosedServicesList[0] == "self Unloaded Delivery") {
-      TheSnackBar(
-        context,
-        "self Unloaded Can't be Used With Any Service",
-        const Color.fromARGB(255, 150, 10, 10),
-      );
-      choosedServicesList.clear();
-      return false;
-    }
-    if (date.year == 2021) {
+    } else if (date.year == 2021) {
       TheSnackBar(
         context,
         'Please Select Date',
@@ -714,7 +560,7 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
         const Color.fromARGB(255, 150, 10, 10),
       );
       return false;
-    } else if (time.hour >= 18 || time.hour < 6) {
+    } else if (time.hour > 18 && time.hour < 6) {
       TheSnackBar(
         context,
         'This period is unavailable',
@@ -753,10 +599,20 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
           return false;
         }
       }
+
+      // if (selectedHoursDuration == "" ||
+      //     selectedHoursDuration == " " ||
+      //     selectedHoursDuration == "0") {
+      //   selectedHoursDuration = "00";
+      // } else if (selectedMinuteDuration == "" ||
+      //     selectedMinuteDuration == " " ||
+      //     selectedMinuteDuration == "0") {
+      //   selectedMinuteDuration = "00";
+      // }
       int closedHours = int.parse(selectedHoursDuration);
       int closedMinutes = int.parse(selectedMinuteDuration);
       if ((closedHours + time.hour) >= 18 &&
-          (closedMinutes + time.minute) > 1) {
+          (closedMinutes + time.minute) > 5) {
         TheSnackBar(
           context,
           'Duration Exceeding closing time,'
@@ -764,8 +620,7 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
           const Color.fromARGB(255, 150, 10, 10),
         );
         return false;
-      }
-      if ((closedHours + time.hour) >= 17 &&
+      } else if ((closedHours + time.hour) >= 17 &&
           (closedMinutes + time.minute) > 65) {
         TheSnackBar(
           context,
@@ -784,20 +639,12 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
         );
         return false;
       }
-      if (time.hour < 6) {
-        TheSnackBar(
-          context,
-          'Duration Exceeding closing time,'
-          ' please Edit duration or time',
-          const Color.fromARGB(255, 150, 10, 10),
-        );
-        return false;
-      }
       TheSnackBar(
         context,
         'Service Requested Successfully',
         const Color.fromARGB(255, 15, 150, 10),
       );
+
       choosedEndTime = TimeOfDay(
         hour: (choosedStartingDateTime.hour + int.parse(selectedHoursDuration)),
         minute: (choosedStartingDateTime.minute +
@@ -810,7 +657,6 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
         choosedEndTime.hour,
         choosedEndTime.minute,
       );
-
       return true;
     }
   }
@@ -845,11 +691,10 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
     if (checkNewRequest) {
       /*
       UserRequestsPage.requestList.add(
-
+/*
         RequestsStates(
           gateTitle: widget.gateName,
-          serviceTitleList: choosedServicesList,
-          // serviceTitle: selectedService!,
+          serviceTitleList: selectedService!,
           serviceStartDate:
               DateFormat("yyyy/MM/dd").format(choosedStartingDateTime),
           serviceEndDate:
@@ -863,68 +708,17 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
             choosedEndTime.minute,
           ),
         ),
-        */
+
+ */
+      );
+      */
 
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (_) => const UserRequestsPage(),
-        ),
+        MaterialPageRoute(builder: (_) => const UserRequestsPage()),
       );
     }
   }
 
 ////////////////////////////////////////////
-//هي ال widget  اللي بتعرض خيار ال  select all Services ك checkBox
 
-  Widget buildGroupServicesCheckbox(ServicesCheckBox serviceCheckBox) =>
-      CheckboxListTile(
-        controlAffinity: ListTileControlAffinity.leading,
-        title: Text(
-          serviceCheckBox.serviceName,
-          style: const TextStyle(
-            fontSize: 24,
-            color: Colors.orange,
-          ),
-        ),
-        activeColor: Colors.blue,
-        value: serviceCheckBox.isChecked,
-        onChanged: toggleGroupServiceCheckbox,
-      );
-
-// for choosing all Services in one choice
-// its called select all staffs
-// هاد تابع بيتقق اذا تم اختبار ال كل ال Services او لأ
-// مشان الخيار select all Services
-
-  void toggleGroupServiceCheckbox(bool? isChecked) {
-    if (isChecked == null) return;
-    setState(() {
-      selectAllServices.isChecked = isChecked;
-      // ignore: avoid_function_literals_in_foreach_calls
-      chooseService.forEach((service) {
-        if (service.serviceName == "self Unloaded Delivery" &&
-            service.isChecked == true) service.isChecked = false;
-        if (service.serviceName != "self Unloaded Delivery")
-          service.isChecked = isChecked;
-      });
-    });
-  }
-
-//هي ال widget  اللي بتعرض ال Services ك checkBox
-
-  Widget buildServiceCheckbox(ServicesCheckBox servicesCheckBox) =>
-      CheckboxListTile(
-        onChanged: (serviceValue) => setState(() {
-          servicesCheckBox.isChecked = serviceValue!;
-          selectAllServices.isChecked =
-              chooseService.every((service) => service.isChecked == true);
-        }),
-        controlAffinity: ListTileControlAffinity.leading,
-        activeColor: Colors.blue,
-        value: servicesCheckBox.isChecked,
-        title: Text(
-          servicesCheckBox.serviceName,
-          style: const TextStyle(fontSize: 24, color: Colors.white),
-        ),
-      );
 }

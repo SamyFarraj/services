@@ -11,7 +11,8 @@ import '../../Api/controller/login_controller.dart';
 import '../../Api/model/myaccapted_model.dart';
 import '../../moh_project/post_moh/login_controller.dart';
 import '../../services/requests_form.dart';
-import '../home/requests.dart';
+import '../home/requests_page_managment.dart';
+import '../user/user_requests.dart';
 
 class AdminRequestsPage extends StatefulWidget {
    AdminRequestsPage({Key? key}) : super(key: key);

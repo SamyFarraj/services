@@ -2,13 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:project_mohammad/Api/model/allreservation_mode.dart';
+import 'package:http/http.dart' as http;
 
 import '../../moh_project/post_moh/login_controller.dart';
 import '../../services/choices.dart';
-import '../../services/requests_form.dart';
-import '../home/requests.dart';
-import 'package:http/http.dart' as http;
+import 'package:project_mohammad/Api/model/allreservation_mode.dart';
+import '../user/user_requests.dart';
 
 class ServiceCalender extends StatefulWidget {
   const ServiceCalender({Key? key}) : super(key: key);
@@ -18,12 +17,12 @@ class ServiceCalender extends StatefulWidget {
 }
 
 class _ServiceCalenderState extends State<ServiceCalender> {
-  List<AllReseervatios> ulist = [];
+  List<AllReseervatios> uList = [];
   List<AllReseervatios> userLists = [];
-List<AllReseervatios>myadminRequestsManageList=[];
-  @override
+List<AllReseervatios>myAdminRequestsManageList=[];
+
   static List<AllReseervatios> parseAgents(String responseBody) {
-    print("sdknkjsdngjnd");
+    print("Parse Agent done");
     //Map<String,String>.from(oldMap)
     final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
     return parsed
@@ -38,15 +37,15 @@ List<AllReseervatios>myadminRequestsManageList=[];
         'Authorization': 'Bearer $t'
       },
     );
-    print('the tokem ${t}');
+    print('the token ${t}');
 
     print('the statues is ${response.statusCode}');
     if (response.statusCode == 200) {
-      final List parsedList = json.decode(response.body);
+      // final List parsedList = json.decode(response.body);
       // List<MyReservations> list = parsedList.map((val) => MyReservations.fromJson(val)).toList();
       //  print("${response.body}");json.decode(response.body);
       List<AllReseervatios> list = parseAgents(response.body);
-      print("sdasdasdasdsad$list");
+      print("List Print$list");
       return list;
     } else {
       throw Exception('Unexpected error occurred!');
@@ -62,20 +61,20 @@ List<AllReseervatios>myadminRequestsManageList=[];
 
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
     fetchData().then((subjectFromServer) {
       setState(() {
-        print("the u list issss : $ulist");
-        ulist = subjectFromServer;
-        userLists = ulist;
-        print("fsfsdfdsfdsf${userLists[0].gateName}");
+        print("the u list is : $uList");
+        uList = subjectFromServer;
+        userLists = uList;
+        print("user list print${userLists[0].gateName}");
 
         for(int i=0;i<userLists.length;i++)
         {
           if(userLists[i].isAccepted==1)
             {
-          myadminRequestsManageList.add(userLists[i]);
+          myAdminRequestsManageList.add(userLists[i]);
         }}
       });
     });
@@ -176,10 +175,10 @@ List<AllReseervatios>myadminRequestsManageList=[];
                             onPressed: () {
                               setState(() {
                                 print('the select date${selectedDate}');
-                                print('the select array${myadminRequestsManageList[0].startTime}');
+                                print('the select array${myAdminRequestsManageList[0].startTime}');
 
                                 serviceDateFilter(
-                                  myadminRequestsManageList,
+                                  myAdminRequestsManageList,
                                   selectedDate,
                                 );
                               });

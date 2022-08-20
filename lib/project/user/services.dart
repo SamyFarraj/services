@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:project_mohammad/Api/model/name_service.dart';
 import 'package:http/http.dart' as http;
 import 'package:project_mohammad/components/dash_board.dart';
-import 'package:project_mohammad/project/edition/service_info_new_ed.dart';
-import 'package:project_mohammad/project/home/service_info_input.dart';
+import 'package:project_mohammad/project/user/service_info_input.dart';
 import 'package:project_mohammad/services/choices.dart';
 
 import '../../main.dart';
@@ -27,7 +26,7 @@ class _ServiceEditionState extends State<ServiceEditionS> {
       },
     );
     if (response.statusCode == 200) {
-      print("yesssssssssss");
+      print("response status 200");
       return jsonDecode(response.body);
     } else {
       return "Error code is ${response.statusCode}";
@@ -35,15 +34,15 @@ class _ServiceEditionState extends State<ServiceEditionS> {
   }
   List<String> gatesEdition=[];
 
-  List<String> servicewoodward = [];
-  List<String> servicefarmer = [];
-  List<String> bothstreet = [];
-  List<String> bothstreetID = [];
+  List<String> serviceWoodWard = [];
+  List<String> serviceFarmer = [];
+  List<String> bothStreet = [];
+  List<String> bothStreetID = [];
 
   String selectedService = 'Select Service';
   String? selectedStreet = "FARMER";
 
-  late int theid;
+  late int theId;
 
   Future<ListService> fetchAlbum() async {
  //   gatesEdition.add('');
@@ -53,7 +52,7 @@ print('here');
         }
             // snapshot.data!.services.woodWard[1].street
             );
-    print("the respsmss base ${response.statusCode}");
+    print("the response base ${response.statusCode}");
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
@@ -168,17 +167,17 @@ print('here');
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                      //  gatesEdition.clear();
-                        servicewoodward.clear();
-                       servicefarmer.clear();
-                        bothstreet.clear();
+                        serviceWoodWard.clear();
+                       serviceFarmer.clear();
+                        bothStreet.clear();
                         print("step one ");
-                        bothstreet.add('Select Service');
-                        print("dkphhhhh");
+                        bothStreet.add('Select Service');
+                        print("service select done");
                         // gatesEdition.clear();
                         //gatesEdition.add('select service');
                         /*
                           if (snapshot.data!.services.woodward.length == 0) {
-                            servicewoodward.add('no item');
+                            serviceWoodWard.add('no item');
                           }
                         */
                           for (int i = 0;
@@ -186,9 +185,9 @@ print('here');
                               i++) {
                             print("there is no item ");
 
-                            servicewoodward.add(snapshot.data!.services.woodward[i].name);
+                            serviceWoodWard.add(snapshot.data!.services.woodward[i].name);
                           }
-                          print(servicewoodward);
+                          print(serviceWoodWard);
 
 
                         for (int i = 0;
@@ -196,20 +195,20 @@ print('here');
                             i++) {
                           print("there is no item ");
 
-                          bothstreet.add(
+                          bothStreet.add(
                               snapshot.data!.services.bothStreet[i].name);
-                          bothstreetID.add(
+                          bothStreetID.add(
                               snapshot.data!.services.bothStreet[i].id.toString());
                         }
                         /*
                           if (snapshot.data!.services.farmer.length == 0) {
-                            servicefarmer.add('no item');
+                            serviceFarmer.add('no item');
                           }
                         */
-                          print("dkphhhhh");
+                          print("service both street");
 
                           for (int i = 0; i < snapshot.data!.services.farmer.length; i++)
-                          {servicefarmer.add(snapshot.data!.services.farmer[i].name);}
+                          {serviceFarmer.add(snapshot.data!.services.farmer[i].name);}
                         return Column(
                           children: <Widget>[
                             SizedBox(
@@ -243,47 +242,47 @@ print('here');
                                 onChanged: (street) => setState(
                                   () {
                                     selectedStreet = street;
-                                    print("the select steree $selectedStreet");
+                                    print("the selected street $selectedStreet");
                                     //111111
 
                                     if (selectedStreet == 'FARMER') {
-                                      if (servicefarmer.length == 0) {
-                                        // servicefarmer.add('');
+                                      if (serviceFarmer.length == 0) {
+                                        // serviceFarmer.add('');
                                         gatesEdition =
-                                            List.from(servicefarmer);
-                                        //    servicesList.add('selecet serveics');
+                                            List.from(serviceFarmer);
+                                        //    servicesList.add('select services');
 
                                       }
                                       else {
-                                        // servicefarmer.add('');
+                                        // serviceFarmer.add('');
                                         gatesEdition =
-                                            List.from(servicefarmer);
+                                            List.from(serviceFarmer);
                                         print(
-                                            'the farmeeer is ${gatesEdition}');
-                                        //    servicesList.add('selecet serveics');
+                                            'the farmer is ${gatesEdition}');
+                                        //    servicesList.add('select services');
                                         selectedService = gatesEdition[0];
                                       }
                                     }
 
                                     if (selectedStreet == 'WOODWARD') {
-                                      if (servicewoodward.length == 0) {
-                                        // servicefarmer.add('');
+                                      if (serviceWoodWard.length == 0) {
+                                        // serviceFarmer.add('');
                                         gatesEdition =
-                                            List.from(servicewoodward);
-                                        //    servicesList.add('selecet serveics');
+                                            List.from(serviceWoodWard);
+                                        //    servicesList.add('select services');
 
                                       }
                                       else {
                                         gatesEdition =
-                                            List.from(servicewoodward);
-                                        //    servicesList.add('selecet serveics');
+                                            List.from(serviceWoodWard);
+                                        //    servicesList.add('select services');
                                         selectedService = gatesEdition[0];
-                                        print(selectedService + "sasasa");
+                                        print(selectedService + "selected Services printing");
                                       }
                                     }
                                     // servicesList.clear();
                                     //gatesEdition.clear();
-                                    print("kdfsjkjfkl${gatesEdition}");
+                                    print("gates Ed ${gatesEdition}");
                                   },
                                 ),
                               ),
@@ -323,16 +322,16 @@ print('here');
                                     .toList(),
                                 onChanged: (service) => setState(() {
                                   selectedService = service!;
-                                  print("thedasdas $bothstreet");
-                                  print('the both street${bothstreet}');
+                                  print("both street :  $bothStreet");
+                                  print('the both street${bothStreet}');
                                   Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(
                                       builder: (_) =>
                                           ServiceInfoInputNewEd(
                                         gateName: selectedService,
-                                        both: bothstreet,
+                                        both: bothStreet,
                                         listservice: snapshot.data!.services.bothStreet,
-                                            bothId:bothstreetID,
+                                            bothId:bothStreetID,
 
                                           ),
                                     ),
