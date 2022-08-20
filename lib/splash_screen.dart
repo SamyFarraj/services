@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
-import 'authentication/log_in_page.dart';
+import 'authentication/user_log_in_page.dart';
 import 'project/projects_page.dart';
 
 Future splashSc()async{

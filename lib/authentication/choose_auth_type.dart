@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:project_mohammad/authentication/log_in_page.dart';
-import 'package:project_mohammad/authentication/sign_up_page.dart';
+import 'package:project_mohammad/authentication/user_log_in_page.dart';
+import 'package:project_mohammad/authentication/user_sign_up_page.dart';
 
 import 'admin_log_in_page.dart';
 
@@ -106,7 +106,7 @@ class _AuthChoosingPageState extends State<AuthChoosingPage> {
                         child: ElevatedButton(
                           onPressed: () => Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (_) => const LogInPage(),
+                              builder: (_) => const UserLogInPage(),
                             ),
                           ),
                           style: ElevatedButton.styleFrom(

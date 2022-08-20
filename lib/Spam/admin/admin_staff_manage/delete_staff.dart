@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../components/snack_bar.dart';
+import '../../../components/snack_bar.dart';
 
 class DeleteStaff extends StatefulWidget {
   const DeleteStaff({Key? key}) : super(key: key);

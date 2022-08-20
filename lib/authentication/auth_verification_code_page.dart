@@ -26,7 +26,7 @@ class _AuthVerificationCodePageState extends State<AuthVerificationCodePage> {
 
   //متغير ل تحديد طهور ال password
   bool passwordVisibility = true;
-  late Future<String> mycode;
+  late Future<String> myCode;
 
   @override
   void initState() {
@@ -50,9 +50,9 @@ class _AuthVerificationCodePageState extends State<AuthVerificationCodePage> {
 
 
 
-    mycode =Account_User.get_varvecation_code();
-    print('heloooo');
-    print('the code is $mycode');
+    myCode =Account_User.get_varvecation_code();
+    print('hello');
+    print('the code is $myCode');
   }
 
   @override

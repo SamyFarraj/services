@@ -9,7 +9,8 @@ import '../../Api/model/name_service.dart';
 import '../../main.dart';
 import '../../services/choices.dart';
 import '../constant.dart';
-import '../home/requests.dart';
+import '../home/requests_page_management.dart';
+import 'user_requests.dart';
 
 /*
 File in order to enter service reservation information such as

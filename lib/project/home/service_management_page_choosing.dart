@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../admin/admin_control_panel.dart';
-import '../edition/DEMO.dart';
-import '../edition/services_edition.dart';
+import '../user/services.dart';
 import 'package:project_mohammad/project/projects_page.dart';
 // import 'services.dart';
 

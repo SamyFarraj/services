@@ -6,9 +6,9 @@ import 'package:project_mohammad/project/constant.dart';
 import 'package:http/http.dart' as http;
 import 'package:project_mohammad/components/snack_bar.dart';
 
-import '../../services/choices.dart';
-import '../../services/requests_form.dart';
-import 'requests.dart';
+
+import '../../project/user/user_requests.dart';
+import '../../project/home/requests_page_management.dart';
 
 /*
 File in order to enter service reservation information such as

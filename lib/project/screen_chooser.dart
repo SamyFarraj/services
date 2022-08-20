@@ -1,10 +1,10 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:project_mohammad/project/edition/services_edition.dart';
+import 'package:project_mohammad/Spam/home_pages/services_edition.dart';
 
 import 'home/service_management_page_choosing.dart';
 import 'home/home_page.dart';
-import 'home/requests.dart';
+import 'home/requests_page_management.dart';
 
 class ScreenChooser extends StatefulWidget {
   const ScreenChooser({Key? key}) : super(key: key);

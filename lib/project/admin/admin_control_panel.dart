@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:project_mohammad/components/dash_board.dart';
-import 'package:project_mohammad/project/admin/add_new_admin.dart';
-import 'package:project_mohammad/project/admin/remove_admin.dart';
+import 'package:project_mohammad/project/admin/admins_manage/add_new_admin.dart';
+import 'package:project_mohammad/project/admin/admins_manage/remove_admin.dart';
 
 import '../../components/buttons.dart';
-import 'add_new_service.dart';
-import 'block_service.dart';
-import 'delete_service.dart';
+import 'services_manage/add_new_service.dart';
+import 'services_manage/block_service.dart';
+import 'services_manage/delete_service.dart';
 import 'service_calender.dart';
-import 'un_block_service.dart';
+import 'services_manage/un_block_service.dart';
 
 //هدول ال imports تبع ال staff
 // import 'add_new_staff.dart';

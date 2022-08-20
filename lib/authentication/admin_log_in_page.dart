@@ -1,9 +1,8 @@
-// import 'package:email_validator/email_validator.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:project_mohammad/Api/controller/login_controller.dart';
+import 'package:project_mohammad/project/projects_page.dart';
 
-// import '../components/buttons.dart';
 
 class AdminLogInPage extends StatefulWidget {
   const AdminLogInPage({Key? key}) : super(key: key);
@@ -204,17 +203,23 @@ class _AdminLogInPageState extends State<AdminLogInPage> {
                           /*
                           final formKey = adminLoginFormKey.currentState!;
                             if(formKey.validate()){
-
+                                Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ProjectsPage(),
+                            ),
+                          );
                             }
                            */
+
                           print('Pressed');
                           logincontroller().signIn(
                             adminEmailController.text,
                             adminPasswordController.text,
                             'Admin',
                           );
-                          print('befor send request ');
-                      //    logincontroller().signIn(adminEmailController.text,adminPasswordController.text,'/Admin');
+                          print('before send request ');
+                             // logincontroller().signIn(adminEmailController.text,adminPasswordController.text,'/Admin');
                         },
                         style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.symmetric(

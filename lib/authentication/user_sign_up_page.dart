@@ -1,7 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:project_mohammad/Api/controller/signup_contrller.dart';
-import 'package:project_mohammad/components/buttons.dart';
+import 'package:project_mohammad/authentication/user_log_in_page.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -12,21 +12,27 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   // هدول متعيرات مشان اظهار ال password وال re password
-  bool rePasswordVisibility = true;
-  bool passwordVisibility = true;
+  bool userRePasswordVisibility = true;
+  bool userPasswordVisibility = true;
+
   // هدول ال controllers مشات الحقول
   //هاد لل اسم
-  final nameController = TextEditingController();
+  final userNameController = TextEditingController();
+
   //هاد لل email
-  final emailController = TextEditingController();
+  final userEmailController = TextEditingController();
+
   //هاد لل password
-  final passwordController = TextEditingController();
+  final userPasswordController = TextEditingController();
+
   //هاد ل إعادة password
-  final rePasswordController = TextEditingController();
+  final userRePasswordController = TextEditingController();
+
   //هاد ل إعادة رقم ال هاتف
-  final phoneController = TextEditingController();
+  final userPhoneController = TextEditingController();
+
   //هاد ال key مسان ال validation
-  final signUpFormKey = GlobalKey<FormState>();
+  final userSignUpFormKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +74,7 @@ class _SignUpPageState extends State<SignUpPage> {
           // ما يعطي pixels rendered out error
           // يعني مشات  ما تطلع ال pixels  من الشاشة
           Form(
-            key: signUpFormKey,
+            key: userSignUpFormKey,
             child: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
@@ -101,10 +107,10 @@ class _SignUpPageState extends State<SignUpPage> {
                         // هاد ال حقل الخاص ب الاسم
                         TextFormField(
                           validator: (enteredPasswordVal) =>
-                          enteredPasswordVal!.length < 6
-                              ? "Name is too short"
-                              : null,
-                          controller: nameController,
+                              enteredPasswordVal!.length < 6
+                                  ? "Name is too short"
+                                  : null,
+                          controller: userNameController,
                           decoration: const InputDecoration(
                             prefixIcon: Icon(
                               Icons.person,
@@ -141,12 +147,12 @@ class _SignUpPageState extends State<SignUpPage> {
                         // هاد ال حقل الخاص ب ال email
                         TextFormField(
                           validator: (enteredEmailVal) =>
-                          enteredEmailVal != null &&
-                              !EmailValidator.validate(enteredEmailVal)
-                              ? "Please Enter a Valid E-Mail"
-                              : null,
+                              enteredEmailVal != null &&
+                                      !EmailValidator.validate(enteredEmailVal)
+                                  ? "Please Enter a Valid E-Mail"
+                                  : null,
                           keyboardType: TextInputType.emailAddress,
-                          controller: emailController,
+                          controller: userEmailController,
                           decoration: const InputDecoration(
                             prefixIcon: Icon(
                               Icons.mail,
@@ -183,12 +189,12 @@ class _SignUpPageState extends State<SignUpPage> {
                         // هاد ال حقل الخاص ب ال password
                         TextFormField(
                           validator: (enteredPasswordVal) =>
-                          enteredPasswordVal!.length < 8
-                              ? "Password is too short"
-                              : null,
+                              enteredPasswordVal!.length < 8
+                                  ? "Password is too short"
+                                  : null,
                           keyboardType: TextInputType.visiblePassword,
-                          obscureText: passwordVisibility,
-                          controller: passwordController,
+                          obscureText: userPasswordVisibility,
+                          controller: userPasswordController,
                           decoration: InputDecoration(
                             prefixIcon: const Icon(
                               Icons.vpn_key_sharp,
@@ -196,12 +202,13 @@ class _SignUpPageState extends State<SignUpPage> {
                             ),
                             suffixIcon: IconButton(
                               color: Colors.blue,
-                              icon: passwordVisibility
+                              icon: userPasswordVisibility
                                   ? const Icon(Icons.visibility_off)
                                   : const Icon(Icons.visibility),
                               // color: Colors.deepOrange,
                               onPressed: () => setState(
-                                    () => passwordVisibility = !passwordVisibility,
+                                () => userPasswordVisibility =
+                                    !userPasswordVisibility,
                               ),
                             ),
                             label: const Text(
@@ -235,11 +242,11 @@ class _SignUpPageState extends State<SignUpPage> {
                         // هاد ال حقل الخاص ب اعادة ال password
                         TextFormField(
                           validator: (enteredPasswordVal) =>
-                          enteredPasswordVal!= passwordController.text
-                              ? "re-Password isn't current"
-                              : null,
-                          obscureText: rePasswordVisibility,
-                          controller: rePasswordController,
+                              enteredPasswordVal != userPasswordController.text
+                                  ? "re-Password isn't current"
+                                  : null,
+                          obscureText: userRePasswordVisibility,
+                          controller: userRePasswordController,
                           decoration: InputDecoration(
                             prefixIcon: const Icon(
                               Icons.vpn_key_sharp,
@@ -247,13 +254,13 @@ class _SignUpPageState extends State<SignUpPage> {
                             ),
                             suffixIcon: IconButton(
                               color: Colors.blue,
-                              icon: rePasswordVisibility
+                              icon: userRePasswordVisibility
                                   ? const Icon(Icons.visibility_off)
                                   : const Icon(Icons.visibility),
                               // color: Colors.deepOrange,
                               onPressed: () => setState(
-                                    () => rePasswordVisibility =
-                                !rePasswordVisibility,
+                                () => userRePasswordVisibility =
+                                    !userRePasswordVisibility,
                               ),
                             ),
                             label: const Text(
@@ -287,11 +294,11 @@ class _SignUpPageState extends State<SignUpPage> {
                         // هاد ال حقل الخاص ب رقم الهاتف
                         TextFormField(
                           validator: (enteredPhoneVal) =>
-                          enteredPhoneVal!.length < 9
-                              ? "phone is too short"
-                              : null,
+                              enteredPhoneVal!.length < 9
+                                  ? "phone is too short"
+                                  : null,
                           keyboardType: TextInputType.phone,
-                          controller: phoneController,
+                          controller: userPhoneController,
                           decoration: const InputDecoration(
                             prefixIcon: Icon(
                               Icons.phone,
@@ -348,27 +355,32 @@ class _SignUpPageState extends State<SignUpPage> {
                             // حاليا رح اتركو بتعليق مشات
                             // ما يعذبك وقت التجريب اخر شي بزبطو
                             /*
-                                final signinFormKey = signupFormKey.currentState!;
-                              if(signinFormKey.validate()){
+                                final signUpFormKey = signupFormKey.currentState!;
+                              if(signUpFormKey.validate()){
+
                                 // تابع ارسال البيانات
                               }
                              */
-
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => UserLogInPage(),
+                              ),
+                            );
                             print("Test Request SignUp");
                             sign_Up().sign_Up_request(
-                                nameController.text,
-                                emailController.text,
-                                passwordController.text,
-                                rePasswordController.text,
-                                phoneController.text
+                                userNameController.text,
+                                userEmailController.text,
+                                userPasswordController.text,
+                                userRePasswordController.text,
+                                userPhoneController.text,
                             );
-
                           },
                           style: ElevatedButton.styleFrom(
                             padding: EdgeInsets.symmetric(
                               vertical: 5.0,
                               horizontal:
-                              MediaQuery.of(context).size.width * 0.25,
+                                  MediaQuery.of(context).size.width * 0.25,
                             ),
                             primary: Colors.blue,
                             shape: RoundedRectangleBorder(
@@ -376,7 +388,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             ),
                             elevation: 15.0,
                           ),
-                          child:  Row(
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: const <Widget>[
                               Icon(
