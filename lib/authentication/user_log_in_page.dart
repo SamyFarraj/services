@@ -3,20 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:project_mohammad/Api/controller/login_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LogInPage extends StatefulWidget {
-  const LogInPage({Key? key}) : super(key: key);
+class UserLogInPage extends StatefulWidget {
+  const UserLogInPage({Key? key}) : super(key: key);
 
   @override
-  State<LogInPage> createState() => _LogInPageState();
+  State<UserLogInPage> createState() => _UserLogInPageState();
 }
 
-class _LogInPageState extends State<LogInPage> {
+class _UserLogInPageState extends State<UserLogInPage> {
   // هدول ال controller
   // مشان ال textFields
 
 
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  final userEmailController = TextEditingController();
+  final userPasswordController = TextEditingController();
 
   // هاد ال key  مشات ال  validation
   final loginFormKey = GlobalKey<FormState>();
@@ -103,7 +103,7 @@ class _LogInPageState extends State<LogInPage> {
                                   ? "Please Enter a Valid E-Mail"
                                   : null,
                           keyboardType: TextInputType.emailAddress,
-                          controller: emailController,
+                          controller: userEmailController,
                           decoration: const InputDecoration(
                             prefixIcon: Icon(
                               Icons.mail,
@@ -144,7 +144,7 @@ class _LogInPageState extends State<LogInPage> {
                                   ? "Password is too short"
                                   : null,
                           obscureText: passwordVisibility,
-                          controller: passwordController,
+                          controller: userPasswordController,
                           decoration: InputDecoration(
                             prefixIcon: const Icon(
                               Icons.vpn_key_sharp,
@@ -258,8 +258,8 @@ class _LogInPageState extends State<LogInPage> {
                             }
                              */
                             print('pressed');
-                            logincontroller().signIn(emailController.text,
-                                passwordController.text, '');
+                            logincontroller().signIn(userEmailController.text,
+                                userPasswordController.text, '');
                           },
                         )
                         //  هي كبسة ال login

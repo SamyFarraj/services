@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project_mohammad/Api/controller/Admin/add_service_controller.dart';
 import 'package:project_mohammad/services/choices.dart';
 
-import '../../components/snack_bar.dart';
+import '../../../components/snack_bar.dart';
 
 class AddNewService extends StatefulWidget {
   const AddNewService({Key? key}) : super(key: key);
@@ -17,7 +17,7 @@ class _AddNewServiceState extends State<AddNewService> {
   final serviceNameController = TextEditingController();
   List<String> streetsList = ["Select Street", "WoodWard", "Farmer","BothStreet"];
   String? selectedStreet = "Select Street";
-final Streetname=TextEditingController();
+final StreetName = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -123,7 +123,7 @@ final Streetname=TextEditingController();
                                     .toList(),
                                 onChanged: (street) => setState(() {
                                   selectedStreet = street;
-                                  Streetname.text=street!;
+                                  StreetName.text=street!;
                                 }),
                               ),
                             ),
@@ -175,7 +175,7 @@ final Streetname=TextEditingController();
                             //      setState(() {
                             //
                             //            checkNewService(selectedStreet!, serviceNameController.text);
-                            //            Add_sercive_Admin().Add_Servicee(serviceNameController.text, Streetname.text);
+                            //            Add_sercive_Admin().Add_Servicee(serviceNameController.text, StreetName.text);
                             //      });
                             //   },
                             //   "Add Service",
@@ -186,7 +186,7 @@ final Streetname=TextEditingController();
                                 setState(() {
 
                                   checkNewService(selectedStreet!, serviceNameController.text);
-                                  Add_sercive_Admin().Add_Servicee(serviceNameController.text, Streetname.text);
+                                  Add_sercive_Admin().Add_Servicee(serviceNameController.text, StreetName.text);
                                 });
                               },
                               style: ElevatedButton.styleFrom(

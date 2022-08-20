@@ -8,7 +8,7 @@ import 'package:project_mohammad/components/snack_bar.dart';
 
 
 import '../../project/user/user_requests.dart';
-import '../../project/home/requests_page_managment.dart';
+import '../../project/home/requests_page_management.dart';
 
 /*
 File in order to enter service reservation information such as

@@ -1,14 +1,12 @@
-import 'dart:ui';
-
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+
 import 'package:project_mohammad/services/choices.dart';
-
-import '../../Api/controller/Admin/addNewAdmin_Controller.dart';
-
-import '../../components/snack_bar.dart';
-
+import 'package:email_validator/email_validator.dart';
+import '../../../Api/controller/Admin/addNewAdmin_Controller.dart';
+import '../../../components/snack_bar.dart';
 // import '../../components/buttons.dart';
+
+
 
 class AddNewAdmin extends StatefulWidget {
   const AddNewAdmin({Key? key}) : super(key: key);

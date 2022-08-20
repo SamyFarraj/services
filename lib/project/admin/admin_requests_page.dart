@@ -7,12 +7,12 @@ import 'package:project_mohammad/components/dash_board.dart';
 import 'package:http/http.dart' as http;
 
 import '../../Api/controller/Admin/aceept_or_decline_reservation.dart';
-import '../../Api/controller/login_controller.dart';
 import '../../Api/model/myaccapted_model.dart';
 import '../../moh_project/post_moh/login_controller.dart';
 import '../../services/requests_form.dart';
-import '../home/requests_page_managment.dart';
 import '../user/user_requests.dart';
+// import '../home/requests_page_management.dart';
+// import '../../Api/controller/login_controller.dart';
 
 class AdminRequestsPage extends StatefulWidget {
    AdminRequestsPage({Key? key}) : super(key: key);
@@ -47,7 +47,7 @@ class _AdminRequestsPageState extends State<AdminRequestsPage> {
   List<Myascapted> adminAcceptedRequestListEds = [];
   @override
   static List<Myascapted> parseAgents(String responseBody) {
-    print("sdknkjsdngjnd");
+    print("parse Agents ");
     //Map<String,String>.from(oldMap)
     final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
     return parsed
@@ -69,7 +69,7 @@ class _AdminRequestsPageState extends State<AdminRequestsPage> {
       // List<MyReservations> list = parsedList.map((val) => MyReservations.fromJson(val)).toList();
       //  print("${response.body}");json.decode(response.body);
       List<Myascapted> list = parseAgents(response.body);
-      print("sdasdasdasdsad$list");
+      print("parse Agent list : $list");
       return list;
     } else {
       throw Exception('Unexpected error occurred!');
@@ -77,12 +77,12 @@ class _AdminRequestsPageState extends State<AdminRequestsPage> {
   }
 
   List<Myascapted> pending = [];
-  List<Myascapted> listpending = [];
+  List<Myascapted> listPending = [];
 
 
   @override
   static List<Myascapted> parseAgentsformypending(String responseBody) {
-    print("sdknkjsdngjnd");
+    print("parse agent pending");
     //Map<String,String>.from(oldMap)
     final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
     return parsed
@@ -103,7 +103,7 @@ class _AdminRequestsPageState extends State<AdminRequestsPage> {
       // List<MyReservations> list = parsedList.map((val) => MyReservations.fromJson(val)).toList();
       //  print("${response.body}");json.decode(response.body);
       List<Myascapted> list = parseAgents(response.body);
-      print("sdasdasdasdsad$list");
+      print("List is : $list");
       return list;
     } else {
       throw Exception('Unexpected error occurred!');
@@ -118,10 +118,10 @@ class _AdminRequestsPageState extends State<AdminRequestsPage> {
     super.initState();
     fetchData().then((subjectFromServer) {
       setState(() {
-        print("the u list issss : $ulist");
+        print("the u list is : $ulist");
         ulist = subjectFromServer;
         userLists = ulist;
-       // print("fsfsdfdsfdsf${userLists[0].gateName}");
+       // print("user [0] gate is : ${userLists[0].gateName}");
 
         for(int i=0;i<userLists.length;i++)
         {
@@ -135,17 +135,17 @@ else
         }
       });
     });
-/*
-    mypendingresrrvations().then((subjectFromServer) {
-      setState(() {
 
-        pending = subjectFromServer;
-        listpending = pending;
-        print("the pending list is $listpending");
-      });
-    });
+    // mypendingresrrvations().then((subjectFromServer) {
+    //   setState(() {
+    //
+    //     pending = subjectFromServer;
+    //     listPending = pending;
+    //     print("the pending list is $listPending");
+    //   });
+    // });
 
- */
+
   }
 
 

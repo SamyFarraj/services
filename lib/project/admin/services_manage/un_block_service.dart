@@ -1,127 +1,103 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:project_mohammad/Api/controller/Admin/addNewAdmin_Controller.dart';
-import 'package:project_mohammad/Api/model/showadmins_model.dart';
-import 'package:project_mohammad/project/constant.dart';
 import 'package:project_mohammad/services/choices.dart';
 import 'package:http/http.dart' as http;
 
-import '../../Api/controller/login_controller.dart';
-import '../../Api/shred_preference.dart';
-import '../../components/snack_bar.dart';
-import '../../moh_project/post_moh/login_controller.dart';
+import '../../../Api/controller/login_controller.dart';
+import '../../../Api/model/blocked_model.dart';
+import '../../../components/snack_bar.dart';
+import '../../../moh_project/post_moh/login_controller.dart';
+import '../../constant.dart';
 
-class RemoveAdmin extends StatefulWidget {
-  const RemoveAdmin({Key? key}) : super(key: key);
+class UnBlockService extends StatefulWidget {
+  const UnBlockService({Key? key}) : super(key: key);
 
   @override
-  State<RemoveAdmin> createState() => _RemoveAdminState();
+  State<UnBlockService> createState() => _UnBlockServiceState();
 }
 
-class _RemoveAdminState extends State<RemoveAdmin> {
+class _UnBlockServiceState extends State<UnBlockService> {
+  String selectedService = 'Select Service';
+  String? selectedStreet = "Select Street";
 
 
-
-  List<Showadmins> ulist = [];
-  List<Showadmins> userLists = [];
-  @override
-  static List<Showadmins> parseAgents(String responseBody) {
-    print("sdknkjsdngjnd");
-    //Map<String,String>.from(oldMap)
+List<String> blooock=[];
+  List<BlockedModel> ulist = [];
+  List<BlockedModel> userLists = [];
+  late Future<List<BlockedModel>> futureData;
+  static List<BlockedModel> parseAgents(String responseBody) {
     final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
-    return parsed
-        .map<Showadmins>((json) => Showadmins.fromJson(json))
-        .toList();
+    return parsed.map<BlockedModel>((json) => BlockedModel.fromJson(json)).toList();
   }
-
-  Future<List<Showadmins>> fetchData() async {
-    print("the token is ${t}");
-    final response = await http.get(
-      Uri.parse('${base_Url}/api/Admin/ShowAllAdmins'),
-      headers: {
-
-        'Authorization':'Bearer ${t}'
-      },
+  Future<List<BlockedModel>> fetchData() async {
+    final response = await http
+        .get(Uri.parse('${base_Url}/api/Admin/IndexBlockedServices'),
+    headers: <String,String>
+        {
+      'Authorization': 'Bearer $t'
+    }
     );
-    print('the statues is ${response.statusCode}');
     if (response.statusCode == 200) {
-      final List parsedList = json.decode(response.body);
-      // List<MyReservations> list = parsedList.map((val) => MyReservations.fromJson(val)).toList();
-      //  print("${response.body}");json.decode(response.body);
-      List<Showadmins> list = parseAgents(response.body);
-      print("sdasdasdasdsad$list");
+      print("${response.body}");
+      List<BlockedModel> list = parseAgents(response.body);
+      print("sdasdasdasdsad${list}");
       return list;
     } else {
-      throw Exception('Unexpected error occurred!');
+      throw Exception('Unexpected error occured!');
     }
   }
 
 
-/*
-  Future  <List <Showadmins>>   getallAdmins()async
+  Future <String> Un_Block_Service(int id)async
   {
-    var respose = await http.get(Uri.parse('${base_Url}/api/Admin/ShowAllAdmins'),
-    headers:<String ,String >
-        {
-          'Authorization':'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZTM4Y2M3MmFlMTY3ZjgxYjc3ZTkwMzE1ZWEzMWY4NzNlZWQ0YmNiOGQzNTBjMzcyYzRkMTY1ZGE1YmI5MzJiYmFlZDJkZjFiZWY3OWJmNjMiLCJpYXQiOjE2NTM4NjY4MzYuMDczNDksIm5iZiI6MTY1Mzg2NjgzNi4wNzM0OTYsImV4cCI6MTY4NTQwMjgzNi4wMDQzNzQsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.umj9EaVbeViSSv3p8LgKv-nrkV46hkQsPhIJOHrUAC2gQAUX-T3B5Ft1cXDaOGwUDpfGRL4DXihd1KMuax42zPmNqd5ET5j2-0XuPrTmkxBUOhyoSqAxM_-HKK0ZAdYNg6TI7syMIM8vZFXEa_4nNI0oLNHW5YjLtt_y05C7OkCCRjOfyk57mkme2Hp91gkUu3MkZEMqeD7UKba9zDAzCy7wSgY37Y9Fi10H9RX6BWhDzPo-05tOq_dRFHUj423O3rwPA75ATxI1gMKPxA62WOpmfRzgJHbvdz4-wQZnabE9DcBx8b1Q7j4YWELMBvmA16tJ5bPB91Ohc_SSVWni'
-              '1mvZF4jba7_vhCA74LAVqSFAgZN7c5w_nAO'
-              'juyN6zqf23jsrWX4exj6JN1AtE-GIEW_lFomBTOXuX'
-              '_cPtssfzx0O7rAhTx0uyIk1SQ4SLfSmEdLgmRRy7NSu4HG2'
-              'NFx4OHFFJnLYUEvJRJx3-F4-88E5Aa1XQqSSmOYfA'
-              'OJQ5AyWo-31YI4ujPaWxSfkDpUFwGJw2GSOFkdxxLnDi-F53E5HX'
-              'U2Nl7y8ZlrwyvtN4b1pWVxGMFgiTaaAdWsJbxtjJSp4ctnbWG-'
-              'xX1Gdn4bdDP_mrweLWqkzBnkwIA2ZGw1Sh_qt3s8IJipilyx8V5E'
-              '3BkJb28J6Eq77RT6mMiF4sn0'
-    }
-
+    final response = await http.get(
+      Uri.parse('${base_Url}/api/Admin/BlockServices/${id}'),
+      headers: {
+        'Authorization': 'Bearer $t'
+      },
     );
-    List<Showadmins>res=[];
-    if(respose.statusCode==200)
-      {
-res=showadminsFromJson(respose.toString());
-print("the response is $res");
-return res;
-      }
-    else return [] ;
-
-
-  }
-  late Future<List<Showadmins>>listadmin;
-
-
- */
-  List <String> usres=[];
-  @override
-  void initState() {
-    if(addAdminList.length>0) {
-      addAdminList.length=1;
-
+    print(response.statusCode);
+    if(response.statusCode==200)
+    {
+      return jsonDecode(response.body);
     }
-   // addAdminList.clear();
-   // addAdminList.add('select');
+    else
+    {
+      return "Error code is ${response.statusCode}";
+    }
+  }
+
+int id =0;
+  void initState() {
     super.initState();
     fetchData().then((subjectFromServer) {
       setState(() {
         ulist = subjectFromServer;
         userLists = ulist;
-        print("fsfsdfdsfdsf${userLists[1].name}");
-     //   addAdminList=List.from(userLists)
+
+
+        blooock.clear();
         for(int i=0;i<userLists.length;i++)
-        {
-          addAdminList.add(userLists[i].name);
-          print('rtr$usres');
+          {
+            blooock.add(userLists[i].name);
+          }
+        selectedService=blooock[0];
 
-        }
+        blockedServicesList = List.from(blooock);
 
+        // print("fsfsdfdsfdsf${userLists}");
       });
     });
 
+    /*
+    futureData =  fetchData();
+    print("the futuerere ${fetchData}");
 
 
+
+     */
   }
-
-  String? selectedAdmin = 'Select Admin';
 
   @override
   Widget build(BuildContext context) {
@@ -131,7 +107,7 @@ return res;
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
-          "Remove Admin",
+          "UnBlock Service",
           style: TextStyle(
             fontSize: 36,
             fontWeight: FontWeight.bold,
@@ -191,14 +167,9 @@ return res;
                     child: SingleChildScrollView(
                       child: Column(
                         children: <Widget>[
+
                           SizedBox(
-                            height: MediaQuery.of(context).size.width * 0.05,
-                          ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.width * 0.05,
-                          ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.75,
+                            width: MediaQuery.of(context).size.width * 0.7,
                             child: DropdownButtonFormField<String>(
                               decoration: InputDecoration(
                                 enabledBorder: UnderlineInputBorder(
@@ -209,8 +180,8 @@ return res;
                                   borderRadius: BorderRadius.circular(25),
                                 ),
                               ),
-                              value: selectedAdmin,
-                              items: addAdminList
+                              value: selectedService,
+                              items: blockedServicesList
                                   .map(
                                     (service) => DropdownMenuItem<String>(
                                       value: service,
@@ -224,40 +195,40 @@ return res;
                                     ),
                                   )
                                   .toList(),
-                              onChanged: (currentChoice) => setState(() {
-                                selectedAdmin = currentChoice!;
+                              onChanged: (service) => setState(() {
+                                selectedService = service!;
+                                print("the selected is ${selectedService}");
+                                for (int i=0;i<userLists.length;i++)
+                                  {
+                                    if(selectedService ==userLists[i].name)
+                                      {
+                                        id =userLists[i].id;
+                                        print('the id  ${id}');
+                                        break;
+                                      }
+                                  }
+
                               }),
                             ),
                           ),
                           SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.1,
+                            height: MediaQuery.of(context).size.height * 0.4,
                           ),
                           // buttonOfManageServices(
                           //   context,
                           //   () {
-                          //     checkAdminDelete(selectedAdmin!);
+                          //     // checkServiceBlock(selectedService);
                           //   },
-                          //   "Remove Admin",
-                          //   const Color.fromARGB(255, 150, 10, 10),
+                          //   "UnBlock Service",
+                          //   const Color.fromARGB(255, 10, 150, 10),
                           // ),
                           ElevatedButton(
                             onPressed: () {
-                              checkAdminDelete(selectedAdmin!);
-                            for(int i=0;i<userLists.length;i++)
-                              {
-                                if(selectedAdmin==userLists[i].name)
-                                  {
-                                    AddNewAdmin_con.RemoveAdmin(userLists[i].id);
-                                    break;
-                                  }
-                              }
-
-                             // هون تابع حذف ادمن لازم ينحط
-
-
-
-
-                            },
+                              Un_Block_Service(id);
+                          //    print("the response from un blocked is ${Un_Block_Service(id)}");
+                              print("the listt is ${userLists[0].name}");
+                              // checkServiceBlock(selectedService);
+                             },
                             style: ElevatedButton.styleFrom(
                               minimumSize: const Size(300, 60),
                               padding: EdgeInsets.symmetric(
@@ -265,14 +236,14 @@ return res;
                                 horizontal:
                                     MediaQuery.of(context).size.width * 0.2,
                               ),
-                              primary: const Color.fromARGB(255, 150, 10, 10),
+                              primary: const Color.fromARGB(255, 10, 150, 10),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               elevation: 15.0,
                             ),
                             child: const Text(
-                              "Remove Admin",
+                              "UnBlock Service",
                               style: TextStyle(
                                 fontSize: 24,
                                 color: Colors.white,
@@ -292,13 +263,17 @@ return res;
     );
   }
 
-  bool checkAdminDelete(String selectedAdmin) {
-    if (selectedAdmin == 'Select Admin') {
-      TheSnackBar(context, "Please Select Admin",
+  bool checkServiceUnBlock(String selectedService) {
+    if (selectedStreet == null) {
+      TheSnackBar(context, 'Please Select Street',
+          const Color.fromARGB(255, 150, 10, 10));
+      return false;
+    } else if (selectedService == 'Select Service') {
+      TheSnackBar(context, "Please Select Service",
           const Color.fromARGB(255, 150, 10, 10));
       return false;
     } else {
-      TheSnackBar(context, "Admin Deleted Successfully",
+      TheSnackBar(context, "Service Blocked Successfully",
           const Color.fromARGB(255, 15, 150, 10));
       return true;
     }
