@@ -306,7 +306,7 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                               ],
                                             ),
                                             Container(
-                                              height: 0.009,
+                                              height: 0.09,
                                               width: MediaQuery.of(context)
                                                       .size
                                                       .width *
@@ -348,124 +348,126 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                               width: 5,
                             ),
                           ),
-                          child: Column(
-                            children: <Widget>[
-                              const Text(
-                                "Passed",
-                                style: TextStyle(
-                                  fontSize: 28,
-                                  color: Color.fromARGB(255, 230, 84, 15),
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Container(
-                                margin: const EdgeInsets.only(
-                                  top: 10,
-                                ),
-                                height: MediaQuery.of(context).size.width * 0.9,
-                                width: MediaQuery.of(context).size.width * 0.7,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Colors.blue,
-                                    width: 2,
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: <Widget>[
+                                const Text(
+                                  "Passed",
+                                  style: TextStyle(
+                                    fontSize: 28,
+                                    color: Color.fromARGB(255, 230, 84, 15),
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                child: ListView(
-                                  children: <Widget>[
-                                    ...UserRequestsPage.requestList.map((val) {
-                                      return Column(
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: <Widget>[
-                                              Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: <Widget>[
-                                                  Column(
-                                                    children: <Widget>[
-                                                      Text(
-                                                        val.serviceName,
-                                                        style: const TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 26,
-                                                          fontWeight:
-                                                              FontWeight.bold,
+                                Container(
+                                  margin: const EdgeInsets.only(
+                                    top: 10,
+                                  ),
+                                  height: MediaQuery.of(context).size.width * 0.9,
+                                  width: MediaQuery.of(context).size.width * 0.7,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Colors.blue,
+                                      width: 2,
+                                    ),
+                                  ),
+                                  child: ListView(
+                                    children: <Widget>[
+                                      ...UserRequestsPage.requestList.map((val) {
+                                        return Column(
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: <Widget>[
+                                                Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: <Widget>[
+                                                    Column(
+                                                      children: <Widget>[
+                                                        Text(
+                                                          val.serviceName,
+                                                          style: const TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 26,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                          ),
                                                         ),
-                                                      ),
-                                                      Text(
-                                                        '${DateFormat("yyyy/MM/dd").format(val.createdAt)}',
-                                                        style: const TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 26,
+                                                        Text(
+                                                          '${DateFormat("yyyy/MM/dd").format(val.createdAt)}',
+                                                          style: const TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 26,
+                                                          ),
                                                         ),
-                                                      ),
-                                                      Text(
-                                                        " start at ${DateFormat("yyyy/MM/dd").format(val.startTime)}",
-                                                        style: const TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 26,
+                                                        Text(
+                                                          " start at ${DateFormat("yyyy/MM/dd").format(val.startTime)}",
+                                                          style: const TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 26,
+                                                          ),
                                                         ),
-                                                      ),
-                                                      Text(
-                                                        "end at ${DateFormat("yyyy/MM/dd").format(val.endTime)}",
-                                                        style: const TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 26,
+                                                        Text(
+                                                          "end at ${DateFormat("yyyy/MM/dd").format(val.endTime)}",
+                                                          style: const TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 26,
+                                                          ),
                                                         ),
-                                                      ),
-                                                      // Text(
-                                                      //   " for ${val.hoursDuration}"
-                                                      //   " hour/s and "
-                                                      //   "${val.minuteDuration} "
-                                                      //   "minute/s",
-                                                      //   style: const TextStyle(
-                                                      //     color: Colors.white,
-                                                      //     fontSize: 21,
-                                                      //   ),
-                                                      // ),
-                                                      Text(
-                                                        "from ${val.gateName}",
-                                                        style: const TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 26,
+                                                        // Text(
+                                                        //   " for ${val.hoursDuration}"
+                                                        //   " hour/s and "
+                                                        //   "${val.minuteDuration} "
+                                                        //   "minute/s",
+                                                        //   style: const TextStyle(
+                                                        //     color: Colors.white,
+                                                        //     fontSize: 21,
+                                                        //   ),
+                                                        // ),
+                                                        Text(
+                                                          "from ${val.gateName}",
+                                                          style: const TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 26,
+                                                          ),
                                                         ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                          Container(
-                                            height: 0.009,
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.65,
-                                            alignment: Alignment.center,
-                                            margin: const EdgeInsets.only(
-                                              top: 15,
-                                              bottom: 15,
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
                                             ),
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: Colors.blue,
-                                                // color: const Color.fromARGB(
-                                                //     255, 230, 84, 15),
-                                                width: 1,
+                                            Container(
+                                              height: 0.4,
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.65,
+                                              alignment: Alignment.center,
+                                              margin: const EdgeInsets.only(
+                                                top: 15,
+                                                bottom: 15,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                  color: Colors.blue,
+                                                  // color: const Color.fromARGB(
+                                                  //     255, 230, 84, 15),
+                                                  width: 1,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ],
-                                      );
-                                    }).toList(),
-                                  ],
+                                          ],
+                                        );
+                                      }).toList(),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ],
