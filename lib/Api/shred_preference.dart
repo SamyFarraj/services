@@ -1,32 +1,25 @@
-
-
-
-
-
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../moh_project/post_moh/login_controller.dart';
-
-
- saveshared(String mytoken)async
-{
-  SharedPreferences pref= await SharedPreferences.getInstance();
-  pref.setString('Token', "$mytoken");
+saveShared(String theToken) async {
+  SharedPreferences pref = await SharedPreferences.getInstance();
+  pref.setString(
+    'Token',
+    "$theToken",
+  );
 }
 
- getshared()async
-{
-  SharedPreferences pref= await SharedPreferences.getInstance();
-  String? mytoken;
+getSharedData() async {
+  SharedPreferences pref = await SharedPreferences.getInstance();
+  String? theToken;
 
-  mytoken=pref.getString('Token') ?? "M";
-  t= mytoken;
-
+  theToken = pref.getString('Token') ?? "M";
+  theToken = theToken;
 }
 
-delettoken()async
-{
-  SharedPreferences pref= await SharedPreferences.getInstance();
-  pref.setString('Token', '');
-
+deleteToken() async {
+  SharedPreferences pref = await SharedPreferences.getInstance();
+  pref.setString(
+    'Token',
+    '',
+  );
 }

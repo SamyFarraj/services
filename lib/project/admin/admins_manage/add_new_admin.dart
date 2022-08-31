@@ -1,12 +1,9 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 
-import 'package:project_mohammad/services/choices.dart';
-import 'package:email_validator/email_validator.dart';
-import '../../../Api/controller/Admin/addNewAdmin_Controller.dart';
+import '/services/choices.dart';
+import '../../../Api/controller/Admin/add_new_admin_controller.dart';
 import '../../../components/snack_bar.dart';
-// import '../../components/buttons.dart';
-
-
 
 class AddNewAdmin extends StatefulWidget {
   const AddNewAdmin({Key? key}) : super(key: key);
@@ -91,9 +88,9 @@ class _AddNewAdminState extends State<AddNewAdmin> {
                         child: Column(
                           children: <Widget>[
                             TextFormField(
-                              validator: (enteredEmailVal) =>
-                              enteredEmailVal != null &&
-                                  !EmailValidator.validate(enteredEmailVal)
+                              validator: (enteredEmailVal) => enteredEmailVal !=
+                                          null &&
+                                      !EmailValidator.validate(enteredEmailVal)
                                   ? "Please Enter a Valid E-Mail"
                                   : null,
                               controller: adminEMailController,
@@ -143,12 +140,12 @@ class _AddNewAdminState extends State<AddNewAdmin> {
                             ElevatedButton(
                               onPressed: () {
                                 final formKey = addAdminFormKey.currentState!;
-                                if(formKey.validate()){
+                                if (formKey.validate()) {
                                   // تباع الارسال
                                   // checkNewAdmin(adminEMailController.text);
                                   checkNewAddAdminRequest();
-                                  AddNewAdmin_con.Add_new_ADmiin(adminEMailController.text);
-
+                                  AddNewAdmin_con.addNewAdmin(
+                                      adminEMailController.text);
                                 }
                               },
                               style: ElevatedButton.styleFrom(
@@ -185,26 +182,30 @@ class _AddNewAdminState extends State<AddNewAdmin> {
       }),
     );
   }
-  bool checkNewAddAdminRequest(){
-    if(_checkNewAdmin(adminEMailController.text)){
-      addAdminList.add(adminEMailController.text);
+
+  bool checkNewAddAdminRequest() {
+    if (_checkNewAdmin(
+      adminEMailController.text,
+    )) {
+      addAdminList.add(
+        adminEMailController.text,
+      );
       TheSnackBar(context, 'Admin Added Successfully',
           const Color.fromARGB(255, 10, 150, 10));
     }
     return false;
   }
+
   bool _checkNewAdmin(String adminEMail) {
     if (adminEMail == '' || adminEMail == ' ') {
       TheSnackBar(context, 'Please Enter Admin E-mail Address',
           const Color.fromARGB(255, 150, 10, 10));
       return false;
-    }
-    else if(adminEMail.length < 8){
+    } else if (adminEMail.length < 8) {
       TheSnackBar(context, 'E-Mail Is Too Short',
           const Color.fromARGB(255, 150, 10, 10));
       return false;
-    }
-     else {
+    } else {
       for (var admin in addAdminList) {
         if (adminEMail == admin) {
           TheSnackBar(context, 'Admin E-mail Exited',
@@ -212,12 +213,10 @@ class _AddNewAdminState extends State<AddNewAdmin> {
           return false;
         }
       }
-  //    addAdminList.add(adminName);
+      //    addAdminList.add(adminName);
       TheSnackBar(context, 'Admin Added Successfully',
           const Color.fromARGB(255, 10, 150, 10));
       return true;
     }
   }
-
-
 }

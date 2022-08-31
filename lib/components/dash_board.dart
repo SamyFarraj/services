@@ -4,11 +4,6 @@ import '../project/home/dash_board_pages/General/contact_us.dart';
 import '../project/home/dash_board_pages/Settings/dashboard_verification_code_page.dart';
 import '../project/home/dash_board_pages/Settings/edit_account_info.dart';
 
-
-
-
-
-
 final generalDashboardList = [
   "Contact Us",
 ];
@@ -103,9 +98,9 @@ class _DashBoardState extends State<DashBoard> {
               children: settingsDashboardList
                   .map(
                     (tile) => BasicTileWidget(
-                  tile: tile,
-                ),
-              )
+                      tile: tile,
+                    ),
+                  )
                   .toList(),
             ),
           ),
@@ -144,14 +139,14 @@ class _BasicTileWidgetState extends State<BasicTileWidget> {
         );
         if (title == "Contact Us") {
           page = const ContactUs();
-        }
-        else if(title == "Change Password"){
-          page = const DashBoardVerificationCodePage(currectnum: '2',);
-        } else if(title == "Edit Account Info"){
+        } else if (title == "Change Password") {
+          page = const DashBoardVerificationCodePage(
+            correctVerificationCode: '2',
+          );
+        } else if (title == "Edit Account Info") {
           page = const EditAccountInfo();
         }
-        if(title == "logout") {
-
+        if (title == "logout") {
           return;
         }
         Navigator.of(context).push(

@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:project_mohammad/components/snack_bar.dart';
-import 'package:project_mohammad/project/home/dash_board_pages/Settings/change_password_page.dart';
-import 'package:project_mohammad/project/projects_page.dart';
 
+import '/components/snack_bar.dart';
+import '/project/home/dash_board_pages/Settings/change_password_page.dart';
 import '../Api/controller/User/account_user.dart';
 
 class AuthVerificationCodePage extends StatefulWidget {
   const AuthVerificationCodePage({Key? key}) : super(key: key);
 
   @override
-  State<AuthVerificationCodePage> createState() => _AuthVerificationCodePageState();
+  State<AuthVerificationCodePage> createState() =>
+      _AuthVerificationCodePageState();
 }
 
 class _AuthVerificationCodePageState extends State<AuthVerificationCodePage> {
   // هاد ال controller
   // مشان ال textField
   final verificationCodeController = TextEditingController();
-  Future correctVerificationCode  =  Account_User.get_varvecation_code();
+  Future correctVerificationCode = Account_User.getVerificationCode();
   bool buttonStatus = false;
   String buttonDisplayText = "Enter Code";
   Widget showIcon = Container(
@@ -30,8 +30,6 @@ class _AuthVerificationCodePageState extends State<AuthVerificationCodePage> {
 
   @override
   void initState() {
-
-
     verificationCodeController.addListener(() {
       bool isButtonActivate = verificationCodeController.text.length >= 6;
       setState(() {
@@ -48,9 +46,7 @@ class _AuthVerificationCodePageState extends State<AuthVerificationCodePage> {
 
     print('the code  is $correctVerificationCode');
 
-
-
-    myCode =Account_User.get_varvecation_code();
+    myCode = Account_User.getVerificationCode();
     print('hello');
     print('the code is $myCode');
   }
@@ -180,10 +176,12 @@ class _AuthVerificationCodePageState extends State<AuthVerificationCodePage> {
                           child: ElevatedButton(
                             onPressed: buttonStatus
                                 ? () {
-                                    if (verificationCodeController.text == correctVerificationCode) {
+                                    if (verificationCodeController.text ==
+                                        correctVerificationCode) {
                                       Navigator.of(context).pushReplacement(
                                         MaterialPageRoute(
-                                          builder: (_) => const ChangePasswordPage(),
+                                          builder: (_) =>
+                                              const ChangePasswordPage(),
                                         ),
                                       );
                                       // TheSnackBar(
@@ -194,9 +192,9 @@ class _AuthVerificationCodePageState extends State<AuthVerificationCodePage> {
                                     } else {
                                       final currentCode =
                                           verificationCodeFormKey.currentState!;
-                                      // if (currentCode.validate()) {
-                                      //   print("accepted");
-                                      // }
+                                      if (currentCode.validate()) {
+                                        print("accepted");
+                                      }
                                       TheSnackBar(
                                         context,
                                         "Please Enter A Valid Code",
@@ -244,7 +242,6 @@ class _AuthVerificationCodePageState extends State<AuthVerificationCodePage> {
 
   void checkVerificationCode() {
     if (verificationCodeController.text == correctVerificationCode) {
-
     } else if (verificationCodeController.text == '') {
       TheSnackBar(
         context,
@@ -259,5 +256,4 @@ class _AuthVerificationCodePageState extends State<AuthVerificationCodePage> {
       );
     }
   }
-
 }

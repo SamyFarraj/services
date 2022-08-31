@@ -17,24 +17,24 @@ class BlockServices extends StatefulWidget {
 }
 
 class _BlockServiceState extends State<BlockServices> {
-  List<String> servicewoodward = [];
-  List<String> servicefarmer = [];
-  List<String> bothstreet = [];
+  List<String> woodWardServices = [];
+  List<String> farmerService = [];
+  List<String> bothStreetsServices = [];
 List<String>servicesList=[];
 
   Future <String> Block_Service(int id)async
   {
     final response = await http.get(
-      Uri.parse('${base_Url}/api/Admin/BlockServices/${id}'),
+      Uri.parse('${baseUrl}/api/Admin/BlockServices/${id}'),
       headers: {
-        'Authorization':'Bearer $t'
+        'Authorization':'Bearer $theToken'
       },
     );
-    print("yesssssssssss${response.body}");
+
 
     if(response.statusCode==200)
       {
-        print("yesssssssssss");
+
         return jsonDecode(response.body);
       }
     else
@@ -48,24 +48,23 @@ int i=0;
 
   String selectedService = 'Select Service';
   String? selectedStreet = "Farmer";
-  late int theid;
+  late int theId;
   Future<ListService> fetchAlbum() async {
  //   servicesList.clear();
 
     final response = await http
-        .get(Uri.parse('${base_Url}/api/Admin/services'),
+        .get(Uri.parse('${baseUrl}/api/Admin/services'),
         headers: {
-          'Authorization':'Bearer $t'
+          'Authorization':'Bearer $theToken'
         }
       // snapshot.data!.services.woodWard[1].street
     );
-    print("the respsmss base ${response.body}");
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
       return ListService.fromJson(jsonDecode(response.body));
     } else {
-      //    print("kgjsdjklsd ${snapshot.data!.services.woodWard[1].street}");
+
 
       throw Exception('Failed to load album');
     }
@@ -77,8 +76,7 @@ int i=0;
     super.initState();
 
     date=fetchAlbum();
-    print(' the i is ${servicesList}');
-    print("gdgdf,h;l");
+
   }
 
   @override
@@ -154,44 +152,41 @@ int i=0;
                         {
                           if (snapshot.hasData)
                             {
-                              servicewoodward.clear();
-                              servicefarmer.clear();
-                              bothstreet.clear();
-
-                              print("step one ");
-
-                              print("dkphhhhh");
+                              woodWardServices.clear();
+                              farmerService.clear();
+                              bothStreetsServices.clear();
 
 
-                              servicefarmer.add('select service');
+
+
+                              farmerService.add('select service');
 
                               for(int i =0;i<snapshot.data!.services.bothStreet.length;i++)
                               {
-                                print("there is no item ");
 
-                                bothstreet.add(snapshot.data!.services.bothStreet[i].name);
+
+                                bothStreetsServices.add(snapshot.data!.services.bothStreet[i].name);
                               }
 
                               //
                               for(int i =0;i<snapshot.data!.services.woodward.length;i++)
                               {
-                                print("there is no item ");
 
-                                servicewoodward.add(snapshot.data!.services.woodward[i].name);
+                                woodWardServices.add(snapshot.data!.services.woodward[i].name);
                               }
-                              //   print("the array = ${servicewoodward}");
 
 
 
-                              if(  servicefarmer.length<=snapshot.data!.services.farmer.length)
+
+                              if(  farmerService.length<=snapshot.data!.services.farmer.length)
                               {
 
-                                print("dkphhhhh");
+
                                 for(int i =0;i<snapshot.data!.services.farmer.length;i++)
                                 {
-                                  print("there is no item ");
 
-                                  servicefarmer.add(snapshot.data!.services.farmer[i].name);
+
+                                  farmerService.add(snapshot.data!.services.farmer[i].name);
                                 }
                               }
                               return
@@ -273,16 +268,16 @@ int i=0;
                                             if(selectedStreet=='FARMER')
                                             {
 
-                                              if(servicefarmer.length==0)
+                                              if(farmerService.length==0)
                                                 {
-                                                  // servicefarmer.add('');
-                                                  servicesList = List.from(servicefarmer);
-                                              //    servicesList.add('selecet serveics');
+                                                  // farmerServices.add('');
+                                                  servicesList = List.from(farmerService);
+                                              //    servicesList.add('select services');
 
                                                 }
                                               else {
                                                 servicesList =
-                                                    List.from(servicefarmer);
+                                                    List.from(farmerService);
                                                 selectedService =
                                                 servicesList[0];
                                               }
@@ -290,13 +285,13 @@ int i=0;
 
                                             if(selectedStreet=='WOODWARD')
                                             {
-                                              servicesList = List.from(servicewoodward);
+                                              servicesList = List.from(woodWardServices);
                                               selectedService=servicesList[0];
 
                                             }
                                             // servicesList.clear();
 
-                                            print("kdfsjkjfkl${servicesList}");
+
 
                                           }),
                                     ),
@@ -338,15 +333,13 @@ int i=0;
                                       onChanged: (service) => setState(() {
 
                                         selectedService = service!;
-                                        print("the selecteddd $selectedService");
-                                        print("dkphhhhh");
+
                                         if(selectedStreet=='WOODWARD')
                                           for(int i =0;i<snapshot.data!.services.woodward.length;i++)
                                           {
                                             if(selectedService==snapshot.data!.services.woodward[i].name)
                                             {
-                                              theid=snapshot.data!.services.woodward[i].id;
-                                              print("the id ${theid}");
+                                              theId=snapshot.data!.services.woodward[i].id;
                                               break;
 
 
@@ -358,8 +351,7 @@ int i=0;
                                           {
                                             if(selectedService==snapshot.data!.services.farmer[i].name)
                                             {
-                                              theid=snapshot.data!.services.farmer[i].id;
-                                              print("the id ${theid}");
+                                              theId=snapshot.data!.services.farmer[i].id;
                                               break;
 
 
@@ -425,7 +417,6 @@ int i=0;
                                     onPressed: () {
 
                                       checkServiceBlock(selectedService);
-                                    print("there response bloock${Block_Service(theid)}") ;
                                     },
                                     style: ElevatedButton.styleFrom(
                                       minimumSize: const Size(300, 60),

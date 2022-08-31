@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:project_mohammad/authentication/user_log_in_page.dart';
-import 'package:project_mohammad/components/snack_bar.dart';
-import 'package:project_mohammad/project/home/dash_board_pages/Settings/change_password_page.dart';
-import 'package:project_mohammad/project/projects_page.dart';
+
+import '/components/snack_bar.dart';
 
 class newPasswordPage extends StatefulWidget {
   const newPasswordPage({Key? key}) : super(key: key);
@@ -15,6 +13,7 @@ class _newPasswordPageState extends State<newPasswordPage> {
   // هاد ال controller
   // مشان ال textField
   final newPasswordController = TextEditingController();
+
   // String dashBoardCorrectVerificationCode = "123456";
   bool buttonStatus = false;
   String buttonDisplayText = "Enter New PassWord";
@@ -122,9 +121,7 @@ class _newPasswordPageState extends State<newPasswordPage> {
                         // هاد ال حقل الخاص ب ال code تبع التحقق
                         TextFormField(
                           validator: (enteredCode) =>
-                          enteredCode!.length > 8
-                              ? "too Short"
-                              : null,
+                              enteredCode!.length > 8 ? "too Short" : null,
                           controller: newPasswordController,
                           decoration: const InputDecoration(
                             prefixIcon: Icon(
@@ -168,33 +165,31 @@ class _newPasswordPageState extends State<newPasswordPage> {
                           child: ElevatedButton(
                             onPressed: buttonStatus
                                 ? () {
-                              if (checkNewPassword()) {
-                                //هون تابع ارسال القيمة
-                                // TheSnackBar(
-                                //   context,
-                                //   "Ac",
-                                //   const Color.fromARGB(255, 10, 150, 10),
-                                // );
-                              } else {
-                                final currentCode =
-                                newPasswordFormKey.currentState!;
-                                // if (currentCode.validate()) {
-                                //   print("accepted");
-                                // }
-                                TheSnackBar(
-                                  context,
-                                  "Password is too short",
-                                  const Color.fromARGB(255, 150, 10, 10),
-                                );
-                              }
-                            }
+                                    if (checkNewPassword()) {
+                                      //هون تابع ارسال القيمة
+                                      // TheSnackBar(
+                                      //   context,
+                                      //   "Ac",
+                                      //   const Color.fromARGB(255, 10, 150, 10),
+                                      // );
+                                    } else {
+                                      final currentCode =
+                                          newPasswordFormKey.currentState!;
+                                      if (currentCode.validate()) {}
+                                      TheSnackBar(
+                                        context,
+                                        "Password is too short",
+                                        const Color.fromARGB(255, 150, 10, 10),
+                                      );
+                                    }
+                                  }
                                 : null,
                             style: ElevatedButton.styleFrom(
                               onSurface: Colors.grey,
                               padding: EdgeInsets.symmetric(
                                 vertical: 10.0,
                                 horizontal:
-                                MediaQuery.of(context).size.width * 0.1,
+                                    MediaQuery.of(context).size.width * 0.1,
                               ),
                               primary: const Color.fromARGB(255, 10, 150, 10),
                               elevation: 15.0,
@@ -228,15 +223,13 @@ class _newPasswordPageState extends State<newPasswordPage> {
 
   bool checkNewPassword() {
     if (newPasswordController.text.length > 8) {
-        return true;
+      return true;
     } else
       TheSnackBar(
         context,
         "Please Enter New Password",
         const Color.fromARGB(255, 150, 10, 10),
       );
-      return false;
-
+    return false;
   }
-
 }

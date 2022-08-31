@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:project_mohammad/authentication/auth_verification_code_page.dart';
-import 'package:project_mohammad/project/projects_page.dart';
 
+import '/project/projects_page.dart';
 import '../../../../Api/controller/User/account_user.dart';
-
-
 
 class ChangePasswordPage extends StatefulWidget {
   const ChangePasswordPage({Key? key}) : super(key: key);
@@ -19,15 +16,14 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   final editingPasswordFormKey = GlobalKey<FormState>();
   final newPasswordController = TextEditingController();
   final rePasswordController = TextEditingController();
-  late Future<String> mycode;
-@override
+  late Future<String> theVerificationCode;
+
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    mycode =Account_User.get_varvecation_code();
-    print('heloooo');
-print('the code is $mycode');
-}
+    theVerificationCode = Account_User.getVerificationCode();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -102,9 +98,9 @@ print('the code is $mycode');
 
                         TextFormField(
                           validator: (enteredPasswordVal) =>
-                          enteredPasswordVal!.length < 8
-                              ? "Password is too short"
-                              : null,
+                              enteredPasswordVal!.length < 8
+                                  ? "Password is too short"
+                                  : null,
                           keyboardType: TextInputType.visiblePassword,
                           obscureText: passwordVisibility,
                           controller: newPasswordController,
@@ -120,7 +116,7 @@ print('the code is $mycode');
                                   : const Icon(Icons.visibility),
                               // color: Colors.deepOrange,
                               onPressed: () => setState(
-                                    () => passwordVisibility = !passwordVisibility,
+                                () => passwordVisibility = !passwordVisibility,
                               ),
                             ),
                             label: const Text(
@@ -154,9 +150,9 @@ print('the code is $mycode');
                         // هاد ال حقل الخاص ب اعادة ال password
                         TextFormField(
                           validator: (enteredPasswordVal) =>
-                          enteredPasswordVal!= newPasswordController.text
-                              ? "re-Password isn't current"
-                              : null,
+                              enteredPasswordVal != newPasswordController.text
+                                  ? "re-Password isn't current"
+                                  : null,
                           obscureText: rePasswordVisibility,
                           controller: rePasswordController,
                           decoration: InputDecoration(
@@ -171,8 +167,8 @@ print('the code is $mycode');
                                   : const Icon(Icons.visibility),
                               // color: Colors.deepOrange,
                               onPressed: () => setState(
-                                    () => rePasswordVisibility =
-                                !rePasswordVisibility,
+                                () => rePasswordVisibility =
+                                    !rePasswordVisibility,
                               ),
                             ),
                             label: const Text(
@@ -205,17 +201,21 @@ print('the code is $mycode');
                         ),
                         ElevatedButton(
                           onPressed: () {
-                            final changePasswordFormKey = editingPasswordFormKey.currentState!;
-                            if(changePasswordFormKey.validate()){
+                            final changePasswordFormKey =
+                                editingPasswordFormKey.currentState!;
+                            if (changePasswordFormKey.validate()) {
                               // تابع ارسال البيانات
-                              Account_User.Reset_password(newPasswordController.text, rePasswordController.text);
+                              Account_User.Reset_password(
+                                  newPasswordController.text,
+                                  rePasswordController.text);
 
                               Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(builder: (_){
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) {
                                     return const ProjectsPage();
                                   },
-                                  ),
+                                ),
                               );
                             }
                           },
@@ -223,7 +223,7 @@ print('the code is $mycode');
                             padding: EdgeInsets.symmetric(
                               vertical: 10.0,
                               horizontal:
-                              MediaQuery.of(context).size.width * 0.15,
+                                  MediaQuery.of(context).size.width * 0.15,
                             ),
                             minimumSize: Size(
                                 MediaQuery.of(context).size.width * 0.85,

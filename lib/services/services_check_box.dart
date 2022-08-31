@@ -1,4 +1,4 @@
-class ServicesCheckBox{
+class ServicesCheckBox {
   final String serviceName;
   bool isChecked;
 

@@ -61,14 +61,15 @@ class HomePage extends StatelessWidget {
             ),
             Column(
               children: <Widget>[
-
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.26,
                 ),
-                Image.asset("asset/images/project_picture.png",
+                Image.asset(
+                  "asset/images/project_picture.png",
                   height: MediaQuery.of(context).size.height * 0.63,
                   width: double.infinity,
-                  fit: BoxFit.cover,),
+                  fit: BoxFit.cover,
+                ),
               ],
             ),
           ],

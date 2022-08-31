@@ -7,7 +7,7 @@ Widget buttonsOfControlPanel(
   String secondWord,
 ) {
   return Container(
-    padding: const EdgeInsets.all(13),
+    padding: const EdgeInsets.all(13,),
     child: ElevatedButton(
       onPressed: () {
         Navigator.of(context).push(

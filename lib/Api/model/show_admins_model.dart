@@ -1,16 +1,15 @@
 // To parse this JSON data, do
 //
-//     final showadmins = showadminsFromJson(jsonString);
+//     final showAdmins = showAdminsFromJson(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
-List<Showadmins> showadminsFromJson(String str) => List<Showadmins>.from(json.decode(str).map((x) => Showadmins.fromJson(x)));
+List<ShowAdmins> showAdminsFromJson(String str) => List<ShowAdmins>.from(json.decode(str).map((x) => ShowAdmins.fromJson(x),),);
 
-String showadminsToJson(List<Showadmins> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String showAdminsToJson(List<ShowAdmins> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson(),),),);
 
-class Showadmins {
-  Showadmins({
+class ShowAdmins {
+  ShowAdmins({
     required this.id,
     required this.name,
     required this.email,
@@ -22,7 +21,7 @@ class Showadmins {
   String email;
   String phone;
 
-  factory Showadmins.fromJson(Map<String, dynamic> json) => Showadmins(
+  factory ShowAdmins.fromJson(Map<String, dynamic> json) => ShowAdmins(
     id: json["id"],
     name: json["name"],
     email: json["email"],

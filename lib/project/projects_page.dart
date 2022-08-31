@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'screen_chooser.dart';
 
-
 bool admin = false;
+
 class ProjectsPage extends StatefulWidget {
   const ProjectsPage({Key? key}) : super(key: key);
 
@@ -24,14 +24,12 @@ class _ProjectsPageState extends State<ProjectsPage> {
           Switch(
             value: isAdmin,
             activeColor: Colors.deepOrange,
-
             onChanged: (isAdmin) {
               setState(() {
                 this.isAdmin = isAdmin;
                 admin = isAdmin;
               });
             },
-
           ),
         ],
         centerTitle: true,

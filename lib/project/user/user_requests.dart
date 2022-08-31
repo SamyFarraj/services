@@ -3,15 +3,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../Api/controller/User/work/Services_controller.dart';
+import '../../Api/controller/User/work/services_controller.dart';
 import '../../Api/model/my_accepted_model.dart';
 import '../../components/dash_board.dart';
 import '../../main.dart';
 
-
 class UserRequestsPage extends StatefulWidget {
-  static List<Myascapted> requestList = [];
-  static List<Myascapted> acceptedRequestList = [];
+  static List<MyAccepted> requestList = [];
+  static List<MyAccepted> acceptedRequestList = [];
 
   const UserRequestsPage({Key? key}) : super(key: key);
 
@@ -20,76 +19,64 @@ class UserRequestsPage extends StatefulWidget {
 }
 
 class _UserRequestsPageState extends State<UserRequestsPage> {
-
-
-  List<Myascapted> uList = [];
-  List<Myascapted> userLists = [];
+  List<MyAccepted> uList = [];
+  List<MyAccepted> userLists = [];
 
   get http => null;
 
-  @override
-  static List<Myascapted> parseAgents(String responseBody) {
-    print("ParsAgentSuc");
+  static List<MyAccepted> parseAgents(String responseBody) {
     //Map<String,String>.from(oldMap)
     final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
-    return parsed
-        .map<Myascapted>((json) => Myascapted.fromJson(json))
-        .toList();
+    return parsed.map<MyAccepted>((json) => MyAccepted.fromJson(json)).toList();
   }
 
-  Future<List<Myascapted>> fetchData() async {
+  Future<List<MyAccepted>> fetchData() async {
     final response = await http.get(
-      Uri.parse('http://192.168.56.1:8000/api/Reservation/MyAcceptedReservation'),
-      headers: {
-        'Authorization':'Bearer $tokenUser'
-      },
+      Uri.parse(
+          'http://192.168.56.1:8000/api/Reservation/MyAcceptedReservation'),
+      headers: {'Authorization': 'Bearer $userToken'},
     );
-    print('the statues is ${response.statusCode}');
+
     if (response.statusCode == 200) {
-      final List parsedList = json.decode(response.body);
+      // final List parsedList = json.decode(response.body);
       // List<MyReservations> list = parsedList.map((val) => MyReservations.fromJson(val)).toList();
-      //  print("${response.body}");json.decode(response.body);
-      List<Myascapted> list = parseAgents(response.body);
-      print("sdasdasdasdsad$list");
+      //
+      List<MyAccepted> list = parseAgents(response.body);
+
       return list;
     } else {
       throw Exception('Unexpected error occurred!');
     }
   }
 
-  List<Myascapted> pending = [];
-  List<Myascapted> listpending = [];
+  List<MyAccepted> pending = [];
+  List<MyAccepted> pendingList = [];
 
-
-  @override
-  static List<Myascapted> parseAgentsformypending(String responseBody) {
-    print("sdknkjsdngjnd");
+  static List<MyAccepted> parseAgentForMyPending(String responseBody) {
     //Map<String,String>.from(oldMap)
     final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
-    return parsed
-        .map<Myascapted>((json) => Myascapted.fromJson(json))
-        .toList();
+    return parsed.map<MyAccepted>((json) => MyAccepted.fromJson(json)).toList();
   }
 
-  Future<List<Myascapted>> mypendingresrrvations() async {
+  Future<List<MyAccepted>> myPendingReservations() async {
     final response = await http.get(
-      Uri.parse('http://192.168.56.1:8000/api/Reservation/MyPendingReservation'),
-      headers: {
-        'Authorization':'Bearer $tokenUser'
-      },
+      Uri.parse(
+          'http://192.168.56.1:8000/api/Reservation/MyPendingReservation'),
+      headers: {'Authorization': 'Bearer $userToken'},
     );
-    print('the statues is ${response.statusCode}');
+
     if (response.statusCode == 200) {
-      final List parsedList = json.decode(response.body);
+      // final List parsedList = json.decode(response.body);
       // List<MyReservations> list = parsedList.map((val) => MyReservations.fromJson(val)).toList();
-      //  print("${response.body}");json.decode(response.body);
-      List<Myascapted> list = parseAgents(response.body);
-      print("sdasdasdasdsasASd$list");
+      //
+      List<MyAccepted> list = parseAgents(response.body);
+
       return list;
     } else {
       throw Exception('Unexpected error occurred!');
     }
   }
+
   @override
   void initState() {
     UserRequestsPage.requestList.clear();
@@ -98,33 +85,24 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
       setState(() {
         uList = subjectFromServer;
         userLists = uList;
-        // print("fsfsdfdsfdsf${userLists[0].gateName}");
 
-        for(int i=0;i<userLists.length;i++)
-        {
-
+        for (int i = 0; i < userLists.length; i++) {
           UserRequestsPage.requestList.add(userLists[i]);
-          print('dsasd${ UserRequestsPage.requestList}');
         }
       });
     });
 
-    mypendingresrrvations().then((subjectFromServer) {
+    myPendingReservations().then((subjectFromServer) {
       setState(() {
-
         pending = subjectFromServer;
-        listpending = pending;
-        print("the pending list is $listpending");
-        for(int i=0;i<listpending.length;i++)
-        {
+        pendingList = pending;
 
-          UserRequestsPage.requestList.add(listpending[i]);
+        for (int i = 0; i < pendingList.length; i++) {
+          UserRequestsPage.requestList.add(pendingList[i]);
         }
       });
     });
-    print('the final list is ${UserRequestsPage.requestList}');
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -213,9 +191,10 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                     top: 10,
                                     bottom: 10,
                                   ),
-                                  height: MediaQuery.of(context).size.width * 0.9,
+                                  height:
+                                      MediaQuery.of(context).size.width * 0.9,
                                   width:
-                                  MediaQuery.of(context).size.width * 0.7,
+                                      MediaQuery.of(context).size.width * 0.7,
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(
                                     border: Border.all(
@@ -223,50 +202,52 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                       width: 2,
                                     ),
                                   ),
-                                  child:
-                                  ListView(
+                                  child: ListView(
                                     children: <Widget>[
-                                      ...UserRequestsPage.requestList.map((val) {
-                                        print("the value is ${val.gateName}");
+                                      ...UserRequestsPage.requestList
+                                          .map((val) {
                                         return Column(
                                           children: [
                                             Row(
                                               mainAxisAlignment:
-                                              MainAxisAlignment.center,
+                                                  MainAxisAlignment.center,
                                               children: <Widget>[
                                                 Column(
                                                   mainAxisAlignment:
-                                                  MainAxisAlignment.center,
+                                                      MainAxisAlignment.center,
                                                   children: <Widget>[
                                                     Column(
                                                       children: <Widget>[
-
                                                         Text(
                                                           val.serviceName,
-                                                          style: const TextStyle(
+                                                          style:
+                                                              const TextStyle(
                                                             color: Colors.white,
                                                             fontSize: 26,
                                                             fontWeight:
-                                                            FontWeight.bold,
+                                                                FontWeight.bold,
                                                           ),
                                                         ),
                                                         Text(
                                                           '${DateFormat("yyyy/MM/dd").format(val.createdAt)}',
-                                                          style: const TextStyle(
+                                                          style:
+                                                              const TextStyle(
                                                             color: Colors.white,
                                                             fontSize: 26,
                                                           ),
                                                         ),
                                                         Text(
                                                           " start at ${DateFormat("HH:mm").format(val.startTime)}",
-                                                          style: const TextStyle(
+                                                          style:
+                                                              const TextStyle(
                                                             color: Colors.white,
                                                             fontSize: 26,
                                                           ),
                                                         ),
                                                         Text(
                                                           "end at ${DateFormat("HH:mm").format(val.endTime)}",
-                                                          style: const TextStyle(
+                                                          style:
+                                                              const TextStyle(
                                                             color: Colors.white,
                                                             fontSize: 26,
                                                           ),
@@ -283,7 +264,8 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                                         // ),
                                                         Text(
                                                           "from ${val.gateName}",
-                                                          style: const TextStyle(
+                                                          style:
+                                                              const TextStyle(
                                                             color: Colors.white,
                                                             fontSize: 26,
                                                           ),
@@ -293,18 +275,27 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                                   ],
                                                 ),
                                                 TextButton(
-                                                  style: ElevatedButton.styleFrom(
+                                                  style:
+                                                      ElevatedButton.styleFrom(
                                                     primary: Colors.transparent,
-                                                    onPrimary: const Color.fromARGB(
-                                                        255, 230, 84, 15),
-                                                    padding: const EdgeInsets.all(-5),
-                                                    shadowColor: Colors.transparent,
+                                                    onPrimary:
+                                                        const Color.fromARGB(
+                                                            255, 230, 84, 15),
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            -5),
+                                                    shadowColor:
+                                                        Colors.transparent,
                                                   ),
                                                   onPressed: () {
                                                     setState(() {
                                                       //حط تابع الحذف هون
-                                                      Servicee.delete_reservation(val.id);
-                                                      UserRequestsPage.requestList.remove(val);
+                                                      Service
+                                                          .delete_reservation(
+                                                              val.id);
+                                                      UserRequestsPage
+                                                          .requestList
+                                                          .remove(val);
                                                     });
                                                   },
                                                   child: const Icon(
@@ -314,11 +305,11 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                                 ),
                                               ],
                                             ),
-
                                             Container(
                                               height: 0.009,
-                                              width:
-                                              MediaQuery.of(context).size.width *
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
                                                   0.65,
                                               alignment: Alignment.center,
                                               margin: const EdgeInsets.only(
@@ -368,11 +359,10 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                 ),
                               ),
                               Container(
-
                                 margin: const EdgeInsets.only(
                                   top: 10,
                                 ),
-                                height: MediaQuery.of(context).size.width *0.9,
+                                height: MediaQuery.of(context).size.width * 0.9,
                                 width: MediaQuery.of(context).size.width * 0.7,
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
@@ -384,27 +374,25 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                 child: ListView(
                                   children: <Widget>[
                                     ...UserRequestsPage.requestList.map((val) {
-                                      print('the list is ${val.gateName}');
                                       return Column(
                                         children: [
                                           Row(
                                             mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                                MainAxisAlignment.center,
                                             children: <Widget>[
                                               Column(
                                                 mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                                    MainAxisAlignment.center,
                                                 children: <Widget>[
                                                   Column(
                                                     children: <Widget>[
-
                                                       Text(
                                                         val.serviceName,
                                                         style: const TextStyle(
                                                           color: Colors.white,
                                                           fontSize: 26,
                                                           fontWeight:
-                                                          FontWeight.bold,
+                                                              FontWeight.bold,
                                                         ),
                                                       ),
                                                       Text(
@@ -451,11 +439,11 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                               ),
                                             ],
                                           ),
-
                                           Container(
                                             height: 0.009,
-                                            width:
-                                            MediaQuery.of(context).size.width *
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
                                                 0.65,
                                             alignment: Alignment.center,
                                             margin: const EdgeInsets.only(

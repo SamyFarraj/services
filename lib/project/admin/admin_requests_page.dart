@@ -1,74 +1,61 @@
-
-
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:project_mohammad/components/dash_board.dart';
 import 'package:http/http.dart' as http;
 
-import '../../Api/controller/Admin/aceept_or_decline_reservation.dart';
+import '/components/dash_board.dart';
+import '../../Api/controller/Admin/accept_or_decline_reservation.dart';
 import '../../Api/model/my_accepted_model.dart';
 import '../../moh_project/post_moh/login_controller.dart';
 import '../../services/requests_form.dart';
 import '../user/user_requests.dart';
+
 // import '../home/requests_page_management.dart';
 // import '../../Api/controller/login_controller.dart';
 
 class AdminRequestsPage extends StatefulWidget {
-   AdminRequestsPage({Key? key}) : super(key: key);
+  AdminRequestsPage({Key? key}) : super(key: key);
 
-  final List<Myascapted> adminAcceptedRequestListEd = [];
+  final List<MyAccepted> adminAcceptedRequestListEd = [];
 
   @override
   State<AdminRequestsPage> createState() => _AdminRequestsPageState();
 }
 
-
 AdminRequestsPage arp = AdminRequestsPage();
 
-void acceptRequest(Myascapted request){
+void acceptRequest(MyAccepted request) {
   arp.adminAcceptedRequestListEd.add(request);
   UserRequestsPage.requestList.remove(request);
 }
 
-void deleteRequest(RequestsStates request){
+void deleteRequest(RequestsStates request) {
   UserRequestsPage.requestList.remove(request);
 }
 
-
-
 class _AdminRequestsPageState extends State<AdminRequestsPage> {
+  List<MyAccepted> theUsersList = [];
+  List<MyAccepted> userLists = [];
+  List<MyAccepted> adminAcceptedRequestListEds = [];
 
-
-
-
-  List<Myascapted> ulist = [];
-  List<Myascapted> userLists = [];
-  List<Myascapted> adminAcceptedRequestListEds = [];
-  @override
-  static List<Myascapted> parseAgents(String responseBody) {
+  static List<MyAccepted> parseAgents(String responseBody) {
     print("parse Agents ");
     //Map<String,String>.from(oldMap)
     final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
-    return parsed
-        .map<Myascapted>((json) => Myascapted.fromJson(json))
-        .toList();
+    return parsed.map<MyAccepted>((json) => MyAccepted.fromJson(json)).toList();
   }
 
-  Future<List<Myascapted>> fetchData() async {
+  Future<List<MyAccepted>> fetchData() async {
     final response = await http.get(
       Uri.parse('http://192.168.56.1:8000/api/Admin/Reservation'),
-      headers: {
-
-        'Authorization': 'Bearer $t'
-      },
+      headers: {'Authorization': 'Bearer $theToken'},
     );
     print('the statues is ${response.statusCode}');
     if (response.statusCode == 200) {
-      final List parsedList = json.decode(response.body);
+      // final List parsedList = json.decode(response.body);
       // List<MyReservations> list = parsedList.map((val) => MyReservations.fromJson(val)).toList();
       //  print("${response.body}");json.decode(response.body);
-      List<Myascapted> list = parseAgents(response.body);
+      List<MyAccepted> list = parseAgents(response.body);
       print("parse Agent list : $list");
       return list;
     } else {
@@ -76,21 +63,18 @@ class _AdminRequestsPageState extends State<AdminRequestsPage> {
     }
   }
 
-  List<Myascapted> pending = [];
-  List<Myascapted> listPending = [];
+  List<MyAccepted> pending = [];
+  List<MyAccepted> listPending = [];
 
-
-  @override
-  static List<Myascapted> parseAgentsformypending(String responseBody) {
+  static List<MyAccepted> parseAgentsForMyPending(String responseBody) {
     print("parse agent pending");
     //Map<String,String>.from(oldMap)
     final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
-    return parsed
-        .map<Myascapted>((json) => Myascapted.fromJson(json))
-        .toList();
+    return parsed.map<MyAccepted>((json) => MyAccepted.fromJson(json)).toList();
   }
+
 /*
-  Future<List<Myascapted>> mypendingresrrvations() async {
+  Future<List<MyAccepted>> myPendingReservations() async {
     final response = await http.get(
       Uri.parse('http://192.168.56.1:8000/api/Reservation/MyPendingReservation'),
       headers: {
@@ -102,7 +86,7 @@ class _AdminRequestsPageState extends State<AdminRequestsPage> {
       final List parsedList = json.decode(response.body);
       // List<MyReservations> list = parsedList.map((val) => MyReservations.fromJson(val)).toList();
       //  print("${response.body}");json.decode(response.body);
-      List<Myascapted> list = parseAgents(response.body);
+      List<MyAccepted> list = parseAgents(response.body);
       print("List is : $list");
       return list;
     } else {
@@ -113,30 +97,27 @@ class _AdminRequestsPageState extends State<AdminRequestsPage> {
 
   @override
   void initState() {
-    arp.  adminAcceptedRequestListEd.clear();
+    arp.adminAcceptedRequestListEd.clear();
     UserRequestsPage.requestList.clear();
     super.initState();
     fetchData().then((subjectFromServer) {
       setState(() {
-        print("the u list is : $ulist");
-        ulist = subjectFromServer;
-        userLists = ulist;
-       // print("user [0] gate is : ${userLists[0].gateName}");
+        print("the u list is : $theUsersList");
+        theUsersList = subjectFromServer;
+        userLists = theUsersList;
+        // print("user [0] gate is : ${userLists[0].gateName}");
 
-        for(int i=0;i<userLists.length;i++)
-        {
-if(userLists[i].isAccepted==0) {
-  UserRequestsPage.requestList.add(userLists[i]);
-}
-else
-  {
-    arp.  adminAcceptedRequestListEd.add(userLists[i]);
-  }
+        for (int i = 0; i < userLists.length; i++) {
+          if (userLists[i].isAccepted == 0) {
+            UserRequestsPage.requestList.add(userLists[i]);
+          } else {
+            arp.adminAcceptedRequestListEd.add(userLists[i]);
+          }
         }
       });
     });
 
-    // mypendingresrrvations().then((subjectFromServer) {
+    // myPendingReservations().then((subjectFromServer) {
     //   setState(() {
     //
     //     pending = subjectFromServer;
@@ -144,14 +125,7 @@ else
     //     print("the pending list is $listPending");
     //   });
     // });
-
-
   }
-
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -294,8 +268,7 @@ else
                                                     ),
                                                   ),
                                                   Text(
-                                                    "start : ${val.startTime
-                                                       }",
+                                                    "start : ${val.startTime}",
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 26,
@@ -332,10 +305,11 @@ else
                                                   ElevatedButton(
                                                     onPressed: () {
                                                       setState(() {
+                                                        Acc_dec
+                                                            .Accept_reservation(
+                                                                val.id);
 
-                                                        Acc_dec.Accept_reservation(val.id);
-
-                                                      //  acceptRequest(val);
+                                                        //  acceptRequest(val);
                                                       });
                                                     },
                                                     style: ElevatedButton
@@ -383,8 +357,10 @@ else
                                                   ElevatedButton(
                                                     onPressed: () {
                                                       setState(() {
-                                                //        deleteRequest(val);
-                                                        Acc_dec.delete_reservation(val.id);
+                                                        //        deleteRequest(val);
+                                                        Acc_dec
+                                                            .delete_reservation(
+                                                                val.id);
                                                       });
                                                     },
                                                     style: ElevatedButton
@@ -486,7 +462,6 @@ else
                           ),
                         ),
 
-
                         /////////////////////////////////
 
                         Container(
@@ -523,13 +498,13 @@ else
                                   ),
                                   height: 0.009,
                                   width:
-                                  MediaQuery.of(context).size.width * 0.7,
+                                      MediaQuery.of(context).size.width * 0.7,
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(
                                       border: Border.all(
-                                        color: Colors.blue,
-                                        width: 2,
-                                      )),
+                                    color: Colors.blue,
+                                    width: 2,
+                                  )),
                                 ),
                                 // ...adminRequestsList.map((val) {
                                 ...arp.adminAcceptedRequestListEd.map((val) {
@@ -537,11 +512,11 @@ else
                                     children: [
                                       Row(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.center,
+                                            MainAxisAlignment.center,
                                         children: <Widget>[
                                           Column(
                                             mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                                MainAxisAlignment.center,
                                             children: <Widget>[
                                               Column(
                                                 children: <Widget>[
@@ -552,7 +527,7 @@ else
                                                       color: Colors.white,
                                                       fontSize: 26,
                                                       fontWeight:
-                                                      FontWeight.bold,
+                                                          FontWeight.bold,
                                                     ),
                                                   ),
                                                   Text(
@@ -563,7 +538,7 @@ else
                                                       color: Colors.white,
                                                       fontSize: 26,
                                                       fontWeight:
-                                                      FontWeight.bold,
+                                                          FontWeight.bold,
                                                     ),
                                                   ),
                                                   Text(
@@ -574,16 +549,14 @@ else
                                                     ),
                                                   ),
                                                   Text(
-                                                    "start : ${val.startTime
-                                                        }",
+                                                    "start : ${val.startTime}",
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 26,
                                                     ),
                                                   ),
                                                   Text(
-                                                    "end : ${val.endTime
-                                                       }",
+                                                    "end : ${val.endTime}",
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 26,
@@ -648,8 +621,8 @@ else
                                       Container(
                                         height: 0.009,
                                         width:
-                                        MediaQuery.of(context).size.width *
-                                            0.65,
+                                            MediaQuery.of(context).size.width *
+                                                0.65,
                                         alignment: Alignment.center,
                                         margin: const EdgeInsets.only(
                                           top: 15,

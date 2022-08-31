@@ -1,8 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:project_mohammad/Api/controller/login_controller.dart';
-import 'package:project_mohammad/project/projects_page.dart';
 
+import '/Api/controller/login_controller.dart';
 
 class AdminLogInPage extends StatefulWidget {
   const AdminLogInPage({Key? key}) : super(key: key);
@@ -213,13 +212,13 @@ class _AdminLogInPageState extends State<AdminLogInPage> {
                            */
 
                           print('Pressed');
-                          logincontroller().signIn(
+                          LoginController().signIn(
                             adminEmailController.text,
                             adminPasswordController.text,
                             'Admin',
                           );
                           print('before send request ');
-                             // logincontroller().signIn(adminEmailController.text,adminPasswordController.text,'/Admin');
+                          // loginController().signIn(adminEmailController.text,adminPasswordController.text,'/Admin');
                         },
                         style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.symmetric(

@@ -1,7 +1,7 @@
 /*
 
 
-Future<String> delet(int id) async {
+Future<String> delete(int id) async {
   final response = await http
       .get(Uri.parse('**************************************${id}')
 

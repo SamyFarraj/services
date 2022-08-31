@@ -1,24 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:project_mohammad/services/requests_form.dart';
-import 'package:project_mohammad/services/services_check_box.dart';
-import 'package:project_mohammad/services/staff.dart';
 
-import '../Api/model/allreservation_mode.dart';
+import '/services/requests_form.dart';
+import '/services/services_check_box.dart';
+import '/services/staff.dart';
+import '../Api/model/all_reservation_model.dart';
 import '../Api/model/name_service.dart';
 import 'street_service_chooser.dart';
 
+class getData {
+  static late ListService l1;
 
-
-class getdata {
-
- static late ListService l1 ;
- getdata(ListService l )
- {
-   l1=l;
- }
-
+  getData(ListService l) {
+    l1 = l;
+  }
 }
+
 //مصفوفة لاسم الشوارع
 //المتغير الاول title يرمز لاسم الشارع
 //المتغير الثاني srChooser يرمز للمصفوفة المحتواة في اسم الشارع
@@ -41,7 +38,6 @@ final woodWardStreetList = <ServiceChooser>[
 ];
 //مصفوفة ال بوابات
 
-
 //المتغير title يرمز لاسم البوابة
 
 final farmerStreetList = <ServiceChooser>[
@@ -54,7 +50,7 @@ final farmerStreetList = <ServiceChooser>[
 //حجز خدمة مع البوابة او انه يريد حجز البوابة فقط
 //فكرة حجز البوابة فقط هي التأكد اذا كانت الخدمة Not Assigned فإنه
 //يتجاهلها وما عدا ذلك سوف يرسلها لقاعدة البيانات
-late ListService ss ;
+late ListService ss;
 
 /*
 List<String> servicesList = [
@@ -101,13 +97,11 @@ final chooseStaff = [
   StaffCheckBox(staff_name: "staff 10"),
 ];
 
-
 final chooseService = [
   ServicesCheckBox(serviceName: "self Unloaded Delivery"),
-
 ];
 
-List<AllReseervatios> adminCalendarList = [];
+List<AllReservations> adminCalendarList = [];
 
 // هي list  مشان اضافة newAdmin
 //رح يضيفها ع  ال database
@@ -143,7 +137,7 @@ List<RequestsStates> adminRequestsManageList = [
   RequestsStates(
     user: "user 2",
     gateTitle: "gate2",
-    serviceTitleList: ['service2.0', 'service2.1' ,'service2.2'],
+    serviceTitleList: ['service2.0', 'service2.1', 'service2.2'],
     serviceStartDate: DateFormat("MM/dd/yyyy").format(
       DateTime(
         2022,
@@ -161,12 +155,15 @@ List<RequestsStates> adminRequestsManageList = [
     serviceTime: TimeOfDay.now(),
     hoursDuration: int.parse("1"),
     minuteDuration: int.parse("30"),
-    endingTime: TimeOfDay(hour:00 , minute: 00,),
+    endingTime: TimeOfDay(
+      hour: 00,
+      minute: 00,
+    ),
   ),
   RequestsStates(
     user: "user 3",
     gateTitle: "gate3",
-    serviceTitleList: ['service3.0', 'service3.1' ,'service3.2'],
+    serviceTitleList: ['service3.0', 'service3.1', 'service3.2'],
     serviceStartDate: DateFormat("MM/dd/yyyy").format(
       DateTime(
         2022,
@@ -195,7 +192,7 @@ List<RequestsStates> adminRequestsManageList = [
   RequestsStates(
     user: "user 4",
     gateTitle: "gate4",
-    serviceTitleList: ['service4.0', 'service4.1' ,'service4.2'],
+    serviceTitleList: ['service4.0', 'service4.1', 'service4.2'],
     serviceStartDate: DateFormat("MM/dd/yyyy").format(
       DateTime(
         2022,
@@ -247,7 +244,7 @@ List<RequestsStates> adminRequestsManageList = [
   RequestsStates(
     user: "user 6",
     gateTitle: "gate4",
-    serviceTitleList: ['service6.0', 'service6.1' ,'service6.2'],
+    serviceTitleList: ['service6.0', 'service6.1', 'service6.2'],
     serviceStartDate: DateFormat("MM/dd/yyyy").format(
       DateTime(
         2022,
@@ -275,20 +272,13 @@ List<RequestsStates> adminRequestsManageList = [
   ),
 ];
 
-List<String> addAdminList = [
-  'Select Admin'
-];
-
-
-
+List<String> addAdminList = ['Select Admin'];
 
 List<String> gatesEdition = [
   'Select Gate',
-
 ];
 List<String> streetEdition = [
   'Select Street',
   'WOODWARD',
   'FARMER',
 ];
-

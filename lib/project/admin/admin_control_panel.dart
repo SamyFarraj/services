@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:project_mohammad/components/dash_board.dart';
-import 'package:project_mohammad/project/admin/admins_manage/add_new_admin.dart';
-import 'package:project_mohammad/project/admin/admins_manage/remove_admin.dart';
 
+import '/components/dash_board.dart';
+import '/project/admin/admins_manage/add_new_admin.dart';
+import '/project/admin/admins_manage/remove_admin.dart';
 import '../../components/buttons.dart';
+import 'service_calender.dart';
 import 'services_manage/add_new_service.dart';
 import 'services_manage/block_service.dart';
 import 'services_manage/delete_service.dart';
-import 'service_calender.dart';
 import 'services_manage/un_block_service.dart';
 
 //هدول ال imports تبع ال staff
@@ -95,7 +95,6 @@ class _AdminControlPanelState extends State<AdminControlPanel> {
                       color: Color.fromARGB(180, 0, 0, 65),
                     ),
                     child: panelGridView(),
-
                   ),
                 ),
               ],
@@ -132,8 +131,8 @@ class _AdminControlPanelState extends State<AdminControlPanel> {
   }
 
   Widget buildButton(currentButton) => GridTile(
-    child: Center(
-      child: currentButton,
-    ),
-  );
+        child: Center(
+          child: currentButton,
+        ),
+      );
 }
