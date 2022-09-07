@@ -25,7 +25,6 @@ class _ServiceEditionState extends State<ServiceEditionS> {
       headers: {'Authorization': 'Bearer $userToken'},
     );
     if (response.statusCode == 200) {
-      print("response status 200");
       return jsonDecode(response.body);
     } else {
       return "Error code is ${response.statusCode}";
@@ -46,18 +45,18 @@ class _ServiceEditionState extends State<ServiceEditionS> {
 
   Future<ListService> fetchAlbum() async {
     //   gatesEdition.add('');
-    print('here');
+
     final response = await http.get(Uri.parse('${baseUrl}/api/services'),
         headers: {'Authorization': 'Bearer $userToken'}
         // snapshot.data!.services.woodWard[1].street
         );
-    print("the response base ${response.statusCode}");
+
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
       return ListService.fromJson(jsonDecode(response.body));
     } else {
-      //    print("WoodWard ${snapshot.data!.services.woodWard[1].street}");
+      //
 
       throw Exception('Failed to load album');
     }
@@ -70,14 +69,14 @@ class _ServiceEditionState extends State<ServiceEditionS> {
     // TODO: implement initState
     super.initState();
     date = fetchAlbum();
-    print("processDone");
+
     //gatesEdition.clear();
   }
 
 //int i=0;
   @override
   Widget build(BuildContext context) {
-    // print('the is is${i++}');
+    //
     // String selectedService = 'Select Service';
     // String? selectedStreet = "Select Street";
     return Scaffold(
@@ -87,7 +86,7 @@ class _ServiceEditionState extends State<ServiceEditionS> {
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
-          "Select Street D",
+          "Select Street",
           style: TextStyle(
             fontSize: 30,
             fontWeight: FontWeight.bold,
@@ -170,9 +169,9 @@ class _ServiceEditionState extends State<ServiceEditionS> {
                           serviceWoodWard.clear();
                           serviceFarmer.clear();
                           bothStreet.clear();
-                          print("step one ");
+
                           bothStreet.add('Select Service');
-                          print("service select done");
+
                           // gatesEdition.clear();
                           //gatesEdition.add('select service');
                           /*
@@ -183,18 +182,13 @@ class _ServiceEditionState extends State<ServiceEditionS> {
                           for (int i = 0;
                               i < snapshot.data!.services.woodward.length;
                               i++) {
-                            print("there is no item ");
-
                             serviceWoodWard
                                 .add(snapshot.data!.services.woodward[i].name);
                           }
-                          print(serviceWoodWard);
 
                           for (int i = 0;
                               i < snapshot.data!.services.bothStreet.length;
                               i++) {
-                            print("there is no item ");
-
                             bothStreet.add(
                                 snapshot.data!.services.bothStreet[i].name);
                             bothStreetID.add(snapshot
@@ -206,7 +200,6 @@ class _ServiceEditionState extends State<ServiceEditionS> {
                             serviceFarmer.add('no item');
                           }
                         */
-                          print("service both street");
 
                           for (int i = 0;
                               i < snapshot.data!.services.farmer.length;
@@ -229,7 +222,13 @@ class _ServiceEditionState extends State<ServiceEditionS> {
                                     ),
                                   ),
                                   // value: selectedStreet,
-                                  hint: Text("Select Service"),
+                                  hint: Text(
+                                    "Select Service",
+                                    style: const TextStyle(
+                                      fontSize: 22,
+                                      color: Colors.blue,
+                                    ),
+                                  ),
                                   items: selectStreet
                                       .map(
                                         (street) => DropdownMenuItem<String>(
@@ -247,8 +246,7 @@ class _ServiceEditionState extends State<ServiceEditionS> {
                                   onChanged: (street) => setState(
                                     () {
                                       selectedStreet = street;
-                                      print(
-                                          "the selected street $selectedStreet");
+
                                       //111111
 
                                       if (selectedStreet == 'FARMER') {
@@ -262,8 +260,7 @@ class _ServiceEditionState extends State<ServiceEditionS> {
                                           // serviceFarmer.add('');
                                           gatesEdition =
                                               List.from(serviceFarmer);
-                                          print(
-                                              'the farmer is ${gatesEdition}');
+
                                           //    servicesList.add('select services');
                                           selectedService = gatesEdition[0];
                                         }
@@ -281,13 +278,10 @@ class _ServiceEditionState extends State<ServiceEditionS> {
                                               List.from(serviceWoodWard);
                                           //    servicesList.add('select services');
                                           selectedService = gatesEdition[0];
-                                          print(selectedService +
-                                              "selected Services printing");
                                         }
                                       }
                                       // servicesList.clear();
                                       //gatesEdition.clear();
-                                      print("gates Ed ${gatesEdition}");
                                     },
                                   ),
                                 ),
@@ -299,6 +293,13 @@ class _ServiceEditionState extends State<ServiceEditionS> {
                               SizedBox(
                                 width: MediaQuery.of(context).size.width * 0.7,
                                 child: DropdownButtonFormField<String>(
+                                  hint: Text(
+                                    "Select Service",
+                                    style: const TextStyle(
+                                      fontSize: 22,
+                                      color: Colors.blue,
+                                    ),
+                                  ),
                                   decoration: InputDecoration(
                                     enabledBorder: UnderlineInputBorder(
                                       borderSide: const BorderSide(
@@ -326,8 +327,7 @@ class _ServiceEditionState extends State<ServiceEditionS> {
                                       .toList(),
                                   onChanged: (service) => setState(() {
                                     selectedService = service!;
-                                    print("both street :  $bothStreet");
-                                    print('the both street${bothStreet}');
+
                                     Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
                                         builder: (_) => ServiceInfoInputNewEd(

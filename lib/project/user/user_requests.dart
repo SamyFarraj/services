@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:project_mohammad/project/constant.dart';
 
 import '../../Api/controller/User/work/services_controller.dart';
 import '../../Api/model/my_accepted_model.dart';
@@ -20,7 +21,7 @@ class UserRequestsPage extends StatefulWidget {
 
 class _UserRequestsPageState extends State<UserRequestsPage> {
   List<MyAccepted> uList = [];
-  List<MyAccepted> userLists = [];
+  List<MyAccepted> reservationsLists = [];
 
   get http => null;
 
@@ -31,10 +32,14 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
   }
 
   Future<List<MyAccepted>> fetchData() async {
+    var url =
+        Uri.parse('http://$baseUrl/api/Reservation/MyAcceptedReservation');
     final response = await http.get(
-      Uri.parse(
-          'http://192.168.56.1:8000/api/Reservation/MyAcceptedReservation'),
-      headers: {'Authorization': 'Bearer $userToken'},
+      url,
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $userToken',
+      },
     );
 
     if (response.statusCode == 200) {
@@ -60,8 +65,7 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
 
   Future<List<MyAccepted>> myPendingReservations() async {
     final response = await http.get(
-      Uri.parse(
-          'http://192.168.56.1:8000/api/Reservation/MyPendingReservation'),
+      Uri.parse('http://$baseUrl/api/Reservation/MyPendingReservation'),
       headers: {'Authorization': 'Bearer $userToken'},
     );
 
@@ -79,29 +83,35 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
 
   @override
   void initState() {
-    UserRequestsPage.requestList.clear();
+    print('Start init state');
+    // UserRequestsPage.requestList.clear();
     super.initState();
+    print('Start init fetch');
     fetchData().then((subjectFromServer) {
+      print('start then');
       setState(() {
-        uList = subjectFromServer;
-        userLists = uList;
+        reservationsLists.addAll(subjectFromServer);
 
-        for (int i = 0; i < userLists.length; i++) {
-          UserRequestsPage.requestList.add(userLists[i]);
+        for (var reservation in reservationsLists) {
+          print("$reservation");
+          UserRequestsPage.requestList.add(reservation);
         }
       });
+      print('start for loop');
     });
+    print('end init fetch , start myPending reservations');
 
     myPendingReservations().then((subjectFromServer) {
       setState(() {
-        pending = subjectFromServer;
-        pendingList = pending;
+        pendingList.addAll(subjectFromServer);
 
-        for (int i = 0; i < pendingList.length; i++) {
-          UserRequestsPage.requestList.add(pendingList[i]);
+        for (var pendingReservation in pendingList) {
+          print("$pendingReservation");
+          UserRequestsPage.requestList.add(pendingReservation);
         }
       });
     });
+    print('end init state');
   }
 
   @override
@@ -352,7 +362,7 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                             child: Column(
                               children: <Widget>[
                                 const Text(
-                                  "Passed",
+                                  "Accepted",
                                   style: TextStyle(
                                     fontSize: 28,
                                     color: Color.fromARGB(255, 230, 84, 15),
@@ -363,8 +373,10 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                   margin: const EdgeInsets.only(
                                     top: 10,
                                   ),
-                                  height: MediaQuery.of(context).size.width * 0.9,
-                                  width: MediaQuery.of(context).size.width * 0.7,
+                                  height:
+                                      MediaQuery.of(context).size.width * 0.9,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.7,
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(
                                     border: Border.all(
@@ -374,7 +386,8 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                   ),
                                   child: ListView(
                                     children: <Widget>[
-                                      ...UserRequestsPage.requestList.map((val) {
+                                      ...UserRequestsPage.requestList
+                                          .map((val) {
                                         return Column(
                                           children: [
                                             Row(
@@ -389,7 +402,8 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                                       children: <Widget>[
                                                         Text(
                                                           val.serviceName,
-                                                          style: const TextStyle(
+                                                          style:
+                                                              const TextStyle(
                                                             color: Colors.white,
                                                             fontSize: 26,
                                                             fontWeight:
@@ -398,21 +412,24 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                                         ),
                                                         Text(
                                                           '${DateFormat("yyyy/MM/dd").format(val.createdAt)}',
-                                                          style: const TextStyle(
+                                                          style:
+                                                              const TextStyle(
                                                             color: Colors.white,
                                                             fontSize: 26,
                                                           ),
                                                         ),
                                                         Text(
                                                           " start at ${DateFormat("yyyy/MM/dd").format(val.startTime)}",
-                                                          style: const TextStyle(
+                                                          style:
+                                                              const TextStyle(
                                                             color: Colors.white,
                                                             fontSize: 26,
                                                           ),
                                                         ),
                                                         Text(
                                                           "end at ${DateFormat("yyyy/MM/dd").format(val.endTime)}",
-                                                          style: const TextStyle(
+                                                          style:
+                                                              const TextStyle(
                                                             color: Colors.white,
                                                             fontSize: 26,
                                                           ),
@@ -429,7 +446,8 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                                         // ),
                                                         Text(
                                                           "from ${val.gateName}",
-                                                          style: const TextStyle(
+                                                          style:
+                                                              const TextStyle(
                                                             color: Colors.white,
                                                             fontSize: 26,
                                                           ),

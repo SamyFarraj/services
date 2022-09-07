@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:project_mohammad/Api/model/my_accepted_model.dart';
 
 import '/components/snack_bar.dart';
 import '/services/services_check_box.dart';
@@ -163,13 +164,15 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
     print("the list send is ${ReservationToSend.servicesMap[1].id}");
 
     print("the list send is ${ReservationToSend.servicesMap[1].name}");
-    var response = await http.post(Uri.parse('$baseUrl/api/Reservation'),
-        headers: <String, String>{
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization': 'Bearer $userToken'
-        },
-        body: listServiceToSendToJson(ReservationToSend));
+    var response = await http.post(
+      Uri.parse('$baseUrl/api/Reservation'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $userToken'
+      },
+      body: listServiceToSendToJson(ReservationToSend),
+    );
     print('the response i ss${response.body}');
     print('the response i ss${response.statusCode}');
 
@@ -265,7 +268,7 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
                           ),
                           child: SingleChildScrollView(
                             child: Column(
-                              children: [
+                              children: <Widget>[
                                 SizedBox(
                                   height: MediaQuery.of(context).size.height *
                                       0.025,
@@ -562,6 +565,9 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
                                           selectedMinuteDuration!,
                                           selectedHoursDuration!,
                                         );
+                                        print(
+                                            "${UserRequestsPage.requestList.length}");
+                                        print("start send reservation");
                                         book_reservation(
                                           gateName,
                                           DateFormat("yyyy-MM-dd HH:mm")
@@ -571,6 +577,24 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
                                               .format(choosedEndingDateTime)
                                               .toString(),
                                         );
+                                        UserRequestsPage.requestList.add(
+                                          MyAccepted(
+                                            id: 10,
+                                            userId: 23,
+                                            startTime: DateTime(2023),
+                                            endTime: DateTime(2024),
+                                            gateName: gateName,
+                                            isAccepted: 0,
+                                            createdAt: DateTime.now(),
+                                            updatedAt: DateTime.now(),
+                                            serviceName: "serviceName",
+                                            serviceId: 12,
+                                            userName: 'userName',
+                                          ),
+                                        );
+                                        print("end send reservation");
+                                        print(
+                                            "${UserRequestsPage.requestList.length}");
                                         // book_reservation(gateName,time.toString(),choosedEndTime.toString());
                                       },
                                     );
