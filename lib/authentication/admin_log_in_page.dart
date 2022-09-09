@@ -213,10 +213,9 @@ class _AdminLogInPageState extends State<AdminLogInPage> {
                            */
 
                           print('Pressed');
-                          logincontroller().signIn(
+                          logincontroller().signInAdmin(
                             adminEmailController.text,
                             adminPasswordController.text,
-                            'Admin',
                           );
                           print('before send request ');
                              // logincontroller().signIn(adminEmailController.text,adminPasswordController.text,'/Admin');

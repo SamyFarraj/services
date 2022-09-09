@@ -157,6 +157,7 @@ class _UserLogInPageState extends State<UserLogInPage> {
                                   : const Icon(Icons.visibility),
                               // color: Colors.deepOrange,
                               onPressed: () => setState(
+
                                 () => passwordVisibility = !passwordVisibility,
                               ),
                             ),
@@ -258,8 +259,8 @@ class _UserLogInPageState extends State<UserLogInPage> {
                             }
                              */
                             print('pressed');
-                            logincontroller().signIn(userEmailController.text,
-                                userPasswordController.text, '');
+                            logincontroller().signInUser(userEmailController.text,
+                                userPasswordController.text);
                           },
                         )
                         //  هي كبسة ال login

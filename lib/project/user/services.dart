@@ -9,6 +9,8 @@ import 'package:project_mohammad/services/choices.dart';
 
 import '../../main.dart';
 import '../constant.dart';
+String tokenUser='eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMThiOTJmYzBlNWE0YThkZjQ0NDM3NmRhODI0M2Q4NTc5ZDY4YmZkYzQ5MGFmN2Q2MDU4MWZlY2Y3ZjllYmVjNjRmNjFjYzExNTI2MTU2YzAiLCJpYXQiOjE2NjI2NTg3MzguNDA5MTIxLCJuYmYiOjE2NjI2NTg3MzguNDA5MTMzLCJleHAiOjE2OTQxOTQ3MzguMzgyMTQsInN1YiI6IjIiLCJzY29wZXMiOltdfQ.JglZtVeEXuCX-y9lyoG101CDevE-s5EevM2wCDP7uDI-DLsPYrxGsK5noIei3o0xWi8bz0JjX-VVDDaAsxdmF7jhT3nBuLqy-Hqqq5Tagx_ritDwcsIuSecFirsTkoF3YHUPz5j2Z6_ZKmNfufp65gCDsKyYy_c_OBfAXnHTIsKU1n1LHseDxipD1hxOYp5RG8b23LRq2GdsGXIPh-Q7H_yfCx3H7fAYiye60D01dt_rVBD2DcneojvOqCOVGNI99syPHjz01dYFpLTpAgtrpT4Jgxi7x_bcDUVEsIWqJHSaxVWai8IGNKllJol7hRmyECz5bbZtsPdcilXygA_kpTJeziLUr8bIDuMI_q3-CbVzXnkOAyTAl5ChllVhKkrrsFdUtSe7mvud14XholKMA9-hwjznZRYvLD_e8yH-0pQ_6tVxgUZ_PAPjCtQr6-7UCUbzEEICLZ7-NqEi6WO-NLSxNqE_XULuTnmRYGVtzCnrQViqDVWl9b5AolKWWLm8rcSa83uDddOnKs6HZwY1RAqH5V1zZ63q0wU_yhW7UI7_Zpjjd-90EjYUFicg5jj-mSaMcvlQpicISIvimt8veMJXoLd_PuY_tG5x3cPZWPpteCE2OzYwM0PNnXN7xfNB8_sLSgZsE8auq3BcvU0JtNuY7vL6Q1F2KfLj_ofuHLE';
+
 class ServiceEditionS extends StatefulWidget {
   const ServiceEditionS({Key? key}) : super(key: key);
 
@@ -47,12 +49,17 @@ class _ServiceEditionState extends State<ServiceEditionS> {
   Future<ListService> fetchAlbum() async {
  //   gatesEdition.add('');
 print('here');
-    final response = await http.get(Uri.parse('${base_Url}/api/services'), headers: {
-      'Authorization':'Bearer $tokenUser'
+    final response = await http.get(Uri.parse('${base_Url}/api/services'),
+        headers: {
+      'Authorization':'Bearer ${tokenUser}'
+      ,
+      'Accept':'application/json'
         }
             // snapshot.data!.services.woodWard[1].street
             );
-    print("the response base ${response.statusCode}");
+print("iam here");
+
+print("the response base ${response.body}");
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.

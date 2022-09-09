@@ -12,7 +12,7 @@ class logincontroller {
   var token;
   var message;
 
-  Future<String> signIn(String email,String pass,String plusurl) async {
+  Future<String> signInAdmin(String email,String pass) async {
     var url = (base_Url +'/api/Admin/login');
     var uri = Uri.parse(url);
     var response = await http.post(
@@ -30,11 +30,37 @@ class logincontroller {
       token = responsejeson['Token'];
 // message=responsejeson['success'];
       t=token;
-      saveshared(t);
+      savesharedAdmin(t);
       // return jsonDecode(response.body)['access_token'];
       return token;
     } else {
       return 'fail';
     }
   }
+  Future<String> signInUser(String email,String pass) async {
+    var url = (base_Url +'/api/login');
+    var uri = Uri.parse(url);
+    var response = await http.post(
+      uri,
+      headers: <String, String>{
+        'accept': 'application/json',
+      },
+      body: {'email':email,
+        'password':pass},
+    );
+    print("${response.body}");
+
+    if (response.statusCode == 200) {
+      var responsejeson = jsonDecode(response.body);
+      token = responsejeson['Token'];
+// message=responsejeson['success'];
+      t=token;
+      saveSharedUser(t);
+      // return jsonDecode(response.body)['access_token'];
+      return token;
+    } else {
+      return 'fail';
+    }
+  }
+
 }

@@ -213,7 +213,7 @@ print('the code is $mycode');
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(builder: (_){
-                                    return const ProjectsPage();
+                                    return  ProjectsPage(admin);
                                   },
                                   ),
                               );

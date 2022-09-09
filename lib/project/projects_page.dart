@@ -4,15 +4,20 @@ import 'screen_chooser.dart';
 
 
 bool admin = false;
+
 class ProjectsPage extends StatefulWidget {
-  const ProjectsPage({Key? key}) : super(key: key);
+  bool isAdmin = false;
+   ProjectsPage(this.isAdmin) {
+     admin=isAdmin;
+   }
+
 
   @override
   _ProjectsPageState createState() => _ProjectsPageState();
 }
 
+
 class _ProjectsPageState extends State<ProjectsPage> {
-  bool isAdmin = false;
 
   @override
   Widget build(BuildContext context) {
@@ -20,20 +25,20 @@ class _ProjectsPageState extends State<ProjectsPage> {
       extendBody: true,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        actions: [
-          Switch(
-            value: isAdmin,
-            activeColor: Colors.deepOrange,
-
-            onChanged: (isAdmin) {
-              setState(() {
-                this.isAdmin = isAdmin;
-                admin = isAdmin;
-              });
-            },
-
-          ),
-        ],
+        // actions: [
+        //   Switch(
+        //     value: widget.isAdmin,
+        //     activeColor: Colors.deepOrange,
+        //
+        //     onChanged: (isAdmin) {
+        //       setState(() {
+        //         widget.isAdmin = isAdmin;
+        //         admin = isAdmin;
+        //       });
+        //     },
+        //
+        //   ),
+        // ],
         centerTitle: true,
         title: const Text(
           "Select Project",
