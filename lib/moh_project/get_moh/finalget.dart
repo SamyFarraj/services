@@ -6,9 +6,9 @@ import 'model_page1.dart';
 import 'package:http/http.dart' as http;
 
 Future<Page1> fetchAlbum() async {
-  final response = await http.get(Uri.parse(url2+urlplus));
+  final response = await http.get(Uri.parse(url2+urlPlus));
   if (response.statusCode == 200) {
-    print("sdfsdfdfgdfhdfm${response}$urlplus");
+    print("URLPlus ${response}$urlPlus");
 
     // If te server did return a 200 OK response,
     // then parse the JSON.

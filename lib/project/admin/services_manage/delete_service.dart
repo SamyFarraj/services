@@ -1,12 +1,11 @@
 import 'dart:convert';
-import 'dart:developer';
+
 
 import 'package:flutter/material.dart';
-import 'package:project_mohammad/Api/controller/User/work/Services_controller.dart';
-import 'package:project_mohammad/Api/model/name_service.dart';
-import 'package:project_mohammad/Api/model/new_model_service.dart';
-import 'package:project_mohammad/project/constant.dart';
-import 'package:project_mohammad/services/choices.dart';
+import '/Api/controller/User/work/services_controller.dart';
+import '/Api/model/name_service.dart';
+import '/project/constant.dart';
+import '/services/choices.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../moh_project/post_moh/login_controller.dart';
@@ -19,10 +18,10 @@ class DeleteService extends StatefulWidget {
 }
 
 class _DeleteServiceState extends State<DeleteService> {
-  List<String> servicewoodward = [];
-  List<String> servicefarmer = [];
+  List<String> woodWardServices = [];
+  List<String> farmerServices = [];
 
-  Future<void> refrech() {
+  Future<void> refresh() {
     return Future.delayed(
       Duration(seconds: 0),
     );
@@ -31,25 +30,25 @@ class _DeleteServiceState extends State<DeleteService> {
 
   String selectedService = 'Select Service';
   String? selectedStreet = "FARMER";
-  late int theid;
+  late int theId;
 
   Future<ListService> fetchAlbum() async {
-    print('the token is ${t} end');
+
     final response =
-        await http.get(Uri.parse('${base_Url}/api/Admin/services'),
+        await http.get(Uri.parse('${baseUrl}/api/Admin/services'),
             headers: {
-          'Authorization':'Bearer $t'
+          'Authorization':'Bearer $theToken'
 
         }
             // snapshot.data!.services.woodWard[1].street
             );
-    print("the respsmss base ${response.body}");
+
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
       return ListService.fromJson(jsonDecode(response.body));
     } else {
-      //    print("kgjsdjklsd ${snapshot.data!.services.woodWard[1].street}");
+      //
 
       throw Exception('Failed to load album');
     }
@@ -62,7 +61,7 @@ class _DeleteServiceState extends State<DeleteService> {
     // TODO: implement initState
     super.initState();
     date = fetchAlbum();
-    print("gdgdf,h;l");
+
   }
 
   @override
@@ -133,46 +132,46 @@ class _DeleteServiceState extends State<DeleteService> {
                         future: date,
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
-                            servicewoodward.clear();
-                            servicefarmer.clear();
-                            print("step one ");
+                            woodWardServices.clear();
+                            farmerServices.clear();
 
-                            print("dkphhhhh");
-                            servicefarmer.add('select service');
+
+
+                            farmerServices.add('select service');
 
                             if (snapshot.data!.services.woodward.length == 0) {
-                              servicewoodward.add('no item');
+                              woodWardServices.add('no item');
                             } else {
                               for (int i = 0;
                                   i < snapshot.data!.services.woodward.length;
                                   i++) {
-                                print("there is no item ");
 
-                                servicewoodward.add(
+
+                                woodWardServices.add(
                                     snapshot.data!.services.woodward[i].name);
                               }
                             }
-                            //   print("the array = ${servicewoodward}");
+                            //
 
                             if (snapshot.data!.services.farmer.length == 0) {
-                              servicefarmer.add('no item');
+                              farmerServices.add('no item');
                             } else {
-                              print("dkphhhhh");
+
                               for (int i = 0;
                                   i < snapshot.data!.services.farmer.length;
                                   i++) {
-                                servicefarmer.add(
+                                farmerServices.add(
                                     snapshot.data!.services.farmer[i].name);
                               }
 
                               {
-                                print("dkphhhhh");
+
                               }
                             }
 
-                            //  servicesList = List.from(servicefarmer);
-                            //   print("mu listtttt ${servicefarmer}");
-                            // print('the titleee ${selectedStreet}');
+                            //  servicesList = List.from(farmerServices);
+                            //
+                            //
 
 /*
 
@@ -181,7 +180,7 @@ class _DeleteServiceState extends State<DeleteService> {
               if(  servicesList.length<=snapshot.data!.services.woodWard.length)
               {
 
-                print("dkphhhhh");
+
                 for(int i =0;i<snapshot.data!.services.woodWard.length;i++)
                 {
                   servicesList.add(snapshot.data!.services.woodWard[i].name);
@@ -194,7 +193,7 @@ class _DeleteServiceState extends State<DeleteService> {
               if(  servicesList.length<=snapshot.data!.services.farmer.length)
               {
 
-                print("dkphhhhh");
+
                 for(int i =0;i<snapshot.data!.services.woodWard.length;i++)
                 {
                   servicesList.add(snapshot.data!.services.woodWard[i].name);
@@ -204,7 +203,7 @@ class _DeleteServiceState extends State<DeleteService> {
          else  if(  servicesList.length<=snapshot.data!.services.farmer.length)
             {
 
-              print("dkphhhhh");
+
               for(int i =0;i<snapshot.data!.services.woodWard.length;i++)
               {
                 servicesList.add(snapshot.data!.services.woodWard[i].name);
@@ -213,7 +212,7 @@ class _DeleteServiceState extends State<DeleteService> {
 */
                             return Column(children: <Widget>[
                               RefreshIndicator(
-                                onRefresh: refrech,
+                                onRefresh: refresh,
                                 child: SizedBox(
                                   width:
                                       MediaQuery.of(context).size.width * 0.75,
@@ -243,33 +242,33 @@ class _DeleteServiceState extends State<DeleteService> {
                                         .toList(),
                                     onChanged: (street) => setState(() {
                                       selectedStreet = street;
-                                      print(
-                                          "the selected is  ${selectedStreet}");
+
+
                                       if (selectedStreet == 'FARMER') {
-                                        print("tsettttt");
-                                        servicesList = List.from(servicefarmer);
+
+                                        servicesList = List.from(farmerServices);
                                         selectedService = servicesList[0];
                                       }
 
                                       if (selectedStreet == 'WOODWARD') {
                                         servicesList =
-                                            List.from(servicewoodward);
+                                            List.from(woodWardServices);
                                         selectedService = servicesList[0];
                                       }
                                       // servicesList.clear();
 
-                                      print("kdfsjkjfkl${servicesList}");
+
                                       /*
                             if (selectedStreet=='WoodWard')
                             {
 
-                              print("step one ");
+
                               if(  servicesList.length<=snapshot.data!.services.woodWard.length)
                               {
 
                                 servicesList.clear();
-                                servicesList.add('sasas');
-                                print("dkphhhhh");
+                                servicesList.add('serviceName');
+
                                 for(int i =0;i<snapshot.data!.services.woodWard.length;i++)
                                 {
                                   servicesList.add(snapshot.data!.services.woodWard[i].name);
@@ -281,7 +280,7 @@ class _DeleteServiceState extends State<DeleteService> {
                               if(  servicesList.length<=snapshot.data!.services.farmer.length)
                               {
 
-                                print("dkphhhhh");
+
                                 for(int i =0;i<snapshot.data!.services.farmer.length;i++)
                                 {
                                   servicesList.add(snapshot.data!.services.farmer[i].name);
@@ -296,7 +295,7 @@ class _DeleteServiceState extends State<DeleteService> {
                               if(  servicesList.length<=snapshot.data!.services.woodWard.length)
                               {
 
-                                print("dkphhhhh");
+
                                 for(int i =0;i<snapshot.data!.services.woodWard.length;i++)
                                 {
                                   servicesList.add(snapshot.data!.services.woodWard[i].name);
@@ -309,7 +308,7 @@ class _DeleteServiceState extends State<DeleteService> {
                               if(  servicesList.length<=snapshot.data!.services.farmer.length)
                               {
 
-                                print("dkphhhhh");
+
                                 for(int i =0;i<snapshot.data!.services.farmer.length;i++)
                                 {
                                   servicesList.add(snapshot.data!.services.farmer[i].name);
@@ -319,7 +318,7 @@ class _DeleteServiceState extends State<DeleteService> {
                             else  if(  servicesList.length<=snapshot.data!.services.farmer.length)
                             {
 
-                              print("dkphhhhh");
+
                               for(int i =0;i<snapshot.data!.services.woodWard.length;i++)
                               {
                                 servicesList.add(snapshot.data!.services.woodWard[i].name);
@@ -373,21 +372,21 @@ class _DeleteServiceState extends State<DeleteService> {
                                       .toList(),
                                   onChanged: (service) => setState(() {
                                     selectedService = service!;
-                                    print("the selecteddd ${selectedService}");
-                                    print("dkphhhhh");
+
+
                                     if (selectedStreet == 'WOODWARD')
                                       for (int i = 0;
                                           i <
                                               snapshot.data!.services.woodward
                                                   .length;
                                           i++) {
-                                        print("test $i");
+
                                         if (selectedService ==
                                             snapshot.data!.services.woodward[i]
                                                 .name) {
-                                          theid = snapshot
+                                          theId = snapshot
                                               .data!.services.woodward[i].id;
-                                          print("the id ${theid}");
+
                                           break;
                                         }
                                       }
@@ -400,9 +399,9 @@ class _DeleteServiceState extends State<DeleteService> {
                                         if (selectedService ==
                                             snapshot.data!.services.farmer[i]
                                                 .name) {
-                                          theid = snapshot
+                                          theId = snapshot
                                               .data!.services.farmer[i].id;
-                                          print("the id ${theid}");
+
                                           break;
                                         }
                                       }
@@ -419,11 +418,11 @@ class _DeleteServiceState extends State<DeleteService> {
                               //   context,
                               //   () {
                               //      //  fetch();
-                              //      //fetchfinall();
+                              //      //fetchFinal();
                               //      // FetchList();
-                              //      // print("samyyyy${fetchfinall()} ");
+                              //      //
                               //      checkServiceDelete(selectedService);
-                              //      // print(finallServicelist);
+                              //      //
                               //    },
                               //   "Delete Service",
                               //   const Color.fromARGB(255, 150, 10, 10),
@@ -431,12 +430,12 @@ class _DeleteServiceState extends State<DeleteService> {
                               ElevatedButton(
                                 onPressed: () {
                                   //  fetch();
-                                  //fetchfinall();
+                                  //fetchFinal();
                                   // FetchList();
-                                  // print("samyyyy${fetchfinall()} ");
+                                  //
                                   checkServiceDelete(selectedService);
-                                  Servicee.delte_Service(theid);
-                                  // print(finallServicelist);
+                                  Service.deleteService(theId);
+                                  //
                                 },
                                 style: ElevatedButton.styleFrom(
                                   minimumSize: const Size(300, 60),
@@ -462,7 +461,7 @@ class _DeleteServiceState extends State<DeleteService> {
                               )
                             ]);
                           } else if (snapshot.hasError) {
-                            print('${snapshot.error}');
+
                             return Text(
                               '${snapshot.error}',
                               style: TextStyle(fontSize: 40),

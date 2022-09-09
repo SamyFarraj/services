@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:project_mohammad/services/choices.dart';
 
+import '/services/choices.dart';
 import '../../../components/snack_bar.dart';
-
-
 
 class AddNewStaff extends StatefulWidget {
   const AddNewStaff({Key? key}) : super(key: key);

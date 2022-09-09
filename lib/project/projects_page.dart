@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'screen_chooser.dart';
 
-
 bool admin = false;
 
 class ProjectsPage extends StatefulWidget {
@@ -25,6 +24,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
       extendBody: true,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
+<<<<<<< HEAD
         // actions: [
         //   Switch(
         //     value: widget.isAdmin,
@@ -39,6 +39,20 @@ class _ProjectsPageState extends State<ProjectsPage> {
         //
         //   ),
         // ],
+=======
+        actions: [
+          Switch(
+            value: isAdmin,
+            activeColor: Colors.deepOrange,
+            onChanged: (isAdmin) {
+              setState(() {
+                this.isAdmin = isAdmin;
+                admin = isAdmin;
+              });
+            },
+          ),
+        ],
+>>>>>>> 7af0289f19b2ab59e21f79499360d49b316fc19d
         centerTitle: true,
         title: const Text(
           "Select Project",

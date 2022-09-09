@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:project_mohammad/authentication/user_log_in_page.dart';
-import 'package:project_mohammad/authentication/user_sign_up_page.dart';
 
+import '/authentication/user_log_in_page.dart';
+import '/authentication/user_sign_up_page.dart';
 import 'admin_log_in_page.dart';
 
 class AuthChoosingPage extends StatefulWidget {
@@ -114,9 +114,9 @@ class _AuthChoosingPageState extends State<AuthChoosingPage> {
                             padding: EdgeInsets.symmetric(
                               vertical: 10.0,
                               horizontal:
-                              MediaQuery.of(context).size.width * 0.1,
+                                  MediaQuery.of(context).size.width * 0.1,
                             ),
-                            primary:  Colors.blue,
+                            primary: Colors.blue,
                             elevation: 15.0,
                           ),
                           child: Row(
@@ -149,7 +149,7 @@ class _AuthChoosingPageState extends State<AuthChoosingPage> {
                             padding: EdgeInsets.symmetric(
                               vertical: 10.0,
                               horizontal:
-                              MediaQuery.of(context).size.width * 0.1,
+                                  MediaQuery.of(context).size.width * 0.1,
                             ),
                             primary: Colors.blue,
                             elevation: 15.0,
@@ -174,9 +174,9 @@ class _AuthChoosingPageState extends State<AuthChoosingPage> {
                       Text(
                         "Admin",
                         style: TextStyle(
-                            fontSize: 26,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.deepOrange,
+                          fontSize: 26,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.deepOrange,
                         ),
                       ),
                       SizedBox(

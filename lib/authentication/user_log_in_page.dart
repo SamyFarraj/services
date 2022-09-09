@@ -1,7 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:project_mohammad/Api/controller/login_controller.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+import '/Api/controller/login_controller.dart';
 
 class UserLogInPage extends StatefulWidget {
   const UserLogInPage({Key? key}) : super(key: key);
@@ -13,7 +13,6 @@ class UserLogInPage extends StatefulWidget {
 class _UserLogInPageState extends State<UserLogInPage> {
   // هدول ال controller
   // مشان ال textFields
-
 
   final userEmailController = TextEditingController();
   final userPasswordController = TextEditingController();
@@ -236,7 +235,8 @@ class _UserLogInPageState extends State<UserLogInPage> {
                                   color: Colors.white,
                                 ),
                                 SizedBox(
-                                  width: MediaQuery.of(context).size.width * 0.05,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.05,
                                 ),
                                 const Text(
                                   "LogInS",
@@ -259,8 +259,13 @@ class _UserLogInPageState extends State<UserLogInPage> {
                             }
                              */
                             print('pressed');
+<<<<<<< HEAD
                             logincontroller().signInUser(userEmailController.text,
                                 userPasswordController.text);
+=======
+                            LoginController().signIn(userEmailController.text,
+                                userPasswordController.text, '');
+>>>>>>> 7af0289f19b2ab59e21f79499360d49b316fc19d
                           },
                         )
                         //  هي كبسة ال login
@@ -269,7 +274,7 @@ class _UserLogInPageState extends State<UserLogInPage> {
                         ElevatedButton(
                           onPressed: () {
                             print('pressed');
-                            logincontroller().signIn(emailController.text,passwordController.text);
+                            loginController().signIn(emailController.text,passwordController.text);
                           },
                           style: ElevatedButton.styleFrom(
                             padding: EdgeInsets.symmetric(

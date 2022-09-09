@@ -1,16 +1,17 @@
 // To parse this JSON data, do
 //
-//     final myAccepted = myAcceptedFromJson(jsonString);
+//     final allReservations = allReservationsFromJson(jsonString);
 
 import 'dart:convert';
 
-List<MyAccepted> myAcceptedFromJson(String str) => List<MyAccepted>.from(
+List<AllReservations> allReservationsFromJson(String str) =>
+    List<AllReservations>.from(
       json.decode(str).map(
-            (x) => MyAccepted.fromJson(x),
+            (x) => AllReservations.fromJson(x),
           ),
     );
 
-String myAcceptedToJson(List<MyAccepted> data) => json.encode(
+String allReservationsToJson(List<AllReservations> data) => json.encode(
       List<dynamic>.from(
         data.map(
           (x) => x.toJson(),
@@ -18,8 +19,8 @@ String myAcceptedToJson(List<MyAccepted> data) => json.encode(
       ),
     );
 
-class MyAccepted {
-  MyAccepted({
+class AllReservations {
+  AllReservations({
     required this.id,
     required this.userId,
     required this.startTime,
@@ -29,7 +30,6 @@ class MyAccepted {
     required this.createdAt,
     required this.updatedAt,
     required this.serviceName,
-    required this.serviceId,
     required this.userName,
   });
 
@@ -42,10 +42,10 @@ class MyAccepted {
   DateTime createdAt;
   DateTime updatedAt;
   String serviceName;
-  int serviceId;
   String userName;
 
-  factory MyAccepted.fromJson(Map<String, dynamic> json) => MyAccepted(
+  factory AllReservations.fromJson(Map<String, dynamic> json) =>
+      AllReservations(
         id: json["id"],
         userId: json["user_id"],
         startTime: DateTime.parse(json["start_time"]),
@@ -55,7 +55,6 @@ class MyAccepted {
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
         serviceName: json["service_name"],
-        serviceId: json["service_id"],
         userName: json["user_name"],
       );
 
@@ -69,7 +68,6 @@ class MyAccepted {
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
         "service_name": serviceName,
-        "service_id": serviceId,
         "user_name": userName,
       };
 }

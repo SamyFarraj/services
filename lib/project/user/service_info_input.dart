@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-import 'package:project_mohammad/components/snack_bar.dart';
-import 'package:project_mohammad/services/services_check_box.dart';
+import 'package:project_mohammad/Api/model/my_accepted_model.dart';
 
-import '../../Api/model/List Services To Send.dart';
+import '/components/snack_bar.dart';
+import '/services/services_check_box.dart';
+import '../../Api/model/list_services_to_send.dart';
 import '../../Api/model/name_service.dart';
 import '../../main.dart';
 import '../../services/choices.dart';
 import '../constant.dart';
-import '../home/requests_page_management.dart';
 import 'user_requests.dart';
 
 /*
@@ -24,17 +24,17 @@ class ServiceInfoInputNewEd extends StatefulWidget {
   final List<String> both;
   final List<String> bothId;
 
-  final List<BothStreet> listservice;
+  final List<BothStreet> servicesList;
 
   const ServiceInfoInputNewEd(
       {required this.gateName,
       required this.both,
-      required this.listservice,
+      required this.servicesList,
       required this.bothId});
 
   @override
   _ServiceInfoInputNewEdState createState() =>
-      _ServiceInfoInputNewEdState(gateName, both, listservice, bothId);
+      _ServiceInfoInputNewEdState(gateName, both, servicesList, bothId);
 }
 
 class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
@@ -42,12 +42,12 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
   late List<String> both;
   late List<String> bothId;
 
-  late List<BothStreet> listservice;
+  late List<BothStreet> servicesList;
   late int id_service;
 
   _ServiceInfoInputNewEdState(String gateName, List<String> both,
-      List<BothStreet> listservice, List<String> bothID) {
-    this.listservice = listservice;
+      List<BothStreet> servicesList, List<String> bothID) {
+    this.servicesList = servicesList;
     this.both = both;
     this.gateName = gateName;
     this.bothId = bothID;
@@ -102,16 +102,16 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
   //text displayed on date Picked button
   late String showedDate = 'select Date';
 
-  ListServeiceToSend ReservationToSend = new ListServeiceToSend(
+  ListServiceToSend ReservationToSend = new ListServiceToSend(
       servicesMap: [], startTime: '', endTime: '', gateName: '');
 
-  List ListOfIdChosingToSend = [];
+  List ListOfIdChoosingToSend = [];
 
   //text displayed on time Picked button
   late String showedTime = 'select Time';
 
   /*
-  Future book_resevices(String gate_name, String Start_time, String end_time,
+  Future book_reservation(String gate_name, String Start_time, String end_time,
     ) async {
     var headers = {
       'Accept': 'application/json',
@@ -138,7 +138,7 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
-    print("the response is yesssss ${response.statusCode} ");
+    print("the response is  ${response.statusCode} ");
     if (response.statusCode == 200) {
       print(await response.stream.bytesToString());
     } else {
@@ -148,7 +148,7 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
 
 
    */
-  book_resevices(
+  book_reservation(
     String gate_name,
     String Start_time,
     String end_time,
@@ -166,20 +166,19 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
     print("the list send is ${ReservationToSend.servicesMap[1].id}");
 
     print("the list send is ${ReservationToSend.servicesMap[1].name}");
-    var response = await http.post(Uri.parse('$base_Url/api/Reservation'),
-        headers: <String, String>{
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization':'Bearer $tokenUser'
-        },
-        body: listServeiceToSendToJson(ReservationToSend));
+    var response = await http.post(
+      Uri.parse('$baseUrl/api/Reservation'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $userToken'
+      },
+      body: listServiceToSendToJson(ReservationToSend),
+    );
     print('the response i ss${response.body}');
     print('the response i ss${response.statusCode}');
 
     if (response.statusCode == 201) {
-      print('secssful');
-      print('body ${response.body}');
-      print('the end is ${listServeiceToSendToJson(ReservationToSend)}');
       return response;
     } else
       response;
@@ -271,7 +270,7 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
                           ),
                           child: SingleChildScrollView(
                             child: Column(
-                              children: [
+                              children: <Widget>[
                                 SizedBox(
                                   height: MediaQuery.of(context).size.height *
                                       0.025,
@@ -295,7 +294,7 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
                                           ),
                                         ),
                                         value: selectedService,
-                                        items: listservice
+                                        items: servicesList
                                             .map(
                                               (service) =>
                                               DropdownMenuItem<String>(
@@ -568,7 +567,10 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
                                           selectedMinuteDuration!,
                                           selectedHoursDuration!,
                                         );
-                                        book_resevices(
+                                        print(
+                                            "${UserRequestsPage.requestList.length}");
+                                        print("start send reservation");
+                                        book_reservation(
                                           gateName,
                                           DateFormat("yyyy-MM-dd HH:mm")
                                               .format(choosedStartingDateTime)
@@ -577,7 +579,25 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
                                               .format(choosedEndingDateTime)
                                               .toString(),
                                         );
-                                        // book_resevices(gateName,time.toString(),choosedEndTime.toString());
+                                        UserRequestsPage.requestList.add(
+                                          MyAccepted(
+                                            id: 10,
+                                            userId: 23,
+                                            startTime: DateTime(2023),
+                                            endTime: DateTime(2024),
+                                            gateName: gateName,
+                                            isAccepted: 0,
+                                            createdAt: DateTime.now(),
+                                            updatedAt: DateTime.now(),
+                                            serviceName: "serviceName",
+                                            serviceId: 12,
+                                            userName: 'userName',
+                                          ),
+                                        );
+                                        print("end send reservation");
+                                        print(
+                                            "${UserRequestsPage.requestList.length}");
+                                        // book_reservation(gateName,time.toString(),choosedEndTime.toString());
                                       },
                                     );
                                   },

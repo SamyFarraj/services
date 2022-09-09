@@ -1,27 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:project_mohammad/authentication/user_log_in_page.dart';
-import 'package:project_mohammad/components/snack_bar.dart';
-import 'package:project_mohammad/project/home/dash_board_pages/Settings/change_password_page.dart';
-import 'package:project_mohammad/project/projects_page.dart';
 
+import '/components/snack_bar.dart';
+import '/project/home/dash_board_pages/Settings/change_password_page.dart';
 import '../../../../Api/controller/User/account_user.dart';
 
 class DashBoardVerificationCodePage extends StatefulWidget {
-  final String   currectnum;
-  const DashBoardVerificationCodePage({required this.currectnum,Key? key}) : super(key: key);
+  final String correctVerificationCode;
+
+  const DashBoardVerificationCodePage(
+      {required this.correctVerificationCode, Key? key})
+      : super(key: key);
 
   @override
-  State<DashBoardVerificationCodePage> createState() => _DashBoardVerificationCodePageState(currectnum);
+  State<DashBoardVerificationCodePage> createState() =>
+      _DashBoardVerificationCodePageState(correctVerificationCode);
 }
 
-class _DashBoardVerificationCodePageState extends State<DashBoardVerificationCodePage> {
+class _DashBoardVerificationCodePageState
+    extends State<DashBoardVerificationCodePage> {
   // هاد ال controller
   // مشان ال textField
-late String current ;
-  _DashBoardVerificationCodePageState(String current)
-  {
-    this.current=current;
+  late String current;
+
+  _DashBoardVerificationCodePageState(String current) {
+    this.current = current;
   }
+
   final verificationCodeController = TextEditingController();
   String dashBoardCorrectVerificationCode = "123456";
   bool buttonStatus = false;
@@ -30,17 +34,14 @@ late String current ;
     width: 10,
   );
   final verificationCodeFormKey = GlobalKey<FormState>();
-String? mycode;
+  String? theVerificationCode;
 
   //متغير ل تحديد طهور ال password
   bool passwordVisibility = true;
-late Future<String> date;
-
+  late Future<String> date;
 
   @override
   void initState() {
-    
-    print('jollad');
     verificationCodeController.addListener(() {
       bool isButtonActivate = verificationCodeController.text.length >= 6;
       setState(() {
@@ -54,7 +55,7 @@ late Future<String> date;
       });
     });
     super.initState();
-        date = Account_User.get_varvecation_code();
+    date = Account_User.getVerificationCode();
   }
 
   @override
@@ -70,7 +71,7 @@ late Future<String> date;
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
-          "Verisy",
+          "Verification",
           style: TextStyle(
             fontSize: 36,
             fontWeight: FontWeight.bold,
@@ -135,64 +136,53 @@ late Future<String> date;
                         ),
                         // هاد ال حقل الخاص ب ال code تبع التحقق
                         FutureBuilder<String>(
-                            future:date,
-                       builder: (context, snapshot) {
-
-                              if(snapshot.hasData)
-                                {
-                                  mycode=snapshot.data.toString();
-                                  print('the code is $mycode');
-                                  return   TextFormField(
-                                    validator: (enteredCode) =>
-                                    enteredCode == dashBoardCorrectVerificationCode
-                                        ? "inCorrect Code"
-                                        : null,
-                                    controller: verificationCodeController,
-                                    decoration: const InputDecoration(
-                                      prefixIcon: Icon(
-                                        //هون انا عدلت تعديل  بالايقونة
-                                        Icons.ten_k,
-                                        color: Colors.deepOrange,
-                                      ),
-                                      label: Text(
-                                        "Code",
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          color: Colors.blueAccent,
-                                        ),
-                                      ),
-                                      enabledBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                          width: 2.0,
-                                          color: Colors.deepOrange,
-                                        ),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          width: 2.0,
-                                          color: Colors.blue,
-                                        ),
-                                      ),
-                                    ),
-                                    style: const TextStyle(
-                                      color: Colors.white,
+                          future: date,
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              theVerificationCode = snapshot.data.toString();
+                              print('the code is $theVerificationCode');
+                              return TextFormField(
+                                validator: (enteredCode) => enteredCode ==
+                                        dashBoardCorrectVerificationCode
+                                    ? "inCorrect Code"
+                                    : null,
+                                controller: verificationCodeController,
+                                decoration: const InputDecoration(
+                                  prefixIcon: Icon(
+                                    //هون انا عدلت تعديل  بالايقونة
+                                    Icons.ten_k,
+                                    color: Colors.deepOrange,
+                                  ),
+                                  label: Text(
+                                    "Code",
+                                    style: TextStyle(
                                       fontSize: 18,
+                                      color: Colors.blueAccent,
                                     ),
-                                  );
-                                }
+                                  ),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      width: 2.0,
+                                      color: Colors.deepOrange,
+                                    ),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      width: 2.0,
+                                      color: Colors.blue,
+                                    ),
+                                  ),
+                                ),
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                ),
+                              );
+                            }
 
-                         return  CircularProgressIndicator();
-
-
-                          }
-
-                          ,
-
-
-
-                        )
-                     ,
-
+                            return CircularProgressIndicator();
+                          },
+                        ),
 
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.2,
@@ -205,38 +195,39 @@ late Future<String> date;
                           child: ElevatedButton(
                             onPressed: buttonStatus
                                 ? () {
-                              if (verificationCodeController.text ==
-                                  mycode) {
-                                Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                    builder: (_) => const ChangePasswordPage(),
-                                  ),
-                                );
-                                // TheSnackBar(
-                                //   context,
-                                //   "Ac",
-                                //   const Color.fromARGB(255, 10, 150, 10),
-                                // );
-                              } else {
-                                final currentCode =
-                                verificationCodeFormKey.currentState!;
-                                // if (currentCode.validate()) {
-                                //   print("accepted");
-                                // }
-                                TheSnackBar(
-                                  context,
-                                  "Please Enter A Valid Code",
-                                  const Color.fromARGB(255, 150, 10, 10),
-                                );
-                              }
-                            }
+                                    if (verificationCodeController.text ==
+                                        theVerificationCode) {
+                                      Navigator.of(context).pushReplacement(
+                                        MaterialPageRoute(
+                                          builder: (_) =>
+                                              const ChangePasswordPage(),
+                                        ),
+                                      );
+                                      // TheSnackBar(
+                                      //   context,
+                                      //   "Ac",
+                                      //   const Color.fromARGB(255, 10, 150, 10),
+                                      // );
+                                    } else {
+                                      final currentCode =
+                                          verificationCodeFormKey.currentState!;
+                                      if (currentCode.validate()) {
+                                        print("accepted");
+                                      }
+                                      TheSnackBar(
+                                        context,
+                                        "Please Enter A Valid Code",
+                                        const Color.fromARGB(255, 150, 10, 10),
+                                      );
+                                    }
+                                  }
                                 : null,
                             style: ElevatedButton.styleFrom(
                               onSurface: Colors.grey,
                               padding: EdgeInsets.symmetric(
                                 vertical: 10.0,
                                 horizontal:
-                                MediaQuery.of(context).size.width * 0.1,
+                                    MediaQuery.of(context).size.width * 0.1,
                               ),
                               primary: const Color.fromARGB(255, 10, 150, 10),
                               elevation: 15.0,
@@ -270,7 +261,6 @@ late Future<String> date;
 
   void checkVerificationCode() {
     if (verificationCodeController.text == dashBoardCorrectVerificationCode) {
-
     } else if (verificationCodeController.text == '') {
       TheSnackBar(
         context,
@@ -285,5 +275,4 @@ late Future<String> date;
       );
     }
   }
-
 }

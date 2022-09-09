@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:project_mohammad/services/choices.dart';
+import '/services/choices.dart';
 import 'package:http/http.dart' as http;
 
-import '../../../Api/controller/login_controller.dart';
+
 import '../../../Api/model/blocked_model.dart';
 import '../../../components/snack_bar.dart';
 import '../../../moh_project/post_moh/login_controller.dart';
@@ -22,8 +22,8 @@ class _UnBlockServiceState extends State<UnBlockService> {
   String? selectedStreet = "Select Street";
 
 
-List<String> blooock=[];
-  List<BlockedModel> ulist = [];
+List<String> blockedServices=[];
+  List<BlockedModel> theUsersList = [];
   List<BlockedModel> userLists = [];
   late Future<List<BlockedModel>> futureData;
   static List<BlockedModel> parseAgents(String responseBody) {
@@ -32,19 +32,18 @@ List<String> blooock=[];
   }
   Future<List<BlockedModel>> fetchData() async {
     final response = await http
-        .get(Uri.parse('${base_Url}/api/Admin/IndexBlockedServices'),
+        .get(Uri.parse('${baseUrl}/api/Admin/IndexBlockedServices'),
     headers: <String,String>
         {
-      'Authorization': 'Bearer $t'
+      'Authorization': 'Bearer $theToken'
     }
     );
     if (response.statusCode == 200) {
-      print("${response.body}");
       List<BlockedModel> list = parseAgents(response.body);
-      print("sdasdasdasdsad${list}");
+
       return list;
     } else {
-      throw Exception('Unexpected error occured!');
+      throw Exception('Unexpected error occurred!');
     }
   }
 
@@ -52,12 +51,11 @@ List<String> blooock=[];
   Future <String> Un_Block_Service(int id)async
   {
     final response = await http.get(
-      Uri.parse('${base_Url}/api/Admin/BlockServices/${id}'),
+      Uri.parse('${baseUrl}/api/Admin/BlockServices/${id}'),
       headers: {
-        'Authorization': 'Bearer $t'
+        'Authorization': 'Bearer $theToken'
       },
     );
-    print(response.statusCode);
     if(response.statusCode==200)
     {
       return jsonDecode(response.body);
@@ -73,26 +71,26 @@ int id =0;
     super.initState();
     fetchData().then((subjectFromServer) {
       setState(() {
-        ulist = subjectFromServer;
-        userLists = ulist;
+        theUsersList = subjectFromServer;
+        userLists = theUsersList;
 
 
-        blooock.clear();
+        blockedServices.clear();
         for(int i=0;i<userLists.length;i++)
           {
-            blooock.add(userLists[i].name);
+            blockedServices.add(userLists[i].name);
           }
-        selectedService=blooock[0];
+        selectedService=blockedServices[0];
 
-        blockedServicesList = List.from(blooock);
+        blockedServicesList = List.from(blockedServices);
 
-        // print("fsfsdfdsfdsf${userLists}");
+
       });
     });
 
     /*
     futureData =  fetchData();
-    print("the futuerere ${fetchData}");
+
 
 
 
@@ -197,13 +195,11 @@ int id =0;
                                   .toList(),
                               onChanged: (service) => setState(() {
                                 selectedService = service!;
-                                print("the selected is ${selectedService}");
                                 for (int i=0;i<userLists.length;i++)
                                   {
                                     if(selectedService ==userLists[i].name)
                                       {
                                         id =userLists[i].id;
-                                        print('the id  ${id}');
                                         break;
                                       }
                                   }
@@ -225,8 +221,7 @@ int id =0;
                           ElevatedButton(
                             onPressed: () {
                               Un_Block_Service(id);
-                          //    print("the response from un blocked is ${Un_Block_Service(id)}");
-                              print("the listt is ${userLists[0].name}");
+                          //
                               // checkServiceBlock(selectedService);
                              },
                             style: ElevatedButton.styleFrom(

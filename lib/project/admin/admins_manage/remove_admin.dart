@@ -1,14 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:project_mohammad/Api/controller/Admin/addNewAdmin_Controller.dart';
-import 'package:project_mohammad/Api/model/showadmins_model.dart';
-import 'package:project_mohammad/project/constant.dart';
-import 'package:project_mohammad/services/choices.dart';
 import 'package:http/http.dart' as http;
 
-import '../../../Api/controller/login_controller.dart';
-import '../../../Api/shred_preference.dart';
+import '/Api/controller/Admin/add_new_admin_controller.dart';
+import '/Api/model/show_admins_model.dart';
+import '/project/constant.dart';
+import '/services/choices.dart';
 import '../../../components/snack_bar.dart';
 import '../../../moh_project/post_moh/login_controller.dart';
 
@@ -20,48 +18,36 @@ class RemoveAdmin extends StatefulWidget {
 }
 
 class _RemoveAdminState extends State<RemoveAdmin> {
+  List<ShowAdmins> theUsersList = [];
+  List<ShowAdmins> userLists = [];
 
-
-
-  List<Showadmins> ulist = [];
-  List<Showadmins> userLists = [];
-  @override
-  static List<Showadmins> parseAgents(String responseBody) {
-    print("sdknkjsdngjnd");
+  static List<ShowAdmins> parseAgents(String responseBody) {
     //Map<String,String>.from(oldMap)
     final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
-    return parsed
-        .map<Showadmins>((json) => Showadmins.fromJson(json))
-        .toList();
+    return parsed.map<ShowAdmins>((json) => ShowAdmins.fromJson(json)).toList();
   }
 
-  Future<List<Showadmins>> fetchData() async {
-    print("the token is ${t}");
+  Future<List<ShowAdmins>> fetchData() async {
     final response = await http.get(
-      Uri.parse('${base_Url}/api/Admin/ShowAllAdmins'),
-      headers: {
-
-        'Authorization':'Bearer ${t}'
-      },
+      Uri.parse('${baseUrl}/api/Admin/ShowAllAdmins'),
+      headers: {'Authorization': 'Bearer ${theToken}'},
     );
     print('the statues is ${response.statusCode}');
     if (response.statusCode == 200) {
-      final List parsedList = json.decode(response.body);
+      // final List parsedList = json.decode(response.body);
       // List<MyReservations> list = parsedList.map((val) => MyReservations.fromJson(val)).toList();
       //  print("${response.body}");json.decode(response.body);
-      List<Showadmins> list = parseAgents(response.body);
-      print("sdasdasdasdsad$list");
+      List<ShowAdmins> list = parseAgents(response.body);
       return list;
     } else {
       throw Exception('Unexpected error occurred!');
     }
   }
 
-
 /*
-  Future  <List <Showadmins>>   getallAdmins()async
+  Future  <List <ShowAdmins>>   getAllAdmins()async
   {
-    var respose = await http.get(Uri.parse('${base_Url}/api/Admin/ShowAllAdmins'),
+    var response = await http.get(Uri.parse('${base_Url}/api/Admin/ShowAllAdmins'),
     headers:<String ,String >
         {
           'Authorization':'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZTM4Y2M3MmFlMTY3ZjgxYjc3ZTkwMzE1ZWEzMWY4NzNlZWQ0YmNiOGQzNTBjMzcyYzRkMTY1ZGE1YmI5MzJiYmFlZDJkZjFiZWY3OWJmNjMiLCJpYXQiOjE2NTM4NjY4MzYuMDczNDksIm5iZiI6MTY1Mzg2NjgzNi4wNzM0OTYsImV4cCI6MTY4NTQwMjgzNi4wMDQzNzQsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.umj9EaVbeViSSv3p8LgKv-nrkV46hkQsPhIJOHrUAC2gQAUX-T3B5Ft1cXDaOGwUDpfGRL4DXihd1KMuax42zPmNqd5ET5j2-0XuPrTmkxBUOhyoSqAxM_-HKK0ZAdYNg6TI7syMIM8vZFXEa_4nNI0oLNHW5YjLtt_y05C7OkCCRjOfyk57mkme2Hp91gkUu3MkZEMqeD7UKba9zDAzCy7wSgY37Y9Fi10H9RX6BWhDzPo-05tOq_dRFHUj423O3rwPA75ATxI1gMKPxA62WOpmfRzgJHbvdz4-wQZnabE9DcBx8b1Q7j4YWELMBvmA16tJ5bPB91Ohc_SSVWni'
@@ -76,10 +62,10 @@ class _RemoveAdminState extends State<RemoveAdmin> {
     }
 
     );
-    List<Showadmins>res=[];
-    if(respose.statusCode==200)
+    List<ShowAdmins>res=[];
+    if(response.statusCode==200)
       {
-res=showadminsFromJson(respose.toString());
+res=showAdminsFromJson(response.toString());
 print("the response is $res");
 return res;
       }
@@ -87,38 +73,31 @@ return res;
 
 
   }
-  late Future<List<Showadmins>>listadmin;
+  late Future<List<ShowAdmins>>adminList;
 
 
  */
-  List <String> usres=[];
+  List<String> usersList = [];
+
   @override
   void initState() {
-    if(addAdminList.length>0) {
-      addAdminList.length=1;
-
+    if (addAdminList.length > 0) {
+      addAdminList.length = 1;
     }
-   // addAdminList.clear();
-   // addAdminList.add('select');
+    // addAdminList.clear();
+    // addAdminList.add('select');
     super.initState();
     fetchData().then((subjectFromServer) {
       setState(() {
-        ulist = subjectFromServer;
-        userLists = ulist;
-        print("fsfsdfdsfdsf${userLists[1].name}");
-     //   addAdminList=List.from(userLists)
-        for(int i=0;i<userLists.length;i++)
-        {
+        theUsersList = subjectFromServer;
+        userLists = theUsersList;
+
+        //   addAdminList=List.from(userLists)
+        for (int i = 0; i < userLists.length; i++) {
           addAdminList.add(userLists[i].name);
-          print('rtr$usres');
-
         }
-
       });
     });
-
-
-
   }
 
   String? selectedAdmin = 'Select Admin';
@@ -243,20 +222,14 @@ return res;
                           ElevatedButton(
                             onPressed: () {
                               checkAdminDelete(selectedAdmin!);
-                            for(int i=0;i<userLists.length;i++)
-                              {
-                                if(selectedAdmin==userLists[i].name)
-                                  {
-                                    AddNewAdmin_con.RemoveAdmin(userLists[i].id);
-                                    break;
-                                  }
+                              for (int i = 0; i < userLists.length; i++) {
+                                if (selectedAdmin == userLists[i].name) {
+                                  AddNewAdmin_con.RemoveAdmin(userLists[i].id);
+                                  break;
+                                }
                               }
 
-                             // هون تابع حذف ادمن لازم ينحط
-
-
-
-
+                              // هون تابع حذف ادمن لازم ينحط
                             },
                             style: ElevatedButton.styleFrom(
                               minimumSize: const Size(300, 60),

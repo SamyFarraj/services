@@ -1,7 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:project_mohammad/Api/controller/signup_contrller.dart';
-import 'package:project_mohammad/authentication/user_log_in_page.dart';
+import '/Api/controller/signup_controller.dart';
+import '/authentication/user_log_in_page.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);

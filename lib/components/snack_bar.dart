@@ -5,9 +5,10 @@ class TheSnackBar {
   final String errorMessage;
   final Color messageColor;
 
-  TheSnackBar(this.context, this.errorMessage, this.messageColor){
+  TheSnackBar(this.context, this.errorMessage, this.messageColor) {
     snackBar(context, errorMessage, messageColor);
   }
+
   //هاد تابع لل SnackBar بيعرض رسالة الخطأ او رسالة ال اتمام العملية
   void snackBar(
       BuildContext context, String errorMessage, Color snackBarColor) {
@@ -24,6 +25,8 @@ class TheSnackBar {
     );
     ScaffoldMessenger.of(context)
       ..removeCurrentSnackBar()
-      ..showSnackBar(snackBar);
+      ..showSnackBar(
+        snackBar,
+      );
   }
 }

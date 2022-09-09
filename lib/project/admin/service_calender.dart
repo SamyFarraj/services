@@ -1,12 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
+import '/Api/model/all_reservation_model.dart';
 import '../../moh_project/post_moh/login_controller.dart';
 import '../../services/choices.dart';
-import 'package:project_mohammad/Api/model/allreservation_mode.dart';
 import '../user/user_requests.dart';
 
 class ServiceCalender extends StatefulWidget {
@@ -17,34 +17,32 @@ class ServiceCalender extends StatefulWidget {
 }
 
 class _ServiceCalenderState extends State<ServiceCalender> {
-  List<AllReseervatios> uList = [];
-  List<AllReseervatios> userLists = [];
-List<AllReseervatios>myAdminRequestsManageList=[];
+  List<AllReservations> uList = [];
+  List<AllReservations> userLists = [];
+  List<AllReservations> myAdminRequestsManageList = [];
 
-  static List<AllReseervatios> parseAgents(String responseBody) {
+  static List<AllReservations> parseAgents(String responseBody) {
     print("Parse Agent done");
     //Map<String,String>.from(oldMap)
     final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
     return parsed
-        .map<AllReseervatios>((json) => AllReseervatios.fromJson(json))
+        .map<AllReservations>((json) => AllReservations.fromJson(json))
         .toList();
   }
 
-  Future<List<AllReseervatios>> fetchData() async {
+  Future<List<AllReservations>> fetchData() async {
     final response = await http.get(
       Uri.parse('http://192.168.56.1:8000/api/Admin/Reservation'),
-      headers: {
-        'Authorization': 'Bearer $t'
-      },
+      headers: {'Authorization': 'Bearer $theToken'},
     );
-    print('the token ${t}');
+    print('the token ${theToken}');
 
     print('the statues is ${response.statusCode}');
     if (response.statusCode == 200) {
       // final List parsedList = json.decode(response.body);
       // List<MyReservations> list = parsedList.map((val) => MyReservations.fromJson(val)).toList();
       //  print("${response.body}");json.decode(response.body);
-      List<AllReseervatios> list = parseAgents(response.body);
+      List<AllReservations> list = parseAgents(response.body);
       print("List Print$list");
       return list;
     } else {
@@ -52,16 +50,12 @@ List<AllReseervatios>myAdminRequestsManageList=[];
     }
   }
 
-
-
   var servicesCalendarDate = DateTime(2021);
   String showedDate = "select Date";
   DateTime selectedDate = DateTime(2021);
 
-
   @override
   void initState() {
-
     super.initState();
     fetchData().then((subjectFromServer) {
       setState(() {
@@ -70,15 +64,17 @@ List<AllReseervatios>myAdminRequestsManageList=[];
         userLists = uList;
         print("user list print${userLists[0].gateName}");
 
-        for(int i=0;i<userLists.length;i++)
-        {
-          if(userLists[i].isAccepted==1)
-            {
-          myAdminRequestsManageList.add(userLists[i]);
-        }}
+        for (int i = 0; i < userLists.length; i++) {
+          if (userLists[i].isAccepted == 1) {
+            myAdminRequestsManageList.add(
+              userLists[i],
+            );
+          }
+        }
       });
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -175,7 +171,8 @@ List<AllReseervatios>myAdminRequestsManageList=[];
                             onPressed: () {
                               setState(() {
                                 print('the select date${selectedDate}');
-                                print('the select array${myAdminRequestsManageList[0].startTime}');
+                                print(
+                                    'the select array${myAdminRequestsManageList[0].startTime}');
 
                                 serviceDateFilter(
                                   myAdminRequestsManageList,
@@ -234,10 +231,9 @@ List<AllReseervatios>myAdminRequestsManageList=[];
                                             Container(
                                               alignment: Alignment.center,
                                               height: 90,
-                                              width:
-                                              MediaQuery.of(context)
-                                                  .size
-                                                  .width *
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
                                                   0.5,
                                               decoration: BoxDecoration(
                                                 border: Border.all(
@@ -245,28 +241,21 @@ List<AllReseervatios>myAdminRequestsManageList=[];
                                                     color: Colors.blue),
                                               ),
                                               child: ListView(
-                                                padding:
-                                                const EdgeInsets.only(
+                                                padding: const EdgeInsets.only(
                                                   top: 1,
                                                   left: 30,
                                                 ),
                                                 children: <Widget>[
-                                                  
                                                   // ...element.serviceName.map((service) {
                                                   //   return
-                                                Text(
-                                                      element.serviceName,
-                                                      style:
-                                                      const TextStyle(
-                                                          fontSize:
-                                                          22,
-                                                          color: Colors
-                                                              .white),
-                                                    ),
+                                                  Text(
+                                                    element.serviceName,
+                                                    style: const TextStyle(
+                                                        fontSize: 22,
+                                                        color: Colors.white),
+                                                  ),
                                                   //;
                                                   // }).toList(),
-
-                                                   
                                                 ],
                                               ),
                                             ),
@@ -358,16 +347,18 @@ List<AllReseervatios>myAdminRequestsManageList=[];
   //////////
   List<UserRequestsPage> mList = [];
 
-  List serviceDateFilter(List<AllReseervatios> allAcceptedServicesList, DateTime currentDate) {
+  List serviceDateFilter(
+      List<AllReservations> allAcceptedServicesList, DateTime currentDate) {
     adminCalendarList.clear();
-    List NoServiceList = [ "0000"];
+    List NoServiceList = ["0000"];
     allAcceptedServicesList.forEach((service) {
       print('${DateFormat("yyyy-MM-dd").format(currentDate)}');
-     if (DateFormat("yyyy-MM-dd").format(service.startTime) == DateFormat("yyyy-MM-dd").format(currentDate))
+      if (DateFormat("yyyy-MM-dd").format(service.startTime) ==
+          DateFormat("yyyy-MM-dd").format(currentDate))
         adminCalendarList.add(service);
     });
 
-    if(adminCalendarList.isEmpty) return NoServiceList;
+    if (adminCalendarList.isEmpty) return NoServiceList;
     return adminCalendarList;
   }
 }

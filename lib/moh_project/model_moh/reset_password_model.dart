@@ -1,7 +1,7 @@
 class reset {
-
   String password;
   String c_password;
+
   ///
   ///
   /// الموديل رح يحملي كل الدااتا تبعي
@@ -23,7 +23,7 @@ class reset {
   /// نقطى على السطر
   ///
   ///
-  reset fromJson(Map<String, dynamic> json){
+  reset fromJson(Map<String, dynamic> json) {
     return reset(
       c_password: json['c_password'],
       password: json['password'],
@@ -32,9 +32,8 @@ class reset {
 
   Map<String, dynamic> toJson(reset userModel) {
     return {
-      'c_password' : userModel.c_password,
-      'password' : userModel.password,
-
+      'c_password': userModel.c_password,
+      'password': userModel.password,
     };
   }
 }

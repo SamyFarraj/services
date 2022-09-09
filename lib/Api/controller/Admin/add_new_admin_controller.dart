@@ -3,10 +3,9 @@ import 'package:http/http.dart' as http;
 import '/project/constant.dart';
 import '../../../moh_project/post_moh/login_controller.dart';
 
-// import '../login_controller.dart';
-class addServiceAdmin {
-  Future<String> addService(String name, String Street) async {
-    var url = (baseUrl + '/api/Admin/AddService');
+class AddNewAdmin_con {
+  static Future<String> addNewAdmin(String email) async {
+    var url = (baseUrl + '/api/Admin/AddAdmin');
     var uri = Uri.parse(url);
     var response = await http.post(
       uri,
@@ -14,9 +13,9 @@ class addServiceAdmin {
         'accept': 'application/json',
         'Authorization': 'Bearer $theToken'
       },
-      body: {'name': name, 'street': Street},
+      body: {'email': email},
     );
-    print("${response.body}");
+    print("${response.statusCode}");
 
     if (response.statusCode == 200) {
       // var responsejeson = jsonDecode(response.body);
@@ -25,6 +24,18 @@ class addServiceAdmin {
       return response.body;
     } else {
       return 'fail';
+    }
+  }
+
+  static Future RemoveAdmin(int id) async {
+    var response = await http.delete(
+        Uri.parse('${baseUrl}/api/Admin/deleteAdmin/$id'),
+        headers: <String, String>{'Authorization': 'Bearer ${theToken}'});
+    print('field ${response.body} ');
+    if (response.statusCode == 200) {
+      print('remove successful');
+    } else {
+      print('field ');
     }
   }
 }

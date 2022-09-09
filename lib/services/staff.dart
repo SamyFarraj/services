@@ -1,4 +1,4 @@
-class StaffCheckBox{
+class StaffCheckBox {
   // ignore: non_constant_identifier_names
   final String staff_name;
   bool isChecked;

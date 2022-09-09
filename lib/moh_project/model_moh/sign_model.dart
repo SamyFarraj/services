@@ -4,6 +4,7 @@ class UserModel {
   String password;
   String c_password;
   String phone;
+
   ///
   ///
   /// الموديل رح يحملي كل الدااتا تبعي
@@ -28,7 +29,7 @@ class UserModel {
   /// نقطى على السطر
   ///
   ///
-  UserModel fromJson(Map<String, dynamic> json){
+  UserModel fromJson(Map<String, dynamic> json) {
     return UserModel(
       c_password: json['c_password'],
       email: json['email'],
@@ -40,11 +41,11 @@ class UserModel {
 
   Map<String, dynamic> toJson(UserModel userModel) {
     return {
-      'c_password' : userModel.c_password,
-      'name' : userModel.name,
-      'email' : userModel.email,
-      'password' : userModel.password,
-      'phone' : userModel.phone,
+      'c_password': userModel.c_password,
+      'name': userModel.name,
+      'email': userModel.email,
+      'password': userModel.password,
+      'phone': userModel.phone,
     };
   }
 }
