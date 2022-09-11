@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
@@ -7,14 +8,11 @@ import 'package:project_mohammad/project/constant.dart';
 
 import '../../Api/controller/User/work/services_controller.dart';
 import '../../Api/model/my_accepted_model.dart';
+import '../../Cubit/User Level Operation/user_operation_cubit.dart';
 import '../../components/dash_board.dart';
 import '../../main.dart';
 
-<<<<<<< HEAD
-String tokenUser='eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMThiOTJmYzBlNWE0YThkZjQ0NDM3NmRhODI0M2Q4NTc5ZDY4YmZkYzQ5MGFmN2Q2MDU4MWZlY2Y3ZjllYmVjNjRmNjFjYzExNTI2MTU2YzAiLCJpYXQiOjE2NjI2NTg3MzguNDA5MTIxLCJuYmYiOjE2NjI2NTg3MzguNDA5MTMzLCJleHAiOjE2OTQxOTQ3MzguMzgyMTQsInN1YiI6IjIiLCJzY29wZXMiOltdfQ.JglZtVeEXuCX-y9lyoG101CDevE-s5EevM2wCDP7uDI-DLsPYrxGsK5noIei3o0xWi8bz0JjX-VVDDaAsxdmF7jhT3nBuLqy-Hqqq5Tagx_ritDwcsIuSecFirsTkoF3YHUPz5j2Z6_ZKmNfufp65gCDsKyYy_c_OBfAXnHTIsKU1n1LHseDxipD1hxOYp5RG8b23LRq2GdsGXIPh-Q7H_yfCx3H7fAYiye60D01dt_rVBD2DcneojvOqCOVGNI99syPHjz01dYFpLTpAgtrpT4Jgxi7x_bcDUVEsIWqJHSaxVWai8IGNKllJol7hRmyECz5bbZtsPdcilXygA_kpTJeziLUr8bIDuMI_q3-CbVzXnkOAyTAl5ChllVhKkrrsFdUtSe7mvud14XholKMA9-hwjznZRYvLD_e8yH-0pQ_6tVxgUZ_PAPjCtQr6-7UCUbzEEICLZ7-NqEi6WO-NLSxNqE_XULuTnmRYGVtzCnrQViqDVWl9b5AolKWWLm8rcSa83uDddOnKs6HZwY1RAqH5V1zZ63q0wU_yhW7UI7_Zpjjd-90EjYUFicg5jj-mSaMcvlQpicISIvimt8veMJXoLd_PuY_tG5x3cPZWPpteCE2OzYwM0PNnXN7xfNB8_sLSgZsE8auq3BcvU0JtNuY7vL6Q1F2KfLj_ofuHLE';
 
-=======
->>>>>>> 7af0289f19b2ab59e21f79499360d49b316fc19d
 class UserRequestsPage extends StatefulWidget {
   static List<MyAccepted> requestList = [];
   static List<MyAccepted> acceptedRequestList = [];
@@ -37,14 +35,7 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
   }
 
   Future<List<MyAccepted>> fetchData() async {
-    var url =
-        Uri.parse('http://$baseUrl/api/Reservation/MyAcceptedReservation');
-    final response = await http.get(
-<<<<<<< HEAD
-      Uri.parse('$base_Url/api/Reservation/MyAcceptedReservation'),
-=======
-      url,
->>>>>>> 7af0289f19b2ab59e21f79499360d49b316fc19d
+    final response = await http.get(Uri.parse('$baseUrl/api/Reservation/MyAcceptedReservation'),
       headers: {
         'Accept': 'application/json',
         'Authorization': 'Bearer $userToken',
@@ -193,7 +184,26 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                               width: 5,
                             ),
                           ),
-                          child: SingleChildScrollView(
+                          child: BlocConsumer<UserOperationCubit, UserOperationState>(
+  listener: (context, state) {
+    // TODO: implement listener
+    if (state is SuccessStatus) {
+    print("success");
+
+    }
+
+
+    //في حال دخل كلمة سر خطأ
+    if(state is FailureStatus)
+    {
+      //هون حط توست ماسج انو كلمة السر غلط
+      print("رسالة الخطأ انو كلمة السر غلط");
+
+    }
+  },
+  builder: (context, state) {
+    var cubit=UserOperationCubit.get(context);
+    return SingleChildScrollView(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
@@ -309,7 +319,7 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                                   onPressed: () {
                                                     setState(() {
                                                       //حط تابع الحذف هون
-                                                      Service
+                                                      cubit
                                                           .delete_reservation(
                                                               val.id);
                                                       UserRequestsPage
@@ -352,7 +362,9 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                 ),
                               ],
                             ),
-                          ),
+                          );
+  },
+),
                         ),
                         Container(
                           height: MediaQuery.of(context).size.height * 0.4,

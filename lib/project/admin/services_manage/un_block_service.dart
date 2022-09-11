@@ -1,6 +1,10 @@
 import 'dart:convert';
 
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../Cubit/Admin Level Operation/admin_level_cubit.dart';
+import '../../../main.dart';
 import '/services/choices.dart';
 import 'package:http/http.dart' as http;
 
@@ -26,6 +30,7 @@ List<String> blockedServices=[];
   List<BlockedModel> theUsersList = [];
   List<BlockedModel> userLists = [];
   late Future<List<BlockedModel>> futureData;
+
   static List<BlockedModel> parseAgents(String responseBody) {
     final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
     return parsed.map<BlockedModel>((json) => BlockedModel.fromJson(json)).toList();
@@ -35,7 +40,7 @@ List<String> blockedServices=[];
         .get(Uri.parse('${baseUrl}/api/Admin/IndexBlockedServices'),
     headers: <String,String>
         {
-      'Authorization': 'Bearer $theToken'
+      'Authorization': 'Bearer $adminToken'
     }
     );
     if (response.statusCode == 200) {
@@ -46,14 +51,12 @@ List<String> blockedServices=[];
       throw Exception('Unexpected error occurred!');
     }
   }
-
-
   Future <String> Un_Block_Service(int id)async
   {
     final response = await http.get(
       Uri.parse('${baseUrl}/api/Admin/BlockServices/${id}'),
       headers: {
-        'Authorization': 'Bearer $theToken'
+        'Authorization': 'Bearer $adminToken'
       },
     );
     if(response.statusCode==200)
@@ -135,7 +138,28 @@ int id =0;
               color: const Color.fromARGB(150, 60, 60, 100),
             ),
 
-            SingleChildScrollView(
+            BlocConsumer<AdminLevelCubit, AdminLevelState>(
+  listener: (context, state) {
+    // TODO: implement listener
+    if (state is SuccessStatus) {
+      Navigator.pop(context);
+      print("success");
+
+    }
+
+
+    //في حال دخل كلمة سر خطأ
+    if(state is FailureStatus)
+    {
+      //هون حط توست ماسج انو كلمة السر غلط
+      print("رسالة الخطأ ");
+
+    }
+  },
+  builder: (context, state) {
+    var cubit=AdminLevelCubit.get(context);
+
+    return SingleChildScrollView(
               child: Column(
                 children: <Widget>[
                   SizedBox(
@@ -178,7 +202,10 @@ int id =0;
                                   borderRadius: BorderRadius.circular(25),
                                 ),
                               ),
-                              value: selectedService,
+                              hint: Text("Select Service",style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white
+                              ),),
                               items: blockedServicesList
                                   .map(
                                     (service) => DropdownMenuItem<String>(
@@ -218,40 +245,50 @@ int id =0;
                           //   "UnBlock Service",
                           //   const Color.fromARGB(255, 10, 150, 10),
                           // ),
-                          ElevatedButton(
-                            onPressed: () {
-                              Un_Block_Service(id);
-                          //
-                              // checkServiceBlock(selectedService);
-                             },
-                            style: ElevatedButton.styleFrom(
-                              minimumSize: const Size(300, 60),
-                              padding: EdgeInsets.symmetric(
-                                vertical: 5.0,
-                                horizontal:
+                          ConditionalBuilder(
+                              condition: state is RefreshLevelState || state is AdminLevelInitial,
+                              builder: (context) =>       ElevatedButton(
+
+                                onPressed: () {
+                                  cubit.Un_Block_Service(id);
+                                  //
+                                  // checkServiceBlock(selectedService);
+
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  minimumSize: const Size(300, 60),
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: 5.0,
+                                    horizontal:
                                     MediaQuery.of(context).size.width * 0.2,
+                                  ),
+                                  primary: const Color.fromARGB(255, 10, 150, 10),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  elevation: 15.0,
+                                ),
+                                child: const Text(
+                                  "UnBlock Service",
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    color: Colors.white,
+                                  ),
+                                ),
                               ),
-                              primary: const Color.fromARGB(255, 10, 150, 10),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              elevation: 15.0,
-                            ),
-                            child: const Text(
-                              "UnBlock Service",
-                              style: TextStyle(
-                                fontSize: 24,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
+                              fallback: (context) => Center(
+                                child: CircularProgressIndicator(),
+                              ))
+
                         ],
                       ),
                     ),
                   ),
                 ],
               ),
-            ),
+            );
+  },
+),
           ],
         );
       }),

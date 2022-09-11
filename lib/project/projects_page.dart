@@ -24,25 +24,11 @@ class _ProjectsPageState extends State<ProjectsPage> {
       extendBody: true,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-<<<<<<< HEAD
-        // actions: [
-        //   Switch(
-        //     value: widget.isAdmin,
-        //     activeColor: Colors.deepOrange,
-        //
-        //     onChanged: (isAdmin) {
-        //       setState(() {
-        //         widget.isAdmin = isAdmin;
-        //         admin = isAdmin;
-        //       });
-        //     },
-        //
-        //   ),
-        // ],
-=======
+
         actions: [
+          /*
           Switch(
-            value: isAdmin,
+            value: admin,
             activeColor: Colors.deepOrange,
             onChanged: (isAdmin) {
               setState(() {
@@ -51,8 +37,9 @@ class _ProjectsPageState extends State<ProjectsPage> {
               });
             },
           ),
+
+           */
         ],
->>>>>>> 7af0289f19b2ab59e21f79499360d49b316fc19d
         centerTitle: true,
         title: const Text(
           "Select Project",

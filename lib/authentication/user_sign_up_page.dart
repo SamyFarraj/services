@@ -1,5 +1,8 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../Cubit/Cubit Accountant -User/user_accountant_cubit.dart';
 import '/Api/controller/signup_controller.dart';
 import '/authentication/user_log_in_page.dart';
 
@@ -92,7 +95,30 @@ class _SignUpPageState extends State<SignUpPage> {
                     height: 50,
                   ),
                   // هاد ال container اللي بيحتوي ع ال textFields
-                  Container(
+                  BlocConsumer<UserAccountantCubit, UserAccountantState>(
+  listener: (context, state) {
+    // TODO: implement listener
+    if (state is SuccessSignUpState) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => UserLogInPage(),
+        ),
+      );
+
+    }
+
+//في حال دخل كلمة سر خطأ
+    if(state is FailedSignUpState)
+    {
+      //هون حط توست ماسج انو كلمة السر غلط
+      print("dasdas");
+
+    }
+  },
+  builder: (context, state) {
+    var cubit=UserAccountantCubit.get(context);
+    return Container(
                     padding: const EdgeInsets.all(10),
                     width: MediaQuery.of(context).size.width * 0.9,
                     height: MediaQuery.of(context).size.height * 0.67,
@@ -348,7 +374,69 @@ class _SignUpPageState extends State<SignUpPage> {
                         // }),
                         //  هي كبسة ال signUp
                         // جوا ال onPressed منحط ال استدعاء تابع ارسال البيانات لل database
+                        ConditionalBuilder(
+                            condition: state is RefreshLevelState || state is UserAccountantInitial,
+                            builder: (context) => ElevatedButton(
+                              onPressed: () {
+                                /*
+                          final formKey = adminLoginFormKey.currentState!;
+                            if(formKey.validate()){
+                                Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ProjectsPage(),
+                            ),
+                          );
+                            }
+                           */
 
+                                print('Pressed');
+
+                                cubit.sign_Up_request(
+                                  userNameController.text,
+                                  userEmailController.text,
+                                  userPasswordController.text,
+                                  userRePasswordController.text,
+                                  userPhoneController.text,
+                                );
+                                print('before send request ');
+                                // loginController().signIn(adminEmailController.text,adminPasswordController.text,'/Admin');
+                              },
+                              style: ElevatedButton.styleFrom(
+                                padding: EdgeInsets.symmetric(
+                                  vertical: 5.0,
+                                  horizontal:
+                                  MediaQuery.of(context).size.width *
+                                      0.30,
+                                ),
+                                primary: Colors.blue,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                elevation: 15.0,
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceEvenly,
+                                children: const <Widget>[
+                                  Icon(
+                                    Icons.lock_open_rounded,
+                                    color: Colors.white,
+                                  ),
+                                  Text(
+                                    "Sign Up",
+                                    style: TextStyle(
+                                      fontSize: 24,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            fallback: (context) => Center(
+                              child: CircularProgressIndicator(),
+                            )),
+                        /*
                         ElevatedButton(
                           onPressed: () {
                             //هون لازم نضيف ال validator
@@ -405,9 +493,13 @@ class _SignUpPageState extends State<SignUpPage> {
                             ],
                           ),
                         ),
+
+                         */
                       ],
                     ),
-                  ),
+                  );
+  },
+),
                 ],
               ),
             ),

@@ -1,6 +1,10 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../Cubit/Cubit Accountant -User/user_accountant_cubit.dart';
+import '../project/projects_page.dart';
 import '/Api/controller/login_controller.dart';
 
 class UserLogInPage extends StatefulWidget {
@@ -14,14 +18,14 @@ class _UserLogInPageState extends State<UserLogInPage> {
   // هدول ال controller
   // مشان ال textFields
 
-  final userEmailController = TextEditingController();
-  final userPasswordController = TextEditingController();
+  final adminEmailController = TextEditingController();
+  final adminPasswordController = TextEditingController();
 
-  // هاد ال key  مشات ال  validation
-  final loginFormKey = GlobalKey<FormState>();
+  // هاد ال key مسان ال  validator
+  final adminLoginFormKey = GlobalKey<FormState>();
 
   //متغير ل تحديد طهور ال password
-  bool passwordVisibility = true;
+  bool adminPasswordVisibility = true;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +35,7 @@ class _UserLogInPageState extends State<UserLogInPage> {
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
-          "LogIn",
+          "User LogIn",
           style: TextStyle(
             fontSize: 36,
             fontWeight: FontWeight.bold,
@@ -62,257 +66,233 @@ class _UserLogInPageState extends State<UserLogInPage> {
           // هاد مشان لما نفتح ال keyboard
           // ما يعطي pixels rendered out error
           // يعني مشات  ما تطلع ال pixels  من الشاشة
-          Form(
-            key: loginFormKey,
-            child: SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.14,
-                  ),
-                  //  هاد logo  الشركة
-                  Image.asset(
-                    "asset/images/logo.png",
-                    width: double.infinity,
-                    height: MediaQuery.of(context).size.height * 0.095,
-                  ),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  // هاد ال container اللي بيحتوي ع ال textFields
-                  // هون شغل الربط
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    height: MediaQuery.of(context).size.height * 0.65,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(35),
-                      color: const Color.fromARGB(180, 0, 0, 65),
-                    ),
-                    child: Column(
-                      children: <Widget>[
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.1,
-                        ),
-                        // هاد ال حقل الخاص ب ال email
-                        TextFormField(
-                          validator: (enteredEmailVal) =>
-                              enteredEmailVal != null &&
-                                      !EmailValidator.validate(enteredEmailVal)
-                                  ? "Please Enter a Valid E-Mail"
-                                  : null,
-                          keyboardType: TextInputType.emailAddress,
-                          controller: userEmailController,
-                          decoration: const InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.mail,
-                              color: Colors.deepOrange,
-                            ),
-                            label: Text(
-                              "E-Mail",
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.blueAccent,
-                              ),
-                            ),
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                width: 2.0,
-                                color: Colors.deepOrange,
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                width: 2.0,
-                                color: Colors.blue,
-                              ),
-                            ),
-                          ),
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                          ),
-                        ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.03,
-                        ),
-                        // هاد ال حقل الخاص ب ال password
-                        TextFormField(
-                          validator: (enteredPasswordVal) =>
-                              enteredPasswordVal!.length < 8
-                                  ? "Password is too short"
-                                  : null,
-                          obscureText: passwordVisibility,
-                          controller: userPasswordController,
-                          decoration: InputDecoration(
-                            prefixIcon: const Icon(
-                              Icons.vpn_key_sharp,
-                              color: Colors.deepOrange,
-                            ),
-                            suffixIcon: IconButton(
-                              color: Colors.blue,
-                              icon: passwordVisibility
-                                  ? const Icon(Icons.visibility_off)
-                                  : const Icon(Icons.visibility),
-                              // color: Colors.deepOrange,
-                              onPressed: () => setState(
 
-                                () => passwordVisibility = !passwordVisibility,
-                              ),
-                            ),
-                            label: const Text(
-                              "Password",
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.blueAccent,
-                              ),
-                            ),
-                            enabledBorder: const UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                width: 2.0,
+          BlocConsumer<UserAccountantCubit, UserAccountantState>(
+            listener: (context, state) {
+              var cubit=UserAccountantCubit.get(context);
+              if (state is Seccfullog) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProjectsPage(false),
+                  ),
+                );
+
+              }
+
+//في حال دخل كلمة سر خطأ
+              if(state is ErrorPasswordState)
+                {
+                  //هون حط توست ماسج انو كلمة السر غلط
+print("dasdas");
+
+                }
+              // TODO: implement listener
+            },
+            builder: (context, state) {
+              var cubit=UserAccountantCubit.get(context);
+              return SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.14,
+                    ),
+                    //  هاد logo  الشركة
+                    Image.asset(
+                      "asset/images/logo.png",
+                      width: double.infinity,
+                      height: MediaQuery.of(context).size.height * 0.095,
+                    ),
+                    const SizedBox(
+                      height: 50,
+                    ),
+                    // هاد ال container اللي بيحتوي ع ال textFields
+                    // هون شغل الربط
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: MediaQuery.of(context).size.height * 0.65,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(35),
+                        color: const Color.fromARGB(180, 0, 0, 65),
+                      ),
+                      child: Column(
+                        children: <Widget>[
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.1,
+                          ),
+                          // هاد ال حقل الخاص ب ال email
+                          TextFormField(
+                            validator: (enteredEmailVal) => enteredEmailVal !=
+                                null &&
+                                !EmailValidator.validate(enteredEmailVal)
+                                ? "Please Enter a Valid E-Mail"
+                                : null,
+                            keyboardType: TextInputType.emailAddress,
+                            controller: adminEmailController,
+                            decoration: const InputDecoration(
+                              prefixIcon: Icon(
+                                Icons.mail,
                                 color: Colors.deepOrange,
                               ),
-                            ),
-                            focusedBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                width: 2.0,
-                                color: Colors.blue,
-                              ),
-                            ),
-                          ),
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                          ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            TextButton(
-                              onPressed: () {},
-                              child: const Text(
-                                "forgot password?",
+                              label: Text(
+                                "E-Mail",
                                 style: TextStyle(
                                   fontSize: 18,
+                                  color: Colors.blueAccent,
+                                ),
+                              ),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 2.0,
+                                  color: Colors.deepOrange,
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 2.0,
                                   color: Colors.blue,
                                 ),
                               ),
                             ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.15,
-                        ),
-                        //هاد الزر اخر شي مننقل كلشي جوا ال on pressed
-                        // buttonsOfAuthentication(context, 'Login', (){
-                        //   //هون لازم نضيف ال validator
-                        //   //     // حاليا رح اتركو بتعليق مشات
-                        //   //     // ما يعذبك وقت التجريب اخر شي بزبطو
-                        //   //
-                        //        final LoginFormKeyCurrent = LoginFormKey.currentState!;
-                        //         if(LoginFormKeyCurrent.validate()){
-                        //           // تابع ارسال البيانات
-                        //            print("Test Request SignUp m");
-                        //         }
-                        //
-                        //
-                        // }),
-                        GestureDetector(
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                              left: 15,
-                              right: 15,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Colors.blue,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                const Icon(
-                                  Icons.lock_open_rounded,
-                                  color: Colors.white,
-                                ),
-                                SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.05,
-                                ),
-                                const Text(
-                                  "LogInS",
-                                  style: TextStyle(
-                                    fontSize: 24,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ],
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
                             ),
                           ),
-                          onTap: () {
-                            //هون لازم نضيف ال validator
-                            // حاليا رح اتركو بتعليق مشات
-                            // ما يعذبك وقت التجريب اخر شي بزبطو
-                            /*
-                                final formKey = loginFormKey.currentState!;
-                            if(formKey.validate()){
-                              // تباع الارسال
-                            }
-                             */
-                            print('pressed');
-<<<<<<< HEAD
-                            logincontroller().signInUser(userEmailController.text,
-                                userPasswordController.text);
-=======
-                            LoginController().signIn(userEmailController.text,
-                                userPasswordController.text, '');
->>>>>>> 7af0289f19b2ab59e21f79499360d49b316fc19d
-                          },
-                        )
-                        //  هي كبسة ال login
-                        // جوا ال onPressed منحط ال استدعاء تابع ارسال البيانات لل database
-/*
-                        ElevatedButton(
-                          onPressed: () {
-                            print('pressed');
-                            loginController().signIn(emailController.text,passwordController.text);
-                          },
-                          style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.symmetric(
-                              vertical: 5.0,
-                              horizontal:
-                                  MediaQuery.of(context).size.width * 0.30,
-                            ),
-                            primary: Colors.blue,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            elevation: 15.0,
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.03,
                           ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: const <Widget>[
-                              Icon(
-                                Icons.lock_open_rounded,
-                                color: Colors.white,
+                          // هاد ال حقل الخاص ب ال password
+                          TextFormField(
+                            validator: (enteredPasswordVal) =>
+                            enteredPasswordVal!.length < 8
+                                ? "Password is too short"
+                                : null,
+                            obscureText: adminPasswordVisibility,
+                            controller: adminPasswordController,
+                            decoration: InputDecoration(
+                              prefixIcon: const Icon(
+                                Icons.vpn_key_sharp,
+                                color: Colors.deepOrange,
                               ),
-                              Text(
-                                "LogIn",
+                              suffixIcon: IconButton(
+                                color: Colors.blue,
+                                icon: adminPasswordVisibility
+                                    ? const Icon(Icons.visibility_off)
+                                    : const Icon(Icons.visibility),
+                                // color: Colors.deepOrange,
+                                onPressed: () => setState(
+                                      () => adminPasswordVisibility =
+                                  !adminPasswordVisibility,
+                                ),
+                              ),
+                              label: const Text(
+                                "Password",
                                 style: TextStyle(
-                                  fontSize: 24,
-                                  color: Colors.white,
+                                  fontSize: 18,
+                                  color: Colors.blueAccent,
                                 ),
                               ),
-                            ],
+                              enabledBorder: const UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 2.0,
+                                  color: Colors.deepOrange,
+                                ),
+                              ),
+                              focusedBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 2.0,
+                                  color: Colors.blue,
+                                ),
+                              ),
+                            ),
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                            ),
                           ),
-                        ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.2,
+                          ),
+                          //  هي كبسة ال login
+                          // جوا ال onPressed منحط ال استدعاء
+                          // تابع ارسال البيانات لل database
+                          // buttonsOfAuthentication(context ,"login" ,(){
+                          //   final adminLoginFormKeyCurrent =
+                          //                  adminLoginFormKey.currentState!;
+                          //   //         if(adminLoginFormKeyCurrent.validate()){
+                          //   //           // تابع ارسال البيانات
+                          //   //            print("Test Request SignUp m");
+                          //   //         }
+                          // }),
 
- */
-                      ],
+                          ConditionalBuilder(
+                              condition: state is RefreshLevelState || state is UserAccountantInitial,
+                              builder: (context) => ElevatedButton(
+                                onPressed: () {
+                                  /*
+                          final formKey = adminLoginFormKey.currentState!;
+                            if(formKey.validate()){
+                                Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ProjectsPage(),
+                            ),
+                          );
+                            }
+                           */
+
+                                  print('Pressed');
+
+                                  cubit.signInUser(
+                                    adminEmailController.text,
+                                    adminPasswordController.text,
+                                  );
+                                  print('before send request ');
+                                  // loginController().signIn(adminEmailController.text,adminPasswordController.text,'/Admin');
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: 5.0,
+                                    horizontal:
+                                    MediaQuery.of(context).size.width *
+                                        0.30,
+                                  ),
+                                  primary: Colors.blue,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                  elevation: 15.0,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.spaceEvenly,
+                                  children: const <Widget>[
+                                    Icon(
+                                      Icons.lock_open_rounded,
+                                      color: Colors.white,
+                                    ),
+                                    Text(
+                                      "LogIn",
+                                      style: TextStyle(
+                                        fontSize: 24,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              fallback: (context) => Center(
+                                child: CircularProgressIndicator(),
+                              ))
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ),
+                  ],
+                ),
+              );
+            },
           ),
         ],
       ),

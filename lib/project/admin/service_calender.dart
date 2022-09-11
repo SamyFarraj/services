@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
+import '../../main.dart';
+import '../constant.dart';
 import '/Api/model/all_reservation_model.dart';
 import '../../moh_project/post_moh/login_controller.dart';
 import '../../services/choices.dart';
@@ -31,13 +33,17 @@ class _ServiceCalenderState extends State<ServiceCalender> {
   }
 
   Future<List<AllReservations>> fetchData() async {
-    final response = await http.get(
-      Uri.parse('http://192.168.56.1:8000/api/Admin/Reservation'),
-      headers: {'Authorization': 'Bearer $theToken'},
-    );
-    print('the token ${theToken}');
 
-    print('the statues is ${response.statusCode}');
+    final response = await http.get(
+      Uri.parse('${baseUrl}/api/Admin/Reservation'),
+      headers: {
+        'Authorization': 'Bearer $adminToken',
+                'Accept':'application/json'
+      },
+    );
+    print('the tokeassafdas');
+
+    print('the statues is ${response.body}');
     if (response.statusCode == 200) {
       // final List parsedList = json.decode(response.body);
       // List<MyReservations> list = parsedList.map((val) => MyReservations.fromJson(val)).toList();

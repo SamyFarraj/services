@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../Api/model/all_reservation_model.dart';
 import '/services/requests_form.dart';
 import '/services/services_check_box.dart';
 import '/services/staff.dart';
@@ -23,6 +24,8 @@ class getData {
 final selectStreet = <ServiceChooser>[
   ServiceChooser(title: 'WOODWARD', serviceChoosingList: woodWardStreetList),
   ServiceChooser(title: 'FARMER', serviceChoosingList: farmerStreetList),
+  ServiceChooser(title: 'BothStreet', serviceChoosingList: woodWardStreetList),
+
 ];
 
 //مصفوفة ال بوابات
@@ -31,6 +34,11 @@ final selectStreet = <ServiceChooser>[
 //اخر خيار في كل مصفوفة ضمن الشارع مخصص لحجز الشارع في حالة كات يريد المستخدم
 //ان يركن شاحنة عندها ي الشارع يصبح محجوز بالكامل
 
+final bothStreetList = <ServiceChooser>[
+  const ServiceChooser(title: 'Gate 1'),
+  const ServiceChooser(title: 'Gate 2'),
+  const ServiceChooser(title: 'WOODWARD street'),
+];
 final woodWardStreetList = <ServiceChooser>[
   const ServiceChooser(title: 'Gate 1'),
   const ServiceChooser(title: 'Gate 2'),
@@ -69,12 +77,7 @@ List <String> gatesEdition =[
 */
 
 List<String> blockedServicesList = [
-  'Select Service',
-  'blocked service 1',
-  'blocked service 2',
-  'blocked service 3',
-  'blocked service 4',
-  'blocked service 5',
+
 ];
 
 //هي مشان يقدر المستخدم يختار كل ال staffs المتاحين

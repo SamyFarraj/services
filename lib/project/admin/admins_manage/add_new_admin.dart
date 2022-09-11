@@ -1,6 +1,9 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../Cubit/Admin Level Operation/admin_level_cubit.dart';
 import '/services/choices.dart';
 import '../../../Api/controller/Admin/add_new_admin_controller.dart';
 import '../../../components/snack_bar.dart';
@@ -84,7 +87,27 @@ class _AddNewAdminState extends State<AddNewAdmin> {
                         ),
                         color: Color.fromARGB(180, 0, 0, 65),
                       ),
-                      child: SingleChildScrollView(
+                      child: BlocConsumer<AdminLevelCubit, AdminLevelState>(
+  listener: (context, state) {
+    // TODO: implement listener
+    if (state is SuccessStatus) {
+      Navigator.pop(context);
+      print("success");
+
+    }
+
+
+    //في حال دخل كلمة سر خطأ
+    if(state is FailureStatus)
+    {
+      //هون حط توست ماسج انو كلمة السر غلط
+      print("رسالة الخطأ ");
+
+    }
+
+  },
+  builder: (context, state) {
+    return SingleChildScrollView(
                         child: Column(
                           children: <Widget>[
                             TextFormField(
@@ -137,41 +160,49 @@ class _AddNewAdminState extends State<AddNewAdmin> {
                             //   "Add Admin",
                             //   const Color.fromARGB(255, 10, 150, 10),
                             // ),
-                            ElevatedButton(
-                              onPressed: () {
-                                final formKey = addAdminFormKey.currentState!;
-                                if (formKey.validate()) {
-                                  // تباع الارسال
-                                  // checkNewAdmin(adminEMailController.text);
-                                  checkNewAddAdminRequest();
-                                  AddNewAdmin_con.addNewAdmin(
-                                      adminEMailController.text);
-                                }
-                              },
-                              style: ElevatedButton.styleFrom(
-                                minimumSize: const Size(300, 60),
-                                padding: EdgeInsets.symmetric(
-                                  vertical: 5.0,
-                                  horizontal:
+                            ConditionalBuilder(
+                                condition: state is RefreshLevelState || state is AdminLevelInitial,
+                                builder: (context) =>     ElevatedButton(
+                                  onPressed: () {
+                                    final formKey = addAdminFormKey.currentState!;
+                                    if (formKey.validate()) {
+                                      // تباع الارسال
+                                      // checkNewAdmin(adminEMailController.text);
+                                      checkNewAddAdminRequest();
+                                      AddNewAdmin_con.addNewAdmin(
+                                          adminEMailController.text);
+                                    }
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    minimumSize: const Size(300, 60),
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: 5.0,
+                                      horizontal:
                                       MediaQuery.of(context).size.width * 0.2,
+                                    ),
+                                    primary: const Color.fromARGB(255, 10, 150, 10),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    elevation: 15.0,
+                                  ),
+                                  child: const Text(
+                                    "Add Admin",
+                                    style: TextStyle(
+                                      fontSize: 24,
+                                      color: Colors.white,
+                                    ),
+                                  ),
                                 ),
-                                primary: const Color.fromARGB(255, 10, 150, 10),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                elevation: 15.0,
-                              ),
-                              child: const Text(
-                                "Add Admin",
-                                style: TextStyle(
-                                  fontSize: 24,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
+                                fallback: (context) => Center(
+                                  child: CircularProgressIndicator(),
+                                ))
+
                           ],
                         ),
-                      ),
+                      );
+  },
+),
                     ),
                   ],
                 ),

@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 
+import '../../../../Cubit/Cubit Accountant -User/user_accountant_cubit.dart';
 import '../../../../moh_project/post_moh/login_controller.dart';
 import '../../../constant.dart';
 import 'dashboard_verification_code_page.dart';
@@ -34,25 +36,7 @@ class _EditAccountInfoState extends State<EditAccountInfo> {
   }
 
 //كمان هون عدل رابط ارسال الريكوست
-  static Future<String> updateUserProfile(String name, String phone) async {
-    var headers = {
-      'Accept': 'application/json',
-      'Authorization': 'Bearer ${theToken}'
-    };
-    var request = http.MultipartRequest(
-        'POST', Uri.parse('${baseUrl}/api/Admin/ProfileUpdate'));
-    request.fields.addAll({'name': '${name}', 'phone': '${phone}'});
 
-    request.headers.addAll(headers);
-
-    http.StreamedResponse response = await request.send();
-    print('the statues is ${response.statusCode}');
-    if (response.statusCode == 200) {
-      return (await response.stream.bytesToString());
-    } else {
-      return (response.reasonPhrase.toString());
-    }
-  }
 
   final editingInfoFormKey = GlobalKey<FormState>();
   final newNameController = TextEditingController();
@@ -99,7 +83,13 @@ class _EditAccountInfoState extends State<EditAccountInfo> {
           // يعني مشات  ما تطلع ال pixels  من الشاشة
           Form(
             key: editingInfoFormKey,
-            child: SingleChildScrollView(
+            child: BlocConsumer<UserAccountantCubit, UserAccountantState>(
+  listener: (context, state) {
+    // TODO: implement listener
+  },
+  builder: (context, state) {
+    var cubit=UserAccountantCubit.get(context);
+    return SingleChildScrollView(
               child: Column(
                 children: <Widget>[
                   SizedBox(
@@ -216,7 +206,7 @@ class _EditAccountInfoState extends State<EditAccountInfo> {
                                 editingInfoFormKey.currentState!;
                             if (changeInfoFormKey.validate()) {
                               // تابع ارسال البيانات
-                              updateUserProfile(newNameController.text,
+                              cubit.updateUserProfile(newNameController.text,
                                   newPhoneController.text);
                             }
                           },
@@ -303,7 +293,9 @@ class _EditAccountInfoState extends State<EditAccountInfo> {
                   ),
                 ],
               ),
-            ),
+            );
+  },
+),
           ),
         ],
       ),

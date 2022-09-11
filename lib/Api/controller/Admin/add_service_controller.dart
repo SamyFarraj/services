@@ -1,5 +1,6 @@
 import 'package:http/http.dart' as http;
 
+import '../../../main.dart';
 import '/project/constant.dart';
 import '../../../moh_project/post_moh/login_controller.dart';
 
@@ -12,7 +13,7 @@ class addServiceAdmin {
       uri,
       headers: <String, String>{
         'accept': 'application/json',
-        'Authorization': 'Bearer $theToken'
+        'Authorization': 'Bearer $adminToken'
       },
       body: {'name': name, 'street': Street},
     );

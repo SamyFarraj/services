@@ -1,8 +1,12 @@
 import 'dart:convert';
 
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 
+import '../../../Cubit/Admin Level Operation/admin_level_cubit.dart';
+import '../../../main.dart';
 import '/project/constant.dart';
 import '/services/choices.dart';
 import '../../../Api/model/name_service.dart';
@@ -22,18 +26,7 @@ class _BlockServiceState extends State<BlockService> {
   List<String> bothStreetsServices = [];
   List<String> servicesList = [];
 
-  Future<String> Block_Service(int id) async {
-    final response = await http.get(
-      Uri.parse('${baseUrl}/api/Admin/BlockServices/${id}'),
-      headers: {'Authorization': 'Bearer $theToken'},
-    );
 
-    if (response.statusCode == 200) {
-      return jsonDecode(response.body);
-    } else {
-      return "Error code is ${response.statusCode}";
-    }
-  }
 
   int i = 0;
 
@@ -45,7 +38,7 @@ class _BlockServiceState extends State<BlockService> {
     //   servicesList.clear();
 
     final response = await http.get(Uri.parse('${baseUrl}/api/Admin/services'),
-        headers: {'Authorization': 'Bearer $theToken'}
+        headers: {'Authorization': 'Bearer $adminToken'}
         // snapshot.data!.services.woodWard[1].street
         );
 
@@ -110,7 +103,29 @@ class _BlockServiceState extends State<BlockService> {
               color: const Color.fromARGB(150, 60, 60, 100),
             ),
 
-            SingleChildScrollView(
+            BlocConsumer<AdminLevelCubit, AdminLevelState>(
+  listener: (context, state) {
+    // TODO: implement listener
+    if (state is SuccessStatus) {
+      Navigator.pop(context);
+      print("success");
+
+    }
+
+
+    //في حال دخل كلمة سر خطأ
+    if(state is FailureStatus)
+    {
+      //هون حط توست ماسج انو كلمة السر غلط
+      print("رسالة الخطأ ");
+
+    }
+    // TODO: implement listener
+  },
+  builder: (context, state) {
+    var cubit=AdminLevelCubit.get(context);
+
+    return SingleChildScrollView(
               child: Column(
                 children: <Widget>[
                   SizedBox(
@@ -227,8 +242,8 @@ class _BlockServiceState extends State<BlockService> {
                                         borderRadius: BorderRadius.circular(25),
                                       ),
                                     ),
-                                    items: selectStreet
-                                        .map(
+
+                                    items: selectStreet.map(
                                           (street) => DropdownMenuItem<String>(
                                             value: street.title,
                                             child: Text(
@@ -241,6 +256,10 @@ class _BlockServiceState extends State<BlockService> {
                                           ),
                                         )
                                         .toList(),
+                                    hint: Text("Select Service",style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.white
+                                    ),),
                                     onChanged: (street) => setState(() {
                                       selectedStreet = street;
 
@@ -261,6 +280,11 @@ class _BlockServiceState extends State<BlockService> {
                                       if (selectedStreet == 'WOODWARD') {
                                         servicesList =
                                             List.from(woodWardServices);
+                                        selectedService = servicesList[0];
+                                      }
+                                      if (selectedStreet == 'BothStreet') {
+                                        servicesList =
+                                            List.from(bothStreetsServices);
                                         selectedService = servicesList[0];
                                       }
                                       // servicesList.clear();
@@ -286,7 +310,10 @@ class _BlockServiceState extends State<BlockService> {
                                         borderRadius: BorderRadius.circular(25),
                                       ),
                                     ),
-                                    value: selectedService,
+                                    hint: Text("Select Service",style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.white
+                                    ),),
                                     items: servicesList
                                         .map(
                                           (service) => DropdownMenuItem<String>(
@@ -388,33 +415,40 @@ class _BlockServiceState extends State<BlockService> {
                                 //   "Block Service",
                                 //   const Color.fromARGB(255, 150, 10, 10),
                                 // ),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    checkServiceBlock(selectedService);
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    minimumSize: const Size(300, 60),
-                                    padding: EdgeInsets.symmetric(
-                                      vertical: 5.0,
-                                      horizontal:
+                                ConditionalBuilder(
+                                    condition: state is RefreshLevelState || state is AdminLevelInitial,
+                                    builder: (context) =>        ElevatedButton(
+                                      onPressed: () {
+                                        checkServiceBlock(selectedService);
+                                        cubit.Block_Service(theId);
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        minimumSize: const Size(300, 60),
+                                        padding: EdgeInsets.symmetric(
+                                          vertical: 5.0,
+                                          horizontal:
                                           MediaQuery.of(context).size.width *
                                               0.2,
-                                    ),
-                                    primary:
+                                        ),
+                                        primary:
                                         const Color.fromARGB(255, 150, 10, 10),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(10),
+                                        ),
+                                        elevation: 15.0,
+                                      ),
+                                      child: const Text(
+                                        "Block Service",
+                                        style: TextStyle(
+                                          fontSize: 24,
+                                          color: Colors.white,
+                                        ),
+                                      ),
                                     ),
-                                    elevation: 15.0,
-                                  ),
-                                  child: const Text(
-                                    "Block Service",
-                                    style: TextStyle(
-                                      fontSize: 24,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
+                                    fallback: (context) => Center(
+                                      child: CircularProgressIndicator(),
+                                    ))
+
                               ],
                             );
                           } else if (snapshot.hasError) {
@@ -429,7 +463,9 @@ class _BlockServiceState extends State<BlockService> {
                   ),
                 ],
               ),
-            ),
+            );
+  },
+),
           ],
         );
       }),

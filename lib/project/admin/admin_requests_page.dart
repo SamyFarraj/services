@@ -1,8 +1,12 @@
 import 'dart:convert';
 
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 
+import '../../Cubit/Admin Level Operation/admin_level_cubit.dart';
+import '../../main.dart';
 import '/components/dash_board.dart';
 import '../../Api/controller/Admin/accept_or_decline_reservation.dart';
 import '../../Api/model/my_accepted_model.dart';
@@ -48,7 +52,7 @@ class _AdminRequestsPageState extends State<AdminRequestsPage> {
   Future<List<MyAccepted>> fetchData() async {
     final response = await http.get(
       Uri.parse('http://192.168.56.1:8000/api/Admin/Reservation'),
-      headers: {'Authorization': 'Bearer $theToken'},
+      headers: {'Authorization': 'Bearer $adminToken'},
     );
     print('the statues is ${response.statusCode}');
     if (response.statusCode == 200) {
@@ -164,7 +168,28 @@ class _AdminRequestsPageState extends State<AdminRequestsPage> {
               width: double.infinity,
               color: const Color.fromARGB(150, 60, 60, 100),
             ),
-            SingleChildScrollView(
+            BlocConsumer<AdminLevelCubit, AdminLevelState>(
+  listener: (context, state) {
+    // TODO: implement listener
+    if (state is SuccessStatus) {
+      Navigator.pop(context);
+      print("success");
+
+    }
+
+
+    //في حال دخل كلمة سر خطأ
+    if(state is FailureStatus)
+    {
+      //هون حط توست ماسج انو كلمة السر غلط
+      print("رسالة الخطأ ");
+
+    }
+  },
+  builder: (context, state) {
+    var cubit=AdminLevelCubit.get(context);
+
+    return SingleChildScrollView(
               child: Column(
                 children: <Widget>[
                   SizedBox(
@@ -302,49 +327,54 @@ class _AdminRequestsPageState extends State<AdminRequestsPage> {
                                               ),
                                               Row(
                                                 children: <Widget>[
-                                                  ElevatedButton(
-                                                    onPressed: () {
-                                                      setState(() {
-                                                        Acc_dec
-                                                            .Accept_reservation(
+                                                  ConditionalBuilder(
+                                                      condition: state is RefreshLevelState || state is AdminLevelInitial,
+                                                      builder: (context) =>     ElevatedButton(
+                                                        onPressed: () {
+                                                          setState(() {
+                                                            cubit.Accept_reservation(
                                                                 val.id);
 
-                                                        //  acceptRequest(val);
-                                                      });
-                                                    },
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                      minimumSize:
+                                                            //  acceptRequest(val);
+                                                          });
+                                                        },
+                                                        style: ElevatedButton
+                                                            .styleFrom(
+                                                          minimumSize:
                                                           const Size(40, 20),
-                                                      padding:
+                                                          padding:
                                                           EdgeInsets.symmetric(
-                                                        vertical: 3.0,
-                                                        horizontal:
+                                                            vertical: 3.0,
+                                                            horizontal:
                                                             MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width *
+                                                                context)
+                                                                .size
+                                                                .width *
                                                                 0.05,
-                                                      ),
-                                                      primary:
+                                                          ),
+                                                          primary:
                                                           const Color.fromARGB(
                                                               255, 10, 150, 10),
-                                                      shape:
+                                                          shape:
                                                           RoundedRectangleBorder(
-                                                        borderRadius:
+                                                            borderRadius:
                                                             BorderRadius
                                                                 .circular(10),
+                                                          ),
+                                                          elevation: 15.0,
+                                                        ),
+                                                        child: const Text(
+                                                          "Accept",
+                                                          style: TextStyle(
+                                                            fontSize: 24,
+                                                            color: Colors.white,
+                                                          ),
+                                                        ),
                                                       ),
-                                                      elevation: 15.0,
-                                                    ),
-                                                    child: const Text(
-                                                      "Accept",
-                                                      style: TextStyle(
-                                                        fontSize: 24,
-                                                        color: Colors.white,
-                                                      ),
-                                                    ),
-                                                  ),
+                                                      fallback: (context) => Center(
+                                                        child: CircularProgressIndicator(),
+                                                      ))
+                                                 ,
                                                   SizedBox(
                                                     width:
                                                         MediaQuery.of(context)
@@ -352,50 +382,54 @@ class _AdminRequestsPageState extends State<AdminRequestsPage> {
                                                                 .width *
                                                             0.05,
                                                   ),
-
-                                                  //رفض حجز
-                                                  ElevatedButton(
-                                                    onPressed: () {
-                                                      setState(() {
-                                                        //        deleteRequest(val);
-                                                        Acc_dec
-                                                            .delete_reservation(
+                                                  ConditionalBuilder(
+                                                      condition: state is RefreshLevelState || state is AdminLevelInitial,
+                                                      builder: (context) =>       ElevatedButton(
+                                                        onPressed: () {
+                                                          setState(() {
+                                                            //        deleteRequest(val);
+                                                            cubit.delete_reservation(
                                                                 val.id);
-                                                      });
-                                                    },
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                      minimumSize:
+                                                          });
+                                                        },
+                                                        style: ElevatedButton
+                                                            .styleFrom(
+                                                          minimumSize:
                                                           const Size(40, 20),
-                                                      padding:
+                                                          padding:
                                                           EdgeInsets.symmetric(
-                                                        vertical: 3.0,
-                                                        horizontal:
+                                                            vertical: 3.0,
+                                                            horizontal:
                                                             MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width *
+                                                                context)
+                                                                .size
+                                                                .width *
                                                                 0.05,
-                                                      ),
-                                                      primary:
+                                                          ),
+                                                          primary:
                                                           const Color.fromARGB(
                                                               255, 150, 10, 10),
-                                                      shape:
+                                                          shape:
                                                           RoundedRectangleBorder(
-                                                        borderRadius:
+                                                            borderRadius:
                                                             BorderRadius
                                                                 .circular(10),
+                                                          ),
+                                                          elevation: 15.0,
+                                                        ),
+                                                        child: const Text(
+                                                          "Decline",
+                                                          style: TextStyle(
+                                                            fontSize: 24,
+                                                            color: Colors.white,
+                                                          ),
+                                                        ),
                                                       ),
-                                                      elevation: 15.0,
-                                                    ),
-                                                    child: const Text(
-                                                      "Decline",
-                                                      style: TextStyle(
-                                                        fontSize: 24,
-                                                        color: Colors.white,
-                                                      ),
-                                                    ),
-                                                  ),
+                                                      fallback: (context) => Center(
+                                                        child: CircularProgressIndicator(),
+                                                      ))
+                                                  //رفض حجز
+
                                                 ],
                                               ),
                                             ],
@@ -649,7 +683,9 @@ class _AdminRequestsPageState extends State<AdminRequestsPage> {
                   ),
                 ],
               ),
-            )
+            );
+  },
+)
           ],
         ),
       ),

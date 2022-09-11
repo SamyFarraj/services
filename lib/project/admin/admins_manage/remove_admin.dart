@@ -1,8 +1,12 @@
 import 'dart:convert';
 
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 
+import '../../../Cubit/Admin Level Operation/admin_level_cubit.dart';
+import '../../../main.dart';
 import '/Api/controller/Admin/add_new_admin_controller.dart';
 import '/Api/model/show_admins_model.dart';
 import '/project/constant.dart';
@@ -30,7 +34,7 @@ class _RemoveAdminState extends State<RemoveAdmin> {
   Future<List<ShowAdmins>> fetchData() async {
     final response = await http.get(
       Uri.parse('${baseUrl}/api/Admin/ShowAllAdmins'),
-      headers: {'Authorization': 'Bearer ${theToken}'},
+      headers: {'Authorization': 'Bearer ${adminToken}'},
     );
     print('the statues is ${response.statusCode}');
     if (response.statusCode == 200) {
@@ -140,7 +144,26 @@ return res;
               color: const Color.fromARGB(150, 60, 60, 100),
             ),
 
-            SingleChildScrollView(
+            BlocConsumer<AdminLevelCubit, AdminLevelState>(
+  listener: (context, state) {
+    // TODO: implement listener
+    if (state is SuccessStatus) {
+      Navigator.pop(context);
+      print("success");
+
+    }
+
+
+    //في حال دخل كلمة سر خطأ
+    if(state is FailureStatus)
+    {
+      //هون حط توست ماسج انو كلمة السر غلط
+      print("رسالة الخطأ ");
+
+    }
+  },
+  builder: (context, state) {
+    return SingleChildScrollView(
               child: Column(
                 children: <Widget>[
                   SizedBox(
@@ -188,8 +211,10 @@ return res;
                                   borderRadius: BorderRadius.circular(25),
                                 ),
                               ),
-                              value: selectedAdmin,
-                              items: addAdminList
+                              hint: Text("Select Service",style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.white
+                              ),),                              items: addAdminList
                                   .map(
                                     (service) => DropdownMenuItem<String>(
                                       value: service,
@@ -219,46 +244,54 @@ return res;
                           //   "Remove Admin",
                           //   const Color.fromARGB(255, 150, 10, 10),
                           // ),
-                          ElevatedButton(
-                            onPressed: () {
-                              checkAdminDelete(selectedAdmin!);
-                              for (int i = 0; i < userLists.length; i++) {
-                                if (selectedAdmin == userLists[i].name) {
-                                  AddNewAdmin_con.RemoveAdmin(userLists[i].id);
-                                  break;
-                                }
-                              }
+                          ConditionalBuilder(
+                              condition: state is RefreshLevelState || state is AdminLevelInitial,
+                              builder: (context) =>     ElevatedButton(
+                                onPressed: () {
+                                  checkAdminDelete(selectedAdmin!);
+                                  for (int i = 0; i < userLists.length; i++) {
+                                    if (selectedAdmin == userLists[i].name) {
+                                      AddNewAdmin_con.RemoveAdmin(userLists[i].id);
+                                      break;
+                                    }
+                                  }
 
-                              // هون تابع حذف ادمن لازم ينحط
-                            },
-                            style: ElevatedButton.styleFrom(
-                              minimumSize: const Size(300, 60),
-                              padding: EdgeInsets.symmetric(
-                                vertical: 5.0,
-                                horizontal:
+                                  // هون تابع حذف ادمن لازم ينحط
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  minimumSize: const Size(300, 60),
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: 5.0,
+                                    horizontal:
                                     MediaQuery.of(context).size.width * 0.2,
+                                  ),
+                                  primary: const Color.fromARGB(255, 150, 10, 10),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  elevation: 15.0,
+                                ),
+                                child: const Text(
+                                  "Remove Admin",
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    color: Colors.white,
+                                  ),
+                                ),
                               ),
-                              primary: const Color.fromARGB(255, 150, 10, 10),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              elevation: 15.0,
-                            ),
-                            child: const Text(
-                              "Remove Admin",
-                              style: TextStyle(
-                                fontSize: 24,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
+                              fallback: (context) => Center(
+                                child: CircularProgressIndicator(),
+                              ))
+
                         ],
                       ),
                     ),
                   ),
                 ],
               ),
-            ),
+            );
+  },
+),
           ],
         );
       }),

@@ -2,17 +2,15 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:project_mohammad/project/user/service_info_input.dart';
 
-import '/Api/model/name_service.dart';
-import '/components/dash_board.dart';
-import '/project/user/service_info_input.dart';
-import '/services/choices.dart';
+
+import '../../Api/model/name_service.dart';
+import '../../components/dash_board.dart';
 import '../../main.dart';
+import '../../services/choices.dart';
 import '../constant.dart';
-<<<<<<< HEAD
-String tokenUser='eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMThiOTJmYzBlNWE0YThkZjQ0NDM3NmRhODI0M2Q4NTc5ZDY4YmZkYzQ5MGFmN2Q2MDU4MWZlY2Y3ZjllYmVjNjRmNjFjYzExNTI2MTU2YzAiLCJpYXQiOjE2NjI2NTg3MzguNDA5MTIxLCJuYmYiOjE2NjI2NTg3MzguNDA5MTMzLCJleHAiOjE2OTQxOTQ3MzguMzgyMTQsInN1YiI6IjIiLCJzY29wZXMiOltdfQ.JglZtVeEXuCX-y9lyoG101CDevE-s5EevM2wCDP7uDI-DLsPYrxGsK5noIei3o0xWi8bz0JjX-VVDDaAsxdmF7jhT3nBuLqy-Hqqq5Tagx_ritDwcsIuSecFirsTkoF3YHUPz5j2Z6_ZKmNfufp65gCDsKyYy_c_OBfAXnHTIsKU1n1LHseDxipD1hxOYp5RG8b23LRq2GdsGXIPh-Q7H_yfCx3H7fAYiye60D01dt_rVBD2DcneojvOqCOVGNI99syPHjz01dYFpLTpAgtrpT4Jgxi7x_bcDUVEsIWqJHSaxVWai8IGNKllJol7hRmyECz5bbZtsPdcilXygA_kpTJeziLUr8bIDuMI_q3-CbVzXnkOAyTAl5ChllVhKkrrsFdUtSe7mvud14XholKMA9-hwjznZRYvLD_e8yH-0pQ_6tVxgUZ_PAPjCtQr6-7UCUbzEEICLZ7-NqEi6WO-NLSxNqE_XULuTnmRYGVtzCnrQViqDVWl9b5AolKWWLm8rcSa83uDddOnKs6HZwY1RAqH5V1zZ63q0wU_yhW7UI7_Zpjjd-90EjYUFicg5jj-mSaMcvlQpicISIvimt8veMJXoLd_PuY_tG5x3cPZWPpteCE2OzYwM0PNnXN7xfNB8_sLSgZsE8auq3BcvU0JtNuY7vL6Q1F2KfLj_ofuHLE';
-=======
->>>>>>> 7af0289f19b2ab59e21f79499360d49b316fc19d
+
 
 class ServiceEditionS extends StatefulWidget {
   const ServiceEditionS({Key? key}) : super(key: key);
@@ -22,9 +20,9 @@ class ServiceEditionS extends StatefulWidget {
 }
 
 class _ServiceEditionState extends State<ServiceEditionS> {
+
   Future<String> Block_Service(int id) async {
     final response = await http.get(
-      // Uri.parse('http://192.168.35.1:8000/api/Admin/BlockServices/${id}'),
       Uri.parse('${baseUrl}/api/Admin/BlockServices/${id}'),
       headers: {'Authorization': 'Bearer $userToken'},
     );
@@ -34,43 +32,25 @@ class _ServiceEditionState extends State<ServiceEditionS> {
       return "Error code is ${response.statusCode}";
     }
   }
-
-  List<String> gatesEdition = [];
-
-  List<String> serviceWoodWard = [];
-  List<String> serviceFarmer = [];
-  List<String> bothStreet = [];
-  List<String> bothStreetID = [];
-
-  String selectedService = 'Select Service';
-  String? selectedStreet = "FARMER";
-
-  late int theId;
-
   Future<ListService> fetchAlbum() async {
-<<<<<<< HEAD
- //   gatesEdition.add('');
-print('here');
-    final response = await http.get(Uri.parse('${base_Url}/api/services'),
-        headers: {
-      'Authorization':'Bearer ${tokenUser}'
-      ,
-      'Accept':'application/json'
-        }
-            // snapshot.data!.services.woodWard[1].street
-            );
-print("iam here");
 
-print("the response base ${response.body}");
-=======
     //   gatesEdition.add('');
+    print('here');
 
+    print("iam here");
+
+
+    //   gatesEdition.add('');
     final response = await http.get(Uri.parse('${baseUrl}/api/services'),
-        headers: {'Authorization': 'Bearer $userToken'}
-        // snapshot.data!.services.woodWard[1].street
-        );
+        headers: {
+      'Authorization':'Bearer $userToken',
+          'Accept':'application/json'
 
->>>>>>> 7af0289f19b2ab59e21f79499360d49b316fc19d
+    }
+      // snapshot.data!.services.woodWard[1].street
+    );
+    print("the response base ${response.body}");
+
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
@@ -82,7 +62,21 @@ print("the response base ${response.body}");
     }
   }
 
+
+
+
+  List<String> gatesEdition = [];
+  List<String> serviceWoodWard = [];
+  List<String> serviceFarmer = [];
+  List<String> bothStreet = [];
+  List<String> bothStreetID = [];
   late Future<ListService> date;
+
+  String selectedService = 'Select Service';
+  String? selectedStreet = "FARMER";
+
+
+  late int theId;
 
   @override
   void initState() {

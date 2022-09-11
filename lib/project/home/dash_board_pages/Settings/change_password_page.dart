@@ -210,16 +210,10 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                                   rePasswordController.text);
 
                               Navigator.pushReplacement(
-<<<<<<< HEAD
                                   context,
                                   MaterialPageRoute(builder: (_){
                                     return  ProjectsPage(admin);
-=======
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) {
-                                    return const ProjectsPage();
->>>>>>> 7af0289f19b2ab59e21f79499360d49b316fc19d
+
                                   },
                                 ),
                               );

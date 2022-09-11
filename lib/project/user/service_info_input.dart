@@ -1,8 +1,11 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:project_mohammad/Api/model/my_accepted_model.dart';
 
+import '../../Cubit/User Level Operation/user_operation_cubit.dart';
 import '/components/snack_bar.dart';
 import '/services/services_check_box.dart';
 import '../../Api/model/list_services_to_send.dart';
@@ -12,13 +15,12 @@ import '../../services/choices.dart';
 import '../constant.dart';
 import 'user_requests.dart';
 
+
 /*
 File in order to enter service reservation information such as
 date, start and end time, gate and route, etc...
 
  */
-String tokenUser='eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMThiOTJmYzBlNWE0YThkZjQ0NDM3NmRhODI0M2Q4NTc5ZDY4YmZkYzQ5MGFmN2Q2MDU4MWZlY2Y3ZjllYmVjNjRmNjFjYzExNTI2MTU2YzAiLCJpYXQiOjE2NjI2NTg3MzguNDA5MTIxLCJuYmYiOjE2NjI2NTg3MzguNDA5MTMzLCJleHAiOjE2OTQxOTQ3MzguMzgyMTQsInN1YiI6IjIiLCJzY29wZXMiOltdfQ.JglZtVeEXuCX-y9lyoG101CDevE-s5EevM2wCDP7uDI-DLsPYrxGsK5noIei3o0xWi8bz0JjX-VVDDaAsxdmF7jhT3nBuLqy-Hqqq5Tagx_ritDwcsIuSecFirsTkoF3YHUPz5j2Z6_ZKmNfufp65gCDsKyYy_c_OBfAXnHTIsKU1n1LHseDxipD1hxOYp5RG8b23LRq2GdsGXIPh-Q7H_yfCx3H7fAYiye60D01dt_rVBD2DcneojvOqCOVGNI99syPHjz01dYFpLTpAgtrpT4Jgxi7x_bcDUVEsIWqJHSaxVWai8IGNKllJol7hRmyECz5bbZtsPdcilXygA_kpTJeziLUr8bIDuMI_q3-CbVzXnkOAyTAl5ChllVhKkrrsFdUtSe7mvud14XholKMA9-hwjznZRYvLD_e8yH-0pQ_6tVxgUZ_PAPjCtQr6-7UCUbzEEICLZ7-NqEi6WO-NLSxNqE_XULuTnmRYGVtzCnrQViqDVWl9b5AolKWWLm8rcSa83uDddOnKs6HZwY1RAqH5V1zZ63q0wU_yhW7UI7_Zpjjd-90EjYUFicg5jj-mSaMcvlQpicISIvimt8veMJXoLd_PuY_tG5x3cPZWPpteCE2OzYwM0PNnXN7xfNB8_sLSgZsE8auq3BcvU0JtNuY7vL6Q1F2KfLj_ofuHLE';
-
 class ServiceInfoInputNewEd extends StatefulWidget {
   final String gateName;
   final List<String> both;
@@ -152,10 +154,12 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
     String gate_name,
     String Start_time,
     String end_time,
+      List choosedServicesList, ListServiceToSend ReservationToSend
   ) async {
     for (int i = 0; i < choosedServicesList.length; i++) {
-      ReservationToSend.servicesMap.add(new ServicesMap(
-          id: bothId[i].toString(), name: choosedServicesList[i]));
+      ReservationToSend.servicesMap.add(
+          new ServicesMap(id: bothId[i].toString(), name: choosedServicesList[i])
+      );
       // ReservationToSend.servicesMap[i].name=;
 
     }
@@ -231,7 +235,31 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
               width: double.infinity,
               color: const Color.fromARGB(150, 60, 60, 80),
             ),
-            SingleChildScrollView(
+            BlocConsumer<UserOperationCubit, UserOperationState>(
+  listener: (context, state) {
+    if (state is SuccessStatus) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => UserRequestsPage(),
+        ),
+      );
+
+    }
+
+
+    //في حال دخل كلمة سر خطأ
+    if(state is FailureStatus)
+    {
+      //هون حط توست ماسج انو كلمة السر غلط
+      print("رسالة الخطأ انو كلمة السر غلط");
+
+    }
+    // TODO: implement listener
+  },
+  builder: (context, state) {
+    var cubit=UserOperationCubit.get(context);
+    return SingleChildScrollView(
               child: Column(
                 children: <Widget>[
                   SizedBox(
@@ -534,81 +562,84 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
                                   height:
                                       MediaQuery.of(context).size.height * 0.05,
                                 ),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    setState(
-                                      () {
-                                        selectedMinuteDuration =
-                                            choosedDurationMinuteController
-                                                .text;
-                                        selectedHoursDuration =
-                                            choosedDurationHoursController.text;
-                                        // checkNewRequest(
-                                        //   selectedMinuteDuration!,
-                                        //   selectedHoursDuration!,
-                                        //   selectedService!,
-                                        // );
-                                        if (selectedHoursDuration == "" ||
-                                            selectedHoursDuration == " " ||
-                                            selectedHoursDuration == "0") {
-                                          selectedHoursDuration = "00";
-                                        } else if (selectedMinuteDuration ==
+
+                                ConditionalBuilder(
+                                    condition: state is RefreshLevelState || state is UserOperationInitial,
+                                    builder: (context) =>   ElevatedButton(
+                                      onPressed: () {
+                                        setState(
+                                              () {
+                                            selectedMinuteDuration =
+                                                choosedDurationMinuteController
+                                                    .text;
+                                            selectedHoursDuration =
+                                                choosedDurationHoursController.text;
+                                            // checkNewRequest(
+                                            //   selectedMinuteDuration!,
+                                            //   selectedHoursDuration!,
+                                            //   selectedService!,
+                                            // );
+                                            if (selectedHoursDuration == "" ||
+                                                selectedHoursDuration == " " ||
+                                                selectedHoursDuration == "0") {
+                                              selectedHoursDuration = "00";
+                                            } else if (selectedMinuteDuration ==
                                                 "" ||
-                                            selectedMinuteDuration == " " ||
-                                            selectedMinuteDuration == "0") {
-                                          selectedMinuteDuration = "00";
-                                        }
-                                        requestSender(
-                                          checkNewRequest(
-                                            selectedMinuteDuration!,
-                                            selectedHoursDuration!,
-                                            selectedService!,
-                                          ),
-                                          selectedMinuteDuration!,
-                                          selectedHoursDuration!,
+                                                selectedMinuteDuration == " " ||
+                                                selectedMinuteDuration == "0") {
+                                              selectedMinuteDuration = "00";
+                                            }
+                                            requestSender(
+                                              checkNewRequest(
+                                                selectedMinuteDuration!,
+                                                selectedHoursDuration!,
+                                                selectedService!,
+                                              ),
+                                              selectedMinuteDuration!,
+                                              selectedHoursDuration!,
+                                            );
+                                            print(
+                                                "${UserRequestsPage.requestList.length}");
+                                            print("start send reservation");
+                                            cubit.book_reservation(
+                                                gateName,
+                                                DateFormat("yyyy-MM-dd HH:mm")
+                                                    .format(choosedStartingDateTime)
+                                                    .toString(),
+                                                DateFormat("yyyy-MM-dd HH:mm")
+                                                    .format(choosedEndingDateTime)
+                                                    .toString(),choosedServicesList,ReservationToSend,bothId
+                                            );
+                                            UserRequestsPage.requestList.add(MyAccepted(
+                                              id: 10,
+                                              userId: 23,
+                                              startTime: DateTime(2023),
+                                              endTime: DateTime(2024),
+                                              gateName: gateName,
+                                              isAccepted: 0,
+                                              createdAt: DateTime.now(),
+                                              updatedAt: DateTime.now(),
+                                              serviceName: "serviceName",
+                                              serviceId: 12,
+                                              userName: 'userName',),);
+                                            print("end send reservation");
+                                            print("${UserRequestsPage.requestList.length}");
+                                            // book_reservation(gateName,time.toString(),choosedEndTime.toString());
+                                          },
                                         );
-                                        print(
-                                            "${UserRequestsPage.requestList.length}");
-                                        print("start send reservation");
-                                        book_reservation(
-                                          gateName,
-                                          DateFormat("yyyy-MM-dd HH:mm")
-                                              .format(choosedStartingDateTime)
-                                              .toString(),
-                                          DateFormat("yyyy-MM-dd HH:mm")
-                                              .format(choosedEndingDateTime)
-                                              .toString(),
-                                        );
-                                        UserRequestsPage.requestList.add(
-                                          MyAccepted(
-                                            id: 10,
-                                            userId: 23,
-                                            startTime: DateTime(2023),
-                                            endTime: DateTime(2024),
-                                            gateName: gateName,
-                                            isAccepted: 0,
-                                            createdAt: DateTime.now(),
-                                            updatedAt: DateTime.now(),
-                                            serviceName: "serviceName",
-                                            serviceId: 12,
-                                            userName: 'userName',
-                                          ),
-                                        );
-                                        print("end send reservation");
-                                        print(
-                                            "${UserRequestsPage.requestList.length}");
-                                        // book_reservation(gateName,time.toString(),choosedEndTime.toString());
                                       },
-                                    );
-                                  },
-                                  child: const Text(
-                                    "Submit",
-                                    style: TextStyle(
-                                      fontSize: 26,
-                                      color: Colors.white,
+                                      child: const Text(
+                                        "Submit",
+                                        style: TextStyle(
+                                          fontSize: 26,
+                                          color: Colors.white,
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
+                                    fallback: (context) => Center(
+                                      child: CircularProgressIndicator(),
+                                    ))
+
                               ],
                             ),
                           ),
@@ -618,7 +649,9 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
                   ),
                 ],
               ),
-            ),
+            );
+  },
+),
           ],
         ),
       ),
@@ -889,11 +922,11 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
         ),
         */
 
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (_) => const UserRequestsPage(),
-        ),
-      );
+      // Navigator.of(context).pushReplacement(
+      //   MaterialPageRoute(
+      //     builder: (_) => const UserRequestsPage(),
+      //   ),
+      // );
     }
   }
 

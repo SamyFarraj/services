@@ -1,5 +1,8 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../Cubit/Admin Level Operation/admin_level_cubit.dart';
 import '/Api/controller/Admin/add_service_controller.dart';
 import '../../../components/snack_bar.dart';
 
@@ -61,7 +64,27 @@ class _AddNewServiceState extends State<AddNewService> {
               color: const Color.fromARGB(150, 60, 60, 100),
             ),
 
-            SingleChildScrollView(
+            BlocConsumer<AdminLevelCubit, AdminLevelState>(
+  listener: (context, state) {
+    // TODO: implement listener
+    if (state is SuccessStatus) {
+      Navigator.pop(context);
+     print("success");
+
+    }
+
+
+    //في حال دخل كلمة سر خطأ
+    if(state is FailureStatus)
+    {
+      //هون حط توست ماسج انو كلمة السر غلط
+      print("رسالة الخطأ ");
+
+    }
+  },
+  builder: (context, state) {
+    var cubit=AdminLevelCubit.get(context);
+    return SingleChildScrollView(
               child: Column(
                 children: <Widget>[
                   SizedBox(
@@ -110,7 +133,7 @@ class _AddNewServiceState extends State<AddNewService> {
                                   borderRadius: BorderRadius.circular(25),
                                 ),
                               ),
-                              value: selectedStreet,
+                              hint:Text("Select Service"),
                               items: streetsList
                                   .map(
                                     (street) => DropdownMenuItem<String>(
@@ -185,44 +208,52 @@ class _AddNewServiceState extends State<AddNewService> {
                           //   "Add Service",
                           //   const Color.fromARGB(255, 10, 150, 10),
                           // ),
-                          ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                checkNewService(selectedStreet!,
-                                    serviceNameController.text);
-                                addServiceAdmin().addService(
-                                    serviceNameController.text,
-                                    StreetName.text);
-                              });
-                            },
-                            style: ElevatedButton.styleFrom(
-                              minimumSize: const Size(300, 60),
-                              padding: EdgeInsets.symmetric(
-                                vertical: 5.0,
-                                horizontal:
+                          ConditionalBuilder(
+                              condition: state is RefreshLevelState || state is AdminLevelInitial,
+                              builder: (context) => ElevatedButton(
+                                onPressed: () {
+                                  setState(() {
+                                    checkNewService(selectedStreet!,
+                                        serviceNameController.text);
+                                    cubit.addService(
+                                        serviceNameController.text,
+                                        StreetName.text);
+                                  });
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  minimumSize: const Size(300, 60),
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: 5.0,
+                                    horizontal:
                                     MediaQuery.of(context).size.width * 0.2,
+                                  ),
+                                  primary: const Color.fromARGB(255, 10, 150, 10),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  elevation: 30.0,
+                                ),
+                                child: const Text(
+                                  "Add Service",
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    color: Colors.white,
+                                  ),
+                                ),
                               ),
-                              primary: const Color.fromARGB(255, 10, 150, 10),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              elevation: 30.0,
-                            ),
-                            child: const Text(
-                              "Add Service",
-                              style: TextStyle(
-                                fontSize: 24,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
+                              fallback: (context) => Center(
+                                child: CircularProgressIndicator(),
+                              ))
+
                         ],
                       ),
                     ),
                   ),
                 ],
               ),
-            ),
+            );
+  },
+),
           ],
         );
       }),

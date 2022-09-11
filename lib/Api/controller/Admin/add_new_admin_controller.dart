@@ -1,5 +1,6 @@
 import 'package:http/http.dart' as http;
 
+import '../../../main.dart';
 import '/project/constant.dart';
 import '../../../moh_project/post_moh/login_controller.dart';
 
@@ -11,7 +12,7 @@ class AddNewAdmin_con {
       uri,
       headers: <String, String>{
         'accept': 'application/json',
-        'Authorization': 'Bearer $theToken'
+        'Authorization': 'Bearer $adminToken'
       },
       body: {'email': email},
     );
@@ -30,7 +31,7 @@ class AddNewAdmin_con {
   static Future RemoveAdmin(int id) async {
     var response = await http.delete(
         Uri.parse('${baseUrl}/api/Admin/deleteAdmin/$id'),
-        headers: <String, String>{'Authorization': 'Bearer ${theToken}'});
+        headers: <String, String>{'Authorization': 'Bearer ${adminToken}'});
     print('field ${response.body} ');
     if (response.statusCode == 200) {
       print('remove successful');
