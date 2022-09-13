@@ -18,7 +18,6 @@ class _AddNewServiceState extends State<AddNewService> {
 
   final serviceNameController = TextEditingController();
   List<String> streetsList = [
-    "Select Street",
     "WoodWard",
     "Farmer",
     "BothStreet"
@@ -69,6 +68,11 @@ class _AddNewServiceState extends State<AddNewService> {
     // TODO: implement listener
     if (state is SuccessStatus) {
       Navigator.pop(context);
+      TheSnackBar(
+        context,
+        'Service Add Successfully',
+        const Color.fromARGB(255, 10, 150, 10),
+      );
      print("success");
 
     }
@@ -77,6 +81,11 @@ class _AddNewServiceState extends State<AddNewService> {
     //في حال دخل كلمة سر خطأ
     if(state is FailureStatus)
     {
+      TheSnackBar(
+        context,
+        "couldn't connect to server",
+        const Color.fromARGB(255, 150, 10, 10),
+      );
       //هون حط توست ماسج انو كلمة السر غلط
       print("رسالة الخطأ ");
 
@@ -133,7 +142,11 @@ class _AddNewServiceState extends State<AddNewService> {
                                   borderRadius: BorderRadius.circular(25),
                                 ),
                               ),
-                              hint:Text("Select Service"),
+                              hint:Text("Select Street" , style: TextStyle(
+                                fontSize: 26,
+                                color: Colors.white,
+
+                              ),),
                               items: streetsList
                                   .map(
                                     (street) => DropdownMenuItem<String>(
@@ -213,11 +226,13 @@ class _AddNewServiceState extends State<AddNewService> {
                               builder: (context) => ElevatedButton(
                                 onPressed: () {
                                   setState(() {
-                                    checkNewService(selectedStreet!,
-                                        serviceNameController.text);
-                                    cubit.addService(
-                                        serviceNameController.text,
-                                        StreetName.text);
+                                    if(checkNewService(selectedStreet!,
+                                        serviceNameController.text)){
+                                      cubit.addService(
+                                          serviceNameController.text,
+                                          StreetName.text);
+                                    }
+
                                   });
                                 },
                                 style: ElevatedButton.styleFrom(
@@ -286,11 +301,7 @@ class _AddNewServiceState extends State<AddNewService> {
           return false;
         }
       }
-      TheSnackBar(
-        context,
-        'Service Add Successfully',
-        const Color.fromARGB(255, 10, 150, 10),
-      );
+
       return true;
     }
   }
