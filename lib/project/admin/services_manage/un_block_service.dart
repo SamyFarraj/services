@@ -93,38 +93,14 @@ class _UnBlockServiceState extends State<UnBlockService> {
     return Scaffold(
       extendBody: true,
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text(
-          "UnBlock Service",
-          style: TextStyle(
-            fontSize: 36,
-            fontWeight: FontWeight.bold,
-            letterSpacing: 1.0,
-            fontStyle: FontStyle.italic,
-            color: Colors.deepOrange,
-          ),
-        ),
-        backgroundColor: const Color.fromARGB(180, 0, 0, 65),
-      ),
+      appBar: _appBarContent(),
       body: Builder(builder: (context) {
         return Stack(
           children: <Widget>[
             // هاد container بيحوي صورة الخلفية
-            SizedBox(
-              width: double.infinity,
-              height: double.infinity,
-              child: Image.asset(
-                "asset/images/background_picture.png",
-                fit: BoxFit.cover,
-              ),
-            ),
+            _backgroundImage(),
             //هاد لون فوق الخلفية مشات وضوح الكتابة
-            Container(
-              height: double.infinity,
-              width: double.infinity,
-              color: const Color.fromARGB(150, 60, 60, 100),
-            ),
+            _colorCorrectionLayer(),
 
             BlocConsumer<AdminLevelCubit, AdminLevelState>(
               listener: (context, state) {
@@ -156,18 +132,7 @@ class _UnBlockServiceState extends State<UnBlockService> {
                 return SingleChildScrollView(
                   child: Column(
                     children: <Widget>[
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.14,
-                      ),
-                      //  هاد logo  الشركة
-                      Image.asset(
-                        "asset/images/logo.png",
-                        width: double.infinity,
-                        height: MediaQuery.of(context).size.height * 0.095,
-                      ),
-                      const SizedBox(
-                        height: 50,
-                      ),
+                      _logoImage(),
                       Container(
                         alignment: Alignment.center,
                         padding: const EdgeInsets.all(10),
@@ -291,6 +256,55 @@ class _UnBlockServiceState extends State<UnBlockService> {
       }),
     );
   }
+
+  AppBar _appBarContent() => AppBar(
+    centerTitle: true,
+    title: const Text(
+      "UnBlock Service",
+      style: TextStyle(
+        fontSize: 36,
+        fontWeight: FontWeight.bold,
+        letterSpacing: 1.0,
+        fontStyle: FontStyle.italic,
+        color: Colors.deepOrange,
+      ),
+    ),
+    backgroundColor: const Color.fromARGB(180, 0, 0, 65),
+  );
+
+  Widget _backgroundImage() => SizedBox(
+    width: double.infinity,
+    height: double.infinity,
+    child: Image.asset(
+      "asset/images/background_picture.png",
+      fit: BoxFit.cover,
+    ),
+  );
+
+  Widget _colorCorrectionLayer() => Container(
+    height: double.infinity,
+    width: double.infinity,
+    color: const Color.fromARGB(150, 60, 60, 100),
+  );
+
+  Widget _logoImage() => Column(
+    children: <Widget>[
+      SizedBox(
+        height: MediaQuery.of(context).size.height * 0.14,
+      ),
+      //  هاد logo  الشركة
+      Image.asset(
+        "asset/images/logo.png",
+        width: double.infinity,
+        height: MediaQuery.of(context).size.height * 0.095,
+      ),
+      const SizedBox(
+        height: 50,
+      ),
+    ],
+  );
+
+
 
   bool checkServiceUnBlock(String selectedService) {
     // if (selectedStreet == null) {

@@ -149,7 +149,7 @@ class AdminLevelCubit extends Cubit<AdminLevelState> {
   }
 
 
-   Future<String> Accept_reservation(int id) async {
+   Future<String> AcceptReservation(int id) async {
 
      emit(AlterDataBase());
 
