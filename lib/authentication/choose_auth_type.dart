@@ -110,13 +110,13 @@ class _AuthChoosingPageState extends State<AuthChoosingPage> {
                             ),
                           ),
                           style: ElevatedButton.styleFrom(
-                            onSurface: Colors.grey,
+                            disabledBackgroundColor: Colors.grey,
                             padding: EdgeInsets.symmetric(
                               vertical: 10.0,
                               horizontal:
                                   MediaQuery.of(context).size.width * 0.1,
                             ),
-                            primary: Colors.blue,
+                            backgroundColor: Colors.blue,
                             elevation: 15.0,
                           ),
                           child: Row(
@@ -145,13 +145,13 @@ class _AuthChoosingPageState extends State<AuthChoosingPage> {
                             ),
                           ),
                           style: ElevatedButton.styleFrom(
-                            onSurface: Colors.grey,
+                            disabledBackgroundColor: Colors.grey,
                             padding: EdgeInsets.symmetric(
                               vertical: 10.0,
                               horizontal:
                                   MediaQuery.of(context).size.width * 0.1,
                             ),
-                            primary: Colors.blue,
+                            backgroundColor: Colors.blue,
                             elevation: 15.0,
                           ),
                           child: Row(
@@ -201,13 +201,13 @@ class _AuthChoosingPageState extends State<AuthChoosingPage> {
                             ),
                           ),
                           style: ElevatedButton.styleFrom(
-                            onSurface: Colors.grey,
+                            disabledBackgroundColor: Colors.grey,
                             padding: EdgeInsets.symmetric(
                               vertical: 10.0,
                               horizontal:
                                   MediaQuery.of(context).size.width * 0.1,
                             ),
-                            primary: Colors.blue,
+                            backgroundColor: Colors.blue,
                             elevation: 15.0,
                           ),
                           child: Row(

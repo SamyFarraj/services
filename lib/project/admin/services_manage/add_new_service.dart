@@ -30,38 +30,14 @@ class _AddNewServiceState extends State<AddNewService> {
     return Scaffold(
       extendBody: true,
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text(
-          "Add Service",
-          style: TextStyle(
-            fontSize: 36,
-            fontWeight: FontWeight.bold,
-            letterSpacing: 1.0,
-            fontStyle: FontStyle.italic,
-            color: Colors.deepOrange,
-          ),
-        ),
-        backgroundColor: const Color.fromARGB(180, 0, 0, 65),
-      ),
+      appBar: _appBarContent(),
       body: Builder(builder: (context) {
         return Stack(
           children: <Widget>[
             // هاد container بيحوي صورة الخلفية
-            SizedBox(
-              width: double.infinity,
-              height: double.infinity,
-              child: Image.asset(
-                "asset/images/background_picture.png",
-                fit: BoxFit.cover,
-              ),
-            ),
+            _backgroundImage(),
             //هاد لون فوق الخلفية مشات وضوح الكتابة
-            Container(
-              height: double.infinity,
-              width: double.infinity,
-              color: const Color.fromARGB(150, 60, 60, 100),
-            ),
+            _colorCorrectionLayer(),
 
             BlocConsumer<AdminLevelCubit, AdminLevelState>(
   listener: (context, state) {
@@ -96,18 +72,7 @@ class _AddNewServiceState extends State<AddNewService> {
     return SingleChildScrollView(
               child: Column(
                 children: <Widget>[
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.14,
-                  ),
-                  //  هاد logo  الشركة
-                  Image.asset(
-                    "asset/images/logo.png",
-                    width: double.infinity,
-                    height: MediaQuery.of(context).size.height * 0.095,
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.06,
-                  ),
+                  _logoImage(),
                   Container(
                     padding: const EdgeInsets.only(
                       top: 10,
@@ -242,7 +207,7 @@ class _AddNewServiceState extends State<AddNewService> {
                                     horizontal:
                                     MediaQuery.of(context).size.width * 0.2,
                                   ),
-                                  primary: const Color.fromARGB(255, 10, 150, 10),
+                                  backgroundColor: const Color.fromARGB(255, 10, 150, 10),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10),
                                   ),
@@ -274,6 +239,56 @@ class _AddNewServiceState extends State<AddNewService> {
       }),
     );
   }
+
+  AppBar _appBarContent() => AppBar(
+    centerTitle: true,
+    title: const Text(
+      "Add Service",
+      style: TextStyle(
+        fontSize: 36,
+        fontWeight: FontWeight.bold,
+        letterSpacing: 1.0,
+        fontStyle: FontStyle.italic,
+        color: Colors.deepOrange,
+      ),
+    ),
+    backgroundColor: const Color.fromARGB(180, 0, 0, 65),
+  );
+
+  Widget _backgroundImage () => SizedBox(
+    width: double.infinity,
+    height: double.infinity,
+    child: Image.asset(
+      "asset/images/background_picture.png",
+      fit: BoxFit.cover,
+    ),
+  );
+
+  Widget _colorCorrectionLayer() => Container(
+    height: double.infinity,
+    width: double.infinity,
+    color: const Color.fromARGB(150, 60, 60, 100),
+  );
+
+  Widget _logoImage() => Column(
+    children: <Widget>[
+      SizedBox(
+        height: MediaQuery.of(context).size.height * 0.14,
+      ),
+      //  هاد logo  الشركة
+      Image.asset(
+        "asset/images/logo.png",
+        width: double.infinity,
+        height: MediaQuery.of(context).size.height * 0.095,
+      ),
+      SizedBox(
+        height: MediaQuery.of(context).size.height * 0.06,
+      ),
+    ],
+  );
+
+
+
 
   bool checkNewService(String selectedStreet, String serviceName) {
     if (selectedStreet == "Select Street") {
