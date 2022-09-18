@@ -30,20 +30,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
     return Scaffold(
       extendBody: true,
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text(
-          "Change Password",
-          style: TextStyle(
-            fontSize: 36,
-            fontWeight: FontWeight.bold,
-            letterSpacing: 1.0,
-            fontStyle: FontStyle.italic,
-            color: Colors.deepOrange,
-          ),
-        ),
-        backgroundColor: const Color.fromARGB(150, 0, 0, 65),
-      ),
+      appBar: _appBarContent(),
       body: Stack(
         children: <Widget>[
           // صورة الخلفية
@@ -253,4 +240,20 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
       ),
     );
   }
+  AppBar _appBarContent() => AppBar(
+    centerTitle: true,
+    title: _appBarTitle(),
+    backgroundColor: const Color.fromARGB(150, 0, 0, 65),
+  );
+
+  Text _appBarTitle() => const Text(
+    "Change Password",
+    style: TextStyle(
+      fontSize: 36,
+      fontWeight: FontWeight.bold,
+      letterSpacing: 1.0,
+      fontStyle: FontStyle.italic,
+      color: Colors.deepOrange,
+    ),
+  );
 }

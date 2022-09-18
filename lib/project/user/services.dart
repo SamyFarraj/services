@@ -88,38 +88,7 @@ class _ServiceEditionState extends State<ServiceEditionS> {
       drawer: const DashBoard(),
       extendBody: true,
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text(
-          "Select Street",
-          style: TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-            color: Colors.deepOrange,
-          ),
-        ),
-        backgroundColor: const Color.fromARGB(150, 0, 0, 65),
-        // actions: [
-        //   IconButton(
-        //     onPressed: () {
-        //       if (admin) {
-        //         Navigator.of(context).push(
-        //           MaterialPageRoute(
-        //             builder: (_) => const AdminControlPanel(),
-        //           ),
-        //         );
-        //       } else {
-        //         snackBar(
-        //           context,
-        //           "This Feature only for Admins",
-        //           const Color.fromARGB(255, 150, 10, 10),
-        //         );
-        //       }
-        //     },
-        //     icon: const Icon(Icons.view_headline_sharp),
-        //   ),
-        // ],
-      ),
+      appBar: _appBarContent(),
       body: SizedBox(
         width: double.infinity,
         height: double.infinity,
@@ -369,4 +338,21 @@ class _ServiceEditionState extends State<ServiceEditionS> {
       ),
     );
   }
+
+  AppBar _appBarContent() => AppBar(
+    centerTitle: true,
+    title: _appBarTitle(),
+    backgroundColor: const Color.fromARGB(150, 0, 0, 65),
+
+  );
+
+  Text _appBarTitle() => const Text(
+    "Select Street",
+    style: TextStyle(
+      fontSize: 30,
+      fontWeight: FontWeight.bold,
+      color: Colors.deepOrange,
+    ),
+  );
+
 }

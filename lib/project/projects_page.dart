@@ -23,36 +23,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
     return Scaffold(
       extendBody: true,
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-
-        actions: [
-          /*
-          Switch(
-            value: admin,
-            activeColor: Colors.deepOrange,
-            onChanged: (isAdmin) {
-              setState(() {
-                this.isAdmin = isAdmin;
-                admin = isAdmin;
-              });
-            },
-          ),
-
-           */
-        ],
-        centerTitle: true,
-        title: const Text(
-          "Select Project",
-          style: TextStyle(
-            fontSize: 36,
-            fontWeight: FontWeight.bold,
-            letterSpacing: 1.0,
-            fontStyle: FontStyle.italic,
-            color: Colors.deepOrange,
-          ),
-        ),
-        backgroundColor: const Color.fromARGB(80, 0, 30, 70),
-      ),
+      appBar: _appBarContent(),
       body: Stack(
         children: <Widget>[
           SizedBox(
@@ -156,4 +127,20 @@ class _ProjectsPageState extends State<ProjectsPage> {
       ),
     );
   }
+  AppBar _appBarContent () => AppBar(
+    centerTitle: true,
+    title: _appBarTitle(),
+    backgroundColor: const Color.fromARGB(80, 0, 30, 70),
+  );
+
+  Text _appBarTitle() => const Text(
+    "Select Project",
+    style: TextStyle(
+      fontSize: 36,
+      fontWeight: FontWeight.bold,
+      letterSpacing: 1.0,
+      fontStyle: FontStyle.italic,
+      color: Colors.deepOrange,
+    ),
+  );
 }

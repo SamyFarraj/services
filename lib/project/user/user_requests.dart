@@ -118,19 +118,7 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
       drawer: const DashBoard(),
       extendBody: true,
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text(
-          "Requests",
-          style: TextStyle(
-            fontSize: 28,
-            fontWeight: FontWeight.bold,
-            fontStyle: FontStyle.italic,
-            color: Color.fromARGB(255, 230, 84, 15),
-          ),
-        ),
-        backgroundColor: const Color.fromARGB(150, 0, 0, 65),
-      ),
+      appBar: _appBarContent(),
       body: SizedBox(
         width: double.infinity,
         height: double.infinity,
@@ -528,4 +516,20 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
       ),
     );
   }
+
+  AppBar _appBarContent() => AppBar(
+    centerTitle: true,
+    title: _appBarTitle(),
+    backgroundColor: const Color.fromARGB(150, 0, 0, 65),
+  );
+
+  Text _appBarTitle() => const Text(
+    "Requests",
+    style: TextStyle(
+      fontSize: 28,
+      fontWeight: FontWeight.bold,
+      fontStyle: FontStyle.italic,
+      color: Color.fromARGB(255, 230, 84, 15),
+    ),
+  );
 }
