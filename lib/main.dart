@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'Cubit/Admin Level Operation/admin_level_cubit.dart';
-import 'Cubit/Cubit Accountant -User/user_accountant_cubit.dart';
+import 'Cubit/Cubit Accountant -User/accountant_cubit.dart';
 import 'Cubit/User Level Operation/user_operation_cubit.dart';
 import 'authentication/choose_auth_type.dart';
 import 'project/projects_page.dart';
@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
           providers: [
             BlocProvider(
                 create: (BuildContext context) =>
-                    UserAccountantCubit()..checkToken()),
+                AccountantCubit()..checkToken()),
             BlocProvider(
                 create: (BuildContext context) => UserOperationCubit()),
             BlocProvider(create: (BuildContext context) => AdminLevelCubit()),
@@ -54,12 +54,12 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<UserAccountantCubit, UserAccountantState>(
+    return BlocConsumer<AccountantCubit, UserAccountantState>(
       listener: (context, state) {
         // TODO: implement listener
       },
       builder: (context, state) {
-        var cubit = UserAccountantCubit.get(context);
+        var cubit = AccountantCubit.get(context);
         cubit.checkToken();
         return _MyHomePage();
       },

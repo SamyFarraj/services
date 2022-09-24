@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../Cubit/Admin Level Operation/admin_level_cubit.dart';
+import '/Api/controller/Admin/add_service_controller.dart';
 import '../../../components/snack_bar.dart';
 
 class AddNewService extends StatefulWidget {
@@ -47,37 +48,7 @@ class _AddNewServiceState extends State<AddNewService> {
         ),
       );
 
-  Widget _backgroundImage() => SizedBox(
-        width: double.infinity,
-        height: double.infinity,
-        child: Image.asset(
-          "asset/images/background_picture.png",
-          fit: BoxFit.cover,
-        ),
-      );
 
-  Widget _colorCorrectionLayer() => Container(
-        height: double.infinity,
-        width: double.infinity,
-        color: const Color.fromARGB(150, 60, 60, 100),
-      );
-
-  Widget _logoImage() => Column(
-        children: <Widget>[
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.14,
-          ),
-          //  هاد logo  الشركة
-          Image.asset(
-            "asset/images/logo.png",
-            width: double.infinity,
-            height: MediaQuery.of(context).size.height * 0.095,
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.06,
-          ),
-        ],
-      );
 
   Widget _bodyContent() => Builder(
         builder: (context) => Stack(
@@ -100,6 +71,38 @@ class _AddNewServiceState extends State<AddNewService> {
           ],
         ),
       );
+
+  Widget _backgroundImage() => SizedBox(
+    width: double.infinity,
+    height: double.infinity,
+    child: Image.asset(
+      "asset/images/background_picture.png",
+      fit: BoxFit.cover,
+    ),
+  );
+
+  Widget _colorCorrectionLayer() => Container(
+    height: double.infinity,
+    width: double.infinity,
+    color: const Color.fromARGB(150, 60, 60, 100),
+  );
+
+  Widget _logoImage() => Column(
+    children: <Widget>[
+      SizedBox(
+        height: MediaQuery.of(context).size.height * 0.14,
+      ),
+      //  هاد logo  الشركة
+      Image.asset(
+        "asset/images/logo.png",
+        width: double.infinity,
+        height: MediaQuery.of(context).size.height * 0.095,
+      ),
+      SizedBox(
+        height: MediaQuery.of(context).size.height * 0.06,
+      ),
+    ],
+  );
 
   _listenerFunction(context, state) {
     if (state is SuccessStatus) {
@@ -159,7 +162,7 @@ class _AddNewServiceState extends State<AddNewService> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                _streetChoosingDropDownList(),
+                // _streetChoosingDropDownList(),
                 _serviceNameField(),
                 ConditionalBuilder(
                   condition:

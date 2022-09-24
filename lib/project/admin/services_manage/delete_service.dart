@@ -164,6 +164,7 @@ class _DeleteServiceState extends State<DeleteService> {
                                 //
 
                                 return Column(children: <Widget>[
+                                  /*
                                   RefreshIndicator(
                                     onRefresh: refresh,
                                     child: SizedBox(
@@ -299,6 +300,7 @@ class _DeleteServiceState extends State<DeleteService> {
                                       ),
                                     ),
                                   ),
+                                   */
                                   SizedBox(
                                     height: MediaQuery.of(context).size.height *
                                         0.1,

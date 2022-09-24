@@ -355,33 +355,7 @@ class _AdminRequestsPageState extends State<AdminRequestsPage> {
                                         // كونو لغاه مؤقتا عملت كلشي يتعلق فيه
                                         // تعليقات لانو احتمال يطلبو بعدين
 
-                                        // Container(
-                                        //   alignment: Alignment.center,
-                                        //   height: 90,
-                                        //   width:
-                                        //   MediaQuery.of(context).size.width *
-                                        //       0.7,
-                                        //   decoration: BoxDecoration(
-                                        //     border: Border.all(
-                                        //         width: 2, color: Colors.blue),
-                                        //   ),
-                                        //   child: ListView(
-                                        //     padding: const EdgeInsets.only(
-                                        //       top: 1,
-                                        //       left: 30,
-                                        //     ),
-                                        //     children: [
-                                        //       ...val.choosedStaffs.map((staff) {
-                                        //         return Text(
-                                        //           staff,
-                                        //           style: const TextStyle(
-                                        //               fontSize: 22,
-                                        //               color: Colors.white),
-                                        //         );
-                                        //       }).toList(),
-                                        //     ],
-                                        //   ),
-                                        // ),
+
 
                                         Container(
                                           height: 0.009,
@@ -430,14 +404,7 @@ class _AdminRequestsPageState extends State<AdminRequestsPage> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  const Text(
-                                    "Accepted",
-                                    style: TextStyle(
-                                      fontSize: 28,
-                                      color: Color.fromARGB(255, 230, 84, 15),
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
+                                  _headerText("Accepted"),
                                   _divider(),
 
                                   // ...adminRequestsList.map((val) {
@@ -450,107 +417,21 @@ class _AdminRequestsPageState extends State<AdminRequestsPage> {
                                           children: <Widget>[
                                             Column(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.center,
+                                              MainAxisAlignment.center,
                                               children: <Widget>[
-                                                Column(
-                                                  children: <Widget>[
-                                                    // ignore: prefer_const_constructors
-                                                    Text(
-                                                      val.userName,
-                                                      style: const TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 26,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      //هون في تعديل
+                                                // ignore: prefer_const_constructors
+                                                _text(val.userName),
+                                                _text(val.serviceName),
+                                                _text('${val.createdAt}'),
+                                                _text('${val.startTime}'),
+                                                _text('${val.endTime}'),
+                                                _text('${val.gateName}'),
 
-                                                      val.serviceName,
-                                                      style: const TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 26,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      '${val.createdAt}',
-                                                      style: const TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 26,
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      "start : ${val.startTime}",
-                                                      style: const TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 26,
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      "end : ${val.endTime}",
-                                                      style: const TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 26,
-                                                      ),
-                                                    ),
-                                                    // Text(
-                                                    //   " for ${val.hoursDuration}"
-                                                    //       " hour/s and "
-                                                    //       "${val.minuteDuration} "
-                                                    //       "minute/s",
-                                                    //   style: const TextStyle(
-                                                    //     color: Colors.white,
-                                                    //     fontSize: 21,
-                                                    //   ),
-                                                    // ),
-                                                    Text(
-                                                      "from ${val.gateName}",
-                                                      style: const TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 26,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
                                               ],
                                             ),
                                           ],
                                         ),
 
-                                        //هاد ال container كان مشان ال staffs
-                                        // كونو لغاه مؤقتا عملت كلشي يتعلق فيه
-                                        // تعليقات لانو احتمال يطلبو بعدين
-
-                                        // Container(
-                                        //   alignment: Alignment.center,
-                                        //   height: 90,
-                                        //   width:
-                                        //   MediaQuery.of(context).size.width *
-                                        //       0.7,
-                                        //   decoration: BoxDecoration(
-                                        //     border: Border.all(
-                                        //         width: 2, color: Colors.blue),
-                                        //   ),
-                                        //   child: ListView(
-                                        //     padding: const EdgeInsets.only(
-                                        //       top: 1,
-                                        //       left: 30,
-                                        //     ),
-                                        //     children: [
-                                        //       ...val.choosedStaffs.map((staff) {
-                                        //         return Text(
-                                        //           staff,
-                                        //           style: const TextStyle(
-                                        //               fontSize: 22,
-                                        //               color: Colors.white),
-                                        //         );
-                                        //       }).toList(),
-                                        //     ],
-                                        //   ),
-                                        // ),
                                         Divider(
                                           color: Colors.blue,
                                           thickness: 3,
@@ -663,6 +544,15 @@ class _AdminRequestsPageState extends State<AdminRequestsPage> {
         ),
         child: _text(title),
       );
+
+  Text _headerText(String content) => Text(
+    content,
+    style: TextStyle(
+      fontSize: 28,
+      color: Color.fromARGB(255, 230, 84, 15),
+      fontWeight: FontWeight.bold,
+    ),
+  );
 
   Text _text(String content) => Text(
         content,

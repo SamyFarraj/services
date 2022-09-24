@@ -72,7 +72,7 @@ class Account_User {
     }
   }
 
-  static Future<String> getVerificationCode() async {
+  static Future<String> getVerificationCode(String theToken) async {
     var response = await http.get(
         Uri.parse('$baseUrl/api/Admin/ResetPasswordRequest'),
         headers: <String, String>{'Authorization': 'Bearer $theToken'});

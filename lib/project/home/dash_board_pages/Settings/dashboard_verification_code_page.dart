@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_mohammad/main.dart';
 
 import '/components/snack_bar.dart';
 import '/project/home/dash_board_pages/Settings/change_password_page.dart';
@@ -55,7 +56,7 @@ class _DashBoardVerificationCodePageState
       });
     });
     super.initState();
-    date = Account_User.getVerificationCode();
+    date = Account_User.getVerificationCode(userToken);
   }
 
   @override

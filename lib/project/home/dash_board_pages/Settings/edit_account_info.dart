@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 
-import '../../../../Cubit/Cubit Accountant -User/user_accountant_cubit.dart';
+import '../../../../Cubit/Cubit Accountant -User/accountant_cubit.dart';
 import '../../../constant.dart';
 import 'dashboard_verification_code_page.dart';
 
@@ -61,12 +61,12 @@ class _EditAccountInfoState extends State<EditAccountInfo> {
           // يعني مشات  ما تطلع ال pixels  من الشاشة
           Form(
             key: editingInfoFormKey,
-            child: BlocConsumer<UserAccountantCubit, UserAccountantState>(
+            child: BlocConsumer<AccountantCubit, UserAccountantState>(
               listener: (context, state) {
                 // TODO: implement listener
               },
               builder: (context, state) {
-                var cubit = UserAccountantCubit.get(context);
+                var cubit = AccountantCubit.get(context);
                 return SingleChildScrollView(
                   child: Column(
                     children: <Widget>[
