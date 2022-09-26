@@ -47,7 +47,6 @@ class _RemoveAdminState extends State<RemoveAdmin> {
     }
   }
 
-
   List<String> usersList = [];
 
   @override
@@ -76,163 +75,13 @@ class _RemoveAdminState extends State<RemoveAdmin> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBody: true,
-      extendBodyBehindAppBar: true,
-      appBar: _appBarContent(),
-      body: Builder(builder: (context) {
-        return Stack(
-          children: <Widget>[
-            // هاد container بيحوي صورة الخلفية
-            _backgroundImage(),
-            //هاد لون فوق الخلفية مشات وضوح الكتابة
-            _colorCorrectionLayer(),
-
-            BlocConsumer<AdminLevelCubit, AdminLevelState>(
-              listener: (context, state) {
-                // TODO: implement listener
-                if (state is SuccessStatus) {
-                  Navigator.pop(context);
-                  print("success");
-                }
-
-                //في حال دخل كلمة سر خطأ
-                if (state is FailureStatus) {
-                  //هون حط توست ماسج انو كلمة السر غلط
-                  print("رسالة الخطأ ");
-                }
-              },
-              builder: (context, state) {
-                return SingleChildScrollView(
-                  child: Column(
-                    children: <Widget>[
-                      _logoImage(),
-                      Container(
-                        alignment: Alignment.center,
-                        padding: const EdgeInsets.all(10),
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height * 0.704,
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(35),
-                            topRight: Radius.circular(35),
-                          ),
-                          color: Color.fromARGB(180, 0, 0, 65),
-                        ),
-                        child: SingleChildScrollView(
-                          child: Column(
-                            children: <Widget>[
-                              SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.width * 0.05,
-                              ),
-                              SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.width * 0.05,
-                              ),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.75,
-                                child: DropdownButtonFormField<String>(
-                                  decoration: InputDecoration(
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        width: 6.0,
-                                        color: Colors.blue,
-                                      ),
-                                      borderRadius: BorderRadius.circular(25),
-                                    ),
-                                  ),
-                                  hint: Text(
-                                    "Select Service",
-                                    style: TextStyle(
-                                        fontSize: 16, color: Colors.white),
-                                  ),
-                                  items: addAdminList
-                                      .map(
-                                        (service) => DropdownMenuItem<String>(
-                                          value: service,
-                                          child: Text(
-                                            service,
-                                            style: const TextStyle(
-                                              fontSize: 22,
-                                              color: Colors.blue,
-                                            ),
-                                          ),
-                                        ),
-                                      )
-                                      .toList(),
-                                  onChanged: (currentChoice) => setState(() {
-                                    selectedAdmin = currentChoice!;
-                                  }),
-                                ),
-                              ),
-                              SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.1,
-                              ),
-                              // buttonOfManageServices(
-                              //   context,
-                              //   () {
-                              //     checkAdminDelete(selectedAdmin!);
-                              //   },
-                              //   "Remove Admin",
-                              //   const Color.fromARGB(255, 150, 10, 10),
-                              // ),
-                              ConditionalBuilder(
-                                condition: state is RefreshLevelState ||
-                                    state is AdminLevelInitial,
-                                builder: (context) => ElevatedButton(
-                                  onPressed: () {
-                                    checkAdminDelete(selectedAdmin!);
-                                    for (int i = 0; i < userLists.length; i++) {
-                                      if (selectedAdmin == userLists[i].name) {
-                                        AddNewAdminController.RemoveAdmin(
-                                            userLists[i].id);
-                                        break;
-                                      }
-                                    }
-
-                                    // هون تابع حذف ادمن لازم ينحط
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    minimumSize: const Size(300, 60),
-                                    padding: EdgeInsets.symmetric(
-                                      vertical: 5.0,
-                                      horizontal:
-                                          MediaQuery.of(context).size.width *
-                                              0.2,
-                                    ),
-                                    backgroundColor:
-                                        const Color.fromARGB(255, 150, 10, 10),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    elevation: 15.0,
-                                  ),
-                                  child: const Text(
-                                    "Remove Admin",
-                                    style: TextStyle(
-                                      fontSize: 24,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                                fallback: (context) => Center(
-                                  child: CircularProgressIndicator(),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-          ],
-        );
-      }),
+    return SafeArea(
+      child: Scaffold(
+        extendBody: true,
+        extendBodyBehindAppBar: true,
+        appBar: _appBarContent(),
+        body: _bodyContent(),
+      ),
     );
   }
 
@@ -251,39 +100,185 @@ class _RemoveAdminState extends State<RemoveAdmin> {
         backgroundColor: const Color.fromARGB(180, 0, 0, 65),
       );
 
+  Widget _bodyContent() => Builder(builder: (context) {
+  return Stack(
+  children: <Widget>[
+  // هاد container بيحوي صورة الخلفية
+  _backgroundImage(),
+  //هاد لون فوق الخلفية مشات وضوح الكتابة
+  _colorCorrectionLayer(),
+
+  _blocConsumer(),
+  ],
+  );
+  });
+
   Widget _backgroundImage() => SizedBox(
-    width: double.infinity,
-    height: double.infinity,
-    child: Image.asset(
-      "asset/images/background_picture.png",
-      fit: BoxFit.cover,
+        width: double.infinity,
+        height: double.infinity,
+        child: Image.asset(
+          "asset/images/background_picture.png",
+          fit: BoxFit.cover,
+        ),
+      );
+
+  Widget _colorCorrectionLayer() => Container(
+        height: double.infinity,
+        width: double.infinity,
+        color: const Color.fromARGB(150, 60, 60, 100),
+      );
+
+  Widget _logoImage() => Column(
+        children: <Widget>[
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.14,
+          ),
+          //  هاد logo  الشركة
+          Image.asset(
+            "asset/images/logo.png",
+            width: double.infinity,
+            height: MediaQuery.of(context).size.height * 0.095,
+          ),
+          const SizedBox(
+            height: 50,
+          ),
+        ],
+      );
+
+  BlocConsumer _blocConsumer() => BlocConsumer<AdminLevelCubit, AdminLevelState>(
+    listener: (context, state) {
+      // TODO: implement listener
+      _listener(context ,state);
+    },
+    builder: (context, state) {
+      return Column(
+        children: <Widget>[
+          _logoImage(),
+          _contentContainer(context ,state),
+        ],
+      );
+    },
+  );
+
+  _listener(context , state) {
+    if (state is SuccessStatus) {
+      Navigator.pop(context);
+      print("success");
+    }
+
+    //في حال دخل كلمة سر خطأ
+    if (state is FailureStatus) {
+      //هون حط توست ماسج انو كلمة السر غلط
+      print("رسالة الخطأ ");
+    }
+  }
+
+  Widget _contentContainer(context ,state) => Expanded(
+    child: Container(
+      alignment: Alignment.center,
+      padding: const EdgeInsets.symmetric(vertical: 10 , horizontal: 40,),
+      decoration: _contentContainerDecoration(),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          _dropDownButtonList(),
+
+          _conditionalBuilder(context , state),
+        ],
+      ),
     ),
   );
 
-  Widget _colorCorrectionLayer() => Container(
-    height: double.infinity,
-    width: double.infinity,
-    color: const Color.fromARGB(150, 60, 60, 100),
+  BoxDecoration _contentContainerDecoration() => const BoxDecoration(
+    borderRadius: BorderRadius.only(
+      topLeft: Radius.circular(35),
+      topRight: Radius.circular(35),
+    ),
+    color: Color.fromARGB(180, 0, 0, 65),
   );
 
-  Widget _logoImage() => Column(
-    children: <Widget>[
-      SizedBox(
-        height: MediaQuery.of(context).size.height * 0.14,
-      ),
-      //  هاد logo  الشركة
-      Image.asset(
-        "asset/images/logo.png",
-        width: double.infinity,
-        height: MediaQuery.of(context).size.height * 0.095,
-      ),
-      const SizedBox(
-        height: 50,
-      ),
-    ],
-  );
+  DropdownButtonFormField _dropDownButtonList() =>
+      DropdownButtonFormField<String>(
+        decoration: _dropDownListDecoration(),
+        hint: _hintText(),
+        items: addAdminList
+            .map(
+              (adminName) => DropdownMenuItem<String>(
+                value: adminName,
+                child: _itemsText(adminName),
+              ),
+            )
+            .toList(),
+        onChanged: (currentChoice) => setState(() {
+          selectedAdmin = currentChoice!;
+        }),
+      );
 
+  _dropDownListDecoration() => InputDecoration(
+        enabledBorder: UnderlineInputBorder(
+          borderSide: const BorderSide(
+            width: 6.0,
+            color: Colors.blue,
+          ),
+          borderRadius: BorderRadius.circular(25),
+        ),
+      );
 
+  Text _hintText() => _itemsText("Select Admin");
+
+  ConditionalBuilder _conditionalBuilder(context , state) => ConditionalBuilder(
+        condition: state is RefreshLevelState || state is AdminLevelInitial,
+        builder: (context) => _removeAdminButton(),
+        fallback: (context) => _fallBack(),
+      );
+
+  Widget _removeAdminButton() => ElevatedButton(
+        onPressed: _onPressedFunction,
+        style: _buttonStyle(),
+        child: _buttonText(),
+      );
+
+  _onPressedFunction() {
+    checkAdminDelete(selectedAdmin!);
+    for (int i = 0; i < userLists.length; i++) {
+      if (selectedAdmin == userLists[i].name) {
+        AddNewAdminController.RemoveAdmin(userLists[i].id);
+        break;
+      }
+    }
+
+    // هون تابع حذف ادمن لازم ينحط
+  }
+
+  ButtonStyle _buttonStyle() => ElevatedButton.styleFrom(
+        minimumSize: const Size(300, 60),
+        padding: EdgeInsets.symmetric(
+          vertical: 5.0,
+          horizontal: MediaQuery.of(context).size.width * 0.2,
+        ),
+        backgroundColor: const Color.fromARGB(255, 150, 10, 10),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        elevation: 15.0,
+      );
+
+  _buttonText() => const Text(
+        "Remove Admin",
+        style: TextStyle(
+          fontSize: 24,
+          color: Colors.white,
+        ),
+      );
+
+  Widget _fallBack() => Center(
+        child: CircularProgressIndicator(),
+      );
+
+  Text _itemsText(String title) => Text(
+        title,
+        style: TextStyle(fontSize: 22, color: Colors.blue),
+      );
 
   bool checkAdminDelete(String selectedAdmin) {
     if (selectedAdmin == 'Select Admin') {

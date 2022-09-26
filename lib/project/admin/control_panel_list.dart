@@ -5,6 +5,7 @@ import '../../components/buttons.dart';
 import 'admins_manage/add_new_admin.dart';
 import 'admins_manage/remove_admin.dart';
 import 'service_calender.dart';
+import 'services_manage/block_service1.dart';
 import 'services_manage/un_block_service.dart';
 
 List controlPanelButtons(context) => [
@@ -28,7 +29,7 @@ List controlPanelButtons(context) => [
       ),
       buttonsOfControlPanel(
         context,
-        const UnBlockService(),
+         UnBlockService(),
         "UnBlock",
         "service",
       ),
@@ -41,7 +42,7 @@ List controlPanelButtons(context) => [
       buttonsOfControlPanel(
         context,
         const RemoveAdmin(),
-        "Delete",
+        "Remove",
         "Admin",
       ),
       buttonsOfControlPanel(

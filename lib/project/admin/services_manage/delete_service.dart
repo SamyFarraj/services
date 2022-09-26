@@ -4,11 +4,9 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
-import 'package:project_mohammad/components/snack_bar.dart';
 
 import '/Api/model/name_service.dart';
 import '/project/constant.dart';
-import '/services/choices.dart';
 import '../../../Cubit/Admin Level Operation/admin_level_cubit.dart';
 import '../../../main.dart';
 
@@ -33,7 +31,7 @@ class _DeleteServiceState extends State<DeleteService> {
   List<String> servicesList = [];
 
   String selectedService = 'Select Service';
-  String? selectedStreet = "FARMER";
+  String? selectedStreet = "BothStreet";
   late int theId;
 
   Future<ListService> fetchAlbum() async {
@@ -67,19 +65,54 @@ class _DeleteServiceState extends State<DeleteService> {
     return Scaffold(
       extendBody: true,
       extendBodyBehindAppBar: true,
-      appBar: _appBarContent(),
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text(
+          "Delete Service",
+          style: TextStyle(
+            fontSize: 36,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1.0,
+            fontStyle: FontStyle.italic,
+            color: Colors.deepOrange,
+          ),
+        ),
+        backgroundColor: const Color.fromARGB(180, 0, 0, 65),
+      ),
       body: Builder(builder: (context) {
         return Stack(
           children: <Widget>[
             // هاد container بيحوي صورة الخلفية
-            _backgroundImage(),
+            SizedBox(
+              width: double.infinity,
+              height: double.infinity,
+              child: Image.asset(
+                "asset/images/background_picture.png",
+                fit: BoxFit.cover,
+              ),
+            ),
             //هاد لون فوق الخلفية مشات وضوح الكتابة
-            _colorCorrectionLayer(),
+            Container(
+              height: double.infinity,
+              width: double.infinity,
+              color: const Color.fromARGB(150, 60, 60, 100),
+            ),
 
             SingleChildScrollView(
               child: Column(
                 children: <Widget>[
-                  _logoImage(),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.14,
+                  ),
+                  //  هاد logo  الشركة
+                  Image.asset(
+                    "asset/images/logo.png",
+                    width: double.infinity,
+                    height: MediaQuery.of(context).size.height * 0.095,
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
 
                   Container(
                     alignment: Alignment.center,
@@ -162,145 +195,8 @@ class _DeleteServiceState extends State<DeleteService> {
                                 //  servicesList = List.from(farmerServices);
                                 //
                                 //
-
+                                servicesList = List.from(bothStreetServices);
                                 return Column(children: <Widget>[
-                                  /*
-                                  RefreshIndicator(
-                                    onRefresh: refresh,
-                                    child: SizedBox(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.75,
-                                      child: DropdownButtonFormField<String>(
-                                        decoration: InputDecoration(
-                                          enabledBorder: UnderlineInputBorder(
-                                            borderSide: const BorderSide(
-                                              width: 3.6,
-                                              color: Colors.blue,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(25),
-                                          ),
-                                        ),
-                                        items: selectStreet
-                                            .map(
-                                              (street) =>
-                                                  DropdownMenuItem<String>(
-                                                value: street.title,
-                                                child: Text(
-                                                  street.title,
-                                                  style: const TextStyle(
-                                                    fontSize: 22,
-                                                    color: Colors.blue,
-                                                  ),
-                                                ),
-                                              ),
-                                            )
-                                            .toList(),
-                                        hint: Text(
-                                          "Select Service",
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.white),
-                                        ),
-                                        onChanged: (street) => setState(() {
-                                          selectedStreet = street;
-                                          if (selectedStreet == 'BothStreet') {
-                                            servicesList =
-                                                List.from(bothStreetServices);
-                                            selectedService = servicesList[0];
-                                          }
-
-                                          if (selectedStreet == 'FARMER') {
-                                            servicesList =
-                                                List.from(farmerServices);
-                                            selectedService = servicesList[0];
-                                          }
-
-                                          if (selectedStreet == 'WOODWARD') {
-                                            servicesList =
-                                                List.from(woodWardServices);
-                                            selectedService = servicesList[0];
-                                          }
-                                          // servicesList.clear();
-
-/*
-                            if (selectedStreet=='WoodWard')
-                            {
-
-
-                              if(  servicesList.length<=snapshot.data!.services.woodWard.length)
-                              {
-
-                                servicesList.clear();
-                                servicesList.add('serviceName');
-
-                                for(int i =0;i<snapshot.data!.services.woodWard.length;i++)
-                                {
-                                  servicesList.add(snapshot.data!.services.woodWard[i].name);
-                                }
-                              }
-                            }
-                          else if (selectedStreet=='Farmer')
-                            {
-                              if(  servicesList.length<=snapshot.data!.services.farmer.length)
-                              {
-
-
-                                for(int i =0;i<snapshot.data!.services.farmer.length;i++)
-                                {
-                                  servicesList.add(snapshot.data!.services.farmer[i].name);
-                                }
-                              }
-                            }
-
-*/
-/*
-                            if(selectedStreet=='WoodWard')
-                            {
-                              if(  servicesList.length<=snapshot.data!.services.woodWard.length)
-                              {
-
-
-                                for(int i =0;i<snapshot.data!.services.woodWard.length;i++)
-                                {
-                                  servicesList.add(snapshot.data!.services.woodWard[i].name);
-                                }
-                              }
-
-                            }
-                            else if (selectedStreet=='Farmer')
-                            {
-                              if(  servicesList.length<=snapshot.data!.services.farmer.length)
-                              {
-
-
-                                for(int i =0;i<snapshot.data!.services.farmer.length;i++)
-                                {
-                                  servicesList.add(snapshot.data!.services.farmer[i].name);
-                                }
-                              }
-                            }
-                            else  if(  servicesList.length<=snapshot.data!.services.farmer.length)
-                            {
-
-
-                              for(int i =0;i<snapshot.data!.services.woodWard.length;i++)
-                              {
-                                servicesList.add(snapshot.data!.services.woodWard[i].name);
-                              }
-                            }
-
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (BuildContext context) => super.widget));
-
- */
-                                        }),
-                                      ),
-                                    ),
-                                  ),
-                                   */
                                   SizedBox(
                                     height: MediaQuery.of(context).size.height *
                                         0.1,
@@ -421,10 +317,10 @@ class _DeleteServiceState extends State<DeleteService> {
                                               //fetchFinal();
                                               // FetchList();
                                               //
-                                              if (checkServiceDelete(
-                                                  selectedService)) {
-                                                cubit.deleteService(theId);
-                                              } //
+                                              checkServiceDelete(
+                                                  selectedService);
+                                              cubit.deleteService(theId);
+                                              //
                                             },
                                             style: ElevatedButton.styleFrom(
                                               minimumSize: const Size(300, 60),
@@ -480,72 +376,37 @@ class _DeleteServiceState extends State<DeleteService> {
     );
   }
 
-  AppBar _appBarContent() => AppBar(
-    centerTitle: true,
-    title: _appBarTitle(),
-    backgroundColor: const Color.fromARGB(180, 0, 0, 65),
-  );
-
-  Text _appBarTitle() => const Text(
-    "Delete Service",
-    style: TextStyle(
-      fontSize: 36,
-      fontWeight: FontWeight.bold,
-      letterSpacing: 1.0,
-      fontStyle: FontStyle.italic,
-      color: Colors.deepOrange,
-    ),
-  );
-
-  Widget _backgroundImage() => SizedBox(
-    width: double.infinity,
-    height: double.infinity,
-    child: Image.asset(
-      "asset/images/background_picture.png",
-      fit: BoxFit.cover,
-    ),
-  );
-
-  Widget _colorCorrectionLayer() => Container(
-    height: double.infinity,
-    width: double.infinity,
-    color: const Color.fromARGB(150, 60, 60, 100),
-  );
-
-  Widget _logoImage() => Column(
-    children: <Widget>[
-      SizedBox(
-        height: MediaQuery.of(context).size.height * 0.14,
-      ),
-      //  هاد logo  الشركة
-      Image.asset(
-        "asset/images/logo.png",
-        width: double.infinity,
-        height: MediaQuery.of(context).size.height * 0.095,
-      ),
-      const SizedBox(
-        height: 50,
-      ),
-    ],
-  );
-
-
-
-
   bool checkServiceDelete(String selectedService) {
     if (selectedStreet == null) {
-      TheSnackBar(context, 'Please Select Street',
+      snackBar(context, 'Please Select Street',
           const Color.fromARGB(255, 150, 10, 10));
       return false;
     } else if (selectedService == 'Select Service') {
-      TheSnackBar(context, "Please Select Service",
+      snackBar(context, "Please Select Service",
           const Color.fromARGB(255, 150, 10, 10));
       return false;
     } else {
-      TheSnackBar(context, "Service Deleted Successfully",
+      snackBar(context, "Service Deleted Successfully",
           const Color.fromARGB(255, 15, 150, 10));
       return true;
     }
   }
 
+  void snackBar(
+      BuildContext context, String errorMessage, Color snackBarColor) {
+    final snackBar = SnackBar(
+      content: Text(
+        errorMessage,
+        style: const TextStyle(
+          fontSize: 28,
+          color: Colors.white,
+        ),
+      ),
+      backgroundColor: snackBarColor,
+      duration: const Duration(seconds: 1),
+    );
+    ScaffoldMessenger.of(context)
+      ..removeCurrentSnackBar()
+      ..showSnackBar(snackBar);
+  }
 }

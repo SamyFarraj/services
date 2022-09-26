@@ -58,19 +58,21 @@ class _AddNewServiceState extends State<AddNewService> {
             //هاد لون فوق الخلفية مشات وضوح الكتابة
             _colorCorrectionLayer(),
 
-            BlocConsumer<AdminLevelCubit, AdminLevelState>(
-              listener: (context, state) => _listenerFunction(
-                context,
-                state,
-              ),
-              builder: (context, state) => _builderFunction(
-                context,
-                state,
-              ),
-            ),
+            _blocConsumer(),
           ],
         ),
       );
+
+  BlocConsumer _blocConsumer() => BlocConsumer<AdminLevelCubit, AdminLevelState>(
+    listener: (context, state) => _listenerFunction(
+      context,
+      state,
+    ),
+    builder: (context, state) => _builderFunction(
+      context,
+      state,
+    ),
+  );
 
   Widget _backgroundImage() => SizedBox(
     width: double.infinity,
@@ -171,11 +173,11 @@ class _AddNewServiceState extends State<AddNewService> {
                     "Add Service",
                     () => setState(() {
                       if (checkNewService(
-                        selectedStreet!,
                         serviceNameController.text,
                       )) {
                         cubit.addService(
-                            serviceNameController.text, StreetName.text);
+                          serviceNameController.text,
+                        );
                       }
                     }),
                   ),
@@ -189,6 +191,7 @@ class _AddNewServiceState extends State<AddNewService> {
         ),
       );
 
+ /*
   Widget _streetChoosingDropDownList() => SizedBox(
         width: 220,
         child: DropdownButtonFormField<String>(
@@ -220,6 +223,7 @@ class _AddNewServiceState extends State<AddNewService> {
           }),
         ),
       );
+  */
 
   Widget _serviceNameField() => TextField(
         controller: serviceNameController,
@@ -277,15 +281,8 @@ class _AddNewServiceState extends State<AddNewService> {
         ),
       );
 
-  bool checkNewService(String selectedStreet, String serviceName) {
-    if (selectedStreet == "Select Street") {
-      TheSnackBar(
-        context,
-        'Please Select Street',
-        const Color.fromARGB(255, 150, 10, 10),
-      );
-      return false;
-    } else if (serviceName == '') {
+  bool checkNewService(String serviceName) {
+      if (serviceName == '') {
       TheSnackBar(
         context,
         'Please Enter Service Name',

@@ -48,7 +48,7 @@ class _UnBlockServiceState extends State<UnBlockService> {
     }
   }
 
-  Future<String> Un_Block_Service(int id) async {
+  Future<String> unBlockService(int id) async {
     final response = await http.get(
       Uri.parse('${baseUrl}/api/Admin/BlockServices/${id}'),
       headers: {'Authorization': 'Bearer $adminToken'},
@@ -73,7 +73,10 @@ class _UnBlockServiceState extends State<UnBlockService> {
         for (int i = 0; i < userLists.length; i++) {
           blockedServices.add(userLists[i].name);
         }
-        selectedService = blockedServices[0];
+        if (!blockedServices.isEmpty) {
+          selectedService = blockedServices[0];
+
+        }
 
         blockedServicesList = List.from(blockedServices);
       });
@@ -81,10 +84,6 @@ class _UnBlockServiceState extends State<UnBlockService> {
 
     /*
     futureData =  fetchData();
-
-
-
-
      */
   }
 
@@ -93,37 +92,55 @@ class _UnBlockServiceState extends State<UnBlockService> {
     return Scaffold(
       extendBody: true,
       extendBodyBehindAppBar: true,
-      appBar: _appBarContent(),
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text(
+          "UnBlock Service",
+          style: TextStyle(
+            fontSize: 36,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1.0,
+            fontStyle: FontStyle.italic,
+            color: Colors.deepOrange,
+          ),
+        ),
+        backgroundColor: const Color.fromARGB(180, 0, 0, 65),
+      ),
       body: Builder(builder: (context) {
         return Stack(
           children: <Widget>[
             // هاد container بيحوي صورة الخلفية
-            _backgroundImage(),
+            SizedBox(
+              width: double.infinity,
+              height: double.infinity,
+              child: Image.asset(
+                "asset/images/background_picture.png",
+                fit: BoxFit.cover,
+              ),
+            ),
             //هاد لون فوق الخلفية مشات وضوح الكتابة
-            _colorCorrectionLayer(),
+            Container(
+              height: double.infinity,
+              width: double.infinity,
+              color: const Color.fromARGB(150, 60, 60, 100),
+            ),
 
             BlocConsumer<AdminLevelCubit, AdminLevelState>(
               listener: (context, state) {
                 // TODO: implement listener
                 if (state is SuccessStatus) {
                   Navigator.pop(context);
-                  TheSnackBar(
-                    context,
-                    "Service Blocked Successfully",
-                    const Color.fromARGB(255, 15, 150, 10),
-                  );
                   print("success");
                 }
 
                 //في حال دخل كلمة سر خطأ
                 if (state is FailureStatus) {
-                  TheSnackBar(
-                    context,
-                    "Please Select Service",
-                    const Color.fromARGB(255, 150, 10, 10),
-                  );
                   //هون حط توست ماسج انو كلمة السر غلط
                   print("رسالة الخطأ ");
+                }
+                if(blockedServices.isEmpty){
+                  TheSnackBar(context, 'Please Select Service',
+                      const Color.fromARGB(255, 150, 10, 10));
                 }
               },
               builder: (context, state) {
@@ -132,7 +149,18 @@ class _UnBlockServiceState extends State<UnBlockService> {
                 return SingleChildScrollView(
                   child: Column(
                     children: <Widget>[
-                      _logoImage(),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.14,
+                      ),
+                      //  هاد logo  الشركة
+                      Image.asset(
+                        "asset/images/logo.png",
+                        width: double.infinity,
+                        height: MediaQuery.of(context).size.height * 0.095,
+                      ),
+                      const SizedBox(
+                        height: 50,
+                      ),
                       Container(
                         alignment: Alignment.center,
                         padding: const EdgeInsets.all(10),
@@ -208,11 +236,9 @@ class _UnBlockServiceState extends State<UnBlockService> {
                                       state is AdminLevelInitial,
                                   builder: (context) => ElevatedButton(
                                         onPressed: () {
-                                          if (checkServiceUnBlock(
-                                              selectedService)) {
-                                            cubit.Un_Block_Service(id);
-                                          }
+                                          cubit.Un_Block_Service(id);
                                           //
+                                          // checkServiceBlock(selectedService);
                                         },
                                         style: ElevatedButton.styleFrom(
                                           minimumSize: const Size(300, 60),
@@ -257,66 +283,18 @@ class _UnBlockServiceState extends State<UnBlockService> {
     );
   }
 
-  AppBar _appBarContent() => AppBar(
-    centerTitle: true,
-    title: const Text(
-      "UnBlock Service",
-      style: TextStyle(
-        fontSize: 36,
-        fontWeight: FontWeight.bold,
-        letterSpacing: 1.0,
-        fontStyle: FontStyle.italic,
-        color: Colors.deepOrange,
-      ),
-    ),
-    backgroundColor: const Color.fromARGB(180, 0, 0, 65),
-  );
-
-  Widget _backgroundImage() => SizedBox(
-    width: double.infinity,
-    height: double.infinity,
-    child: Image.asset(
-      "asset/images/background_picture.png",
-      fit: BoxFit.cover,
-    ),
-  );
-
-  Widget _colorCorrectionLayer() => Container(
-    height: double.infinity,
-    width: double.infinity,
-    color: const Color.fromARGB(150, 60, 60, 100),
-  );
-
-  Widget _logoImage() => Column(
-    children: <Widget>[
-      SizedBox(
-        height: MediaQuery.of(context).size.height * 0.14,
-      ),
-      //  هاد logo  الشركة
-      Image.asset(
-        "asset/images/logo.png",
-        width: double.infinity,
-        height: MediaQuery.of(context).size.height * 0.095,
-      ),
-      const SizedBox(
-        height: 50,
-      ),
-    ],
-  );
-
-
-
   bool checkServiceUnBlock(String selectedService) {
-    // if (selectedStreet == null) {
-    //   TheSnackBar(context, 'Please Select Street',
-    //       const Color.fromARGB(255, 150, 10, 10));
-    //   return false;
-    // } else
-      if (selectedService == 'Select Service') {
+    if (selectedStreet == null) {
+      TheSnackBar(context, 'Please Select Street',
+          const Color.fromARGB(255, 150, 10, 10));
+      return false;
+    } else if (selectedService == 'Select Service') {
       TheSnackBar(context, "Please Select Service",
           const Color.fromARGB(255, 150, 10, 10));
       return false;
     } else {
+      TheSnackBar(context, "Service Blocked Successfully",
+          const Color.fromARGB(255, 15, 150, 10));
       return true;
     }
   }

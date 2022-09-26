@@ -85,7 +85,7 @@ class Account_User {
   }
 
 //عدل رابط ارسال الريكوست هون ماتنسى ياحب
-  static Future<String> Reset_password(String password, String confirmPassword) async {
+  static Future<String> Reset_password(String password, String confirmPassword,String theToken) async {
     var headers = {
       'Accept': 'application/json',
       'Authorization': 'Bearer ${theToken}'
