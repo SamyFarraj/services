@@ -256,7 +256,7 @@ class _BlockServiceState extends State<BlockService> {
                                           ),
                                         )
                                             .toList(),
-                                        hint: Text("Select Service",style: TextStyle(
+                                        hint: Text("Select Street",style: TextStyle(
                                             fontSize: 16,
                                             color: Colors.white
                                         ),),
@@ -265,10 +265,12 @@ class _BlockServiceState extends State<BlockService> {
 
                                           if (selectedStreet == 'FARMER') {
                                             if (farmerServices.length == 0) {
+
                                               // farmerServices.add('');
                                               servicesList =
                                                   List.from(farmerServices);
                                               //    servicesList.add('select services');
+                                              selectedService = servicesList[0];
 
                                             } else {
                                               servicesList =

@@ -6,12 +6,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 
 import '/components/dash_board.dart';
-import '/project/constant.dart';
 import '../../Api/model/my_accepted_model.dart';
 import '../../Cubit/Admin Level Operation/admin_level_cubit.dart';
 import '../../main.dart';
 import '../../services/requests_form.dart';
 import '../user/user_requests.dart';
+
+// import '../home/requests_page_management.dart';
+// import '../../Api/controller/login_controller.dart';
 
 class AdminRequestsPage extends StatefulWidget {
   AdminRequestsPage({Key? key}) : super(key: key);
@@ -47,7 +49,7 @@ class _AdminRequestsPageState extends State<AdminRequestsPage> {
 
   Future<List<MyAccepted>> fetchData() async {
     final response = await http.get(
-      Uri.parse('$baseUrl:8000/api/Admin/Reservation'),
+      Uri.parse('http://192.168.56.1:8000/api/Admin/Reservation'),
       headers: {'Authorization': 'Bearer $adminToken'},
     );
     print('the statues is ${response.statusCode}');
@@ -133,440 +135,593 @@ class _AdminRequestsPageState extends State<AdminRequestsPage> {
       drawer: const DashBoard(),
       extendBody: true,
       extendBodyBehindAppBar: true,
-      appBar: _appBarContent(),
-      body: Stack(
-        children: <Widget>[
-          _backgroundImage(),
-          _colorCorrectionLayer(),
-          BlocConsumer<AdminLevelCubit, AdminLevelState>(
-            listener: (context, state) {
-              // TODO: implement listener
-              if (state is SuccessStatus) {
-                Navigator.pop(context);
-                print("success");
-              }
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text(
+          "Requests",
+          style: TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+            fontStyle: FontStyle.italic,
+            color: Color.fromARGB(255, 230, 84, 15),
+          ),
+        ),
+        backgroundColor: const Color.fromARGB(150, 0, 0, 65),
+      ),
+      body: SizedBox(
+        width: double.infinity,
+        height: double.infinity,
+        child: Stack(
+          children: <Widget>[
+            SizedBox(
+              width: double.infinity,
+              height: double.infinity,
+              child: Image.asset(
+                "asset/images/background_picture.png",
+                fit: BoxFit.cover,
+              ),
+            ),
+            Container(
+              height: double.infinity,
+              width: double.infinity,
+              color: const Color.fromARGB(150, 60, 60, 100),
+            ),
+            BlocConsumer<AdminLevelCubit, AdminLevelState>(
+              listener: (context, state) {
+                // TODO: implement listener
+                if (state is SuccessStatus) {
+                  Navigator.pop(context);
+                  print("success");
+                }
 
-              //في حال دخل كلمة سر خطأ
-              if (state is FailureStatus) {
-                //هون حط توست ماسج انو كلمة السر غلط
-                print("رسالة الخطأ ");
-              }
-            },
-            builder: (context, state) {
-              var cubit = AdminLevelCubit.get(context);
+                //في حال دخل كلمة سر خطأ
+                if (state is FailureStatus) {
+                  //هون حط توست ماسج انو كلمة السر غلط
+                  print("رسالة الخطأ ");
+                }
+              },
+              builder: (context, state) {
+                var cubit = AdminLevelCubit.get(context);
 
-              return SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    _logoImage(),
-                    Container(
-                      width: double.infinity,
-                      height: MediaQuery.of(context).size.height,
-                      color: const Color.fromARGB(180, 0, 0, 65),
-                      child: Column(
-                        children: <Widget>[
-                          Container(
-                            height: MediaQuery.of(context).size.height * 0.4,
-                            width: double.infinity,
-                            padding: const EdgeInsets.all(10),
-                            margin: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(35),
-                              border: Border.all(
-                                color: Colors.blue,
-                                // color: const Color.fromARGB(255, 230, 84, 15),
-                                width: 5,
-                              ),
-                            ),
-                            child: SingleChildScrollView(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  const Text(
-                                    "Pending",
-                                    style: TextStyle(
-                                      fontSize: 28,
-                                      color: Color.fromARGB(255, 230, 84, 15),
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  _divider(),
-                                  // ...adminRequestsManageList.map((val) {
-
-                                  ...UserRequestsPage.requestList.map((val) {
-                                    return Column(
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: <Widget>[
-                                            Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: <Widget>[
-                                                Column(
-                                                  children: <Widget>[
-                                                    // ignore: prefer_const_constructors
-                                                    _text(val.userName),
-                                                    _text(val.serviceName),
-                                                    _text('${val.createdAt}'),
-                                                    _text(
-                                                        "start : ${val.startTime}"),
-                                                    _text(
-                                                        "start : ${val.endTime}"),
-                                                    _text(
-                                                        "start : ${val.gateName}"),
-                                                  ],
-                                                ),
-                                                Row(
-                                                  children: <Widget>[
-                                                    ConditionalBuilder(
-                                                      condition: state
-                                                              is RefreshLevelState ||
-                                                          state
-                                                              is AdminLevelInitial,
-                                                      builder: (context) =>
-
-                                                          ElevatedButton(
-                                                        onPressed: () {
-                                                          setState(
-                                                            () => cubit
-                                                                .AcceptReservation(
-                                                              val.id,
-                                                            ),
-                                                          );
-                                                        },
-                                                        style: ElevatedButton
-                                                            .styleFrom(
-                                                          minimumSize:
-                                                              const Size(
-                                                                  40, 20),
-                                                          padding: EdgeInsets
-                                                              .symmetric(
-                                                            vertical: 3.0,
-                                                            horizontal:
-                                                                MediaQuery.of(
-                                                                            context)
-                                                                        .size
-                                                                        .width *
-                                                                    0.05,
-                                                          ),
-                                                          backgroundColor:
-                                                              const Color
-                                                                      .fromARGB(
-                                                                  255,
-                                                                  10,
-                                                                  150,
-                                                                  10),
-                                                          shape:
-                                                              RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10),
-                                                          ),
-                                                          elevation: 15.0,
-                                                        ),
-                                                        child: _text("Accept"),
-                                                      ),
-                                                      fallback: (context) =>
-                                                          Center(
-                                                        child:
-                                                            CircularProgressIndicator(),
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.05,
-                                                    ),
-                                                    ConditionalBuilder(
-                                                      condition: state
-                                                              is RefreshLevelState ||
-                                                          state
-                                                              is AdminLevelInitial,
-                                                      builder: (context) =>
-                                                          ElevatedButton(
-                                                        onPressed: () {
-                                                          setState(
-                                                            () => cubit
-                                                                .delete_reservation(
-                                                              val.id,
-                                                            ),
-                                                          );
-                                                        },
-                                                        style: ElevatedButton
-                                                            .styleFrom(
-                                                          minimumSize:
-                                                              const Size(
-                                                                  40, 20),
-                                                          padding: EdgeInsets
-                                                              .symmetric(
-                                                            vertical: 3.0,
-                                                            horizontal:
-                                                                MediaQuery.of(
-                                                                      context,
-                                                                    )
-                                                                        .size
-                                                                        .width *
-                                                                    0.05,
-                                                          ),
-                                                          backgroundColor:
-                                                              const Color
-                                                                      .fromARGB(
-                                                                  255,
-                                                                  150,
-                                                                  10,
-                                                                  10),
-                                                          shape:
-                                                              RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10),
-                                                          ),
-                                                          elevation: 15.0,
-                                                        ),
-                                                        child: const Text(
-                                                          "Decline",
-                                                          style: TextStyle(
-                                                            fontSize: 24,
-                                                            color: Colors.white,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      fallback: (context) =>
-                                                          Center(
-                                                        child:
-                                                            CircularProgressIndicator(),
-                                                      ),
-                                                    ),
-                                                    //رفض حجز
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-
-                                        //هاد ال container كان مشان ال staffs
-                                        // كونو لغاه مؤقتا عملت كلشي يتعلق فيه
-                                        // تعليقات لانو احتمال يطلبو بعدين
-
-
-
-                                        Container(
-                                          height: 0.009,
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.65,
-                                          alignment: Alignment.center,
-                                          margin: const EdgeInsets.only(
-                                            top: 15,
-                                            bottom: 15,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            border: Border.all(
-                                              color: Colors.blue,
-                                              // color: const Color.fromARGB(
-                                              //     255, 230, 84, 15),
-                                              width: 1,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    );
-                                  }).toList(),
-                                ],
-                              ),
-                            ),
-                          ),
-
-                          /////////////////////////////////
-
-                          Container(
-                            height: MediaQuery.of(context).size.height * 0.4,
-                            width: double.infinity,
-                            padding: const EdgeInsets.all(10),
-                            margin: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(35),
-                              border: Border.all(
-                                color: Colors.blue,
-                                // color: const Color.fromARGB(255, 230, 84, 15),
-                                width: 5,
-                              ),
-                            ),
-                            child: SingleChildScrollView(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  _headerText("Accepted"),
-                                  _divider(),
-
-                                  // ...adminRequestsList.map((val) {
-                                  ...arp.adminAcceptedRequestListEd.map((val) {
-                                    return Column(
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: <Widget>[
-                                            Column(
-                                              mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                              children: <Widget>[
-                                                // ignore: prefer_const_constructors
-                                                _text(val.userName),
-                                                _text(val.serviceName),
-                                                _text('${val.createdAt}'),
-                                                _text('${val.startTime}'),
-                                                _text('${val.endTime}'),
-                                                _text('${val.gateName}'),
-
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-
-                                        Divider(
-                                          color: Colors.blue,
-                                          thickness: 3,
-                                          height: 3,
-                                        ),
-                                        Container(
-                                          height: 0.009,
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.65,
-                                          alignment: Alignment.center,
-                                          margin: const EdgeInsets.only(
-                                            top: 15,
-                                            bottom: 15,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            border: Border.all(
-                                              color: Colors.blue,
-                                              // color: const Color.fromARGB(
-                                              //     255, 230, 84, 15),
-                                              width: 1,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    );
-                                  }).toList(),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
+                return SingleChildScrollView(
+                  child: Column(
+                    children: <Widget>[
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.13,
                       ),
-                    ),
-                  ],
-                ),
-              );
-            },
-          )
-        ],
+                      Image.asset(
+                        "asset/images/logo.png",
+                        width: 200,
+                        height: 80,
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Container(
+                        width: double.infinity,
+                        height: MediaQuery.of(context).size.height,
+                        color: const Color.fromARGB(180, 0, 0, 65),
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              height: MediaQuery.of(context).size.height * 0.4,
+                              width: double.infinity,
+                              padding: const EdgeInsets.all(10),
+                              margin: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(35),
+                                border: Border.all(
+                                  color: Colors.blue,
+                                  // color: const Color.fromARGB(255, 230, 84, 15),
+                                  width: 5,
+                                ),
+                              ),
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    const Text(
+                                      "Pending",
+                                      style: TextStyle(
+                                        fontSize: 28,
+                                        color: Color.fromARGB(255, 230, 84, 15),
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                        top:
+                                            MediaQuery.of(context).size.height *
+                                                0.02,
+                                        bottom:
+                                            MediaQuery.of(context).size.height *
+                                                0.02,
+                                      ),
+                                      height: 0.009,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.7,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                        color: Colors.blue,
+                                        width: 2,
+                                      )),
+                                    ),
+                                    // ...adminRequestsManageList.map((val) {
+
+                                    ...UserRequestsPage.requestList.map((val) {
+                                      return Column(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: <Widget>[
+                                              Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: <Widget>[
+                                                  Column(
+                                                    children: <Widget>[
+                                                      // ignore: prefer_const_constructors
+                                                      Text(
+                                                        val.userName,
+                                                        style: const TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 26,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        val.serviceName,
+                                                        style: const TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 26,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        '${val.createdAt}',
+                                                        style: const TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 26,
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        "start : ${val.startTime}",
+                                                        style: const TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 26,
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        "end : ${val.endTime}",
+                                                        style: const TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 21,
+                                                        ),
+                                                      ),
+                                                      // Text(
+                                                      //   " for ${val.hoursDuration}"
+                                                      //   " hour/s and "
+                                                      //   "${val.minuteDuration} "
+                                                      //   "minute/s",
+                                                      //   style: const TextStyle(
+                                                      //     color: Colors.white,
+                                                      //     fontSize: 21,
+                                                      //   ),
+                                                      // ),
+                                                      Text(
+                                                        "from ${val.gateName}",
+                                                        style: const TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 26,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Row(
+                                                    children: <Widget>[
+                                                      ConditionalBuilder(
+                                                          condition: state
+                                                                  is RefreshLevelState ||
+                                                              state
+                                                                  is AdminLevelInitial,
+                                                          builder: (context) =>
+                                                              ElevatedButton(
+                                                                onPressed: () {
+                                                                  setState(() {
+                                                                    cubit.acceptReservation(
+                                                                        val.id);
+
+                                                                    //  acceptRequest(val);
+                                                                  });
+                                                                },
+                                                                style: ElevatedButton
+                                                                    .styleFrom(
+                                                                  minimumSize:
+                                                                      const Size(
+                                                                          40,
+                                                                          20),
+                                                                  padding:
+                                                                      EdgeInsets
+                                                                          .symmetric(
+                                                                    vertical:
+                                                                        3.0,
+                                                                    horizontal: MediaQuery.of(context)
+                                                                            .size
+                                                                            .width *
+                                                                        0.05,
+                                                                  ),
+                                                                  backgroundColor:
+                                                                      const Color
+                                                                              .fromARGB(
+                                                                          255,
+                                                                          10,
+                                                                          150,
+                                                                          10),
+                                                                  shape:
+                                                                      RoundedRectangleBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            10),
+                                                                  ),
+                                                                  elevation:
+                                                                      15.0,
+                                                                ),
+                                                                child:
+                                                                    const Text(
+                                                                  "Accept",
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize:
+                                                                        24,
+                                                                    color: Colors
+                                                                        .white,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                          fallback: (context) =>
+                                                              Center(
+                                                                child:
+                                                                    CircularProgressIndicator(),
+                                                              )),
+                                                      SizedBox(
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            0.05,
+                                                      ),
+                                                      ConditionalBuilder(
+                                                          condition: state
+                                                                  is RefreshLevelState ||
+                                                              state
+                                                                  is AdminLevelInitial,
+                                                          builder: (context) =>
+                                                              ElevatedButton(
+                                                                onPressed: () {
+                                                                  setState(() {
+                                                                    //        deleteRequest(val);
+                                                                    cubit.delete_reservation(
+                                                                        val.id);
+                                                                  });
+                                                                },
+                                                                style: ElevatedButton
+                                                                    .styleFrom(
+                                                                  minimumSize:
+                                                                      const Size(
+                                                                          40,
+                                                                          20),
+                                                                  padding:
+                                                                      EdgeInsets
+                                                                          .symmetric(
+                                                                    vertical:
+                                                                        3.0,
+                                                                    horizontal: MediaQuery.of(context)
+                                                                            .size
+                                                                            .width *
+                                                                        0.05,
+                                                                  ),
+                                                                  backgroundColor:
+                                                                      const Color
+                                                                              .fromARGB(
+                                                                          255,
+                                                                          150,
+                                                                          10,
+                                                                          10),
+                                                                  shape:
+                                                                      RoundedRectangleBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            10),
+                                                                  ),
+                                                                  elevation:
+                                                                      15.0,
+                                                                ),
+                                                                child:
+                                                                    const Text(
+                                                                  "Decline",
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize:
+                                                                        24,
+                                                                    color: Colors
+                                                                        .white,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                          fallback: (context) =>
+                                                              Center(
+                                                                child:
+                                                                    CircularProgressIndicator(),
+                                                              ))
+                                                      //رفض حجز
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+
+                                          //هاد ال container كان مشان ال staffs
+                                          // كونو لغاه مؤقتا عملت كلشي يتعلق فيه
+                                          // تعليقات لانو احتمال يطلبو بعدين
+
+                                          // Container(
+                                          //   alignment: Alignment.center,
+                                          //   height: 90,
+                                          //   width:
+                                          //   MediaQuery.of(context).size.width *
+                                          //       0.7,
+                                          //   decoration: BoxDecoration(
+                                          //     border: Border.all(
+                                          //         width: 2, color: Colors.blue),
+                                          //   ),
+                                          //   child: ListView(
+                                          //     padding: const EdgeInsets.only(
+                                          //       top: 1,
+                                          //       left: 30,
+                                          //     ),
+                                          //     children: [
+                                          //       ...val.choosedStaffs.map((staff) {
+                                          //         return Text(
+                                          //           staff,
+                                          //           style: const TextStyle(
+                                          //               fontSize: 22,
+                                          //               color: Colors.white),
+                                          //         );
+                                          //       }).toList(),
+                                          //     ],
+                                          //   ),
+                                          // ),
+
+                                          Container(
+                                            height: 0.009,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.65,
+                                            alignment: Alignment.center,
+                                            margin: const EdgeInsets.only(
+                                              top: 15,
+                                              bottom: 15,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                color: Colors.blue,
+                                                // color: const Color.fromARGB(
+                                                //     255, 230, 84, 15),
+                                                width: 1,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    }).toList(),
+                                  ],
+                                ),
+                              ),
+                            ),
+
+                            /////////////////////////////////
+
+                            Container(
+                              height: MediaQuery.of(context).size.height * 0.4,
+                              width: double.infinity,
+                              padding: const EdgeInsets.all(10),
+                              margin: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(35),
+                                border: Border.all(
+                                  color: Colors.blue,
+                                  // color: const Color.fromARGB(255, 230, 84, 15),
+                                  width: 5,
+                                ),
+                              ),
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    const Text(
+                                      "Accepted",
+                                      style: TextStyle(
+                                        fontSize: 28,
+                                        color: Color.fromARGB(255, 230, 84, 15),
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                        top:
+                                            MediaQuery.of(context).size.height *
+                                                0.02,
+                                        bottom:
+                                            MediaQuery.of(context).size.height *
+                                                0.02,
+                                      ),
+                                      height: 0.009,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.7,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                        color: Colors.blue,
+                                        width: 2,
+                                      )),
+                                    ),
+                                    // ...adminRequestsList.map((val) {
+                                    ...arp.adminAcceptedRequestListEd
+                                        .map((val) {
+                                      return Column(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: <Widget>[
+                                              Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: <Widget>[
+                                                  Column(
+                                                    children: <Widget>[
+                                                      // ignore: prefer_const_constructors
+                                                      Text(
+                                                        val.userName,
+                                                        style: const TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 26,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        //هون في تعديل
+
+                                                        val.serviceName,
+                                                        style: const TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 26,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        '${val.createdAt}',
+                                                        style: const TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 26,
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        "start : ${val.startTime}",
+                                                        style: const TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 26,
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        "end : ${val.endTime}",
+                                                        style: const TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 26,
+                                                        ),
+                                                      ),
+                                                      // Text(
+                                                      //   " for ${val.hoursDuration}"
+                                                      //       " hour/s and "
+                                                      //       "${val.minuteDuration} "
+                                                      //       "minute/s",
+                                                      //   style: const TextStyle(
+                                                      //     color: Colors.white,
+                                                      //     fontSize: 21,
+                                                      //   ),
+                                                      // ),
+                                                      Text(
+                                                        "from ${val.gateName}",
+                                                        style: const TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 26,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+
+                                          //هاد ال container كان مشان ال staffs
+                                          // كونو لغاه مؤقتا عملت كلشي يتعلق فيه
+                                          // تعليقات لانو احتمال يطلبو بعدين
+
+                                          // Container(
+                                          //   alignment: Alignment.center,
+                                          //   height: 90,
+                                          //   width:
+                                          //   MediaQuery.of(context).size.width *
+                                          //       0.7,
+                                          //   decoration: BoxDecoration(
+                                          //     border: Border.all(
+                                          //         width: 2, color: Colors.blue),
+                                          //   ),
+                                          //   child: ListView(
+                                          //     padding: const EdgeInsets.only(
+                                          //       top: 1,
+                                          //       left: 30,
+                                          //     ),
+                                          //     children: [
+                                          //       ...val.choosedStaffs.map((staff) {
+                                          //         return Text(
+                                          //           staff,
+                                          //           style: const TextStyle(
+                                          //               fontSize: 22,
+                                          //               color: Colors.white),
+                                          //         );
+                                          //       }).toList(),
+                                          //     ],
+                                          //   ),
+                                          // ),
+
+                                          Container(
+                                            height: 0.009,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.65,
+                                            alignment: Alignment.center,
+                                            margin: const EdgeInsets.only(
+                                              top: 15,
+                                              bottom: 15,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                color: Colors.blue,
+                                                // color: const Color.fromARGB(
+                                                //     255, 230, 84, 15),
+                                                width: 1,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    }).toList(),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            )
+          ],
+        ),
       ),
     );
   }
-
-  AppBar _appBarContent() => AppBar(
-        centerTitle: true,
-        title: _appBarTitle(),
-        backgroundColor: const Color.fromARGB(150, 0, 0, 65),
-      );
-
-  Widget _appBarTitle() => const Text(
-        "Requests",
-        style: TextStyle(
-          fontSize: 28,
-          fontWeight: FontWeight.bold,
-          fontStyle: FontStyle.italic,
-          color: Color.fromARGB(255, 230, 84, 15),
-        ),
-      );
-
-  Widget _backgroundImage() => SizedBox(
-        width: double.infinity,
-        height: double.infinity,
-        child: Image.asset(
-          "asset/images/background_picture.png",
-          fit: BoxFit.cover,
-        ),
-      );
-
-  Widget _colorCorrectionLayer() => Container(
-        height: double.infinity,
-        width: double.infinity,
-        color: const Color.fromARGB(150, 60, 60, 100),
-      );
-
-  Widget _logoImage() => Column(
-        children: <Widget>[
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.13,
-          ),
-          Image.asset(
-            "asset/images/logo.png",
-            width: 200,
-            height: 80,
-          ),
-          const SizedBox(
-            height: 30,
-          ),
-        ],
-      );
-
-  ElevatedButton _elevatedButton(String title, var onPressed) => ElevatedButton(
-        onPressed: () {
-          setState(
-            onPressed,
-          );
-        },
-        style: ElevatedButton.styleFrom(
-          minimumSize: const Size(40, 20),
-          padding: EdgeInsets.symmetric(
-            vertical: 3.0,
-            horizontal: MediaQuery.of(context).size.width * 0.05,
-          ),
-          backgroundColor: const Color.fromARGB(255, 10, 150, 10),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          elevation: 15.0,
-        ),
-        child: _text(title),
-      );
-
-  Text _headerText(String content) => Text(
-    content,
-    style: TextStyle(
-      fontSize: 28,
-      color: Color.fromARGB(255, 230, 84, 15),
-      fontWeight: FontWeight.bold,
-    ),
-  );
-
-  Text _text(String content) => Text(
-        content,
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 26,
-        ),
-      );
-
-  Divider _divider() => Divider(
-        color: Colors.blue,
-        thickness: 3,
-        height: 25,
-        endIndent: 30,
-        indent: 30,
-      );
 }

@@ -259,7 +259,7 @@ print("dasdas");
                                     MediaQuery.of(context).size.width *
                                         0.30,
                                   ),
-                                  primary: Colors.blue,
+                                  backgroundColor: Colors.blue,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(30),
                                   ),

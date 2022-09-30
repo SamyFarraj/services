@@ -87,7 +87,7 @@ class _BlockServiceState extends State<BlockServices> {
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
-          "Block Service",
+          "Block Service1",
           style: TextStyle(
             fontSize: 36,
             fontWeight: FontWeight.bold,

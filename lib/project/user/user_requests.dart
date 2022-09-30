@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:project_mohammad/project/constant.dart';
 
-import '/project/constant.dart';
 import '../../Api/model/my_accepted_model.dart';
 import '../../Cubit/User Level Operation/user_operation_cubit.dart';
 import '../../components/dash_board.dart';
@@ -63,7 +63,7 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
 
   Future<List<MyAccepted>> myPendingReservations() async {
     final response = await http.get(
-      Uri.parse('http://$baseUrl/api/Reservation/MyPendingReservation'),
+      Uri.parse('$baseUrl/api/Reservation/MyPendingReservation'),
       headers: {'Authorization': 'Bearer $userToken'},
     );
 
@@ -118,7 +118,19 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
       drawer: const DashBoard(),
       extendBody: true,
       extendBodyBehindAppBar: true,
-      appBar: _appBarContent(),
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text(
+          "Requests",
+          style: TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+            fontStyle: FontStyle.italic,
+            color: Color.fromARGB(255, 230, 84, 15),
+          ),
+        ),
+        backgroundColor: const Color.fromARGB(150, 0, 0, 65),
+      ),
       body: SizedBox(
         width: double.infinity,
         height: double.infinity,
@@ -271,16 +283,6 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                                                 fontSize: 26,
                                                               ),
                                                             ),
-                                                            // Text(
-                                                            //   " for ${val.hoursDuration}"
-                                                            //   " hour/s and "
-                                                            //   "${val.minuteDuration} "
-                                                            //   "minute/s",
-                                                            //   style: const TextStyle(
-                                                            //     color: Colors.white,
-                                                            //     fontSize: 21,
-                                                            //   ),
-                                                            // ),
                                                             Text(
                                                               "from ${val.gateName}",
                                                               style:
@@ -294,24 +296,7 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                                         ),
                                                       ],
                                                     ),
-                                                    TextButton(
-                                                      style: ElevatedButton
-                                                          .styleFrom(
-                                                        backgroundColor:
-                                                            Colors.transparent,
-                                                        foregroundColor:
-                                                            const Color
-                                                                    .fromARGB(
-                                                                255,
-                                                                230,
-                                                                84,
-                                                                15),
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(-5),
-                                                        shadowColor:
-                                                            Colors.transparent,
-                                                      ),
+                                                    IconButton(
                                                       onPressed: () {
                                                         setState(() {
                                                           //حط تابع الحذف هون
@@ -323,9 +308,12 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                                               .remove(val);
                                                         });
                                                       },
-                                                      child: const Icon(
+                                                      icon: Icon(
                                                         Icons.delete_rounded,
                                                         size: 35,
+                                                        color: const Color
+                                                            .fromARGB(
+                                                            255, 230, 84, 15),
                                                       ),
                                                     ),
                                                   ],
@@ -403,7 +391,7 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                   ),
                                   child: ListView(
                                     children: <Widget>[
-                                      ...UserRequestsPage.requestList
+                                      ...UserRequestsPage.acceptedRequestList
                                           .map((val) {
                                         return Column(
                                           children: [
@@ -516,20 +504,4 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
       ),
     );
   }
-
-  AppBar _appBarContent() => AppBar(
-    centerTitle: true,
-    title: _appBarTitle(),
-    backgroundColor: const Color.fromARGB(150, 0, 0, 65),
-  );
-
-  Text _appBarTitle() => const Text(
-    "Requests",
-    style: TextStyle(
-      fontSize: 28,
-      fontWeight: FontWeight.bold,
-      fontStyle: FontStyle.italic,
-      color: Color.fromARGB(255, 230, 84, 15),
-    ),
-  );
 }
