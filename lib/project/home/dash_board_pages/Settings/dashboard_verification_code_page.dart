@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../main.dart';
 import '/components/snack_bar.dart';
 import '/project/home/dash_board_pages/Settings/change_password_page.dart';
 import '../../../../Api/controller/User/account_user.dart';
@@ -55,7 +56,14 @@ class _DashBoardVerificationCodePageState
       });
     });
     super.initState();
-    date = Account_User.getVerificationCode();
+    if(adminToken=='')
+    {
+      date = Account_User.getVerificationCode(userToken);
+    }
+    else
+    {
+      date = Account_User.getVerificationCode(adminToken);
+    }
   }
 
   @override

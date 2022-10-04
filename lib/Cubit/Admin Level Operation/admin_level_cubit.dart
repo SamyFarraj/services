@@ -72,6 +72,7 @@ class AdminLevelCubit extends Cubit<AdminLevelState> {
   }
 
    Future<String> deleteService(int id) async {
+
     emit(AlterDataBase());
 
     var response = await http

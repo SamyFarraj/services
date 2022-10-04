@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_mohammad/project/home/home_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Api/controller/login_controller.dart';
 import 'Api/shred_preference.dart';
 import 'Cubit/Admin Level Operation/admin_level_cubit.dart';
-import 'Cubit/Cubit Accountant -User/user_accountant_cubit.dart';
+import 'Cubit/Cubit Accountant/accountant_cubit.dart';
 import 'Cubit/User Level Operation/user_operation_cubit.dart';
 import 'authentication/choose_auth_type.dart';
 import 'project/projects_page.dart';
@@ -30,7 +31,7 @@ Future main() async {
 //   userToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZTZlNWE0YzA1Yzg2ZmQ4NDk0N2FiZTM1NDlkZjM3MWZiY2VkYmE5ODZmYmRiNTU1ZGZjMWY2YWU0MjM1MDk3MTlhZWMxYTFlYWYyYTUzNzkiLCJpYXQiOjE2NjI3NDQ5NjEuNTUwNzM5LCJuYmYiOjE2NjI3NDQ5NjEuNTUwNzU3LCJleHAiOjE2OTQyODA5NjEuNTMzNzMzLCJzdWIiOiIyIiwic2NvcGVzIjpbXX0.qJYCFwUnKcrJfzYphxRcFWw9fj-n8WwHkBPwOe_CHia47On0YhbGSrO4bjWGxa3EXGWZM5qqgzTo1xoIOKvr_7RnetD2M7kkykEEY9hqDbbUzTg29xYuAt-rX0pc3AxMjifQRZXy3_DMQ91pvA1476HrNseZxkF5t4XxzYx4W8aAp-tDFOrolXp29bcPGHvt15JBHw1rqx0luLZVBv1hMLxqZrz9P8rYn7I5qh-9CRhy-pVLCOtgmsBUcjHgJwKyHHaNbYDhhvtROuH3-_sP_vkWzumilDGQgZi28GqNZB2tkZhW7vCNH9NuSeUJf0Mo66ROWNhc0cKeEUo3S634fSgQ2NZxhuS7xM-Qiih7yJ3eRB6eXcGnGIIHjOTRU2WhRVSfM_QFGdFtnihscM8HOPAx64tbTAueFQ_wuu8lUU97GsC0loRPaEy8D1WmVZL7oFt3JV88Kac_uksQKOTINWAgO5qyzhFobYaDAocuiskJbVUgrYiTONQDNywnRBlC74MWjlQkR222_d-QGYQKpynWQnXc41Mz8KBbqi2uY2tSiEtlIhD2V7_SxSUPjwq9zOOT2-_-xLf70Vswm6Yd3TFm2RraaZ0wNxsr7CBc5mBAejRiT3nXAl0Iqr7NNYSHDdEAIpAcPFx2nh7UxicCMqy1dindeb1kHlN1SO4xgEI';
 
 
-   userToken = '';
+  // userToken = '';
 
   runApp(MyApp());
 }
@@ -46,7 +47,7 @@ class MyApp extends StatelessWidget {
           providers: [
             BlocProvider(
                 create: (BuildContext context) =>
-                UserAccountantCubit()
+                AccountantCubit()
                   ..checkToken()
 
             ),
@@ -78,12 +79,12 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<UserAccountantCubit, UserAccountantState>(
+    return BlocConsumer<AccountantCubit, UserAccountantState>(
       listener: (context, state) {
         // TODO: implement listener
       },
       builder: (context, state) {
-        var cubit=UserAccountantCubit.get(context);
+        var cubit=AccountantCubit.get(context);
         cubit.checkToken();
         return _MyHomePage();
       },
@@ -99,10 +100,41 @@ class _MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<_MyHomePage> {
+  String _authenticated = '';
+
+  Future<String> checkAuthenticated() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? tokenUser = prefs.getString('tokenUser');
+    String? tokenAdmin = prefs.getString('tokenAdmin');
+
+    if(tokenUser !='')
+      {
+        userToken=tokenUser!;
+        print("log in user ");
+        return userToken;
+      }
+    else  if(tokenAdmin !='')
+    {
+      adminToken=tokenAdmin!;
+      return adminToken;
+    }
+   return '';
+  }
+
   @override
   void initState() {
     // TODO: implement initState
+    checkAuthenticated().then((value)
+    {
+
+      setState(() {
+        checkAuthenticated();
+      });
+    }
+
+    );
     super.initState();
+
   }
 
   @override

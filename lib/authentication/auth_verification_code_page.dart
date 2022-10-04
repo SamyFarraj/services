@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:project_mohammad/main.dart';
+import 'package:project_mohammad/project/projects_page.dart';
 
 import '/components/snack_bar.dart';
 import '/project/home/dash_board_pages/Settings/change_password_page.dart';
@@ -16,7 +18,7 @@ class _AuthVerificationCodePageState extends State<AuthVerificationCodePage> {
   // هاد ال controller
   // مشان ال textField
   final verificationCodeController = TextEditingController();
-  Future correctVerificationCode = Account_User.getVerificationCode();
+ late Future <String> correctVerificationCode ;
   bool buttonStatus = false;
   String buttonDisplayText = "Enter Code";
   Widget showIcon = Container(
@@ -45,8 +47,17 @@ class _AuthVerificationCodePageState extends State<AuthVerificationCodePage> {
     super.initState();
 
     print('the code  is $correctVerificationCode');
+if(adminToken=='')
+  {
+    myCode = Account_User.getVerificationCode(userToken);
+    correctVerificationCode=myCode;
+  }
+else
+  {
+    myCode = Account_User.getVerificationCode(adminToken);
+    correctVerificationCode=myCode;
 
-    myCode = Account_User.getVerificationCode();
+  }
     print('hello');
     print('the code is $myCode');
   }

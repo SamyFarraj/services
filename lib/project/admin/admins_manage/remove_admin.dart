@@ -48,39 +48,7 @@ class _RemoveAdminState extends State<RemoveAdmin> {
     }
   }
 
-/*
-  Future  <List <ShowAdmins>>   getAllAdmins()async
-  {
-    var response = await http.get(Uri.parse('${base_Url}/api/Admin/ShowAllAdmins'),
-    headers:<String ,String >
-        {
-          'Authorization':'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZTM4Y2M3MmFlMTY3ZjgxYjc3ZTkwMzE1ZWEzMWY4NzNlZWQ0YmNiOGQzNTBjMzcyYzRkMTY1ZGE1YmI5MzJiYmFlZDJkZjFiZWY3OWJmNjMiLCJpYXQiOjE2NTM4NjY4MzYuMDczNDksIm5iZiI6MTY1Mzg2NjgzNi4wNzM0OTYsImV4cCI6MTY4NTQwMjgzNi4wMDQzNzQsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.umj9EaVbeViSSv3p8LgKv-nrkV46hkQsPhIJOHrUAC2gQAUX-T3B5Ft1cXDaOGwUDpfGRL4DXihd1KMuax42zPmNqd5ET5j2-0XuPrTmkxBUOhyoSqAxM_-HKK0ZAdYNg6TI7syMIM8vZFXEa_4nNI0oLNHW5YjLtt_y05C7OkCCRjOfyk57mkme2Hp91gkUu3MkZEMqeD7UKba9zDAzCy7wSgY37Y9Fi10H9RX6BWhDzPo-05tOq_dRFHUj423O3rwPA75ATxI1gMKPxA62WOpmfRzgJHbvdz4-wQZnabE9DcBx8b1Q7j4YWELMBvmA16tJ5bPB91Ohc_SSVWni'
-              '1mvZF4jba7_vhCA74LAVqSFAgZN7c5w_nAO'
-              'juyN6zqf23jsrWX4exj6JN1AtE-GIEW_lFomBTOXuX'
-              '_cPtssfzx0O7rAhTx0uyIk1SQ4SLfSmEdLgmRRy7NSu4HG2'
-              'NFx4OHFFJnLYUEvJRJx3-F4-88E5Aa1XQqSSmOYfA'
-              'OJQ5AyWo-31YI4ujPaWxSfkDpUFwGJw2GSOFkdxxLnDi-F53E5HX'
-              'U2Nl7y8ZlrwyvtN4b1pWVxGMFgiTaaAdWsJbxtjJSp4ctnbWG-'
-              'xX1Gdn4bdDP_mrweLWqkzBnkwIA2ZGw1Sh_qt3s8IJipilyx8V5E'
-              '3BkJb28J6Eq77RT6mMiF4sn0'
-    }
 
-    );
-    List<ShowAdmins>res=[];
-    if(response.statusCode==200)
-      {
-res=showAdminsFromJson(response.toString());
-print("the response is $res");
-return res;
-      }
-    else return [] ;
-
-
-  }
-  late Future<List<ShowAdmins>>adminList;
-
-
- */
   List<String> usersList = [];
 
   @override
@@ -88,6 +56,8 @@ return res;
     if (addAdminList.length > 0) {
       addAdminList.length = 1;
     }
+
+
     // addAdminList.clear();
     // addAdminList.add('select');
     super.initState();
@@ -98,6 +68,7 @@ return res;
 
         //   addAdminList=List.from(userLists)
         for (int i = 0; i < userLists.length; i++) {
+          print("hdfg");
           addAdminList.add(userLists[i].name);
         }
       });
@@ -214,7 +185,7 @@ return res;
                               hint: Text("Select Service",style: TextStyle(
                                   fontSize: 16,
                                   color: Colors.white
-                              ),),                              items: addAdminList
+                              ),),                items: addAdminList
                                   .map(
                                     (service) => DropdownMenuItem<String>(
                                       value: service,

@@ -57,15 +57,9 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
   List<MyAccepted> pending = [];
   List<MyAccepted> pendingList = [];
 
-  static List<MyAccepted> parseAgentForMyPending(String responseBody) {
-    //Map<String,String>.from(oldMap)
-    final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
-    return parsed.map<MyAccepted>((json) => MyAccepted.fromJson(json)).toList();
-  }
-
   Future<List<MyAccepted>> myPendingReservations() async {
     final response = await http.get(
-      Uri.parse('http://$baseUrl/api/Reservation/MyPendingReservation'),
+      Uri.parse('$baseUrl/api/Reservation/MyPendingReservation'),
       headers: {'Authorization': 'Bearer $userToken'},
     );
 

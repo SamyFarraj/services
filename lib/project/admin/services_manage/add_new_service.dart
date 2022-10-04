@@ -121,6 +121,7 @@ class _AddNewServiceState extends State<AddNewService> {
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.1,
                           ),
+                          /*
                           SizedBox(
                             width: 220,
                             child: DropdownButtonFormField<String>(
@@ -154,6 +155,8 @@ class _AddNewServiceState extends State<AddNewService> {
                               }),
                             ),
                           ),
+
+                           */
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.1,
                           ),
@@ -213,11 +216,11 @@ class _AddNewServiceState extends State<AddNewService> {
                               builder: (context) => ElevatedButton(
                                 onPressed: () {
                                   setState(() {
-                                    checkNewService(selectedStreet!,
+                                    checkNewService('BothStreet',
                                         serviceNameController.text);
                                     cubit.addService(
                                         serviceNameController.text,
-                                        StreetName.text);
+                                        'BothStreet');
                                   });
                                 },
                                 style: ElevatedButton.styleFrom(

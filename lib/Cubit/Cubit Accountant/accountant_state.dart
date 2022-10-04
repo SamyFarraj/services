@@ -1,4 +1,4 @@
-part of 'user_accountant_cubit.dart';
+part of 'accountant_cubit.dart';
 
 @immutable
 abstract class UserAccountantState {}

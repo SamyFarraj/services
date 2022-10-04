@@ -2,7 +2,7 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../Cubit/Cubit Accountant -User/user_accountant_cubit.dart';
+import '../Cubit/Cubit Accountant/accountant_cubit.dart';
 import '/Api/controller/signup_controller.dart';
 import '/authentication/user_log_in_page.dart';
 
@@ -95,7 +95,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     height: 50,
                   ),
                   // هاد ال container اللي بيحتوي ع ال textFields
-                  BlocConsumer<UserAccountantCubit, UserAccountantState>(
+                  BlocConsumer<AccountantCubit, UserAccountantState>(
   listener: (context, state) {
     // TODO: implement listener
     if (state is SuccessSignUpState) {
@@ -117,7 +117,7 @@ class _SignUpPageState extends State<SignUpPage> {
     }
   },
   builder: (context, state) {
-    var cubit=UserAccountantCubit.get(context);
+    var cubit=AccountantCubit.get(context);
     return Container(
                     padding: const EdgeInsets.all(10),
                     width: MediaQuery.of(context).size.width * 0.9,

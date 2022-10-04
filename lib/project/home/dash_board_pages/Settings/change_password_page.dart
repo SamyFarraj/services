@@ -1,5 +1,9 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../Cubit/Cubit Accountant/accountant_cubit.dart';
+import '../../../../main.dart';
 import '/project/projects_page.dart';
 import '../../../../Api/controller/User/account_user.dart';
 
@@ -22,7 +26,15 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    theVerificationCode = Account_User.getVerificationCode();
+    if(adminToken=='')
+    {
+      theVerificationCode = Account_User.getVerificationCode(userToken);
+    }
+    else
+    {
+      theVerificationCode = Account_User.getVerificationCode(adminToken);
+
+    }
   }
 
   @override
@@ -66,7 +78,34 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
           // يعني مشات  ما تطلع ال pixels  من الشاشة
           Form(
             key: editingPasswordFormKey,
-            child: SingleChildScrollView(
+            child: BlocConsumer<AccountantCubit, UserAccountantState>(
+  listener: (context, state) {
+    if (state is SuccessStatus) {
+      print("تم تغيير الكلمة بنجاح");
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_){
+          return  ProjectsPage(admin);
+
+        },
+        ),
+      );
+
+    }
+
+
+    //في حال دخل كلمة سر خطأ
+    if(state is FailureStatus)
+    {
+      //هون حط توست ماسج انو كلمة السر غلط
+      print("رسالة الخطأ انو كلمة السر غلط");
+
+    }
+    // TODO: implement listener
+  },
+  builder: (context, state) {
+    var cubit=AccountantCubit.get(context);
+    return SingleChildScrollView(
               child: Column(
                 children: <Widget>[
                   SizedBox(
@@ -199,55 +238,70 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.1,
                         ),
-                        ElevatedButton(
-                          onPressed: () {
-                            final changePasswordFormKey =
+                        ConditionalBuilder(
+                            condition: state is RefreshLevelState || state is UserAccountantInitial,
+                            builder: (context) =>     ElevatedButton(
+                              onPressed: () {
+                                final changePasswordFormKey =
                                 editingPasswordFormKey.currentState!;
-                            if (changePasswordFormKey.validate()) {
-                              // تابع ارسال البيانات
-                              Account_User.Reset_password(
-                                  newPasswordController.text,
-                                  rePasswordController.text);
+                                if (changePasswordFormKey.validate()) {
+                                  // تابع ارسال البيانات
+                                  if(adminToken=='')
+                                  {
+                                    cubit.Reset_passwordUser(
+                                        newPasswordController.text,
+                                        rePasswordController.text
 
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(builder: (_){
-                                    return  ProjectsPage(admin);
+                                    );
+                                  }
+                                  else
+                                  {
+                                    cubit.Reset_passwordAdmin(
+                                        newPasswordController.text,
+                                        rePasswordController.text
 
-                                  },
-                                ),
-                              );
-                            }
-                          },
-                          style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.symmetric(
-                              vertical: 10.0,
-                              horizontal:
+                                    );
+                                  }
+
+
+
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                padding: EdgeInsets.symmetric(
+                                  vertical: 10.0,
+                                  horizontal:
                                   MediaQuery.of(context).size.width * 0.15,
+                                ),
+                                minimumSize: Size(
+                                    MediaQuery.of(context).size.width * 0.85,
+                                    MediaQuery.of(context).size.height * 0.05),
+                                primary: const Color.fromARGB(255, 10, 150, 0),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                elevation: 15.0,
+                              ),
+                              child: const Text(
+                                "Change Password",
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  color: Colors.white,
+                                ),
+                              ),
                             ),
-                            minimumSize: Size(
-                                MediaQuery.of(context).size.width * 0.85,
-                                MediaQuery.of(context).size.height * 0.05),
-                            primary: const Color.fromARGB(255, 10, 150, 0),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            elevation: 15.0,
-                          ),
-                          child: const Text(
-                            "Change Password",
-                            style: TextStyle(
-                              fontSize: 24,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
+                            fallback: (context) => Center(
+                              child: CircularProgressIndicator(),
+                            )),
+
                       ],
                     ),
                   ),
                 ],
               ),
-            ),
+            );
+  },
+),
           ),
         ],
       ),

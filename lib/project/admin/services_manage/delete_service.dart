@@ -34,7 +34,7 @@ class _DeleteServiceState extends State<DeleteService> {
   List<String> servicesList = [];
 
   String selectedService = 'Select Service';
-  String? selectedStreet = "FARMER";
+  String? selectedStreet = "BothStreet";
   late int theId;
 
   Future<ListService> fetchAlbum() async {
@@ -189,8 +189,9 @@ class _DeleteServiceState extends State<DeleteService> {
                                 //  servicesList = List.from(farmerServices);
                                 //
                                 //
-
+                                servicesList=   List.from(bothStreetServices);
                                 return Column(children: <Widget>[
+                                  /*
                                   RefreshIndicator(
                                     onRefresh: refresh,
                                     child: SizedBox(
@@ -330,6 +331,8 @@ class _DeleteServiceState extends State<DeleteService> {
                                       ),
                                     ),
                                   ),
+
+                                   */
                                   SizedBox(
                                     height: MediaQuery.of(context).size.height *
                                         0.1,

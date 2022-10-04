@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:project_mohammad/main.dart';
 
 import '/project/constant.dart';
 import '../../../moh_project/post_moh/login_controller.dart';
@@ -94,14 +95,31 @@ class account {
     }
   }
 
-  static Future<String> logout() async {
+  static Future<String> logoutAdmin() async {
     //http://127.0.0.1:8000/api/Admin/logout
     var response = await http.get(Uri.parse('${baseUrl}/api/Admin/logout'),
         headers: {
           'Accept': 'application/json',
-          'Authorization': 'Bearer $theToken'
+          'Authorization': 'Bearer $adminToken'
         });
     print('the re ${response.statusCode}');
+    print('the re ${response.body}');
+
+    if (response.statusCode == 200) {
+      return 'successful';
+    } else
+      return response.statusCode.toString();
+  }
+  static Future<String> logoutUser() async {
+    //http://127.0.0.1:8000/api/Admin/logout
+    var response = await http.get(Uri.parse('${baseUrl}/api/logout'),
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $userToken'
+        });
+    print('the re ${response.statusCode}');
+    print('the re ${response.body}');
+
     if (response.statusCode == 200) {
       return 'successful';
     } else
