@@ -67,9 +67,9 @@ class _DashBoardState extends State<DashBoard> {
               children: generalDashboardList
                   .map(
                     (tile) => BasicTileWidget(
-                      tile: tile,
-                    ),
-                  )
+                  tile: tile,
+                ),
+              )
                   .toList(),
             ),
           ),
@@ -104,9 +104,9 @@ class _DashBoardState extends State<DashBoard> {
               children: settingsDashboardList
                   .map(
                     (tile) => BasicTileWidget(
-                      tile: tile,
-                    ),
-                  )
+                  tile: tile,
+                ),
+              )
                   .toList(),
             ),
           ),
@@ -162,17 +162,29 @@ class _BasicTileWidgetState extends State<BasicTileWidget> {
         }
         if (title == "logout") {
           if(adminToken!=''){
+<<<<<<< HEAD
             
+=======
+>>>>>>> d78ccfe1f90cae1e39628346e5e1beb3a0194e13
             account.logoutAdmin();
             checkAuthenticated();
           }
           else
+<<<<<<< HEAD
             {
               account.logoutUser();
                 checkAuthenticated();
             }
 
 page= const AuthChoosingPage();
+=======
+          {
+            account.logoutUser();
+            checkAuthenticated();
+          }
+
+          page= const AuthChoosingPage();
+>>>>>>> d78ccfe1f90cae1e39628346e5e1beb3a0194e13
 
         }
         Navigator.of(context).push(

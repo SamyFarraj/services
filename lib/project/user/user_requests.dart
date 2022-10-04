@@ -1,17 +1,15 @@
 import 'dart:convert';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:project_mohammad/project/constant.dart';
 
-import '../../Api/controller/User/work/services_controller.dart';
 import '../../Api/model/my_accepted_model.dart';
 import '../../Cubit/User Level Operation/user_operation_cubit.dart';
 import '../../components/dash_board.dart';
 import '../../main.dart';
-
 
 class UserRequestsPage extends StatefulWidget {
   static List<MyAccepted> requestList = [];
@@ -27,7 +25,6 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
   List<MyAccepted> uList = [];
   List<MyAccepted> reservationsLists = [];
 
-
   static List<MyAccepted> parseAgents(String responseBody) {
     //Map<String,String>.from(oldMap)
     final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
@@ -35,7 +32,8 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
   }
 
   Future<List<MyAccepted>> fetchData() async {
-    final response = await http.get(Uri.parse('$baseUrl/api/Reservation/MyAcceptedReservation'),
+    final response = await http.get(
+      Uri.parse('$baseUrl/api/Reservation/MyAcceptedReservation'),
       headers: {
         'Accept': 'application/json',
         'Authorization': 'Bearer $userToken',
@@ -178,187 +176,173 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                               width: 5,
                             ),
                           ),
-                          child: BlocConsumer<UserOperationCubit, UserOperationState>(
-  listener: (context, state) {
-    // TODO: implement listener
-    if (state is SuccessStatus) {
-    print("success");
+                          child: BlocConsumer<UserOperationCubit,
+                              UserOperationState>(
+                            listener: (context, state) {
+                              // TODO: implement listener
+                              if (state is SuccessStatus) {
+                                print("success");
+                              }
 
-    }
-
-
-    //في حال دخل كلمة سر خطأ
-    if(state is FailureStatus)
-    {
-      //هون حط توست ماسج انو كلمة السر غلط
-      print("رسالة الخطأ انو كلمة السر غلط");
-
-    }
-  },
-  builder: (context, state) {
-    var cubit=UserOperationCubit.get(context);
-    return SingleChildScrollView(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                const Text(
-                                  "Pending",
-                                  style: TextStyle(
-                                    fontSize: 28,
-                                    color: Color.fromARGB(255, 230, 84, 15),
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Container(
-                                  margin: const EdgeInsets.only(
-                                    top: 10,
-                                    bottom: 10,
-                                  ),
-                                  height:
-                                      MediaQuery.of(context).size.width * 0.9,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.7,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.blue,
-                                      width: 2,
+                              //في حال دخل كلمة سر خطأ
+                              if (state is FailureStatus) {
+                                //هون حط توست ماسج انو كلمة السر غلط
+                                print("رسالة الخطأ انو كلمة السر غلط");
+                              }
+                            },
+                            builder: (context, state) {
+                              var cubit = UserOperationCubit.get(context);
+                              return SingleChildScrollView(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    const Text(
+                                      "Pending",
+                                      style: TextStyle(
+                                        fontSize: 28,
+                                        color: Color.fromARGB(255, 230, 84, 15),
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
-                                  ),
-                                  child: ListView(
-                                    children: <Widget>[
-                                      ...UserRequestsPage.requestList
-                                          .map((val) {
-                                        return Column(
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: <Widget>[
-                                                Column(
+                                    Container(
+                                      margin: const EdgeInsets.only(
+                                        top: 10,
+                                        bottom: 10,
+                                      ),
+                                      height:
+                                          MediaQuery.of(context).size.width *
+                                              0.9,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.7,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: Colors.blue,
+                                          width: 2,
+                                        ),
+                                      ),
+                                      child: ListView(
+                                        children: <Widget>[
+                                          ...UserRequestsPage.requestList
+                                              .map((val) {
+                                            return Column(
+                                              children: [
+                                                Row(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
                                                   children: <Widget>[
                                                     Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
                                                       children: <Widget>[
-                                                        Text(
-                                                          val.serviceName,
-                                                          style:
-                                                              const TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 26,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          '${DateFormat("yyyy/MM/dd").format(val.createdAt)}',
-                                                          style:
-                                                              const TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 26,
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          " start at ${DateFormat("HH:mm").format(val.startTime)}",
-                                                          style:
-                                                              const TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 26,
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          "end at ${DateFormat("HH:mm").format(val.endTime)}",
-                                                          style:
-                                                              const TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 26,
-                                                          ),
-                                                        ),
-                                                        // Text(
-                                                        //   " for ${val.hoursDuration}"
-                                                        //   " hour/s and "
-                                                        //   "${val.minuteDuration} "
-                                                        //   "minute/s",
-                                                        //   style: const TextStyle(
-                                                        //     color: Colors.white,
-                                                        //     fontSize: 21,
-                                                        //   ),
-                                                        // ),
-                                                        Text(
-                                                          "from ${val.gateName}",
-                                                          style:
-                                                              const TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 26,
-                                                          ),
+                                                        Column(
+                                                          children: <Widget>[
+                                                            Text(
+                                                              val.serviceName,
+                                                              style:
+                                                                  const TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize: 26,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                              ),
+                                                            ),
+                                                            Text(
+                                                              '${DateFormat("yyyy/MM/dd").format(val.createdAt)}',
+                                                              style:
+                                                                  const TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize: 26,
+                                                              ),
+                                                            ),
+                                                            Text(
+                                                              " start at ${DateFormat("HH:mm").format(val.startTime)}",
+                                                              style:
+                                                                  const TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize: 26,
+                                                              ),
+                                                            ),
+                                                            Text(
+                                                              "end at ${DateFormat("HH:mm").format(val.endTime)}",
+                                                              style:
+                                                                  const TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize: 26,
+                                                              ),
+                                                            ),
+                                                            Text(
+                                                              "from ${val.gateName}",
+                                                              style:
+                                                                  const TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize: 26,
+                                                              ),
+                                                            ),
+                                                          ],
                                                         ),
                                                       ],
                                                     ),
+                                                    IconButton(
+                                                      onPressed: () {
+                                                        setState(() {
+                                                          //حط تابع الحذف هون
+                                                          cubit
+                                                              .delete_reservation(
+                                                                  val.id);
+                                                          UserRequestsPage
+                                                              .requestList
+                                                              .remove(val);
+                                                        });
+                                                      },
+                                                      icon: Icon(
+                                                        Icons.delete_rounded,
+                                                        size: 35,
+                                                        color: const Color
+                                                            .fromARGB(
+                                                            255, 230, 84, 15),
+                                                      ),
+                                                    ),
                                                   ],
                                                 ),
-                                                TextButton(
-                                                  style:
-                                                      ElevatedButton.styleFrom(
-                                                    primary: Colors.transparent,
-                                                    onPrimary:
-                                                        const Color.fromARGB(
-                                                            255, 230, 84, 15),
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            -5),
-                                                    shadowColor:
-                                                        Colors.transparent,
+                                                Container(
+                                                  height: 0.09,
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.65,
+                                                  alignment: Alignment.center,
+                                                  margin: const EdgeInsets.only(
+                                                    top: 15,
+                                                    bottom: 15,
                                                   ),
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      //حط تابع الحذف هون
-                                                      cubit
-                                                          .delete_reservation(
-                                                              val.id);
-                                                      UserRequestsPage
-                                                          .requestList
-                                                          .remove(val);
-                                                    });
-                                                  },
-                                                  child: const Icon(
-                                                    Icons.delete_rounded,
-                                                    size: 35,
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                      color: Colors.blue,
+                                                      // color: const Color.fromARGB(
+                                                      //     255, 230, 84, 15),
+                                                      width: 1,
+                                                    ),
                                                   ),
                                                 ),
                                               ],
-                                            ),
-                                            Container(
-                                              height: 0.09,
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.65,
-                                              alignment: Alignment.center,
-                                              margin: const EdgeInsets.only(
-                                                top: 15,
-                                                bottom: 15,
-                                              ),
-                                              decoration: BoxDecoration(
-                                                border: Border.all(
-                                                  color: Colors.blue,
-                                                  // color: const Color.fromARGB(
-                                                  //     255, 230, 84, 15),
-                                                  width: 1,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        );
-                                      }).toList(),
-                                    ],
-                                  ),
+                                            );
+                                          }).toList(),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                          );
-  },
-),
+                              );
+                            },
+                          ),
                         ),
                         Container(
                           height: MediaQuery.of(context).size.height * 0.4,
@@ -401,7 +385,7 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                   ),
                                   child: ListView(
                                     children: <Widget>[
-                                      ...UserRequestsPage.requestList
+                                      ...UserRequestsPage.acceptedRequestList
                                           .map((val) {
                                         return Column(
                                           children: [

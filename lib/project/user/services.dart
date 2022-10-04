@@ -4,13 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:project_mohammad/project/user/service_info_input.dart';
 
-
 import '../../Api/model/name_service.dart';
 import '../../components/dash_board.dart';
 import '../../main.dart';
 import '../../services/choices.dart';
 import '../constant.dart';
-
 
 class ServiceEditionS extends StatefulWidget {
   const ServiceEditionS({Key? key}) : super(key: key);
@@ -20,7 +18,6 @@ class ServiceEditionS extends StatefulWidget {
 }
 
 class _ServiceEditionState extends State<ServiceEditionS> {
-
   Future<String> Block_Service(int id) async {
     final response = await http.get(
       Uri.parse('${baseUrl}/api/Admin/BlockServices/${id}'),
@@ -32,23 +29,21 @@ class _ServiceEditionState extends State<ServiceEditionS> {
       return "Error code is ${response.statusCode}";
     }
   }
-  Future<ListService> fetchAlbum() async {
 
+  Future<ListService> fetchAlbum() async {
     //   gatesEdition.add('');
     print('here');
 
     print("iam here");
 
-
     //   gatesEdition.add('');
     final response = await http.get(Uri.parse('${baseUrl}/api/services'),
         headers: {
-      'Authorization':'Bearer $userToken',
-          'Accept':'application/json'
-
-    }
-      // snapshot.data!.services.woodWard[1].street
-    );
+          'Authorization': 'Bearer $userToken',
+          'Accept': 'application/json'
+        }
+        // snapshot.data!.services.woodWard[1].street
+        );
     print("the response base ${response.body}");
 
     if (response.statusCode == 200) {
@@ -62,9 +57,6 @@ class _ServiceEditionState extends State<ServiceEditionS> {
     }
   }
 
-
-
-
   List<String> gatesEdition = [];
   List<String> serviceWoodWard = [];
   List<String> serviceFarmer = [];
@@ -74,7 +66,6 @@ class _ServiceEditionState extends State<ServiceEditionS> {
 
   String selectedService = 'Select Service';
   String? selectedStreet = "FARMER";
-
 
   late int theId;
 
@@ -97,38 +88,7 @@ class _ServiceEditionState extends State<ServiceEditionS> {
       drawer: const DashBoard(),
       extendBody: true,
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text(
-          "Select Street",
-          style: TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-            color: Colors.deepOrange,
-          ),
-        ),
-        backgroundColor: const Color.fromARGB(150, 0, 0, 65),
-        // actions: [
-        //   IconButton(
-        //     onPressed: () {
-        //       if (admin) {
-        //         Navigator.of(context).push(
-        //           MaterialPageRoute(
-        //             builder: (_) => const AdminControlPanel(),
-        //           ),
-        //         );
-        //       } else {
-        //         snackBar(
-        //           context,
-        //           "This Feature only for Admins",
-        //           const Color.fromARGB(255, 150, 10, 10),
-        //         );
-        //       }
-        //     },
-        //     icon: const Icon(Icons.view_headline_sharp),
-        //   ),
-        // ],
-      ),
+      appBar: _appBarContent(),
       body: SizedBox(
         width: double.infinity,
         height: double.infinity,
@@ -164,18 +124,18 @@ class _ServiceEditionState extends State<ServiceEditionS> {
                   height: 30,
                 ),
                 Container(
-                    width: double.infinity,
-                    alignment: Alignment.center,
-                    height: MediaQuery.of(context).size.height * 0.716,
-                    decoration: const BoxDecoration(
-                      color: Color.fromARGB(180, 0, 0, 65),
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(35),
-                        topRight: Radius.circular(35),
-                      ),
+                  width: double.infinity,
+                  alignment: Alignment.center,
+                  height: MediaQuery.of(context).size.height * 0.716,
+                  decoration: const BoxDecoration(
+                    color: Color.fromARGB(180, 0, 0, 65),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(35),
+                      topRight: Radius.circular(35),
                     ),
-                    child: SingleChildScrollView(
-                        child: FutureBuilder<ListService>(
+                  ),
+                  child: SingleChildScrollView(
+                    child: FutureBuilder<ListService>(
                       future: date,
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
@@ -368,17 +328,9 @@ class _ServiceEditionState extends State<ServiceEditionS> {
                         // By default, show a loading spinner.
                         return const CircularProgressIndicator();
                       },
-                    ))
-                    // ListView(
-                    //   children: selectStreet
-                    //       .map(
-                    //         (tile) => BasicTileWidget(
-                    //       tile: tile,
-                    //     ),
-                    //   )
-                    //       .toList(),
-                    // ),
                     ),
+                  ),
+                ),
               ],
             ),
           ],
@@ -386,4 +338,21 @@ class _ServiceEditionState extends State<ServiceEditionS> {
       ),
     );
   }
+
+  AppBar _appBarContent() => AppBar(
+    centerTitle: true,
+    title: _appBarTitle(),
+    backgroundColor: const Color.fromARGB(150, 0, 0, 65),
+
+  );
+
+  Text _appBarTitle() => const Text(
+    "Select Street",
+    style: TextStyle(
+      fontSize: 30,
+      fontWeight: FontWeight.bold,
+      color: Colors.deepOrange,
+    ),
+  );
+
 }

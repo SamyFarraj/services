@@ -20,19 +20,7 @@ class _OnHoldState extends State<OnHold> {
     return Scaffold(
       extendBody: true,
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          widget.title,
-          style: const TextStyle(
-            fontSize: 28,
-            fontWeight: FontWeight.bold,
-            fontStyle: FontStyle.italic,
-            color: Colors.deepOrange,
-          ),
-        ),
-        backgroundColor: const Color.fromARGB(110, 0, 0, 65),
-      ),
+      appBar: _appBarContent(),
       body: SizedBox(
         width: double.infinity,
         height: double.infinity,
@@ -177,6 +165,24 @@ class _OnHoldState extends State<OnHold> {
       // );
     });
   }
+
+
+  AppBar _appBarContent() => AppBar(
+    centerTitle: true,
+    title: _appBarTitle(),
+    backgroundColor: const Color.fromARGB(110, 0, 0, 65),
+  );
+
+  Text _appBarTitle() => Text(
+    widget.title,
+    style: const TextStyle(
+      fontSize: 28,
+      fontWeight: FontWeight.bold,
+      fontStyle: FontStyle.italic,
+      color: Colors.deepOrange,
+    ),
+  );
+
 
   Future<DateTime?> pickDate(BuildContext context) async {
     final initialDate = DateTime.now();

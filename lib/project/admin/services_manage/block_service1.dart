@@ -20,7 +20,7 @@ class _BlockServiceState extends State<BlockServices> {
   List<String> woodWardServices = [];
   List<String> farmerService = [];
   List<String> bothStreetsServices = [];
-List<String>servicesList=[];
+  List<String>servicesList=[];
 
   Future <String> Block_Service(int id)async
   {
@@ -33,24 +33,24 @@ List<String>servicesList=[];
 
 
     if(response.statusCode==200)
-      {
+    {
 
-        return jsonDecode(response.body);
-      }
+      return jsonDecode(response.body);
+    }
     else
-      {
-        return "Error code is ${response.statusCode}";
-      }
+    {
+      return "Error code is ${response.statusCode}";
+    }
   }
 
 
-int i=0;
+  int i=0;
 
   String selectedService = 'Select Service';
   String? selectedStreet = "Farmer";
   late int theId;
   Future<ListService> fetchAlbum() async {
- //   servicesList.clear();
+    //   servicesList.clear();
 
     final response = await http
         .get(Uri.parse('${baseUrl}/api/Admin/services'),
@@ -87,7 +87,7 @@ int i=0;
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
-          "Block Service",
+          "Block Service1",
           style: TextStyle(
             fontSize: 36,
             fontWeight: FontWeight.bold,
@@ -146,51 +146,51 @@ int i=0;
                     ),
                     child: SingleChildScrollView(
                       child: FutureBuilder
-                        <ListService>(
+                      <ListService>(
                         future:  date,
                         builder:  ( context,snapshot)
                         {
                           if (snapshot.hasData)
+                          {
+                            woodWardServices.clear();
+                            farmerService.clear();
+                            bothStreetsServices.clear();
+
+
+
+
+                            farmerService.add('select service');
+
+                            for(int i =0;i<snapshot.data!.services.bothStreet.length;i++)
                             {
-                              woodWardServices.clear();
-                              farmerService.clear();
-                              bothStreetsServices.clear();
+
+
+                              bothStreetsServices.add(snapshot.data!.services.bothStreet[i].name);
+                            }
+
+                            //
+                            for(int i =0;i<snapshot.data!.services.woodward.length;i++)
+                            {
+
+                              woodWardServices.add(snapshot.data!.services.woodward[i].name);
+                            }
 
 
 
 
-                              farmerService.add('select service');
+                            if(  farmerService.length<=snapshot.data!.services.farmer.length)
+                            {
 
-                              for(int i =0;i<snapshot.data!.services.bothStreet.length;i++)
+
+                              for(int i =0;i<snapshot.data!.services.farmer.length;i++)
                               {
 
 
-                                bothStreetsServices.add(snapshot.data!.services.bothStreet[i].name);
+                                farmerService.add(snapshot.data!.services.farmer[i].name);
                               }
-
-                              //
-                              for(int i =0;i<snapshot.data!.services.woodward.length;i++)
-                              {
-
-                                woodWardServices.add(snapshot.data!.services.woodward[i].name);
-                              }
-
-
-
-
-                              if(  farmerService.length<=snapshot.data!.services.farmer.length)
-                              {
-
-
-                                for(int i =0;i<snapshot.data!.services.farmer.length;i++)
-                                {
-
-
-                                  farmerService.add(snapshot.data!.services.farmer[i].name);
-                                }
-                              }
-                              return
-                                Column(
+                            }
+                            return
+                              Column(
                                 children: <Widget>[
 
 
@@ -269,12 +269,12 @@ int i=0;
                                             {
 
                                               if(farmerService.length==0)
-                                                {
-                                                  // farmerServices.add('');
-                                                  servicesList = List.from(farmerService);
-                                              //    servicesList.add('select services');
+                                              {
+                                                // farmerServices.add('');
+                                                servicesList = List.from(farmerService);
+                                                //    servicesList.add('select services');
 
-                                                }
+                                              }
                                               else {
                                                 servicesList =
                                                     List.from(farmerService);
@@ -360,8 +360,8 @@ int i=0;
 
 
                                         }
-                                       // servicesList.clear();
-                                    //    servicesList.clear();
+                                        // servicesList.clear();
+                                        //    servicesList.clear();
 
 
                                       }),
@@ -442,7 +442,7 @@ int i=0;
                                 ],
                               );
 
-                            }
+                          }
                           else if (snapshot.hasError) {
                             return Text('${snapshot.error}');
 
@@ -468,7 +468,7 @@ int i=0;
   bool checkServiceBlock(String selectedService) {
     if (selectedStreet == "Select Street") {
       TheSnackBar(context, 'Please Select Street',
-          const Color.fromARGB(255, 150, 10, 10),);
+        const Color.fromARGB(255, 150, 10, 10),);
       return false;
     } else if (selectedService == 'Select Service') {
       TheSnackBar(context, 'Please Select Service',
@@ -476,7 +476,7 @@ int i=0;
       return false;
     } else {
       TheSnackBar(context, 'Service Blocked Successfully',
-          const Color.fromARGB(255, 10, 150, 10),);
+        const Color.fromARGB(255, 10, 150, 10),);
       return true;
     }
   }

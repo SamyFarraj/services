@@ -3,7 +3,11 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+<<<<<<< HEAD
 import '../Cubit/Cubit Accountant/accountant_cubit.dart';
+=======
+import '../Cubit/Cubit Accountant -User/accountant_cubit.dart';
+>>>>>>> d78ccfe1f90cae1e39628346e5e1beb3a0194e13
 import '../project/projects_page.dart';
 import '/Api/controller/login_controller.dart';
 

@@ -17,7 +17,7 @@ import '../../Api/shred_preference.dart';
 part 'accountant_state.dart';
 
 class AccountantCubit extends Cubit<UserAccountantState> {
- AccountantCubit() : super(UserAccountantInitial());
+  AccountantCubit() : super(UserAccountantInitial());
 
 
   static AccountantCubit get( context)
@@ -27,79 +27,79 @@ class AccountantCubit extends Cubit<UserAccountantState> {
   }
   late  MyAccount myAccount;
 
-checkToken()
- async {
- await getSharedDataAdmin();
-await getSharedDataUser();
-}
+  checkToken()
+  async {
+    await getSharedDataAdmin();
+    await getSharedDataUser();
+  }
 
   var token;
   var message;
- Future<String> Reset_passwordUser(String password, String confirmPassword) async {
-   emit(EditAccountInfo());
-   var url = (baseUrl + '/api/ResetPassword');
-   var uri = Uri.parse(url);
+  Future<String> Reset_passwordUser(String password, String confirmPassword) async {
+    emit(EditAccountInfo());
+    var url = (baseUrl + '/api/ResetPassword');
+    var uri = Uri.parse(url);
 
-   var response = await http.post(uri, body: {
-     'password': '$password', 'c_password': '$confirmPassword'
-   }
-   ,headers: <String,String>
-       {
-         'Authorization': 'Bearer $userToken'
+    var response = await http.post(uri, body: {
+      'password': '$password', 'c_password': '$confirmPassword'
+    }
+        ,headers: <String,String>
+        {
+          'Authorization': 'Bearer $userToken'
 
-       }
-   );
+        }
+    );
 
-   if (response.statusCode == 200) {
+    if (response.statusCode == 200) {
 
-     emit(SuccessStatus());
-     emit(RefreshLevelState());
+      emit(SuccessStatus());
+      emit(RefreshLevelState());
 
-     return 'yes';
-   } else
+      return 'yes';
+    } else
 
-   {
-     emit(FailureStatus());
-     emit(RefreshLevelState());
+    {
+      emit(FailureStatus());
+      emit(RefreshLevelState());
 
-     return "601";
+      return "601";
 
-   }
+    }
 
- }
- Future<String> Reset_passwordAdmin(String password, String confirmPassword) async {
-   emit(EditAccountInfo());
-   var url = (baseUrl + '/api/ResetPassword');
-   var uri = Uri.parse(url);
+  }
+  Future<String> Reset_passwordAdmin(String password, String confirmPassword) async {
+    emit(EditAccountInfo());
+    var url = (baseUrl + '/api/ResetPassword');
+    var uri = Uri.parse(url);
 
-   var response = await http.post(uri, body: {
-     'password': '$password', 'c_password': '$confirmPassword'
-   }
-       ,headers: <String,String>
-       {
-         'Authorization': 'Bearer $adminToken'
+    var response = await http.post(uri, body: {
+      'password': '$password', 'c_password': '$confirmPassword'
+    }
+        ,headers: <String,String>
+        {
+          'Authorization': 'Bearer $adminToken'
 
-       });
+        });
 
-   if (response.statusCode == 200) {
+    if (response.statusCode == 200) {
 
-     emit(SuccessStatus());
-     emit(RefreshLevelState());
+      emit(SuccessStatus());
+      emit(RefreshLevelState());
 
-     return 'yes';
-   } else
+      return 'yes';
+    } else
 
-   {
-     emit(FailureStatus());
-     emit(RefreshLevelState());
+    {
+      emit(FailureStatus());
+      emit(RefreshLevelState());
 
-     return "601";
+      return "601";
 
-   }
+    }
 
- }
+  }
 
- Future<String> updateUserProfile(String name, String phone) async {
+  Future<String> updateUserProfile(String name, String phone) async {
     emit(EditAccountInfo());
     theToken=userToken;
     theToken=adminToken;
@@ -144,7 +144,7 @@ await getSharedDataUser();
   }
 
   Future<String> signInUser(String email, String pass) async {
-     print("userfsdfsdfsdfsd");
+    print("userfsdfsdfsdfsd");
     emit(CheckPassword());
     var url = (baseUrl + '/api/login');
     var uri = Uri.parse(url);
@@ -196,7 +196,7 @@ await getSharedDataUser();
       var responsejeson = jsonDecode(response.body);
       token = responsejeson['Token'];
 // message=responsejeson['success'];
-    await  saveSharedAdmin(token);
+      await  saveSharedAdmin(token);
       emit(Seccfullog());
       emit(RefreshLevelState());
 
@@ -235,13 +235,13 @@ await getSharedDataUser();
       return response;
     } else
 
-      {
-        emit(FailedSignUpState());
-        emit(RefreshLevelState());
+    {
+      emit(FailedSignUpState());
+      emit(RefreshLevelState());
 
-        return "601";
+      return "601";
 
-      }
+    }
   }
 
 

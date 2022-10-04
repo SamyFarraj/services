@@ -128,8 +128,11 @@ class _AccountSettingsState extends State<AccountSettings> {
                               ElevatedButton(
                                 onPressed: () {
                                   account.logoutAdmin();
+<<<<<<< HEAD
                                   account.logoutUser();
 
+=======
+>>>>>>> d78ccfe1f90cae1e39628346e5e1beb3a0194e13
                                 },
                                 style: ElevatedButton.styleFrom(
                                   padding: const EdgeInsets.symmetric(

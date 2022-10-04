@@ -19,7 +19,7 @@ class AdminLevelCubit extends Cubit<AdminLevelState> {
   }
 
 
-  Future<String> addService(String name, String Street) async {
+  Future<String> addService(String name) async {
     emit(AddToDataBase());
     var url = (baseUrl + '/api/Admin/AddService');
     var uri = Uri.parse(url);
@@ -29,7 +29,7 @@ class AdminLevelCubit extends Cubit<AdminLevelState> {
         'accept': 'application/json',
         'Authorization': 'Bearer $adminToken'
       },
-      body: {'name': name, 'street': Street},
+      body: {'name': name, 'street': 'BothStreet'},
     );
     print("${response.body}");
 
@@ -150,12 +150,12 @@ class AdminLevelCubit extends Cubit<AdminLevelState> {
   }
 
 
-   Future<String> Accept_reservation(int id) async {
+   Future<String> acceptReservation(int id) async {
 
      emit(AlterDataBase());
 
      var response = await http.get(
-        Uri.parse('${baseUrl}/api/Admin/AcceptReservation/$id'),
+        Uri.parse('$baseUrl/api/Admin/AcceptReservation/$id'),
         headers: {'Accept': 'application/json', 'Authorization': 'Bearer $adminToken'});
     print('the res is ${response.statusCode}');
     if (response.statusCode == 200) {
