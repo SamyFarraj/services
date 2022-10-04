@@ -4,12 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 
-<<<<<<< HEAD
-import '../../../../Cubit/Cubit Accountant/accountant_cubit.dart';
+import '../../../../Cubit/Cubit Accountant -User/user_accountant_cubit.dart';
 import '../../../../moh_project/post_moh/login_controller.dart';
-=======
-import '../../../../Cubit/Cubit Accountant -User/accountant_cubit.dart';
->>>>>>> d78ccfe1f90cae1e39628346e5e1beb3a0194e13
 import '../../../constant.dart';
 import 'dashboard_verification_code_page.dart';
 
@@ -41,6 +37,7 @@ class _EditAccountInfoState extends State<EditAccountInfo> {
 
 //كمان هون عدل رابط ارسال الريكوست
 
+
   final editingInfoFormKey = GlobalKey<FormState>();
   final newNameController = TextEditingController();
   final newPhoneController = TextEditingController();
@@ -50,11 +47,31 @@ class _EditAccountInfoState extends State<EditAccountInfo> {
     return Scaffold(
       extendBody: true,
       extendBodyBehindAppBar: true,
-      appBar: _appBarContent(),
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text(
+          "Edit Info",
+          style: TextStyle(
+            fontSize: 36,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1.0,
+            fontStyle: FontStyle.italic,
+            color: Colors.deepOrange,
+          ),
+        ),
+        backgroundColor: const Color.fromARGB(150, 0, 0, 65),
+      ),
       body: Stack(
         children: <Widget>[
           // صورة الخلفية
-          _backgroundImage(),
+          SizedBox(
+            width: double.infinity,
+            height: double.infinity,
+            child: Image.asset(
+              "asset/images/background_picture.png",
+              fit: BoxFit.cover,
+            ),
+          ),
           //هاد لون فوق الخلفية مشات وضوح الكتابة
           Container(
             height: double.infinity,
@@ -66,13 +83,12 @@ class _EditAccountInfoState extends State<EditAccountInfo> {
           // يعني مشات  ما تطلع ال pixels  من الشاشة
           Form(
             key: editingInfoFormKey,
-            child: BlocConsumer<AccountantCubit, UserAccountantState>(
-<<<<<<< HEAD
+            child: BlocConsumer<UserAccountantCubit, UserAccountantState>(
   listener: (context, state) {
     // TODO: implement listener
   },
   builder: (context, state) {
-    var cubit=AccountantCubit.get(context);
+    var cubit=UserAccountantCubit.get(context);
     return SingleChildScrollView(
               child: Column(
                 children: <Widget>[
@@ -132,312 +148,157 @@ class _EditAccountInfoState extends State<EditAccountInfo> {
                                 width: 2.0,
                                 color: Colors.blue,
                               ),
-=======
-              listener: (context, state) {
-                // TODO: implement listener
-              },
-              builder: (context, state) {
-                var cubit = AccountantCubit.get(context);
-                return SingleChildScrollView(
-                  child: Column(
-                    children: <Widget>[
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.14,
-                        // color: Color.fromARGB(110, 200, 200, 200),
-                      ),
-                      //  هاد logo  الشركة
-                      _logoImage(),
-                      const SizedBox(
-                        height: 50,
-                      ),
-                      // هاد ال container اللي بيحتوي ع ال textFields
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        width: MediaQuery.of(context).size.width * 0.9,
-                        height: MediaQuery.of(context).size.height * 0.65,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(35),
-                            color: const Color.fromARGB(180, 0, 0, 65)),
-                        child: Column(
-                          children: <Widget>[
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.03,
->>>>>>> d78ccfe1f90cae1e39628346e5e1beb3a0194e13
                             ),
-                            // هاد ال حقل الخاص ب الاسم
-                            _nameField(),
-
-                            SizedBox(
-                              height:
-                                  MediaQuery.of(context).size.height * 0.045,
-                            ),
-
-                            _phoneNumberField(),
-
-                            SizedBox(
-                              height:
-                                  MediaQuery.of(context).size.height * 0.065,
-                            ),
-                            //  هي كبسة ال signUp
-                            ElevatedButton(
-                              onPressed: () {
-                                final changeInfoFormKey =
-                                editingInfoFormKey.currentState!;
-                                if (changeInfoFormKey.validate()) {
-                                  // تابع ارسال البيانات
-                                  cubit.updateUserProfile(
-                                      newNameController.text,
-                                      newPhoneController.text);
-                                }
-                              },
-                              style: ElevatedButton.styleFrom(
-                                padding: EdgeInsets.symmetric(
-                                  vertical: 10.0,
-                                  horizontal:
-                                  MediaQuery.of(context).size.width * 0.25,
-                                ),
-                                backgroundColor:
-                                const Color.fromARGB(255, 10, 150, 0),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                elevation: 15.0,
-                              ),
-                              child: Row(
-                                mainAxisAlignment:
-                                MainAxisAlignment.spaceEvenly,
-                                children: const <Widget>[
-                                  Icon(
-                                    Icons.lock_open_rounded,
-                                    color: Colors.white,
-                                  ),
-                                  Text(
-                                    "Accept",
-                                    style: TextStyle(
-                                      fontSize: 24,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            // _acceptButton(context , cubit),
-                            SizedBox(
-                              height:
-                                  MediaQuery.of(context).size.height * 0.045,
-                            ),
-                            _orText(),
-                            SizedBox(
-                              height:
-                                  MediaQuery.of(context).size.height * 0.045,
-                            ),
-                            _changePasswordButton(context),
-                          ],
+                          ),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                          ),
                         ),
-                      ),
-                    ],
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.045,
+                        ),
+                        TextFormField(
+                          validator: (enteredPhoneVal) =>
+                              enteredPhoneVal!.length < 9
+                                  ? "phone is too short"
+                                  : null,
+                          keyboardType: TextInputType.phone,
+                          controller: newPhoneController,
+                          decoration: const InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.phone,
+                              color: Colors.deepOrange,
+                            ),
+                            label: Text(
+                              "New Phone Number",
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.blueAccent,
+                              ),
+                            ),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                width: 2.0,
+                                color: Colors.deepOrange,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                width: 2.0,
+                                color: Colors.blue,
+                              ),
+                            ),
+                          ),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                          ),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.065,
+                        ),
+                        //  هي كبسة ال signUp
+                        // جوا ال onPressed منحط ال استدعاء تابع ارسال البيانات لل database
+                        ElevatedButton(
+                          onPressed: () {
+                            final changeInfoFormKey =
+                                editingInfoFormKey.currentState!;
+                            if (changeInfoFormKey.validate()) {
+                              // تابع ارسال البيانات
+                              cubit.updateUserProfile(newNameController.text,
+                                  newPhoneController.text);
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.symmetric(
+                              vertical: 10.0,
+                              horizontal:
+                                  MediaQuery.of(context).size.width * 0.25,
+                            ),
+                            primary: const Color.fromARGB(255, 10, 150, 0),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            elevation: 15.0,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: const <Widget>[
+                              Icon(
+                                Icons.lock_open_rounded,
+                                color: Colors.white,
+                              ),
+                              Text(
+                                "Accept",
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.045,
+                        ),
+                        const Text(
+                          "or",
+                          style: TextStyle(
+                            fontSize: 24,
+                            color: Colors.white,
+                          ),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.045,
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            correctNumber = getVerificationCode().toString();
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (_) {
+                                  return DashBoardVerificationCodePage(
+                                    correctVerificationCode: correctNumber,
+                                  );
+                                },
+                              ),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.symmetric(
+                              vertical: 10.0,
+                              horizontal:
+                                  MediaQuery.of(context).size.width * 0.15,
+                            ),
+                            minimumSize: Size(
+                                MediaQuery.of(context).size.width * 0.85,
+                                MediaQuery.of(context).size.height * 0.05),
+                            primary: const Color.fromARGB(255, 10, 150, 0),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            elevation: 15.0,
+                          ),
+                          child: const Text(
+                            "Change Password",
+                            style: TextStyle(
+                              fontSize: 24,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                );
-              },
-            ),
+                ],
+              ),
+            );
+  },
+),
           ),
         ],
       ),
     );
   }
-
-  AppBar _appBarContent() => AppBar(
-    centerTitle: true,
-    title: const Text(
-      "Edit Info",
-      style: TextStyle(
-        fontSize: 36,
-        fontWeight: FontWeight.bold,
-        letterSpacing: 1.0,
-        fontStyle: FontStyle.italic,
-        color: Colors.deepOrange,
-      ),
-    ),
-    backgroundColor: const Color.fromARGB(150, 0, 0, 65),
-  );
-
-  Widget _backgroundImage() => SizedBox(
-    width: double.infinity,
-    height: double.infinity,
-    child: Image.asset(
-      "asset/images/background_picture.png",
-      fit: BoxFit.cover,
-    ),
-  );
-
-  Image _logoImage () => Image.asset(
-    "asset/images/logo.png",
-    width: double.infinity,
-    height: MediaQuery.of(context).size.height * 0.095,
-  );
-
-  Widget _nameField() => TextFormField(
-    validator: (enteredNameVal) =>
-    enteredNameVal!.length < 6
-        ? "Name is too short"
-        : null,
-    controller: newNameController,
-    decoration: const InputDecoration(
-      prefixIcon: Icon(
-        Icons.person,
-        color: Colors.deepOrange,
-      ),
-      label: Text(
-        "New Name",
-        style: TextStyle(
-          fontSize: 18,
-          color: Colors.blueAccent,
-        ),
-      ),
-      enabledBorder: UnderlineInputBorder(
-        borderSide: BorderSide(
-          width: 2.0,
-          color: Colors.deepOrange,
-        ),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          width: 2.0,
-          color: Colors.blue,
-        ),
-      ),
-    ),
-    style: const TextStyle(
-      color: Colors.white,
-      fontSize: 18,
-    ),
-  );
-
-  Widget _phoneNumberField() => TextFormField(
-    validator: (enteredPhoneVal) =>
-    enteredPhoneVal!.length < 9
-        ? "phone is too short"
-        : null,
-    keyboardType: TextInputType.phone,
-    controller: newPhoneController,
-    decoration: const InputDecoration(
-      prefixIcon: Icon(
-        Icons.phone,
-        color: Colors.deepOrange,
-      ),
-      label: Text(
-        "New Phone Number",
-        style: TextStyle(
-          fontSize: 24,
-          color: Colors.blueAccent,
-        ),
-      ),
-      enabledBorder: UnderlineInputBorder(
-        borderSide: BorderSide(
-          width: 2.0,
-          color: Colors.deepOrange,
-        ),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          width: 2.0,
-          color: Colors.blue,
-        ),
-      ),
-    ),
-    style: const TextStyle(
-      color: Colors.white,
-      fontSize: 24,
-    ),
-  );
-
-  Widget _acceptButton(BuildContext context , var cubit) => ElevatedButton(
-    onPressed: () {
-      final changeInfoFormKey =
-      editingInfoFormKey.currentState!;
-      if (changeInfoFormKey.validate()) {
-        // تابع ارسال البيانات
-        cubit.updateUserProfile(
-            newNameController.text,
-            newPhoneController.text);
-      }
-    },
-    style: ElevatedButton.styleFrom(
-      padding: EdgeInsets.symmetric(
-        vertical: 10.0,
-        horizontal:
-        MediaQuery.of(context).size.width * 0.25,
-      ),
-      backgroundColor:
-      const Color.fromARGB(255, 10, 150, 0),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      elevation: 15.0,
-    ),
-    child: Row(
-      mainAxisAlignment:
-      MainAxisAlignment.spaceEvenly,
-      children: const <Widget>[
-        Icon(
-          Icons.lock_open_rounded,
-          color: Colors.white,
-        ),
-        Text(
-          "Accept",
-          style: TextStyle(
-            fontSize: 24,
-            color: Colors.white,
-          ),
-        ),
-      ],
-    ),
-  );
-
-  Text _orText() => const Text(
-    "or",
-    style: TextStyle(
-      fontSize: 24,
-      color: Colors.white,
-    ),
-  );
-
-  Widget _changePasswordButton(BuildContext context) => ElevatedButton(
-    onPressed: () {
-      correctNumber =
-          getVerificationCode().toString();
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (_) {
-            return DashBoardVerificationCodePage(
-              correctVerificationCode: correctNumber,
-            );
-          },
-        ),
-      );
-    },
-    style: ElevatedButton.styleFrom(
-      padding: EdgeInsets.symmetric(
-        vertical: 10.0,
-        horizontal:
-        MediaQuery.of(context).size.width * 0.15,
-      ),
-      minimumSize: Size(
-          MediaQuery.of(context).size.width * 0.85,
-          MediaQuery.of(context).size.height * 0.05),
-      backgroundColor:
-      const Color.fromARGB(255, 10, 150, 0),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      elevation: 15.0,
-    ),
-    child: const Text(
-      "Change Password",
-      style: TextStyle(
-        fontSize: 24,
-        color: Colors.white,
-      ),
-    ),
-  );
 }

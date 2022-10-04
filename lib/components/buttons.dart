@@ -18,7 +18,7 @@ Widget buttonsOfControlPanel(
       },
       style: ElevatedButton.styleFrom(
         minimumSize: const Size(155, 155),
-        backgroundColor: const Color.fromARGB(55, 100, 100, 255),
+        primary: const Color.fromARGB(55, 100, 100, 255),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
         ),
@@ -65,7 +65,7 @@ Widget buttonsOfManageServices(
         vertical: 5.0,
         horizontal: MediaQuery.of(context).size.width * 0.2,
       ),
-      backgroundColor: buttonColor,
+      primary: buttonColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
@@ -94,7 +94,7 @@ Widget buttonsOfAuthentication(
         horizontal:
         MediaQuery.of(context).size.width * 0.25,
       ),
-      backgroundColor: Colors.blue,
+      primary: Colors.blue,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30),
       ),

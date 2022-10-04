@@ -3,12 +3,15 @@ import 'dart:convert';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart' as http;
-
-import '/Api/model/name_service.dart';
-import '/project/constant.dart';
 import '../../../Cubit/Admin Level Operation/admin_level_cubit.dart';
 import '../../../main.dart';
+import '/Api/controller/User/work/services_controller.dart';
+import '/Api/model/name_service.dart';
+import '/project/constant.dart';
+import '/services/choices.dart';
+import 'package:http/http.dart' as http;
+
+import '../../../moh_project/post_moh/login_controller.dart';
 
 class DeleteService extends StatefulWidget {
   const DeleteService({Key? key}) : super(key: key);
@@ -31,7 +34,7 @@ class _DeleteServiceState extends State<DeleteService> {
   List<String> servicesList = [];
 
   String selectedService = 'Select Service';
-  String? selectedStreet = "BothStreet";
+  String? selectedStreet = "FARMER";
   late int theId;
 
   Future<ListService> fetchAlbum() async {
@@ -149,31 +152,22 @@ class _DeleteServiceState extends State<DeleteService> {
                                 farmerServices.clear();
                                 bothStreetServices.clear();
 
-                                if (snapshot.data!.services.bothStreet.length ==
-                                    0) {
+
+                                if (snapshot.data!.services.bothStreet.length == 0) {
                                   bothStreetServices.add('no item');
                                 } else {
                                   for (int i = 0;
-                                      i <
-                                          snapshot
-                                              .data!.services.bothStreet.length;
-                                      i++) {
-                                    bothStreetServices.add(snapshot
-                                        .data!.services.bothStreet[i].name);
+                                  i < snapshot.data!.services.bothStreet.length; i++)
+                                  {bothStreetServices.add(snapshot.data!.services.bothStreet[i].name);
                                   }
                                 }
 
-                                if (snapshot.data!.services.woodward.length ==
-                                    0) {
+                                if (snapshot.data!.services.woodward.length == 0) {
                                   woodWardServices.add('no item');
                                 } else {
                                   for (int i = 0;
-                                      i <
-                                          snapshot
-                                              .data!.services.woodward.length;
-                                      i++) {
-                                    woodWardServices.add(snapshot
-                                        .data!.services.woodward[i].name);
+                                      i < snapshot.data!.services.woodward.length; i++)
+                                  {woodWardServices.add(snapshot.data!.services.woodward[i].name);
                                   }
                                 }
                                 //
@@ -195,10 +189,8 @@ class _DeleteServiceState extends State<DeleteService> {
                                 //  servicesList = List.from(farmerServices);
                                 //
                                 //
-<<<<<<< HEAD
-                                servicesList=   List.from(bothStreetServices);
+
                                 return Column(children: <Widget>[
-                                  /*
                                   RefreshIndicator(
                                     onRefresh: refresh,
                                     child: SizedBox(
@@ -338,12 +330,6 @@ class _DeleteServiceState extends State<DeleteService> {
                                       ),
                                     ),
                                   ),
-
-                                   */
-=======
-                                servicesList = List.from(bothStreetServices);
-                                return Column(children: <Widget>[
->>>>>>> d78ccfe1f90cae1e39628346e5e1beb3a0194e13
                                   SizedBox(
                                     height: MediaQuery.of(context).size.height *
                                         0.1,
@@ -416,18 +402,18 @@ class _DeleteServiceState extends State<DeleteService> {
                                               break;
                                             }
                                           }
-                                        } else if (selectedStreet ==
-                                            'BothStreet') {
+                                        }
+                                        else if (selectedStreet == 'BothStreet') {
                                           for (int i = 0;
-                                              i <
-                                                  snapshot.data!.services
-                                                      .bothStreet.length;
-                                              i++) {
+                                          i <
+                                              snapshot.data!.services.bothStreet
+                                                  .length;
+                                          i++) {
                                             if (selectedService ==
                                                 snapshot.data!.services
                                                     .bothStreet[i].name) {
-                                              theId = snapshot.data!.services
-                                                  .bothStreet[i].id;
+                                              theId = snapshot
+                                                  .data!.services.bothStreet[i].id;
 
                                               break;
                                             }
@@ -479,7 +465,7 @@ class _DeleteServiceState extends State<DeleteService> {
                                                             .width *
                                                         0.2,
                                               ),
-                                              backgroundColor: const Color.fromARGB(
+                                              primary: const Color.fromARGB(
                                                   255, 150, 10, 10),
                                               shape: RoundedRectangleBorder(
                                                 borderRadius:

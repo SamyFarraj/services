@@ -86,7 +86,20 @@ class _ServiceCalenderState extends State<ServiceCalender> {
     return Scaffold(
       extendBody: true,
       extendBodyBehindAppBar: true,
-      appBar: _appBarContent(),
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text(
+          "Calender",
+          style: TextStyle(
+            fontSize: 36,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1.0,
+            fontStyle: FontStyle.italic,
+            color: Colors.deepOrange,
+          ),
+        ),
+        backgroundColor: const Color.fromARGB(180, 0, 0, 65),
+      ),
       body: Builder(builder: (context) {
         return Stack(
           children: <Widget>[
@@ -316,23 +329,6 @@ class _ServiceCalenderState extends State<ServiceCalender> {
       }),
     );
   }
-
-  AppBar _appBarContent() => AppBar(
-    centerTitle: true,
-    title: _appBarTitle(),
-    backgroundColor: const Color.fromARGB(180, 0, 0, 65),
-  );
-
-  Text _appBarTitle() => const Text(
-    "Calender",
-    style: TextStyle(
-      fontSize: 36,
-      fontWeight: FontWeight.bold,
-      letterSpacing: 1.0,
-      fontStyle: FontStyle.italic,
-      color: Colors.deepOrange,
-    ),
-  );
 
   Future<DateTime?> pickServicesCalendarDate(BuildContext context) async {
     final initialDate = DateTime.now();

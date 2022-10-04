@@ -20,7 +20,7 @@ class _BlockServiceState extends State<BlockServices> {
   List<String> woodWardServices = [];
   List<String> farmerService = [];
   List<String> bothStreetsServices = [];
-  List<String>servicesList=[];
+List<String>servicesList=[];
 
   Future <String> Block_Service(int id)async
   {
@@ -33,24 +33,24 @@ class _BlockServiceState extends State<BlockServices> {
 
 
     if(response.statusCode==200)
-    {
+      {
 
-      return jsonDecode(response.body);
-    }
+        return jsonDecode(response.body);
+      }
     else
-    {
-      return "Error code is ${response.statusCode}";
-    }
+      {
+        return "Error code is ${response.statusCode}";
+      }
   }
 
 
-  int i=0;
+int i=0;
 
   String selectedService = 'Select Service';
   String? selectedStreet = "Farmer";
   late int theId;
   Future<ListService> fetchAlbum() async {
-    //   servicesList.clear();
+ //   servicesList.clear();
 
     final response = await http
         .get(Uri.parse('${baseUrl}/api/Admin/services'),
@@ -87,7 +87,7 @@ class _BlockServiceState extends State<BlockServices> {
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
-          "Block Service1",
+          "Block Service",
           style: TextStyle(
             fontSize: 36,
             fontWeight: FontWeight.bold,
@@ -146,51 +146,51 @@ class _BlockServiceState extends State<BlockServices> {
                     ),
                     child: SingleChildScrollView(
                       child: FutureBuilder
-                      <ListService>(
+                        <ListService>(
                         future:  date,
                         builder:  ( context,snapshot)
                         {
                           if (snapshot.hasData)
-                          {
-                            woodWardServices.clear();
-                            farmerService.clear();
-                            bothStreetsServices.clear();
-
-
-
-
-                            farmerService.add('select service');
-
-                            for(int i =0;i<snapshot.data!.services.bothStreet.length;i++)
                             {
-
-
-                              bothStreetsServices.add(snapshot.data!.services.bothStreet[i].name);
-                            }
-
-                            //
-                            for(int i =0;i<snapshot.data!.services.woodward.length;i++)
-                            {
-
-                              woodWardServices.add(snapshot.data!.services.woodward[i].name);
-                            }
+                              woodWardServices.clear();
+                              farmerService.clear();
+                              bothStreetsServices.clear();
 
 
 
 
-                            if(  farmerService.length<=snapshot.data!.services.farmer.length)
-                            {
+                              farmerService.add('select service');
 
-
-                              for(int i =0;i<snapshot.data!.services.farmer.length;i++)
+                              for(int i =0;i<snapshot.data!.services.bothStreet.length;i++)
                               {
 
 
-                                farmerService.add(snapshot.data!.services.farmer[i].name);
+                                bothStreetsServices.add(snapshot.data!.services.bothStreet[i].name);
                               }
-                            }
-                            return
-                              Column(
+
+                              //
+                              for(int i =0;i<snapshot.data!.services.woodward.length;i++)
+                              {
+
+                                woodWardServices.add(snapshot.data!.services.woodward[i].name);
+                              }
+
+
+
+
+                              if(  farmerService.length<=snapshot.data!.services.farmer.length)
+                              {
+
+
+                                for(int i =0;i<snapshot.data!.services.farmer.length;i++)
+                                {
+
+
+                                  farmerService.add(snapshot.data!.services.farmer[i].name);
+                                }
+                              }
+                              return
+                                Column(
                                 children: <Widget>[
 
 
@@ -269,12 +269,12 @@ class _BlockServiceState extends State<BlockServices> {
                                             {
 
                                               if(farmerService.length==0)
-                                              {
-                                                // farmerServices.add('');
-                                                servicesList = List.from(farmerService);
-                                                //    servicesList.add('select services');
+                                                {
+                                                  // farmerServices.add('');
+                                                  servicesList = List.from(farmerService);
+                                              //    servicesList.add('select services');
 
-                                              }
+                                                }
                                               else {
                                                 servicesList =
                                                     List.from(farmerService);
@@ -360,8 +360,8 @@ class _BlockServiceState extends State<BlockServices> {
 
 
                                         }
-                                        // servicesList.clear();
-                                        //    servicesList.clear();
+                                       // servicesList.clear();
+                                    //    servicesList.clear();
 
 
                                       }),
@@ -442,7 +442,7 @@ class _BlockServiceState extends State<BlockServices> {
                                 ],
                               );
 
-                          }
+                            }
                           else if (snapshot.hasError) {
                             return Text('${snapshot.error}');
 
@@ -468,7 +468,7 @@ class _BlockServiceState extends State<BlockServices> {
   bool checkServiceBlock(String selectedService) {
     if (selectedStreet == "Select Street") {
       TheSnackBar(context, 'Please Select Street',
-        const Color.fromARGB(255, 150, 10, 10),);
+          const Color.fromARGB(255, 150, 10, 10),);
       return false;
     } else if (selectedService == 'Select Service') {
       TheSnackBar(context, 'Please Select Service',
@@ -476,7 +476,7 @@ class _BlockServiceState extends State<BlockServices> {
       return false;
     } else {
       TheSnackBar(context, 'Service Blocked Successfully',
-        const Color.fromARGB(255, 10, 150, 10),);
+          const Color.fromARGB(255, 10, 150, 10),);
       return true;
     }
   }

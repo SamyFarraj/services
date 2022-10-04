@@ -36,13 +36,10 @@ class UserOperationCubit extends Cubit<UserOperationState> {
     ReservationToSend.gateName = gate_name;
     ReservationToSend.startTime = Start_time;
     ReservationToSend.endTime = end_time;
-    print("the gateName${ReservationToSend.gateName} ");
-    print("the start time${ReservationToSend.startTime} ");
     print("the end time${ReservationToSend.endTime} ");
-    print("the list servicesMap id is ${ReservationToSend.servicesMap[0].id}");
-    print("the list servicesMap name is ${ReservationToSend.servicesMap[0].name}");
-    print("the list servicesMap id is ${ReservationToSend.servicesMap[1].id}");
-    print("the list servicesMap name is ${ReservationToSend.servicesMap[1].name}");
+    print("the list send is ${ReservationToSend.servicesMap[1].id}");
+
+    print("the list send is ${ReservationToSend.servicesMap[1].name}");
     var response = await http.post(
       Uri.parse('$baseUrl/api/Reservation'),
       headers: <String, String>{
@@ -57,8 +54,6 @@ class UserOperationCubit extends Cubit<UserOperationState> {
 
     if (response.statusCode == 201) {
       emit(SuccessStatus());
-
-      emit(RefreshLevelState());
 
       return response;
     } else

@@ -275,7 +275,7 @@ List<RequestsStates> adminRequestsManageList = [
   ),
 ];
 
-List<String> addAdminList = [];
+List<String> addAdminList = ['Select Admin'];
 
 List<String> gatesEdition = [
   'Select Gate',

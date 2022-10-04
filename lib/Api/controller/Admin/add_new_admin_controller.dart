@@ -4,7 +4,7 @@ import '../../../main.dart';
 import '/project/constant.dart';
 import '../../../moh_project/post_moh/login_controller.dart';
 
-class AddNewAdminController {
+class AddNewAdmin_con {
   static Future<String> addNewAdmin(String email) async {
     var url = (baseUrl + '/api/Admin/AddAdmin');
     var uri = Uri.parse(url);

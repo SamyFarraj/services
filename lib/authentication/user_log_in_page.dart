@@ -3,11 +3,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-<<<<<<< HEAD
-import '../Cubit/Cubit Accountant/accountant_cubit.dart';
-=======
-import '../Cubit/Cubit Accountant -User/accountant_cubit.dart';
->>>>>>> d78ccfe1f90cae1e39628346e5e1beb3a0194e13
+import '../Cubit/Cubit Accountant -User/user_accountant_cubit.dart';
 import '../project/projects_page.dart';
 import '/Api/controller/login_controller.dart';
 
@@ -71,9 +67,9 @@ class _UserLogInPageState extends State<UserLogInPage> {
           // ما يعطي pixels rendered out error
           // يعني مشات  ما تطلع ال pixels  من الشاشة
 
-          BlocConsumer<AccountantCubit, UserAccountantState>(
+          BlocConsumer<UserAccountantCubit, UserAccountantState>(
             listener: (context, state) {
-              var cubit=AccountantCubit.get(context);
+              var cubit=UserAccountantCubit.get(context);
               if (state is Seccfullog) {
                 Navigator.push(
                   context,
@@ -94,7 +90,7 @@ print("dasdas");
               // TODO: implement listener
             },
             builder: (context, state) {
-              var cubit=AccountantCubit.get(context);
+              var cubit=UserAccountantCubit.get(context);
               return SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
@@ -235,15 +231,26 @@ print("dasdas");
                               condition: state is RefreshLevelState || state is UserAccountantInitial,
                               builder: (context) => ElevatedButton(
                                 onPressed: () {
+                                  /*
+                          final formKey = adminLoginFormKey.currentState!;
+                            if(formKey.validate()){
+                                Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ProjectsPage(),
+                            ),
+                          );
+                            }
+                           */
 
-                                  print('samymyymy user');
+                                  print('Pressed');
 
                                   cubit.signInUser(
                                     adminEmailController.text,
                                     adminPasswordController.text,
                                   );
-
-                                  print('before send request user ');
+                                  print('before send request ');
+                                  // loginController().signIn(adminEmailController.text,adminPasswordController.text,'/Admin');
                                 },
                                 style: ElevatedButton.styleFrom(
                                   padding: EdgeInsets.symmetric(
@@ -252,7 +259,7 @@ print("dasdas");
                                     MediaQuery.of(context).size.width *
                                         0.30,
                                   ),
-                                  backgroundColor: Colors.blue,
+                                  primary: Colors.blue,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(30),
                                   ),
