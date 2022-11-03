@@ -127,7 +127,7 @@ class _AddNewStaffState extends State<AddNewStaff> {
                           // ),
                           ElevatedButton(
                             onPressed: () {
-                              checkNewStaff(staffNameController.text);
+                              // checkNewStaff(staffNameController.text);
                             },
                             style: ElevatedButton.styleFrom(
                               minimumSize: const Size(300, 60),
@@ -163,31 +163,31 @@ class _AddNewStaffState extends State<AddNewStaff> {
     );
   }
 
-  bool checkNewStaff(String staffName) {
-    if (staffName == '') {
-      TheSnackBar(
-        context,
-        'Please Enter Staff Name',
-        const Color.fromARGB(255, 150, 10, 10),
-      );
-      return false;
-    } else {
-      for (var staff in chooseStaff) {
-        if (staffName == staff.staff_name) {
-          TheSnackBar(
-            context,
-            'Staff Name Exited',
-            const Color.fromARGB(255, 150, 10, 10),
-          );
-          return false;
-        }
-      }
-      TheSnackBar(
-        context,
-        'staff Added Successfully',
-        const Color.fromARGB(255, 10, 150, 10),
-      );
-      return true;
-    }
-  }
+  // bool checkNewStaff(String staffName) {
+  //   if (staffName == '') {
+  //     TheSnackBar(
+  //       context,
+  //       'Please Enter Staff Name',
+  //       const Color.fromARGB(255, 150, 10, 10),
+  //     );
+  //     return false;
+  //   } else {
+  //     for (var staff in chooseStaff) {
+  //       if (staffName == staff.staff_name) {
+  //         TheSnackBar(
+  //           context,
+  //           'Staff Name Exited',
+  //           const Color.fromARGB(255, 150, 10, 10),
+  //         );
+  //         return false;
+  //       }
+  //     }
+  //     TheSnackBar(
+  //       context,
+  //       'staff Added Successfully',
+  //       const Color.fromARGB(255, 10, 150, 10),
+  //     );
+  //     return true;
+  //   }
+  // }
 }

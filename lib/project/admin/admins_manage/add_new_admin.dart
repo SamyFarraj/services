@@ -169,8 +169,11 @@ class _AddNewAdminState extends State<AddNewAdmin> {
                                       // تباع الارسال
                                       // checkNewAdmin(adminEMailController.text);
                                       checkNewAddAdminRequest();
+                                      /*
                                       AddNewAdmin_con.addNewAdmin(
                                           adminEMailController.text);
+
+                                       */
                                     }
                                   },
                                   style: ElevatedButton.styleFrom(
@@ -223,6 +226,7 @@ class _AddNewAdminState extends State<AddNewAdmin> {
       );
       TheSnackBar(context, 'Admin Added Successfully',
           const Color.fromARGB(255, 10, 150, 10));
+      Navigator.pop(context);
     }
     return false;
   }
@@ -245,8 +249,8 @@ class _AddNewAdminState extends State<AddNewAdmin> {
         }
       }
       //    addAdminList.add(adminName);
-      TheSnackBar(context, 'Admin Added Successfully',
-          const Color.fromARGB(255, 10, 150, 10));
+      // TheSnackBar(context, 'Admin Added Successfully',
+      //     const Color.fromARGB(255, 10, 150, 10));
       return true;
     }
   }

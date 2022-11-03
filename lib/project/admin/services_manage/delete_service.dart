@@ -3,15 +3,14 @@ import 'dart:convert';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../Cubit/Admin Level Operation/admin_level_cubit.dart';
-import '../../../main.dart';
-import '/Api/controller/User/work/services_controller.dart';
+import 'package:http/http.dart' as http;
+import 'package:project_mohammad/components/snack_bar.dart';
+
 import '/Api/model/name_service.dart';
 import '/project/constant.dart';
 import '/services/choices.dart';
-import 'package:http/http.dart' as http;
-
-import '../../../moh_project/post_moh/login_controller.dart';
+import '../../../Cubit/Admin Level Operation/admin_level_cubit.dart';
+import '../../../main.dart';
 
 class DeleteService extends StatefulWidget {
   const DeleteService({Key? key}) : super(key: key);
@@ -68,54 +67,19 @@ class _DeleteServiceState extends State<DeleteService> {
     return Scaffold(
       extendBody: true,
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text(
-          "Delete Service",
-          style: TextStyle(
-            fontSize: 36,
-            fontWeight: FontWeight.bold,
-            letterSpacing: 1.0,
-            fontStyle: FontStyle.italic,
-            color: Colors.deepOrange,
-          ),
-        ),
-        backgroundColor: const Color.fromARGB(180, 0, 0, 65),
-      ),
+      appBar: _appBarContent(),
       body: Builder(builder: (context) {
         return Stack(
           children: <Widget>[
             // هاد container بيحوي صورة الخلفية
-            SizedBox(
-              width: double.infinity,
-              height: double.infinity,
-              child: Image.asset(
-                "asset/images/background_picture.png",
-                fit: BoxFit.cover,
-              ),
-            ),
+            _backgroundImage(),
             //هاد لون فوق الخلفية مشات وضوح الكتابة
-            Container(
-              height: double.infinity,
-              width: double.infinity,
-              color: const Color.fromARGB(150, 60, 60, 100),
-            ),
+            _colorCorrectionLayer(),
 
             SingleChildScrollView(
               child: Column(
                 children: <Widget>[
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.14,
-                  ),
-                  //  هاد logo  الشركة
-                  Image.asset(
-                    "asset/images/logo.png",
-                    width: double.infinity,
-                    height: MediaQuery.of(context).size.height * 0.095,
-                  ),
-                  const SizedBox(
-                    height: 50,
-                  ),
+                  _logoImage(),
 
                   Container(
                     alignment: Alignment.center,
@@ -152,22 +116,31 @@ class _DeleteServiceState extends State<DeleteService> {
                                 farmerServices.clear();
                                 bothStreetServices.clear();
 
-
-                                if (snapshot.data!.services.bothStreet.length == 0) {
+                                if (snapshot.data!.services.bothStreet.length ==
+                                    0) {
                                   bothStreetServices.add('no item');
                                 } else {
                                   for (int i = 0;
-                                  i < snapshot.data!.services.bothStreet.length; i++)
-                                  {bothStreetServices.add(snapshot.data!.services.bothStreet[i].name);
+                                      i <
+                                          snapshot
+                                              .data!.services.bothStreet.length;
+                                      i++) {
+                                    bothStreetServices.add(snapshot
+                                        .data!.services.bothStreet[i].name);
                                   }
                                 }
 
-                                if (snapshot.data!.services.woodward.length == 0) {
+                                if (snapshot.data!.services.woodward.length ==
+                                    0) {
                                   woodWardServices.add('no item');
                                 } else {
                                   for (int i = 0;
-                                      i < snapshot.data!.services.woodward.length; i++)
-                                  {woodWardServices.add(snapshot.data!.services.woodward[i].name);
+                                      i <
+                                          snapshot
+                                              .data!.services.woodward.length;
+                                      i++) {
+                                    woodWardServices.add(snapshot
+                                        .data!.services.woodward[i].name);
                                   }
                                 }
                                 //
@@ -191,6 +164,7 @@ class _DeleteServiceState extends State<DeleteService> {
                                 //
 
                                 return Column(children: <Widget>[
+                                  /*
                                   RefreshIndicator(
                                     onRefresh: refresh,
                                     child: SizedBox(
@@ -236,7 +210,6 @@ class _DeleteServiceState extends State<DeleteService> {
                                             selectedService = servicesList[0];
                                           }
 
-
                                           if (selectedStreet == 'FARMER') {
                                             servicesList =
                                                 List.from(farmerServices);
@@ -250,7 +223,7 @@ class _DeleteServiceState extends State<DeleteService> {
                                           }
                                           // servicesList.clear();
 
-                                          /*
+/*
                             if (selectedStreet=='WoodWard')
                             {
 
@@ -317,9 +290,6 @@ class _DeleteServiceState extends State<DeleteService> {
                               }
                             }
 
- */
-
-/*
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
@@ -330,6 +300,7 @@ class _DeleteServiceState extends State<DeleteService> {
                                       ),
                                     ),
                                   ),
+                                   */
                                   SizedBox(
                                     height: MediaQuery.of(context).size.height *
                                         0.1,
@@ -402,18 +373,18 @@ class _DeleteServiceState extends State<DeleteService> {
                                               break;
                                             }
                                           }
-                                        }
-                                        else if (selectedStreet == 'BothStreet') {
+                                        } else if (selectedStreet ==
+                                            'BothStreet') {
                                           for (int i = 0;
-                                          i <
-                                              snapshot.data!.services.bothStreet
-                                                  .length;
-                                          i++) {
+                                              i <
+                                                  snapshot.data!.services
+                                                      .bothStreet.length;
+                                              i++) {
                                             if (selectedService ==
                                                 snapshot.data!.services
                                                     .bothStreet[i].name) {
-                                              theId = snapshot
-                                                  .data!.services.bothStreet[i].id;
+                                              theId = snapshot.data!.services
+                                                  .bothStreet[i].id;
 
                                               break;
                                             }
@@ -450,10 +421,10 @@ class _DeleteServiceState extends State<DeleteService> {
                                               //fetchFinal();
                                               // FetchList();
                                               //
-                                              checkServiceDelete(
-                                                  selectedService);
-                                              cubit.deleteService(theId);
-                                              //
+                                              if (checkServiceDelete(
+                                                  selectedService)) {
+                                                cubit.deleteService(theId);
+                                              } //
                                             },
                                             style: ElevatedButton.styleFrom(
                                               minimumSize: const Size(300, 60),
@@ -509,37 +480,72 @@ class _DeleteServiceState extends State<DeleteService> {
     );
   }
 
+  AppBar _appBarContent() => AppBar(
+    centerTitle: true,
+    title: _appBarTitle(),
+    backgroundColor: const Color.fromARGB(180, 0, 0, 65),
+  );
+
+  Text _appBarTitle() => const Text(
+    "Delete Service",
+    style: TextStyle(
+      fontSize: 36,
+      fontWeight: FontWeight.bold,
+      letterSpacing: 1.0,
+      fontStyle: FontStyle.italic,
+      color: Colors.deepOrange,
+    ),
+  );
+
+  Widget _backgroundImage() => SizedBox(
+    width: double.infinity,
+    height: double.infinity,
+    child: Image.asset(
+      "asset/images/background_picture.png",
+      fit: BoxFit.cover,
+    ),
+  );
+
+  Widget _colorCorrectionLayer() => Container(
+    height: double.infinity,
+    width: double.infinity,
+    color: const Color.fromARGB(150, 60, 60, 100),
+  );
+
+  Widget _logoImage() => Column(
+    children: <Widget>[
+      SizedBox(
+        height: MediaQuery.of(context).size.height * 0.14,
+      ),
+      //  هاد logo  الشركة
+      Image.asset(
+        "asset/images/logo.png",
+        width: double.infinity,
+        height: MediaQuery.of(context).size.height * 0.095,
+      ),
+      const SizedBox(
+        height: 50,
+      ),
+    ],
+  );
+
+
+
+
   bool checkServiceDelete(String selectedService) {
     if (selectedStreet == null) {
-      snackBar(context, 'Please Select Street',
+      TheSnackBar(context, 'Please Select Street',
           const Color.fromARGB(255, 150, 10, 10));
       return false;
     } else if (selectedService == 'Select Service') {
-      snackBar(context, "Please Select Service",
+      TheSnackBar(context, "Please Select Service",
           const Color.fromARGB(255, 150, 10, 10));
       return false;
     } else {
-      snackBar(context, "Service Deleted Successfully",
+      TheSnackBar(context, "Service Deleted Successfully",
           const Color.fromARGB(255, 15, 150, 10));
       return true;
     }
   }
 
-  void snackBar(
-      BuildContext context, String errorMessage, Color snackBarColor) {
-    final snackBar = SnackBar(
-      content: Text(
-        errorMessage,
-        style: const TextStyle(
-          fontSize: 28,
-          color: Colors.white,
-        ),
-      ),
-      backgroundColor: snackBarColor,
-      duration: const Duration(seconds: 1),
-    );
-    ScaffoldMessenger.of(context)
-      ..removeCurrentSnackBar()
-      ..showSnackBar(snackBar);
-  }
 }

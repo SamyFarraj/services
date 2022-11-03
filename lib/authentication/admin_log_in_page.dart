@@ -3,7 +3,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../Cubit/Cubit Accountant -User/user_accountant_cubit.dart';
+import '../Cubit/Cubit Accountant -User/accountant_cubit.dart';
 import '../project/projects_page.dart';
 import '/Api/controller/login_controller.dart';
 
@@ -67,15 +67,19 @@ class _AdminLogInPageState extends State<AdminLogInPage> {
           // ما يعطي pixels rendered out error
           // يعني مشات  ما تطلع ال pixels  من الشاشة
 
-          BlocConsumer<UserAccountantCubit, UserAccountantState>(
+          BlocConsumer<AccountantCubit, UserAccountantState>(
             listener: (context, state) {
               if (state is Seccfullog) {
-                Navigator.push(
+
+
+
+
+                Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => ProjectsPage(true),
-                  ),
+                  MaterialPageRoute(builder: (context) => ProjectsPage(true)),
+                      (Route<dynamic> route) => false,
                 );
+
 
               }
 
@@ -90,7 +94,7 @@ class _AdminLogInPageState extends State<AdminLogInPage> {
               // TODO: implement listener
             },
             builder: (context, state) {
-              var cubit=UserAccountantCubit.get(context);
+              var cubit=AccountantCubit.get(context);
               return SingleChildScrollView(
                 child: Column(
                   children: <Widget>[

@@ -3,9 +3,8 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../Cubit/Cubit Accountant -User/user_accountant_cubit.dart';
+import '../Cubit/Cubit Accountant -User/accountant_cubit.dart';
 import '../project/projects_page.dart';
-import '/Api/controller/login_controller.dart';
 
 class UserLogInPage extends StatefulWidget {
   const UserLogInPage({Key? key}) : super(key: key);
@@ -67,15 +66,16 @@ class _UserLogInPageState extends State<UserLogInPage> {
           // ما يعطي pixels rendered out error
           // يعني مشات  ما تطلع ال pixels  من الشاشة
 
-          BlocConsumer<UserAccountantCubit, UserAccountantState>(
+          BlocConsumer<AccountantCubit, UserAccountantState>(
             listener: (context, state) {
-              var cubit=UserAccountantCubit.get(context);
+              var cubit=AccountantCubit.get(context);
+
+
               if (state is Seccfullog) {
-                Navigator.push(
+                Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => ProjectsPage(false),
-                  ),
+                  MaterialPageRoute(builder: (context) => ProjectsPage(false)),
+                      (Route<dynamic> route) => false,
                 );
 
               }
@@ -90,7 +90,7 @@ print("dasdas");
               // TODO: implement listener
             },
             builder: (context, state) {
-              var cubit=UserAccountantCubit.get(context);
+              var cubit=AccountantCubit.get(context);
               return SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
@@ -222,7 +222,7 @@ print("dasdas");
                           //   final adminLoginFormKeyCurrent =
                           //                  adminLoginFormKey.currentState!;
                           //   //         if(adminLoginFormKeyCurrent.validate()){
-                          //   //           // تابع ارسال البيانات
+                          //   //           // تابع ارسال البيان
                           //   //            print("Test Request SignUp m");
                           //   //         }
                           // }),

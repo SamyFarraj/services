@@ -203,20 +203,7 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
     return Scaffold(
       extendBody: true,
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        centerTitle: true,
-        // هي مشان نعرض اسم البوابة بال appBar
-        // choosed gate name display
-        title: Text(
-          widget.gateName,
-          style: const TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-            color: Colors.deepOrange,
-          ),
-        ),
-        backgroundColor: const Color.fromARGB(150, 0, 0, 65),
-      ),
+      appBar: _appBarContent(),
       body: SizedBox(
         width: double.infinity,
         height: double.infinity,
@@ -929,6 +916,20 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
       // );
     }
   }
+  AppBar _appBarContent() => AppBar(
+    centerTitle: true,
+    title: _appBarTitle(),
+    backgroundColor: const Color.fromARGB(150, 0, 0, 65),
+  );
+
+  Text _appBarTitle() => Text(
+    widget.gateName,
+    style: const TextStyle(
+      fontSize: 30,
+      fontWeight: FontWeight.bold,
+      color: Colors.deepOrange,
+    ),
+  );
 
 ////////////////////////////////////////////
 //هي ال widget  اللي بتعرض خيار ال  select all Services ك checkBox

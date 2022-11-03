@@ -52,20 +52,7 @@ class _newPasswordPageState extends State<newPasswordPage> {
     return Scaffold(
       extendBody: true,
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text(
-          "New Password",
-          style: TextStyle(
-            fontSize: 36,
-            fontWeight: FontWeight.bold,
-            letterSpacing: 1.0,
-            fontStyle: FontStyle.italic,
-            color: Colors.deepOrange,
-          ),
-        ),
-        backgroundColor: Colors.transparent,
-      ),
+      appBar: _appBarContent(),
       body: Stack(
         children: <Widget>[
           // هاد container بيحوي صورة الخلفية
@@ -220,6 +207,23 @@ class _newPasswordPageState extends State<newPasswordPage> {
       ),
     );
   }
+
+  AppBar _appBarContent() => AppBar(
+    centerTitle: true,
+    title: _appBarTitle(),
+    backgroundColor: Colors.transparent,
+  );
+
+  Text _appBarTitle() => const Text(
+    "New Password",
+    style: TextStyle(
+      fontSize: 36,
+      fontWeight: FontWeight.bold,
+      letterSpacing: 1.0,
+      fontStyle: FontStyle.italic,
+      color: Colors.deepOrange,
+    ),
+  );
 
   bool checkNewPassword() {
     if (newPasswordController.text.length > 8) {

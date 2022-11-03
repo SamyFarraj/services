@@ -7,7 +7,6 @@ import 'package:intl/intl.dart';
 import '../../main.dart';
 import '../constant.dart';
 import '/Api/model/all_reservation_model.dart';
-import '../../moh_project/post_moh/login_controller.dart';
 import '../../services/choices.dart';
 import '../user/user_requests.dart';
 
@@ -19,6 +18,7 @@ class ServiceCalender extends StatefulWidget {
 }
 
 class _ServiceCalenderState extends State<ServiceCalender> {
+
   List<AllReservations> uList = [];
   List<AllReservations> userLists = [];
   List<AllReservations> myAdminRequestsManageList = [];
@@ -86,20 +86,7 @@ class _ServiceCalenderState extends State<ServiceCalender> {
     return Scaffold(
       extendBody: true,
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text(
-          "Calender",
-          style: TextStyle(
-            fontSize: 36,
-            fontWeight: FontWeight.bold,
-            letterSpacing: 1.0,
-            fontStyle: FontStyle.italic,
-            color: Colors.deepOrange,
-          ),
-        ),
-        backgroundColor: const Color.fromARGB(180, 0, 0, 65),
-      ),
+      appBar: _appBarContent(),
       body: Builder(builder: (context) {
         return Stack(
           children: <Widget>[
@@ -177,8 +164,16 @@ class _ServiceCalenderState extends State<ServiceCalender> {
                             onPressed: () {
                               setState(() {
                                 print('the select date${selectedDate}');
+                                if(myAdminRequestsManageList.isNotEmpty){
+
                                 print(
                                     'the select array${myAdminRequestsManageList[0].startTime}');
+                                }
+                                if(myAdminRequestsManageList.isEmpty){
+
+                                print(
+                                    'the select array is empty');
+                                }
 
                                 serviceDateFilter(
                                   myAdminRequestsManageList,
@@ -329,6 +324,23 @@ class _ServiceCalenderState extends State<ServiceCalender> {
       }),
     );
   }
+
+  AppBar _appBarContent() => AppBar(
+    centerTitle: true,
+    title: _appBarTitle(),
+    backgroundColor: const Color.fromARGB(180, 0, 0, 65),
+  );
+
+  Text _appBarTitle() => const Text(
+    "Calender",
+    style: TextStyle(
+      fontSize: 36,
+      fontWeight: FontWeight.bold,
+      letterSpacing: 1.0,
+      fontStyle: FontStyle.italic,
+      color: Colors.deepOrange,
+    ),
+  );
 
   Future<DateTime?> pickServicesCalendarDate(BuildContext context) async {
     final initialDate = DateTime.now();

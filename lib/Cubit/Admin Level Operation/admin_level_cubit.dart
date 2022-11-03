@@ -149,12 +149,12 @@ class AdminLevelCubit extends Cubit<AdminLevelState> {
   }
 
 
-   Future<String> Accept_reservation(int id) async {
+   Future<String> AcceptReservation(int id) async {
 
      emit(AlterDataBase());
 
      var response = await http.get(
-        Uri.parse('${baseUrl}/api/Admin/AcceptReservation/$id'),
+        Uri.parse('$baseUrl/api/Admin/AcceptReservation/$id'),
         headers: {'Accept': 'application/json', 'Authorization': 'Bearer $adminToken'});
     print('the res is ${response.statusCode}');
     if (response.statusCode == 200) {

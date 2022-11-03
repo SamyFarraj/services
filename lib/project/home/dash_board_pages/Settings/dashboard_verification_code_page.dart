@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_mohammad/main.dart';
 
 import '/components/snack_bar.dart';
 import '/project/home/dash_board_pages/Settings/change_password_page.dart';
@@ -55,7 +56,7 @@ class _DashBoardVerificationCodePageState
       });
     });
     super.initState();
-    date = Account_User.getVerificationCode();
+    date = Account_User.getVerificationCode(userToken);
   }
 
   @override
@@ -65,199 +66,215 @@ class _DashBoardVerificationCodePageState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBody: true,
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text(
-          "Verification",
-          style: TextStyle(
-            fontSize: 36,
-            fontWeight: FontWeight.bold,
-            letterSpacing: 1.0,
-            fontStyle: FontStyle.italic,
-            color: Colors.deepOrange,
+    return SafeArea(
+      child: Scaffold(
+        extendBody: true,
+        extendBodyBehindAppBar: true,
+        appBar: _appBarContent(),
+        body: _bodyContent(),
+      ),
+    );
+  }
+
+  AppBar _appBarContent() => AppBar(
+    centerTitle: true,
+    title: const Text(
+      "Verification",
+      style: TextStyle(
+        fontSize: 36,
+        fontWeight: FontWeight.bold,
+        letterSpacing: 1.0,
+        fontStyle: FontStyle.italic,
+        color: Colors.deepOrange,
+      ),
+    ),
+    backgroundColor: Colors.transparent,
+  );
+
+  Widget _bodyContent() => Stack(
+    children: <Widget>[
+      // هاد container بيحوي صورة الخلفية
+      _backgroundImage(),
+      //هاد لون فوق الخلفية مشات وضوح الكتابة
+      _colorCorrectionContainer(),
+
+      Form(
+        key: verificationCodeFormKey,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.14,
+              ),
+              //  هاد logo  الشركة
+              _logoImage(),
+
+
+              _componentContainer(),
+            ],
           ),
         ),
-        backgroundColor: Colors.transparent,
       ),
-      body: Stack(
-        children: <Widget>[
-          // هاد container بيحوي صورة الخلفية
-          SizedBox(
-            width: double.infinity,
-            height: double.infinity,
-            child: Image.asset(
-              "asset/images/background_picture.png",
-              fit: BoxFit.cover,
+    ],
+  );
+
+  Widget _backgroundImage() => SizedBox(
+    width: double.infinity,
+    height: double.infinity,
+    child: Image.asset(
+      "asset/images/background_picture.png",
+      fit: BoxFit.cover,
+    ),
+  );
+
+  Widget _colorCorrectionContainer() => Container(
+    height: double.infinity,
+    width: double.infinity,
+    color: const Color.fromARGB(150, 60, 60, 100),
+  );
+
+  Widget _logoImage() => Column(
+    children: <Widget>[
+      Image.asset(
+        "asset/images/logo.png",
+        width: double.infinity,
+        height: MediaQuery.of(context).size.height * 0.095,
+      ),
+      const SizedBox(
+        height: 50,
+      ),
+    ],
+  );
+
+  Widget _componentContainer() => Container(
+    padding: const EdgeInsets.all(10),
+    width: MediaQuery.of(context).size.width * 0.9,
+    height: MediaQuery.of(context).size.height * 0.65,
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(35),
+      color: const Color.fromARGB(180, 0, 0, 65),
+    ),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+
+        // هاد ال حقل الخاص ب ال code تبع التحقق
+        _verificationCodeField(),
+
+        //  هي كبسة ال Submit
+        // جوا ال onPressed منحط ال استدعاء تابع
+        // مقارنة الكود اللي اجا من ال database
+        _acceptButton(),
+      ],
+    ),
+  );
+
+  Widget _verificationCodeField() => FutureBuilder<String>(
+    future: date,
+    builder: (context, snapshot) {
+      if (snapshot.hasData) {
+        theVerificationCode = snapshot.data.toString();
+        print('the code is $theVerificationCode');
+        return TextFormField(
+          validator: (enteredCode) => enteredCode ==
+              dashBoardCorrectVerificationCode
+              ? "inCorrect Code"
+              : null,
+          controller: verificationCodeController,
+          decoration: const InputDecoration(
+            prefixIcon: Icon(
+              //هون انا عدلت تعديل  بالايقونة
+              Icons.ten_k,
+              color: Colors.deepOrange,
+            ),
+            label: Text(
+              "Code",
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.blueAccent,
+              ),
+            ),
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                width: 2.0,
+                color: Colors.deepOrange,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                width: 2.0,
+                color: Colors.blue,
+              ),
             ),
           ),
-          //هاد لون فوق الخلفية مشات وضوح الكتابة
-          Container(
-            height: double.infinity,
-            width: double.infinity,
-            color: const Color.fromARGB(150, 60, 60, 100),
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 18,
           ),
-          // هاد مشان لما نفتح ال keyboard
-          // ما يعطي pixels rendered out error
-          // يعني مشات  ما تطلع ال pixels  من الشاشة
-          Form(
-            key: verificationCodeFormKey,
-            child: SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.14,
-                  ),
-                  //  هاد logo  الشركة
-                  Image.asset(
-                    "asset/images/logo.png",
-                    width: double.infinity,
-                    height: MediaQuery.of(context).size.height * 0.095,
-                  ),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  // هاد ال container اللي بيحتوي ع ال textFields
-                  // هون شغل الربط
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    height: MediaQuery.of(context).size.height * 0.65,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(35),
-                      color: const Color.fromARGB(180, 0, 0, 65),
-                    ),
-                    child: Column(
-                      children: <Widget>[
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.2,
-                        ),
-                        // هاد ال حقل الخاص ب ال code تبع التحقق
-                        FutureBuilder<String>(
-                          future: date,
-                          builder: (context, snapshot) {
-                            if (snapshot.hasData) {
-                              theVerificationCode = snapshot.data.toString();
-                              print('the code is $theVerificationCode');
-                              return TextFormField(
-                                validator: (enteredCode) => enteredCode ==
-                                        dashBoardCorrectVerificationCode
-                                    ? "inCorrect Code"
-                                    : null,
-                                controller: verificationCodeController,
-                                decoration: const InputDecoration(
-                                  prefixIcon: Icon(
-                                    //هون انا عدلت تعديل  بالايقونة
-                                    Icons.ten_k,
-                                    color: Colors.deepOrange,
-                                  ),
-                                  label: Text(
-                                    "Code",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      color: Colors.blueAccent,
-                                    ),
-                                  ),
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      width: 2.0,
-                                      color: Colors.deepOrange,
-                                    ),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      width: 2.0,
-                                      color: Colors.blue,
-                                    ),
-                                  ),
-                                ),
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                ),
-                              );
-                            }
+        );
+      }
+      return CircularProgressIndicator();
+    },
+  );
 
-                            return CircularProgressIndicator();
-                          },
-                        ),
-
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.2,
-                        ),
-                        //  هي كبسة ال Submit
-                        // جوا ال onPressed منحط ال استدعاء تابع
-                        // مقارنة الكود اللي اجا من ال database
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.7,
-                          child: ElevatedButton(
-                            onPressed: buttonStatus
-                                ? () {
-                                    if (verificationCodeController.text ==
-                                        theVerificationCode) {
-                                      Navigator.of(context).pushReplacement(
-                                        MaterialPageRoute(
-                                          builder: (_) =>
-                                              const ChangePasswordPage(),
-                                        ),
-                                      );
-                                      // TheSnackBar(
-                                      //   context,
-                                      //   "Ac",
-                                      //   const Color.fromARGB(255, 10, 150, 10),
-                                      // );
-                                    } else {
-                                      final currentCode =
-                                          verificationCodeFormKey.currentState!;
-                                      if (currentCode.validate()) {
-                                        print("accepted");
-                                      }
-                                      TheSnackBar(
-                                        context,
-                                        "Please Enter A Valid Code",
-                                        const Color.fromARGB(255, 150, 10, 10),
-                                      );
-                                    }
-                                  }
-                                : null,
-                            style: ElevatedButton.styleFrom(
-                              onSurface: Colors.grey,
-                              padding: EdgeInsets.symmetric(
-                                vertical: 10.0,
-                                horizontal:
-                                    MediaQuery.of(context).size.width * 0.1,
-                              ),
-                              primary: const Color.fromARGB(255, 10, 150, 10),
-                              elevation: 15.0,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: <Widget>[
-                                showIcon,
-                                Text(
-                                  buttonDisplayText,
-                                  style: const TextStyle(
-                                    fontSize: 24,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+  Widget _acceptButton() =>  SizedBox(
+    width: MediaQuery.of(context).size.width * 0.7,
+    child: ElevatedButton(
+      onPressed: buttonStatus
+          ? () {
+        if (verificationCodeController.text ==
+            theVerificationCode) {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (_) =>
+              const ChangePasswordPage(),
+            ),
+          );
+          // TheSnackBar(
+          //   context,
+          //   "Ac",
+          //   const Color.fromARGB(255, 10, 150, 10),
+          // );
+        } else {
+          final currentCode =
+          verificationCodeFormKey.currentState!;
+          if (currentCode.validate()) {
+            print("accepted");
+          }
+          TheSnackBar(
+            context,
+            "Please Enter A Valid Code",
+            const Color.fromARGB(255, 150, 10, 10),
+          );
+        }
+      }
+          : null,
+      style: ElevatedButton.styleFrom(
+        primary: Color.fromARGB(30, 250, 250, 250),
+        padding: EdgeInsets.symmetric(
+          vertical: 10.0,
+          horizontal:
+          MediaQuery.of(context).size.width * 0.1,
+        ),
+        //ba: const Color.fromARGB(255, 10, 150, 10),
+        elevation: 15.0,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          showIcon,
+          Text(
+            buttonDisplayText,
+            style: const TextStyle(
+              fontSize: 24,
+              color: Colors.white,
             ),
           ),
         ],
       ),
-    );
-  }
+    ),
+  );
 
   void checkVerificationCode() {
     if (verificationCodeController.text == dashBoardCorrectVerificationCode) {

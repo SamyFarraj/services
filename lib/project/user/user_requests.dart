@@ -27,7 +27,6 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
   List<MyAccepted> uList = [];
   List<MyAccepted> reservationsLists = [];
 
-
   static List<MyAccepted> parseAgents(String responseBody) {
     //Map<String,String>.from(oldMap)
     final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
@@ -35,7 +34,8 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
   }
 
   Future<List<MyAccepted>> fetchData() async {
-    final response = await http.get(Uri.parse('$baseUrl/api/Reservation/MyAcceptedReservation'),
+    final response = await http.get(
+      Uri.parse('$baseUrl/api/Reservation/MyAcceptedReservation'),
       headers: {
         'Accept': 'application/json',
         'Authorization': 'Bearer $userToken',
@@ -57,15 +57,9 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
   List<MyAccepted> pending = [];
   List<MyAccepted> pendingList = [];
 
-  static List<MyAccepted> parseAgentForMyPending(String responseBody) {
-    //Map<String,String>.from(oldMap)
-    final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
-    return parsed.map<MyAccepted>((json) => MyAccepted.fromJson(json)).toList();
-  }
-
   Future<List<MyAccepted>> myPendingReservations() async {
     final response = await http.get(
-      Uri.parse('http://$baseUrl/api/Reservation/MyPendingReservation'),
+      Uri.parse('$baseUrl/api/Reservation/MyPendingReservation'),
       headers: {'Authorization': 'Bearer $userToken'},
     );
 
@@ -520,4 +514,20 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
       ),
     );
   }
+
+  AppBar _appBarContent() => AppBar(
+    centerTitle: true,
+    title: _appBarTitle(),
+    backgroundColor: const Color.fromARGB(150, 0, 0, 65),
+  );
+
+  Text _appBarTitle() => const Text(
+    "Requests",
+    style: TextStyle(
+      fontSize: 28,
+      fontWeight: FontWeight.bold,
+      fontStyle: FontStyle.italic,
+      color: Color.fromARGB(255, 230, 84, 15),
+    ),
+  );
 }

@@ -53,6 +53,7 @@ final farmerStreetList = <ServiceChooser>[
   const ServiceChooser(title: 'Gate 4'),
   const ServiceChooser(title: 'FARMER street'),
 ];
+
 //مصفوفة الخدمات
 //خيار Self Unloaded Delivery بيمكن المستخدم من
 //حجز خدمة مع البوابة او انه يريد حجز البوابة فقط
@@ -87,18 +88,18 @@ final selectAllServices = ServicesCheckBox(serviceName: "Select All Services");
 //هي ال List الخاصة بال staffs
 // طبعا هي ال list بتكون فاضية لانو ال admin
 //هو اللي رح يضيف اسماء ال staff  او يحذفها حسب الموجود
-final chooseStaff = [
-  StaffCheckBox(staff_name: "staff 1"),
-  StaffCheckBox(staff_name: "staff 2"),
-  StaffCheckBox(staff_name: "staff 3"),
-  StaffCheckBox(staff_name: "staff 4"),
-  StaffCheckBox(staff_name: "staff 5"),
-  StaffCheckBox(staff_name: "staff 6"),
-  StaffCheckBox(staff_name: "staff 7"),
-  StaffCheckBox(staff_name: "staff 8"),
-  StaffCheckBox(staff_name: "staff 9"),
-  StaffCheckBox(staff_name: "staff 10"),
-];
+// final chooseStaff = [
+//   StaffCheckBox(staff_name: "staff 1"),
+//   StaffCheckBox(staff_name: "staff 2"),
+//   StaffCheckBox(staff_name: "staff 3"),
+//   StaffCheckBox(staff_name: "staff 4"),
+//   StaffCheckBox(staff_name: "staff 5"),
+//   StaffCheckBox(staff_name: "staff 6"),
+//   StaffCheckBox(staff_name: "staff 7"),
+//   StaffCheckBox(staff_name: "staff 8"),
+//   StaffCheckBox(staff_name: "staff 9"),
+//   StaffCheckBox(staff_name: "staff 10"),
+// ];
 
 final chooseService = [
   ServicesCheckBox(serviceName: "self Unloaded Delivery"),
