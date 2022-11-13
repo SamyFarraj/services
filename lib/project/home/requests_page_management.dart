@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../admin/admin_requests_page.dart';
+
+import '../admin/services_manage/admin_requests_new.dart';
 import '../projects_page.dart';
-import '../user/user_requests.dart';
+import '../user/user_requests_new.dart';
 
 int val = 0;
 
@@ -12,7 +13,7 @@ class Requests extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (admin) {
-      return AdminRequestsPage();
+      return AdminRequestsPageEd();
     } else {
       return const UserRequestsPage();
     }

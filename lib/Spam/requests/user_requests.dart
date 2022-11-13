@@ -13,17 +13,17 @@ import '../../components/dash_board.dart';
 import '../../main.dart';
 
 
-class UserRequestsPage extends StatefulWidget {
+class UserRequestsPagep extends StatefulWidget {
   static List<MyAccepted> requestList = [];
   static List<MyAccepted> acceptedRequestList = [];
 
-  const UserRequestsPage({Key? key}) : super(key: key);
+  const UserRequestsPagep({Key? key}) : super(key: key);
 
   @override
-  State<UserRequestsPage> createState() => _UserRequestsPageState();
+  State<UserRequestsPagep> createState() => _UserRequestsPagepState();
 }
 
-class _UserRequestsPageState extends State<UserRequestsPage> {
+class _UserRequestsPagepState extends State<UserRequestsPagep> {
   List<MyAccepted> uList = [];
   List<MyAccepted> reservationsLists = [];
 
@@ -88,7 +88,7 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
 
         for (var reservation in reservationsLists) {
           print("$reservation");
-          UserRequestsPage.requestList.add(reservation);
+          UserRequestsPagep.requestList.add(reservation);
         }
       });
       print('start for loop');
@@ -101,7 +101,7 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
 
         for (var pendingReservation in pendingList) {
           print("$pendingReservation");
-          UserRequestsPage.requestList.add(pendingReservation);
+          UserRequestsPagep.requestList.add(pendingReservation);
         }
       });
     });
@@ -227,7 +227,7 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                   ),
                                   child: ListView(
                                     children: <Widget>[
-                                      ...UserRequestsPage.requestList
+                                      ...UserRequestsPagep.requestList
                                           .map((val) {
                                         return Column(
                                           children: [
@@ -316,7 +316,7 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                                       cubit
                                                           .delete_reservation(
                                                               val.id);
-                                                      UserRequestsPage
+                                                      UserRequestsPagep
                                                           .requestList
                                                           .remove(val);
                                                     });
@@ -401,7 +401,7 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                   ),
                                   child: ListView(
                                     children: <Widget>[
-                                      ...UserRequestsPage.requestList
+                                      ...UserRequestsPagep.requestList
                                           .map((val) {
                                         return Column(
                                           children: [

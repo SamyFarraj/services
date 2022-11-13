@@ -170,14 +170,14 @@ class AccountantCubit extends Cubit<UserAccountantState> {
 
     if (response.statusCode == 200) {
       var responsejeson = jsonDecode(response.body);
-      token = responsejeson['Token'];
+      userToken = responsejeson['Token'];
 // message=responsejeson['success'];
-      await  saveSharedUser(token);
+      await  saveSharedUser(userToken);
       emit(Seccfullog());
       emit(RefreshLevelState());
 
       // return jsonDecode(response.body)['access_token'];
-      return token;
+      return userToken;
     } else {
       emit(ErrorPasswordState());
       emit(RefreshLevelState());
@@ -200,7 +200,7 @@ class AccountantCubit extends Cubit<UserAccountantState> {
       body: {'email': email,
         'password': pass},
     );
-    print(" admin response log in ssssssssssssss: ${response.body}");
+    print(" admin response log in sssss: ${response.body}");
 
     if (response.statusCode == 200) {
       var responsejeson = jsonDecode(response.body);

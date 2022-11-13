@@ -13,7 +13,8 @@ import '../../Api/model/name_service.dart';
 import '../../main.dart';
 import '../../services/choices.dart';
 import '../constant.dart';
-import 'user_requests.dart';
+import '../../Spam/requests/user_requests.dart';
+import 'user_requests_new.dart';
 
 
 /*
