@@ -234,7 +234,8 @@ class AccountantCubit extends Cubit<UserAccountantState> {
       'c_password': rePassword,
       'phone': phone_num,
     });
-
+print("${response.statusCode}");
+print("${response.body})");
     if (response.statusCode == 201) {
       var responsejeson = jsonDecode(response.body);
       Token = responsejeson['access_token'];

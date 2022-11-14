@@ -12,6 +12,7 @@ import '../../components/dash_board.dart';
 import '../../main.dart';
 
 class UserRequestsPage extends StatefulWidget {
+
   static List<MyAccepted> requestList = [];
   static List<MyAccepted> acceptedRequestList = [];
 
@@ -86,7 +87,7 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
 
         for (var reservation in reservationsLists) {
           print("$reservation");
-          UserRequestsPage.requestList.add(reservation);
+          UserRequestsPage.acceptedRequestList.add(reservation);
         }
       });
       print('start for loop');
@@ -99,7 +100,7 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
 
         for (var pendingReservation in pendingList) {
           print("$pendingReservation");
-          UserRequestsPage.requestList.add(pendingReservation);
+         UserRequestsPage.requestList.add(pendingReservation);
         }
       });
     });
@@ -389,7 +390,7 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                         child: ListView(
                           shrinkWrap: true,
                           children: <Widget>[
-                            ...UserRequestsPage.requestList
+                            ...UserRequestsPage.acceptedRequestList
                                 .map((val) {
                               return Card(
                                 color: Color.fromARGB(30, 10, 10, 10),
