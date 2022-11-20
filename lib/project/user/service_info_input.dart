@@ -158,6 +158,8 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
       List choosedServicesList, ListServiceToSend ReservationToSend
   ) async {
     for (int i = 0; i < choosedServicesList.length; i++) {
+
+
       ReservationToSend.servicesMap.add(
           new ServicesMap(id: bothId[i].toString(), name: choosedServicesList[i])
       );
@@ -168,9 +170,9 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
     ReservationToSend.startTime = Start_time;
     ReservationToSend.endTime = end_time;
     print("the end time${ReservationToSend.endTime} ");
-    print("the list send is ${ReservationToSend.servicesMap[1].id}");
+    print("the list send is ${ReservationToSend.servicesMap[0].id}");
 
-    print("the list send is ${ReservationToSend.servicesMap[1].name}");
+    print("the list send is ${ReservationToSend.servicesMap[0].name}");
     var response = await http.post(
       Uri.parse('$baseUrl/api/Reservation'),
       headers: <String, String>{
@@ -589,6 +591,9 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
                                             print(
                                                 "${UserRequestsPage.requestList.length}");
                                             print("start send reservation");
+
+                                            print("the list of Choosed Service is $choosedServicesList");
+
                                             cubit.book_reservation(
                                                 gateName,
                                                 DateFormat("yyyy-MM-dd HH:mm")
@@ -598,6 +603,7 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
                                                     .format(choosedEndingDateTime)
                                                     .toString(),choosedServicesList,ReservationToSend,bothId
                                             );
+                                            /*
                                             UserRequestsPage.requestList.add(MyAccepted(
                                               id: 10,
                                               userId: 23,
@@ -610,6 +616,10 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
                                               serviceName: "serviceName",
                                               serviceId: 12,
                                               userName: 'userName',),);
+
+
+                                             */
+
                                             print("end send reservation");
                                             print("${UserRequestsPage.requestList.length}");
                                             // book_reservation(gateName,time.toString(),choosedEndTime.toString());

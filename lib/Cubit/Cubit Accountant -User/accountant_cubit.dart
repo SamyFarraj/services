@@ -189,6 +189,8 @@ class AccountantCubit extends Cubit<UserAccountantState> {
 
   Future<String> signInAdmin(String email, String pass) async {
     emit(CheckPassword());
+print("the email is $email");
+print("the passw is $pass");
 
     var url = (baseUrl + '/api/Admin/login');
     var uri = Uri.parse(url);
