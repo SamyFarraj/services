@@ -156,10 +156,18 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
     ListServiceToSend ReservationToSend,
   ) async {
     for (int i = 0; i < choosedServicesList.length; i++) {
+<<<<<<< HEAD
       print("both Id is mod $i :${bothId[i]}");
       print(" choosed ser list is mod $i:${choosedServicesList[i]}");
       ReservationToSend.servicesMap.add(new ServicesMap(
           id: bothId[i].toString(), name: choosedServicesList[i]));
+=======
+
+
+      ReservationToSend.servicesMap.add(
+          new ServicesMap(id: bothId[i].toString(), name: choosedServicesList[i])
+      );
+>>>>>>> 0f135f0d167f6a6e03486dd0db897afdc15ad624
       // ReservationToSend.servicesMap[i].name=;
 
     }
@@ -167,9 +175,9 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
     ReservationToSend.startTime = Start_time;
     ReservationToSend.endTime = end_time;
     print("the end time${ReservationToSend.endTime} ");
-    print("the list send is ${ReservationToSend.servicesMap[1].id}");
+    print("the list send is ${ReservationToSend.servicesMap[0].id}");
 
-    print("the list send is ${ReservationToSend.servicesMap[1].name}");
+    print("the list send is ${ReservationToSend.servicesMap[0].name}");
     var response = await http.post(
       Uri.parse('$baseUrl/api/Reservation'),
       headers: <String, String>{
@@ -419,6 +427,7 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
                                           color: Colors.white,
                                         ),
                                       ),
+<<<<<<< HEAD
                                       onPressed: () async {
                                         final choosedDate =
                                             await pickDate(context);
@@ -428,6 +437,122 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
                                           choosedDate.day,
                                           choosedDate.hour,
                                           choosedDate.minute,
+=======
+                                    ),
+                                    Container(
+                                      margin: const EdgeInsets.only(right: 10),
+                                      width: MediaQuery.of(context).size.width *
+                                          0.28,
+                                      child: TextField(
+                                        keyboardType: TextInputType.number,
+                                        controller:
+                                            choosedDurationMinuteController,
+                                        decoration: const InputDecoration(
+                                          label: Text(
+                                            "select minute",
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              color: Colors.blueAccent,
+                                            ),
+                                          ),
+                                          enabledBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                              width: 2.0,
+                                              color: Colors.deepOrange,
+                                            ),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              width: 2.0,
+                                              color: Colors.blue,
+                                            ),
+                                          ),
+                                        ),
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.05,
+                                ),
+
+                                ConditionalBuilder(
+                                    condition: state is RefreshLevelState || state is UserOperationInitial,
+                                    builder: (context) =>   ElevatedButton(
+                                      onPressed: () {
+                                        setState(
+                                              () {
+                                            selectedMinuteDuration =
+                                                choosedDurationMinuteController
+                                                    .text;
+                                            selectedHoursDuration =
+                                                choosedDurationHoursController.text;
+                                            // checkNewRequest(
+                                            //   selectedMinuteDuration!,
+                                            //   selectedHoursDuration!,
+                                            //   selectedService!,
+                                            // );
+                                            if (selectedHoursDuration == "" ||
+                                                selectedHoursDuration == " " ||
+                                                selectedHoursDuration == "0") {
+                                              selectedHoursDuration = "00";
+                                            } else if (selectedMinuteDuration ==
+                                                "" ||
+                                                selectedMinuteDuration == " " ||
+                                                selectedMinuteDuration == "0") {
+                                              selectedMinuteDuration = "00";
+                                            }
+                                            requestSender(
+                                              checkNewRequest(
+                                                selectedMinuteDuration!,
+                                                selectedHoursDuration!,
+                                                selectedService!,
+                                              ),
+                                              selectedMinuteDuration!,
+                                              selectedHoursDuration!,
+                                            );
+                                            print(
+                                                "${UserRequestsPage.requestList.length}");
+                                            print("start send reservation");
+
+                                            print("the list of Choosed Service is $choosedServicesList");
+
+                                            cubit.book_reservation(
+                                                gateName,
+                                                DateFormat("yyyy-MM-dd HH:mm")
+                                                    .format(choosedStartingDateTime)
+                                                    .toString(),
+                                                DateFormat("yyyy-MM-dd HH:mm")
+                                                    .format(choosedEndingDateTime)
+                                                    .toString(),choosedServicesList,ReservationToSend,bothId
+                                            );
+                                            /*
+                                            UserRequestsPage.requestList.add(MyAccepted(
+                                              id: 10,
+                                              userId: 23,
+                                              startTime: DateTime(2023),
+                                              endTime: DateTime(2024),
+                                              gateName: gateName,
+                                              isAccepted: 0,
+                                              createdAt: DateTime.now(),
+                                              updatedAt: DateTime.now(),
+                                              serviceName: "serviceName",
+                                              serviceId: 12,
+                                              userName: 'userName',),);
+
+
+                                             */
+
+                                            print("end send reservation");
+                                            print("${UserRequestsPage.requestList.length}");
+                                            // book_reservation(gateName,time.toString(),choosedEndTime.toString());
+                                          },
+>>>>>>> 0f135f0d167f6a6e03486dd0db897afdc15ad624
                                         );
                                         showSelectedDate();
                                       },
