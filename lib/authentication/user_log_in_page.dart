@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../Cubit/Cubit Accountant -User/accountant_cubit.dart';
+import '../components/snack_bar.dart';
 import '../project/projects_page.dart';
 
 class UserLogInPage extends StatefulWidget {
@@ -83,8 +84,13 @@ class _UserLogInPageState extends State<UserLogInPage> {
 //في حال دخل كلمة سر خطأ
               if(state is ErrorPasswordState)
                 {
+                  TheSnackBar(
+                    context,
+                        ' incorrect email or password',
+                    const Color.fromARGB(255, 150, 10, 10),
+                  );
                   //هون حط توست ماسج انو كلمة السر غلط
-print("dasdas");
+                  print("wrong password");
 
                 }
               // TODO: implement listener
@@ -259,7 +265,7 @@ print("dasdas");
                                     MediaQuery.of(context).size.width *
                                         0.30,
                                   ),
-                                  primary: Colors.blue,
+                                  backgroundColor: Colors.blue,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(30),
                                   ),

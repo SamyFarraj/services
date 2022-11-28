@@ -3,19 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-import 'package:project_mohammad/Api/model/my_accepted_model.dart';
 
-import '../../Cubit/User Level Operation/user_operation_cubit.dart';
 import '/components/snack_bar.dart';
 import '/services/services_check_box.dart';
 import '../../Api/model/list_services_to_send.dart';
 import '../../Api/model/name_service.dart';
+import '../../Cubit/User Level Operation/user_operation_cubit.dart';
 import '../../main.dart';
 import '../../services/choices.dart';
 import '../constant.dart';
-import '../../Spam/requests/user_requests.dart';
 import 'user_requests_new.dart';
-
 
 /*
 File in order to enter service reservation information such as
@@ -155,12 +152,14 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
     String gate_name,
     String Start_time,
     String end_time,
-      List choosedServicesList, ListServiceToSend ReservationToSend
+    List choosedServicesList,
+    ListServiceToSend ReservationToSend,
   ) async {
     for (int i = 0; i < choosedServicesList.length; i++) {
-      ReservationToSend.servicesMap.add(
-          new ServicesMap(id: bothId[i].toString(), name: choosedServicesList[i])
-      );
+      print("both Id is mod $i :${bothId[i]}");
+      print(" choosed ser list is mod $i:${choosedServicesList[i]}");
+      ReservationToSend.servicesMap.add(new ServicesMap(
+          id: bothId[i].toString(), name: choosedServicesList[i]));
       // ReservationToSend.servicesMap[i].name=;
 
     }
@@ -199,7 +198,7 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
 
   @override
   Widget build(BuildContext context) {
-    selectedService = both[0];
+    selectedService = both[1];
 
     return Scaffold(
       extendBody: true,
@@ -224,74 +223,77 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
               color: const Color.fromARGB(150, 60, 60, 80),
             ),
             BlocConsumer<UserOperationCubit, UserOperationState>(
-  listener: (context, state) {
-    if (state is SuccessStatus) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => UserRequestsPage(),
-        ),
-      );
+              listener: (context, state) {
+                if (state is SuccessStatus) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => UserRequestsPage(),
+                    ),
+                  );
+                }
 
-    }
-
-
-    //في حال دخل كلمة سر خطأ
-    if(state is FailureStatus)
-    {
-      //هون حط توست ماسج انو كلمة السر غلط
-      print("رسالة الخطأ انو كلمة السر غلط");
-
-    }
-    // TODO: implement listener
-  },
-  builder: (context, state) {
-    var cubit=UserOperationCubit.get(context);
-    return SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.14,
-                  ),
-                  Image.asset(
-                    "asset/images/logo.png",
-                    width: double.infinity,
-                    height: MediaQuery.of(context).size.height * 0.095,
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.010,
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Column(
+                //في حال دخل كلمة سر خطأ
+                if (state is FailureStatus) {
+                  //هون حط توست ماسج انو كلمة السر غلط
+                  TheSnackBar(
+                    context,
+                    "Couldn't Book Reservation",
+                    const Color.fromARGB(255, 150, 15, 10),
+                  );
+                  print("رسالة الخطأ انو كلمة السر غلط");
+                }
+                // TODO: implement listener
+              },
+              builder: (context, state) {
+                var cubit = UserOperationCubit.get(context);
+                return SingleChildScrollView(
+                  child: Column(
                     children: <Widget>[
-                      SingleChildScrollView(
-                        child: Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.only(
-                            left: 15,
-                            right: 8,
-                            top: 5,
-                            bottom: 5,
-                          ),
-                          alignment: Alignment.topCenter,
-                          height: MediaQuery.of(context).size.height * 0.716,
-                          decoration: const BoxDecoration(
-                            color: Color.fromARGB(180, 0, 0, 65),
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(35),
-                              topRight: Radius.circular(35),
-                            ),
-                          ),
-                          child: SingleChildScrollView(
-                            child: Column(
-                              children: <Widget>[
-                                SizedBox(
-                                  height: MediaQuery.of(context).size.height *
-                                      0.025,
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.14,
+                      ),
+                      Image.asset(
+                        "asset/images/logo.png",
+                        width: double.infinity,
+                        height: MediaQuery.of(context).size.height * 0.095,
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.010,
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Column(
+                        children: <Widget>[
+                          SingleChildScrollView(
+                            child: Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.only(
+                                left: 15,
+                                right: 8,
+                                top: 5,
+                                bottom: 5,
+                              ),
+                              alignment: Alignment.topCenter,
+                              height:
+                                  MediaQuery.of(context).size.height * 0.716,
+                              decoration: const BoxDecoration(
+                                color: Color.fromARGB(180, 0, 0, 65),
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(35),
+                                  topRight: Radius.circular(35),
                                 ),
-                                /*
+                              ),
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  children: <Widget>[
+                                    SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.025,
+                                    ),
+                                    /*
                                 Column(
                                   children: <Widget>[
                                     Container(
@@ -337,309 +339,351 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
 
 
                                  */
-                                const Text(
-                                  "Select Services",
-                                  softWrap: true,
-                                  style: TextStyle(
-                                    fontSize: 30,
-                                    color: Colors.white,
-                                    // backgroundColor: const Color.fromARGB(80, 0, 105, 200),
-                                  ),
-                                ),
-                                Container(
-                                  alignment: Alignment.topCenter,
-                                  margin: const EdgeInsets.only(
-                                    left: 25,
-                                    right: 25,
-                                  ),
-                                  padding: EdgeInsets.only(
-                                    left:
-                                        MediaQuery.of(context).size.width * 0.1,
-                                    top: 0.0001,
-                                  ),
-                                  width: double.infinity,
-                                  height: MediaQuery.of(context).size.height *
-                                      0.265,
-                                  decoration: BoxDecoration(
-                                    color:
-                                        const Color.fromARGB(80, 0, 105, 200),
-                                    borderRadius: BorderRadius.circular(25),
-                                    border: Border.all(
-                                      color: Colors.blue,
-                                      width: 2.0,
+                                    const Text(
+                                      "Select Services",
+                                      softWrap: true,
+                                      style: TextStyle(
+                                        fontSize: 30,
+                                        color: Colors.white,
+                                        // backgroundColor: const Color.fromARGB(80, 0, 105, 200),
+                                      ),
                                     ),
-                                  ),
-                                  child: ListView(
-                                    padding: const EdgeInsets.all(0.1),
-                                    children: [
-                                      buildGroupServicesCheckbox(
-                                          selectAllServices),
-                                      Row(
-                                        children: <Widget>[
-                                          SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
+                                    Container(
+                                      alignment: Alignment.topCenter,
+                                      margin: const EdgeInsets.only(
+                                        left: 25,
+                                        right: 25,
+                                      ),
+                                      padding: EdgeInsets.only(
+                                        left:
+                                            MediaQuery.of(context).size.width *
                                                 0.1,
+                                        top: 0.0001,
+                                      ),
+                                      width: double.infinity,
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.265,
+                                      decoration: BoxDecoration(
+                                        color: const Color.fromARGB(
+                                            80, 0, 105, 200),
+                                        borderRadius: BorderRadius.circular(25),
+                                        border: Border.all(
+                                          color: Colors.blue,
+                                          width: 2.0,
+                                        ),
+                                      ),
+                                      child: ListView(
+                                        padding: const EdgeInsets.all(0.1),
+                                        children: [
+                                          buildGroupServicesCheckbox(
+                                              selectAllServices),
+                                          Row(
+                                            children: <Widget>[
+                                              SizedBox(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.1,
+                                              ),
+                                              const Divider(
+                                                color: Colors.white,
+                                                thickness: 1,
+                                              ),
+                                              SizedBox(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.1,
+                                              ),
+                                            ],
                                           ),
-                                          const Divider(
-                                            color: Colors.white,
-                                            thickness: 1,
-                                          ),
-                                          SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.1,
-                                          ),
+                                          ...chooseService
+                                              .map(buildServiceCheckbox)
+                                              .toList(),
                                         ],
                                       ),
-                                      ...chooseService
-                                          .map(buildServiceCheckbox)
-                                          .toList(),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: MediaQuery.of(context).size.height *
-                                      0.025,
-                                ),
+                                    ),
+                                    SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.025,
+                                    ),
 
-                                //date Picker Button
-                                TextButton(
-                                  child: Text(
-                                    showedDate,
-                                    style: const TextStyle(
-                                      fontSize: 26,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  onPressed: () async {
-                                    final choosedDate = await pickDate(context);
-                                    date = DateTime(
-                                      choosedDate!.year,
-                                      choosedDate.month,
-                                      choosedDate.day,
-                                      choosedDate.hour,
-                                      choosedDate.minute,
-                                    );
-                                    showSelectedDate();
-                                  },
-                                ),
-                                SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.03,
-                                ),
-                                //time picker button
-                                TextButton(
-                                  onPressed: () async {
-                                    final choosedTime = await pickTime(context);
-                                    time = TimeOfDay(
-                                      hour: choosedTime!.hour,
-                                      minute: choosedTime.minute,
-                                    );
-                                    choosedStartingDateTime = DateTime(
-                                      date.year,
-                                      date.month,
-                                      date.day,
-                                      time.hour,
-                                      time.minute,
-                                    );
-                                    showSelectedTime();
-                                  },
-                                  child: Text(
-                                    showedTime,
-                                    style: const TextStyle(
-                                      fontSize: 26,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.03,
-                                ),
-                                const Text(
-                                  "Duration",
-                                  style: TextStyle(
-                                    fontSize: 24,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Container(
-                                      margin: const EdgeInsets.only(right: 10),
-                                      width: MediaQuery.of(context).size.width *
-                                          0.28,
-                                      child: TextField(
-                                        keyboardType: TextInputType.number,
-                                        controller:
-                                            choosedDurationHoursController,
-                                        decoration: const InputDecoration(
-                                          // Icon(
-                                          //   Icons.access_time,
-                                          //   color: Colors.deepOrange,
-                                          // ),
-                                          label: Text(
-                                            "select hours",
-                                            style: TextStyle(
-                                              fontSize: 18,
-                                              color: Colors.blueAccent,
-                                            ),
-                                          ),
-                                          enabledBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                              width: 2.0,
-                                              color: Colors.deepOrange,
-                                            ),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              width: 2.0,
-                                              color: Colors.blue,
-                                            ),
-                                          ),
-                                        ),
+                                    //date Picker Button
+                                    TextButton(
+                                      child: Text(
+                                        showedDate,
                                         style: const TextStyle(
+                                          fontSize: 26,
                                           color: Colors.white,
-                                          fontSize: 18,
                                         ),
                                       ),
-                                    ),
-                                    Container(
-                                      margin: const EdgeInsets.only(right: 10),
-                                      width: MediaQuery.of(context).size.width *
-                                          0.28,
-                                      child: TextField(
-                                        keyboardType: TextInputType.number,
-                                        controller:
-                                            choosedDurationMinuteController,
-                                        decoration: const InputDecoration(
-                                          label: Text(
-                                            "select minute",
-                                            style: TextStyle(
-                                              fontSize: 18,
-                                              color: Colors.blueAccent,
-                                            ),
-                                          ),
-                                          enabledBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                              width: 2.0,
-                                              color: Colors.deepOrange,
-                                            ),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              width: 2.0,
-                                              color: Colors.blue,
-                                            ),
-                                          ),
-                                        ),
-                                        style: const TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 18,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.05,
-                                ),
-
-                                ConditionalBuilder(
-                                    condition: state is RefreshLevelState || state is UserOperationInitial,
-                                    builder: (context) =>   ElevatedButton(
-                                      onPressed: () {
-                                        setState(
-                                              () {
-                                            selectedMinuteDuration =
-                                                choosedDurationMinuteController
-                                                    .text;
-                                            selectedHoursDuration =
-                                                choosedDurationHoursController.text;
-                                            // checkNewRequest(
-                                            //   selectedMinuteDuration!,
-                                            //   selectedHoursDuration!,
-                                            //   selectedService!,
-                                            // );
-                                            if (selectedHoursDuration == "" ||
-                                                selectedHoursDuration == " " ||
-                                                selectedHoursDuration == "0") {
-                                              selectedHoursDuration = "00";
-                                            } else if (selectedMinuteDuration ==
-                                                "" ||
-                                                selectedMinuteDuration == " " ||
-                                                selectedMinuteDuration == "0") {
-                                              selectedMinuteDuration = "00";
-                                            }
-                                            requestSender(
-                                              checkNewRequest(
-                                                selectedMinuteDuration!,
-                                                selectedHoursDuration!,
-                                                selectedService!,
-                                              ),
-                                              selectedMinuteDuration!,
-                                              selectedHoursDuration!,
-                                            );
-                                            print(
-                                                "${UserRequestsPage.requestList.length}");
-                                            print("start send reservation");
-                                            cubit.book_reservation(
-                                                gateName,
-                                                DateFormat("yyyy-MM-dd HH:mm")
-                                                    .format(choosedStartingDateTime)
-                                                    .toString(),
-                                                DateFormat("yyyy-MM-dd HH:mm")
-                                                    .format(choosedEndingDateTime)
-                                                    .toString(),choosedServicesList,ReservationToSend,bothId
-                                            );
-                                            UserRequestsPage.requestList.add(MyAccepted(
-                                              id: 10,
-                                              userId: 23,
-                                              startTime: DateTime(2023),
-                                              endTime: DateTime(2024),
-                                              gateName: gateName,
-                                              isAccepted: 0,
-                                              createdAt: DateTime.now(),
-                                              updatedAt: DateTime.now(),
-                                              serviceName: "serviceName",
-                                              serviceId: 12,
-                                              userName: 'userName',),);
-                                            print("end send reservation");
-                                            print("${UserRequestsPage.requestList.length}");
-                                            // book_reservation(gateName,time.toString(),choosedEndTime.toString());
-                                          },
+                                      onPressed: () async {
+                                        final choosedDate =
+                                            await pickDate(context);
+                                        date = DateTime(
+                                          choosedDate!.year,
+                                          choosedDate.month,
+                                          choosedDate.day,
+                                          choosedDate.hour,
+                                          choosedDate.minute,
                                         );
+                                        showSelectedDate();
                                       },
-                                      child: const Text(
-                                        "Submit",
-                                        style: TextStyle(
+                                    ),
+                                    SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.03,
+                                    ),
+                                    //time picker button
+                                    TextButton(
+                                      onPressed: () async {
+                                        final choosedTime =
+                                            await pickTime(context);
+                                        time = TimeOfDay(
+                                          hour: choosedTime!.hour,
+                                          minute: choosedTime.minute,
+                                        );
+                                        choosedStartingDateTime = DateTime(
+                                          date.year,
+                                          date.month,
+                                          date.day,
+                                          time.hour,
+                                          time.minute,
+                                        );
+                                        showSelectedTime();
+                                      },
+                                      child: Text(
+                                        showedTime,
+                                        style: const TextStyle(
                                           fontSize: 26,
                                           color: Colors.white,
                                         ),
                                       ),
                                     ),
-                                    fallback: (context) => Center(
-                                      child: CircularProgressIndicator(),
-                                    ))
+                                    SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.03,
+                                    ),
+                                    const Text(
+                                      "Duration",
+                                      style: TextStyle(
+                                        fontSize: 24,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: <Widget>[
+                                        Container(
+                                          margin:
+                                              const EdgeInsets.only(right: 10),
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.28,
+                                          child: TextField(
+                                            keyboardType: TextInputType.number,
+                                            controller:
+                                                choosedDurationHoursController,
+                                            decoration: const InputDecoration(
+                                              // Icon(
+                                              //   Icons.access_time,
+                                              //   color: Colors.deepOrange,
+                                              // ),
+                                              label: Text(
+                                                "select hours",
+                                                style: TextStyle(
+                                                  fontSize: 18,
+                                                  color: Colors.blueAccent,
+                                                ),
+                                              ),
+                                              enabledBorder:
+                                                  UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  width: 2.0,
+                                                  color: Colors.deepOrange,
+                                                ),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  width: 2.0,
+                                                  color: Colors.blue,
+                                                ),
+                                              ),
+                                            ),
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18,
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          margin:
+                                              const EdgeInsets.only(right: 10),
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.28,
+                                          child: TextField(
+                                            keyboardType: TextInputType.number,
+                                            controller:
+                                                choosedDurationMinuteController,
+                                            decoration: const InputDecoration(
+                                              label: Text(
+                                                "select minute",
+                                                style: TextStyle(
+                                                  fontSize: 18,
+                                                  color: Colors.blueAccent,
+                                                ),
+                                              ),
+                                              enabledBorder:
+                                                  UnderlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  width: 2.0,
+                                                  color: Colors.deepOrange,
+                                                ),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  width: 2.0,
+                                                  color: Colors.blue,
+                                                ),
+                                              ),
+                                            ),
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.05,
+                                    ),
 
-                              ],
+                                    ConditionalBuilder(
+                                        condition: state is RefreshLevelState ||
+                                            state is UserOperationInitial,
+                                        builder: (context) => ElevatedButton(
+                                              onPressed: () {
+                                                setState(
+                                                  () {
+                                                    selectedMinuteDuration =
+                                                        choosedDurationMinuteController
+                                                            .text;
+                                                    selectedHoursDuration =
+                                                        choosedDurationHoursController
+                                                            .text;
+                                                    // checkNewRequest(
+                                                    //   selectedMinuteDuration!,
+                                                    //   selectedHoursDuration!,
+                                                    //   selectedService!,
+                                                    // );
+                                                    if (selectedHoursDuration ==
+                                                            "" ||
+                                                        selectedHoursDuration ==
+                                                            " " ||
+                                                        selectedHoursDuration ==
+                                                            "0") {
+                                                      selectedHoursDuration =
+                                                          "00";
+                                                    } else if (selectedMinuteDuration ==
+                                                            "" ||
+                                                        selectedMinuteDuration ==
+                                                            " " ||
+                                                        selectedMinuteDuration ==
+                                                            "0") {
+                                                      selectedMinuteDuration =
+                                                          "00";
+                                                    }
+                                                    requestSender(
+                                                      checkNewRequest(
+                                                        selectedMinuteDuration!,
+                                                        selectedHoursDuration!,
+                                                        selectedService!,
+                                                      ),
+                                                      selectedMinuteDuration!,
+                                                      selectedHoursDuration!,
+                                                    );
+                                                    print(
+                                                        "${UserRequestsPage.requestList.length}");
+                                                    print(
+                                                        "start send reservation");
+                                                    cubit.book_reservation(
+                                                        gateName,
+                                                        DateFormat(
+                                                                "yyyy-MM-dd HH:mm")
+                                                            .format(
+                                                                choosedStartingDateTime)
+                                                            .toString(),
+                                                        DateFormat(
+                                                                "yyyy-MM-dd HH:mm")
+                                                            .format(
+                                                                choosedEndingDateTime)
+                                                            .toString(),
+                                                        choosedServicesList,
+                                                        ReservationToSend,
+                                                        bothId);
+                                                    // UserRequestsPage.requestList
+                                                    //     .add(
+                                                    //   MyAccepted(
+                                                    //     id: 10,
+                                                    //     userId: 23,
+                                                    //     startTime:
+                                                    //         DateTime(2023),
+                                                    //     endTime: DateTime(2024),
+                                                    //     gateName: gateName,
+                                                    //     isAccepted: 0,
+                                                    //     createdAt:
+                                                    //         DateTime.now(),
+                                                    //     updatedAt:
+                                                    //         DateTime.now(),
+                                                    //     serviceName:
+                                                    //         "serviceName",
+                                                    //     serviceId: 12,
+                                                    //     userName: 'userName',
+                                                    //   ),
+                                                    // );
+                                                    print(
+                                                        "end send reservation");
+                                                    print(
+                                                        "${UserRequestsPage.requestList.length}");
+                                                    // book_reservation(gateName,time.toString(),choosedEndTime.toString());
+                                                  },
+                                                );
+                                              },
+                                              child: const Text(
+                                                "Submit",
+                                                style: TextStyle(
+                                                  fontSize: 26,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ),
+                                        fallback: (context) => Center(
+                                              child:
+                                                  CircularProgressIndicator(),
+                                            ))
+                                  ],
+                                ),
+                              ),
                             ),
                           ),
-                        ),
+                        ],
                       ),
                     ],
                   ),
-                ],
-              ),
-            );
-  },
-),
+                );
+              },
+            ),
           ],
         ),
       ),
@@ -697,11 +741,13 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
   }
 
   showSelectedTime() {
-    setState(() {
-      if (time != const TimeOfDay(hour: 23, minute: 41)) {
-        showedTime = time.format(context);
-      }
-    });
+    setState(
+      () {
+        if (time != const TimeOfDay(hour: 23, minute: 41)) {
+          showedTime = time.format(context);
+        }
+      },
+    );
   }
 
   /*
@@ -725,7 +771,10 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
     //   return false;
     // } else
     chooseService.forEach((service) {
-      if (service.isChecked) choosedServicesList.add(service.serviceName);
+      if (service.isChecked) {
+        choosedServicesList.add(service.serviceName);
+        print("serviceName: ${service.serviceName}");
+      }
     });
 
     if (choosedServicesList.isEmpty) {
@@ -917,20 +966,21 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
       // );
     }
   }
+
   AppBar _appBarContent() => AppBar(
-    centerTitle: true,
-    title: _appBarTitle(),
-    backgroundColor: const Color.fromARGB(150, 0, 0, 65),
-  );
+        centerTitle: true,
+        title: _appBarTitle(),
+        backgroundColor: const Color.fromARGB(150, 0, 0, 65),
+      );
 
   Text _appBarTitle() => Text(
-    widget.gateName,
-    style: const TextStyle(
-      fontSize: 30,
-      fontWeight: FontWeight.bold,
-      color: Colors.deepOrange,
-    ),
-  );
+        widget.gateName,
+        style: const TextStyle(
+          fontSize: 30,
+          fontWeight: FontWeight.bold,
+          color: Colors.deepOrange,
+        ),
+      );
 
 ////////////////////////////////////////////
 //هي ال widget  اللي بتعرض خيار ال  select all Services ك checkBox
