@@ -3,19 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-import 'package:project_mohammad/Api/model/my_accepted_model.dart';
 
-import '../../Cubit/User Level Operation/user_operation_cubit.dart';
 import '/components/snack_bar.dart';
 import '/services/services_check_box.dart';
 import '../../Api/model/list_services_to_send.dart';
 import '../../Api/model/name_service.dart';
+import '../../Cubit/User Level Operation/user_operation_cubit.dart';
 import '../../main.dart';
 import '../../services/choices.dart';
 import '../constant.dart';
-import '../../Spam/requests/user_requests.dart';
 import 'user_requests_new.dart';
-
 
 /*
 File in order to enter service reservation information such as
@@ -31,9 +28,9 @@ class ServiceInfoInputNewEd extends StatefulWidget {
 
   const ServiceInfoInputNewEd(
       {required this.gateName,
-        required this.both,
-        required this.servicesList,
-        required this.bothId});
+      required this.both,
+      required this.servicesList,
+      required this.bothId});
 
   @override
   _ServiceInfoInputNewEdState createState() =>
@@ -151,18 +148,11 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
 
 
    */
-  book_reservation(
-      String gate_name,
-      String Start_time,
-      String end_time,
-      List choosedServicesList, ListServiceToSend ReservationToSend
-      ) async {
+  book_reservation(String gate_name, String Start_time, String end_time,
+      List choosedServicesList, ListServiceToSend ReservationToSend) async {
     for (int i = 0; i < choosedServicesList.length; i++) {
-
-
-      ReservationToSend.servicesMap.add(
-          new ServicesMap(id: bothId[i].toString(), name: choosedServicesList[i])
-      );
+      ReservationToSend.servicesMap.add(new ServicesMap(
+          id: bothId[i].toString(), name: choosedServicesList[i]));
       // ReservationToSend.servicesMap[i].name=;
 
     }
@@ -195,7 +185,12 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
   void initState() {
     super.initState();
     for (int i = 0; i < both.length; i++) {
-      chooseService.add(new ServicesCheckBox(serviceName: both[i]));
+      chooseService.add(
+        new ServicesCheckBox(
+          serviceName: both[i],
+          serviceId: i,
+        ),
+      );
     }
   }
 
@@ -234,21 +229,17 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
                       builder: (context) => UserRequestsPage(),
                     ),
                   );
-
                 }
 
-
                 //في حال دخل كلمة سر خطأ
-                if(state is FailureStatus)
-                {
+                if (state is FailureStatus) {
                   //هون حط توست ماسج انو كلمة السر غلط
                   print("رسالة الخطأ انو كلمة السر غلط");
-
                 }
                 // TODO: implement listener
               },
               builder: (context, state) {
-                var cubit=UserOperationCubit.get(context);
+                var cubit = UserOperationCubit.get(context);
                 return SingleChildScrollView(
                   child: Column(
                     children: <Widget>[
@@ -278,7 +269,8 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
                                 bottom: 5,
                               ),
                               alignment: Alignment.topCenter,
-                              height: MediaQuery.of(context).size.height * 0.716,
+                              height:
+                                  MediaQuery.of(context).size.height * 0.716,
                               decoration: const BoxDecoration(
                                 color: Color.fromARGB(180, 0, 0, 65),
                                 borderRadius: BorderRadius.only(
@@ -290,8 +282,9 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
                                 child: Column(
                                   children: <Widget>[
                                     SizedBox(
-                                      height: MediaQuery.of(context).size.height *
-                                          0.025,
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.025,
                                     ),
                                     /*
                                 Column(
@@ -356,15 +349,17 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
                                       ),
                                       padding: EdgeInsets.only(
                                         left:
-                                        MediaQuery.of(context).size.width * 0.1,
+                                            MediaQuery.of(context).size.width *
+                                                0.1,
                                         top: 0.0001,
                                       ),
                                       width: double.infinity,
-                                      height: MediaQuery.of(context).size.height *
-                                          0.265,
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.265,
                                       decoration: BoxDecoration(
-                                        color:
-                                        const Color.fromARGB(80, 0, 105, 200),
+                                        color: const Color.fromARGB(
+                                            80, 0, 105, 200),
                                         borderRadius: BorderRadius.circular(25),
                                         border: Border.all(
                                           color: Colors.blue,
@@ -380,8 +375,8 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
                                             children: <Widget>[
                                               SizedBox(
                                                 width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
+                                                        .size
+                                                        .width *
                                                     0.1,
                                               ),
                                               const Divider(
@@ -390,8 +385,8 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
                                               ),
                                               SizedBox(
                                                 width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
+                                                        .size
+                                                        .width *
                                                     0.1,
                                               ),
                                             ],
@@ -403,8 +398,9 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
                                       ),
                                     ),
                                     SizedBox(
-                                      height: MediaQuery.of(context).size.height *
-                                          0.025,
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.025,
                                     ),
 
                                     //date Picker Button
@@ -417,7 +413,8 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
                                         ),
                                       ),
                                       onPressed: () async {
-                                        final choosedDate = await pickDate(context);
+                                        final choosedDate =
+                                            await pickDate(context);
                                         date = DateTime(
                                           choosedDate!.year,
                                           choosedDate.month,
@@ -430,12 +427,14 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
                                     ),
                                     SizedBox(
                                       height:
-                                      MediaQuery.of(context).size.height * 0.03,
+                                          MediaQuery.of(context).size.height *
+                                              0.03,
                                     ),
                                     //time picker button
                                     TextButton(
                                       onPressed: () async {
-                                        final choosedTime = await pickTime(context);
+                                        final choosedTime =
+                                            await pickTime(context);
                                         time = TimeOfDay(
                                           hour: choosedTime!.hour,
                                           minute: choosedTime.minute,
@@ -459,7 +458,8 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
                                     ),
                                     SizedBox(
                                       height:
-                                      MediaQuery.of(context).size.height * 0.03,
+                                          MediaQuery.of(context).size.height *
+                                              0.03,
                                     ),
                                     const Text(
                                       "Duration",
@@ -470,16 +470,19 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
                                     ),
                                     Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
+                                          MainAxisAlignment.spaceEvenly,
                                       children: [
                                         Container(
-                                          margin: const EdgeInsets.only(right: 10),
-                                          width: MediaQuery.of(context).size.width *
+                                          margin:
+                                              const EdgeInsets.only(right: 10),
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
                                               0.28,
                                           child: TextField(
                                             keyboardType: TextInputType.number,
                                             controller:
-                                            choosedDurationHoursController,
+                                                choosedDurationHoursController,
                                             decoration: const InputDecoration(
                                               // Icon(
                                               //   Icons.access_time,
@@ -492,7 +495,8 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
                                                   color: Colors.blueAccent,
                                                 ),
                                               ),
-                                              enabledBorder: UnderlineInputBorder(
+                                              enabledBorder:
+                                                  UnderlineInputBorder(
                                                 borderSide: BorderSide(
                                                   width: 2.0,
                                                   color: Colors.deepOrange,
@@ -512,13 +516,16 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
                                           ),
                                         ),
                                         Container(
-                                          margin: const EdgeInsets.only(right: 10),
-                                          width: MediaQuery.of(context).size.width *
+                                          margin:
+                                              const EdgeInsets.only(right: 10),
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
                                               0.28,
                                           child: TextField(
                                             keyboardType: TextInputType.number,
                                             controller:
-                                            choosedDurationMinuteController,
+                                                choosedDurationMinuteController,
                                             decoration: const InputDecoration(
                                               label: Text(
                                                 "select minute",
@@ -527,7 +534,8 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
                                                   color: Colors.blueAccent,
                                                 ),
                                               ),
-                                              enabledBorder: UnderlineInputBorder(
+                                              enabledBorder:
+                                                  UnderlineInputBorder(
                                                 borderSide: BorderSide(
                                                   width: 2.0,
                                                   color: Colors.deepOrange,
@@ -550,60 +558,78 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
                                     ),
                                     SizedBox(
                                       height:
-                                      MediaQuery.of(context).size.height * 0.05,
+                                          MediaQuery.of(context).size.height *
+                                              0.05,
                                     ),
 
                                     ConditionalBuilder(
-                                        condition: state is RefreshLevelState || state is UserOperationInitial,
-                                        builder: (context) =>   ElevatedButton(
-                                          onPressed: () {
-                                            setState(
+                                        condition: state is RefreshLevelState ||
+                                            state is UserOperationInitial,
+                                        builder: (context) => ElevatedButton(
+                                              onPressed: () {
+                                                setState(
                                                   () {
-                                                selectedMinuteDuration =
-                                                    choosedDurationMinuteController
-                                                        .text;
-                                                selectedHoursDuration =
-                                                    choosedDurationHoursController.text;
-                                                // checkNewRequest(
-                                                //   selectedMinuteDuration!,
-                                                //   selectedHoursDuration!,
-                                                //   selectedService!,
-                                                // );
-                                                if (selectedHoursDuration == "" ||
-                                                    selectedHoursDuration == " " ||
-                                                    selectedHoursDuration == "0") {
-                                                  selectedHoursDuration = "00";
-                                                } else if (selectedMinuteDuration ==
-                                                    "" ||
-                                                    selectedMinuteDuration == " " ||
-                                                    selectedMinuteDuration == "0") {
-                                                  selectedMinuteDuration = "00";
-                                                }
-                                                requestSender(
-                                                  checkNewRequest(
-                                                    selectedMinuteDuration!,
-                                                    selectedHoursDuration!,
-                                                    selectedService!,
-                                                  ),
-                                                  selectedMinuteDuration!,
-                                                  selectedHoursDuration!,
-                                                );
-                                                print(
-                                                    "${UserRequestsPage.requestList.length}");
-                                                print("start send reservation");
+                                                    selectedMinuteDuration =
+                                                        choosedDurationMinuteController
+                                                            .text;
+                                                    selectedHoursDuration =
+                                                        choosedDurationHoursController
+                                                            .text;
+                                                    // checkNewRequest(
+                                                    //   selectedMinuteDuration!,
+                                                    //   selectedHoursDuration!,
+                                                    //   selectedService!,
+                                                    // );
+                                                    if (selectedHoursDuration ==
+                                                            "" ||
+                                                        selectedHoursDuration ==
+                                                            " " ||
+                                                        selectedHoursDuration ==
+                                                            "0") {
+                                                      selectedHoursDuration =
+                                                          "00";
+                                                    } else if (selectedMinuteDuration ==
+                                                            "" ||
+                                                        selectedMinuteDuration ==
+                                                            " " ||
+                                                        selectedMinuteDuration ==
+                                                            "0") {
+                                                      selectedMinuteDuration =
+                                                          "00";
+                                                    }
+                                                    requestSender(
+                                                      checkNewRequest(
+                                                        selectedMinuteDuration!,
+                                                        selectedHoursDuration!,
+                                                        selectedService!,
+                                                      ),
+                                                      selectedMinuteDuration!,
+                                                      selectedHoursDuration!,
+                                                    );
+                                                    print(
+                                                        "${UserRequestsPage.requestList.length}");
+                                                    print(
+                                                        "start send reservation");
 
-                                                print("the list of Choosed Service is $choosedServicesList");
+                                                    print(
+                                                        "the list of Choosed Service is $choosedServicesList");
 
-                                                cubit.book_reservation(
-                                                    gateName,
-                                                    DateFormat("yyyy-MM-dd HH:mm")
-                                                        .format(choosedStartingDateTime)
-                                                        .toString(),
-                                                    DateFormat("yyyy-MM-dd HH:mm")
-                                                        .format(choosedEndingDateTime)
-                                                        .toString(),choosedServicesList,ReservationToSend,bothId
-                                                );
-                                                /*
+                                                    cubit.book_reservation(
+                                                        gateName,
+                                                        DateFormat(
+                                                                "yyyy-MM-dd HH:mm")
+                                                            .format(
+                                                                choosedStartingDateTime)
+                                                            .toString(),
+                                                        DateFormat(
+                                                                "yyyy-MM-dd HH:mm")
+                                                            .format(
+                                                                choosedEndingDateTime)
+                                                            .toString(),
+                                                        choosedServicesList,
+                                                        ReservationToSend,
+                                                        bothId);
+                                                    /*
                                             UserRequestsPage.requestList.add(MyAccepted(
                                               id: 10,
                                               userId: 23,
@@ -620,24 +646,26 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
 
                                              */
 
-                                                print("end send reservation");
-                                                print("${UserRequestsPage.requestList.length}");
-                                                // book_reservation(gateName,time.toString(),choosedEndTime.toString());
+                                                    print(
+                                                        "end send reservation");
+                                                    print(
+                                                        "${UserRequestsPage.requestList.length}");
+                                                    // book_reservation(gateName,time.toString(),choosedEndTime.toString());
+                                                  },
+                                                );
                                               },
-                                            );
-                                          },
-                                          child: const Text(
-                                            "Submit",
-                                            style: TextStyle(
-                                              fontSize: 26,
-                                              color: Colors.white,
+                                              child: const Text(
+                                                "Submit",
+                                                style: TextStyle(
+                                                  fontSize: 26,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
                                             ),
-                                          ),
-                                        ),
                                         fallback: (context) => Center(
-                                          child: CircularProgressIndicator(),
-                                        ))
-
+                                              child:
+                                                  CircularProgressIndicator(),
+                                            ))
                                   ],
                                 ),
                               ),
@@ -697,9 +725,9 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
       // ignore: unnecessary_null_comparison
       initialTime: time != null
           ? TimeOfDay(
-        hour: time.hour,
-        minute: time.minute,
-      )
+              hour: time.hour,
+              minute: time.minute,
+            )
           : initialTime,
     );
     if (newTime == null) return null;
@@ -722,10 +750,10 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
 
   //هاد التابع اللي رح يتحقق من انو طلب الحجز كامل قبل ما ينبعت ع ال dataBase
   bool checkNewRequest(
-      String selectedMinuteDuration,
-      String selectedHoursDuration,
-      String serviceName,
-      ) {
+    String selectedMinuteDuration,
+    String selectedHoursDuration,
+    String serviceName,
+  ) {
     // if (serviceName == 'Select Service') {
     //   TheSnackBar(
     //     context,
@@ -815,7 +843,7 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
         TheSnackBar(
           context,
           'Duration Exceeding closing time,'
-              ' please Edit duration or time',
+          ' please Edit duration or time',
           const Color.fromARGB(255, 150, 10, 10),
         );
         return false;
@@ -825,7 +853,7 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
         TheSnackBar(
           context,
           'Duration Exceeding closing time,'
-              ' please Edit duration or time',
+          ' please Edit duration or time',
           const Color.fromARGB(255, 150, 10, 10),
         );
         return false;
@@ -843,7 +871,7 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
         TheSnackBar(
           context,
           'Duration Exceeding closing time,'
-              ' please Edit duration or time',
+          ' please Edit duration or time',
           const Color.fromARGB(255, 150, 10, 10),
         );
         return false;
@@ -871,9 +899,9 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
   }
 
   TimeOfDay endTimeFormatting(
-      int endHours,
-      int endMinutes,
-      ) {
+    int endHours,
+    int endMinutes,
+  ) {
     int endHour = 0, endMinute = endMinutes;
     TimeOfDay endingTime = TimeOfDay(
       hour: 00,
@@ -893,10 +921,10 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
   }
 
   void requestSender(
-      bool checkNewRequest,
-      String selectedMinuteDuration,
-      String selectedHoursDuration,
-      ) {
+    bool checkNewRequest,
+    String selectedMinuteDuration,
+    String selectedHoursDuration,
+  ) {
     if (checkNewRequest) {
       /*
       UserRequestsPage.requestList.add(
@@ -927,20 +955,21 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
       // );
     }
   }
+
   AppBar _appBarContent() => AppBar(
-    centerTitle: true,
-    title: _appBarTitle(),
-    backgroundColor: const Color.fromARGB(150, 0, 0, 65),
-  );
+        centerTitle: true,
+        title: _appBarTitle(),
+        backgroundColor: const Color.fromARGB(150, 0, 0, 65),
+      );
 
   Text _appBarTitle() => Text(
-    widget.gateName,
-    style: const TextStyle(
-      fontSize: 30,
-      fontWeight: FontWeight.bold,
-      color: Colors.deepOrange,
-    ),
-  );
+        widget.gateName,
+        style: const TextStyle(
+          fontSize: 30,
+          fontWeight: FontWeight.bold,
+          color: Colors.deepOrange,
+        ),
+      );
 
 ////////////////////////////////////////////
 //هي ال widget  اللي بتعرض خيار ال  select all Services ك checkBox
