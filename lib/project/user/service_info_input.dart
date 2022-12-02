@@ -151,6 +151,7 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
 
 
    */
+  /*
   book_reservation(
     String gate_name,
     String Start_time,
@@ -159,7 +160,8 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
   ) async {
     for (int i = 0; i < choosedServicesList.length; i++) {
 
-
+print("the id "+bothId[i].toString());
+print("the choosedServicesList[i] "+choosedServicesList[i]);
       ReservationToSend.servicesMap.add(
           new ServicesMap(id: bothId[i].toString(), name: choosedServicesList[i])
       );
@@ -191,10 +193,16 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
       response;
   }
 
+   */
+
   @override
   void initState() {
+
     super.initState();
     for (int i = 0; i < both.length; i++) {
+      print( "thd service ${both[i]}");
+      print( "thd service ${bothId}");
+
       chooseService.add(new ServicesCheckBox(serviceName: both[i]));
     }
   }
@@ -984,6 +992,8 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
   Widget buildServiceCheckbox(ServicesCheckBox servicesCheckBox) =>
       CheckboxListTile(
         onChanged: (serviceValue) => setState(() {
+          // print("${servicesList[0].name} the valur");
+          // print("${servicesList[0].id} the valur");
           servicesCheckBox.isChecked = serviceValue!;
           selectAllServices.isChecked =
               chooseService.every((service) => service.isChecked == true);

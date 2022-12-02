@@ -29,6 +29,9 @@ class UserOperationCubit extends Cubit<UserOperationState> {
       List choosedServicesList, ListServiceToSend ReservationToSend,List<String> bothId
       ) async {
     for (int i = 0; i < choosedServicesList.length; i++) {
+
+      print("the id "+bothId[i].toString());
+      print("the choosedServicesList[i] "+choosedServicesList[i]);
       ReservationToSend.servicesMap.add(
           new ServicesMap(id: bothId[i].toString(), name: choosedServicesList[i])
       );
@@ -53,11 +56,13 @@ class UserOperationCubit extends Cubit<UserOperationState> {
     print('the response i ss${response.body}');
     print('the response i ss${response.statusCode}');
 
-    if (response.statusCode == 201) {
+    if (response.statusCode == 201)
+    {
       emit(SuccessStatus());
       emit(RefreshLevelState());
       return response;
-    } else
+    }
+    else
       {
         emit(FailureStatus());
         emit(RefreshLevelState());

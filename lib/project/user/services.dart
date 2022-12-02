@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -62,6 +63,10 @@ class _ServiceEditionState extends State<ServiceEditionS> {
   List<String> serviceFarmer = [];
   List<String> bothStreet = [];
   List<String> bothStreetID = [];
+
+  List<Map<String,String>>service_IdFarmer=<Map<String,String>>[];
+  List<Map<String,String>>service_IdWoodWard=<Map<String,String>>[];
+  List<Map<String,String>>service_IdBothStreet=<Map<String,String>>[];
   late Future<ListService> date;
 
   String selectedService = 'Select Service';
@@ -143,7 +148,7 @@ class _ServiceEditionState extends State<ServiceEditionS> {
                           serviceWoodWard.clear();
                           serviceFarmer.clear();
                           bothStreet.clear();
-
+                          bothStreetID.clear();
                           bothStreet.add('Select Service');
 
                           // gatesEdition.clear();
@@ -156,6 +161,9 @@ class _ServiceEditionState extends State<ServiceEditionS> {
                           for (int i = 0;
                               i < snapshot.data!.services.woodward.length;
                               i++) {
+                            service_IdFarmer.add({"${snapshot.data!.services.woodward[i].id}": '${snapshot.data!.services.woodward[i].name}'});
+                          //  service_IdFarmer.addEntries(<",","">)
+                          //  service_IdFarmer.add(snapshot.data!.services.woodward[i].name,snapshot.data!.services.woodward[i].id);
                             serviceWoodWard
                                 .add(snapshot.data!.services.woodward[i].name);
                           }
@@ -300,6 +308,11 @@ class _ServiceEditionState extends State<ServiceEditionS> {
                                       )
                                       .toList(),
                                   onChanged: (service) => setState(() {
+                                    for(int i=0;i<bothStreetID.length;i++)
+                                      {
+                                        print("the id is ${bothStreetID[i]}");
+
+                                      }
                                     selectedService = service!;
 
                                     Navigator.of(context).pushReplacement(
@@ -307,8 +320,7 @@ class _ServiceEditionState extends State<ServiceEditionS> {
                                         builder: (_) => ServiceInfoInputNewEd(
                                           gateName: selectedService,
                                           both: bothStreet,
-                                          servicesList: snapshot
-                                              .data!.services.bothStreet,
+                                          servicesList: snapshot.data!.services.bothStreet,
                                           bothId: bothStreetID,
                                         ),
                                       ),
