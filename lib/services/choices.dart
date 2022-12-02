@@ -84,7 +84,7 @@ List<String> blockedServicesList = [
 //هي مشان يقدر المستخدم يختار كل ال staffs المتاحين
 //بكبسة وحدة تسمها Select all staffs
 // final selectAllStaff = StaffCheckBox(staff_name: "Select All Staffs");
-final selectAllServices = ServicesCheckBox(serviceName: "Select All Services");
+final selectAllServices = ServicesCheckBox(serviceName: "Select All Services" , serviceId: 1010);
 //هي ال List الخاصة بال staffs
 // طبعا هي ال list بتكون فاضية لانو ال admin
 //هو اللي رح يضيف اسماء ال staff  او يحذفها حسب الموجود
@@ -102,7 +102,7 @@ final selectAllServices = ServicesCheckBox(serviceName: "Select All Services");
 // ];
 
 final chooseService = [
-  ServicesCheckBox(serviceName: "self Unloaded Delivery"),
+  ServicesCheckBox(serviceName: "self Unloaded Delivery" , serviceId: 1000),
 ];
 
 List<AllReservations> adminCalendarList = [];
