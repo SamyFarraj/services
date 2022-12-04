@@ -195,7 +195,7 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
   void initState() {
     super.initState();
     for (int i = 0; i < both.length; i++) {
-      chooseService.add(new ServicesCheckBox(serviceName: both[i] , serviceId:  int.tryParse(bothId[i]) != null ? int.tryParse(bothId[i]! : 15000 ));
+      chooseService.add(new ServicesCheckBox(serviceName: both[i] , serviceId:  int.tryParse(bothId[i]) != null ? int.tryParse(bothId[i])! : 15000 );
     }
   }
 
