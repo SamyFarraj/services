@@ -4,6 +4,7 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 import '/components/dash_board.dart';
 import '/project/constant.dart';
@@ -317,9 +318,9 @@ class _AdminRequestsPageEdState extends State<AdminRequestsPageEd> {
                                               // ignore: prefer_const_constructors
                                               _text(val.userName),
                                               _text(val.serviceName),
-                                              _text('${val.createdAt}'),
-                                              _text("start : ${val.startTime}"),
-                                              _text("start : ${val.endTime}"),
+                                              _text('${DateFormat("yyyy/MM/dd").format(val.startTime)}'),
+                                              _text("start : ${DateFormat("HH:mm").format(val.startTime)}"),
+                                              _text("start : ${DateFormat("HH:mm").format(val.endTime)}"),
                                               _text("start : ${val.gateName}"),
                                             ],
                                           ),
@@ -528,9 +529,9 @@ class _AdminRequestsPageEdState extends State<AdminRequestsPageEd> {
                                           // ignore: prefer_const_constructors
                                           _text(val.userName),
                                           _text(val.serviceName),
-                                          _text('${val.createdAt}'),
-                                          _text('${val.startTime}'),
-                                          _text('${val.endTime}'),
+                                          _text('${DateFormat("yyyy/MM/dd").format(val.startTime)}'),
+                                          _text('${DateFormat("HH:mm").format(val.startTime)}'),
+                                          _text('${DateFormat("HH:mm").format(val.endTime)}'),
                                           _text('${val.gateName}'),
                                         ],
                                       ),

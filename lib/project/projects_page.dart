@@ -5,7 +5,7 @@ import 'screen_chooser.dart';
 bool admin = false;
 
 class ProjectsPage extends StatefulWidget {
-  bool isAdmin = false;
+  final bool isAdmin;
    ProjectsPage(this.isAdmin) {
      admin=isAdmin;
    }
@@ -127,7 +127,8 @@ class _ProjectsPageState extends State<ProjectsPage> {
       ),
     );
   }
-  AppBar _appBarContent () => AppBar(
+  AppBar _appBarContent () =>
+      AppBar(
     centerTitle: true,
     title: _appBarTitle(),
     backgroundColor: const Color.fromARGB(80, 0, 30, 70),

@@ -416,21 +416,21 @@ class _UserRequestsPageState extends State<UserRequestsPage> {
                                                   ),
                                                 ),
                                                 Text(
-                                                  '${DateFormat("yyyy/MM/dd").format(val.createdAt)}',
+                                                  '${DateFormat("yyyy/MM/dd").format(val.startTime)}',
                                                   style: const TextStyle(
                                                     color: Colors.white,
                                                     fontSize: 26,
                                                   ),
                                                 ),
                                                 Text(
-                                                  " start at ${DateFormat("yyyy/MM/dd").format(val.startTime)}",
+                                                  " start at ${DateFormat("HH:mm").format(val.startTime)}",
                                                   style: const TextStyle(
                                                     color: Colors.white,
                                                     fontSize: 26,
                                                   ),
                                                 ),
                                                 Text(
-                                                  "end at ${DateFormat("yyyy/MM/dd").format(val.endTime)}",
+                                                  "end at ${DateFormat("HH:mm").format(val.endTime)}",
                                                   style: const TextStyle(
                                                     color: Colors.white,
                                                     fontSize: 26,

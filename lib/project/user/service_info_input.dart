@@ -1,7 +1,6 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
 import '/components/snack_bar.dart';
@@ -9,9 +8,7 @@ import '/services/services_check_box.dart';
 import '../../Api/model/list_services_to_send.dart';
 import '../../Api/model/name_service.dart';
 import '../../Cubit/User Level Operation/user_operation_cubit.dart';
-import '../../main.dart';
 import '../../services/choices.dart';
-import '../constant.dart';
 import 'user_requests_new.dart';
 
 /*
@@ -148,6 +145,10 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
 
 
    */
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0a85f9f3f214f029dec33f3d86e40f64e6327b4d
   /*
   book_reservation(
     String gate_name,
@@ -201,8 +202,8 @@ print("the choosedServicesList[i] "+choosedServicesList[i]);
 
   @override
   void initState() {
-
     super.initState();
+<<<<<<< HEAD
     for (int i = 0; i < both.length; i++) {
       print( "thd service ${both[i]}");
       print( "thd service ${bothId}");
@@ -214,6 +215,31 @@ print("the choosedServicesList[i] "+choosedServicesList[i]);
           serviceId: i,
         ),
       );
+=======
+    for (int i = 0; i < bothId.length; i++) {
+      print("thd service ${both[i]}");
+      print("thd service ${bothId[i]}");
+      if(both[i] == "Select Service")
+      {}else
+      {
+        chooseService.add(
+          ServicesCheckBox(
+            serviceName: both[i],
+            serviceId:
+                int.tryParse(both[i]) != null ?
+                int.tryParse(both[i])! : 0,
+          ),
+        );
+      }
+
+      // chooseService.add(
+      //   new ServicesCheckBox(
+      //     serviceName: both[i],
+      //     serviceId: i,
+      //   ),
+      // );
+
+>>>>>>> 0a85f9f3f214f029dec33f3d86e40f64e6327b4d
     }
   }
 
@@ -246,7 +272,7 @@ print("the choosedServicesList[i] "+choosedServicesList[i]);
             BlocConsumer<UserOperationCubit, UserOperationState>(
               listener: (context, state) {
                 if (state is SuccessStatus) {
-                  Navigator.push(
+                  Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                       builder: (context) => UserRequestsPage(),
@@ -720,7 +746,7 @@ print("the choosedServicesList[i] "+choosedServicesList[i]);
       context: context,
       initialDate: initialDate,
       firstDate: DateTime.now(),
-      lastDate: DateTime(initialDate.year + 1),
+      lastDate: DateTime(initialDate.year + 3),
     );
     if (selectedDate == null) return null;
     return selectedDate;
