@@ -148,7 +148,6 @@ class _ServiceInfoInputNewEdState extends State<ServiceInfoInputNewEd> {
 
 
    */
-<<<<<<< HEAD
   /*
   book_reservation(
     String gate_name,
@@ -205,19 +204,16 @@ print("the choosedServicesList[i] "+choosedServicesList[i]);
 
     super.initState();
     for (int i = 0; i < both.length; i++) {
-<<<<<<< HEAD
       print( "thd service ${both[i]}");
       print( "thd service ${bothId}");
 
-      chooseService.add(new ServicesCheckBox(serviceName: both[i]));
-=======
+      chooseService.add(new ServicesCheckBox(serviceName: both[i], serviceId: 0));
       chooseService.add(
         new ServicesCheckBox(
           serviceName: both[i],
           serviceId: i,
         ),
       );
->>>>>>> 39e421b2d8f7ef515314871740c4ac4d5ff2fe05
     }
   }
 
